@@ -167,6 +167,8 @@ export default function AppBusking({}) {
                   setIsSinging(true);
                   setNowSong({ ...results[0] });
                   removeBuskingSong(results[0].sid, () => {});
+                } else if (nowSong) {
+                  setIsSinging(true);
                 } else {
                   alert('신청된 노래가 존재하지 않습니다!');
                 }
