@@ -26,7 +26,6 @@ export default function AppBusking({}) {
   const [appliance, setAppliance] = useState(null);
   const [results, setResults] = useState(null);
   const [resultNum, setResultNum] = useState(0);
-  const [nowPageResults, setNowPageResults] = useState([]);
   const [pageNum, setPageNum] = useState(1);
   const [beforeSong, setBeforeSong] = useState(null);
   const [nowSong, setNowSong] = useState(null);
@@ -46,19 +45,19 @@ export default function AppBusking({}) {
   }, [buskingData]);
   useEffect(() => {
     if (uid) {
-      setUrl(`https://unique0902.github.io/BuskingApply?uid=${uid}`);
+      setUrl(
+        `https://stunning-semifreddo-f035d0.netlify.app/buskingApply/${uid}`
+      );
     }
   }, [uid]);
   const handelPlus = () => {
     if (pageNum < resultNum / 6) {
       setPageNum(pageNum + 1);
-      setNowPageResults(results.slice((pageNum - 1) * 6, pageNum * 6));
     }
   };
   const handelMinus = () => {
     if (pageNum !== 1) {
       setPageNum(pageNum - 1);
-      setNowPageResults(results.slice((pageNum - 1) * 6, pageNum * 6));
     }
   };
   useEffect(() => {

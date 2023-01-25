@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-// import { useNavigate, useLocation } from 'react-router-dom';
 import {
   FaGuitar,
   FaHome,
@@ -21,7 +20,6 @@ const Sidebar = ({ isShowSideBar, setIsShowSideBar }) => {
   const router = useRouter();
   const checkSelectedBtn = () => {
     const pathArr = router.pathname.split('/');
-    console.log(pathArr[2]);
     if (pathArr[2] === 'busking') {
       setSelectedBtn('makebusking');
     } else {
