@@ -21,8 +21,9 @@ const Sidebar = ({ isShowSideBar, setIsShowSideBar }) => {
   const router = useRouter();
   const checkSelectedBtn = () => {
     const pathArr = router.pathname.split('/');
+    console.log(pathArr[2]);
     if (pathArr[2] === 'busking') {
-      setSelectedBtn('makeBusking');
+      setSelectedBtn('makebusking');
     } else {
       setSelectedBtn(pathArr[2]);
     }
