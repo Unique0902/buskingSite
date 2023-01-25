@@ -1,12 +1,24 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { FaPlus, FaMinusSquare } from 'react-icons/fa';
-
+import { BiSmile, BiSend } from 'react-icons/bi';
+import { useMediaQuery } from 'react-responsive';
 const SearchResult = ({ index, result, onSongClick, btnText }) => {
   const nameRef = useRef();
   const artistRef = useRef();
   const [sid, getSid] = useState('');
   const [isHovering1, setIsHovering1] = useState(false);
   const [isHovering2, setIsHovering2] = useState(false);
+  const [maxLeng, setMaxLeng] = useState(30);
+  const isPc = useMediaQuery({
+    query: '(min-width:1024px)',
+  });
+  useEffect(() => {
+    if (isPc) {
+      setMaxLeng(30);
+    } else {
+      setMaxLeng(20);
+    }
+  }, [isPc]);
   useEffect(() => {
     result.sid ? getSid(result.sid) : getSid(result.id);
   }, [result]);
@@ -20,18 +32,24 @@ const SearchResult = ({ index, result, onSongClick, btnText }) => {
           onMouseOver={() => setIsHovering1(true)}
           onMouseOut={() => setIsHovering1(false)}
         >
-          {btnText == '제거' && result.title.length > 30
-            ? result.title.slice(0, 30) + '..'
+          {(btnText === '제거' ||
+            btnText === '신청가능' ||
+            btnText === '신청') &&
+          result.title.length > maxLeng
+            ? result.title.slice(0, maxLeng) + '..'
             : result.title}
-          {btnText == '추가' && result.name.length > 30
-            ? result.name.slice(0, 30) + '..'
+          {btnText === '추가' && result.name.length > maxLeng
+            ? result.name.slice(0, maxLeng) + '..'
             : result.name}
-          {btnText == '제거' && isHovering1 && (
-            <p className='absolute bg-white rounded-lg border border-gray-500 p-2 text-black'>
-              {result.title}
-            </p>
-          )}
-          {btnText == '추가' && isHovering1 && (
+          {(btnText === '제거' ||
+            btnText === '신청가능' ||
+            btnText === '신청') &&
+            isHovering1 && (
+              <p className='absolute bg-white rounded-lg border border-gray-500 p-2 text-black'>
+                {result.title}
+              </p>
+            )}
+          {btnText === '추가' && isHovering1 && (
             <p className='absolute bg-white rounded-lg border border-gray-500 p-2 text-black'>
               {result.name}
             </p>
@@ -52,23 +70,25 @@ const SearchResult = ({ index, result, onSongClick, btnText }) => {
             : result.artist}
           {isHovering2 && (
             <p className='absolute rounded-lg border border-gray-500 p-2 bg-white text-black'>
-              {result.artist.name}
+              {result.artist.name || result.artist}
             </p>
           )}
         </div>
       </div>
 
-      {result.cnt && <p className='basis-1/12'>{result.cnt}</p>}
+      {result.cnt && <p className='basis-1/12'>{result.cnt + '명'}</p>}
       <button
         onClick={() => {
           btnText === '추가'
             ? onSongClick(result.name, result.artist)
-            : onSongClick(sid);
+            : onSongClick && onSongClick(sid);
         }}
         className='basis-1/12 hover:scale-110'
       >
-        {btnText == '추가' && <FaPlus className='text-white' />}
-        {btnText == '제거' && <FaMinusSquare className=' text-mainRed' />}
+        {btnText === '추가' && <FaPlus className='text-white' />}
+        {btnText === '제거' && <FaMinusSquare className=' text-mainRed' />}
+        {btnText === '신청가능' && <BiSmile className=' text-2xl' />}
+        {btnText === '신청' && <BiSend className=' text-2xl' />}
       </button>
     </li>
   );

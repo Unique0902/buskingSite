@@ -36,6 +36,31 @@ export function BuskingContextProvider({ buskingRepository, children }) {
   const removeBusking = (onUpdate) => {
     buskingRepository.removeBusking(uid, onUpdate);
   };
+  const applyOldBuskingSong = (userId, sid, ip, cnt, applicants, onUpdate) => {
+    buskingRepository.applyOldBuskingSong(
+      userId,
+      sid,
+      ip,
+      cnt,
+      applicants,
+      onUpdate
+    );
+  };
+
+  const applyNewBuskingSong = (userId, title, artist, sid, ip, onUpdate) => {
+    buskingRepository.applyNewBuskingSong(
+      userId,
+      title,
+      artist,
+      sid,
+      ip,
+      onUpdate
+    );
+  };
+
+  const syncBuskingData = (userId, onUpdate) => {
+    buskingRepository.syncBuskingData(userId, onUpdate);
+  };
 
   return (
     <BuskingContext.Provider
@@ -45,6 +70,9 @@ export function BuskingContextProvider({ buskingRepository, children }) {
         applyBuskingSongAgain,
         removeBuskingSong,
         removeBusking,
+        applyOldBuskingSong,
+        applyNewBuskingSong,
+        syncBuskingData,
       }}
     >
       {children}

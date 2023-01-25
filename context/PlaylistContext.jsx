@@ -107,6 +107,10 @@ export function PlaylistContextProvider({ playlistRepository, children }) {
     }
   };
 
+  const syncPlaylist = (userId, onUpdate) => {
+    playlistRepository.syncPlaylist(userId, onUpdate);
+  };
+
   return (
     <PlaylistContext.Provider
       value={{
@@ -120,6 +124,7 @@ export function PlaylistContextProvider({ playlistRepository, children }) {
         updateNowPlaylistName,
         addPlaylist,
         changeNowPlaylist,
+        syncPlaylist,
       }}
     >
       {children}
