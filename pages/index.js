@@ -4,7 +4,6 @@ import LoginNav from '../components/LoginNav';
 import { useAuthContext } from '../context/AuthContext';
 import { useUserDataContext } from '../context/UserDataContext';
 import { useRouter } from 'next/router';
-import Head from 'next/head';
 
 export default function Home() {
   const tutorialRef = useRef(null);

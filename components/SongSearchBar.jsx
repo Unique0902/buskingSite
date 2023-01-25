@@ -13,7 +13,12 @@ const SongSearchBar = ({
   }, [searchWord]);
 
   return (
-    <form className='relative flex flex-row justify-center items-center mb-6'>
+    <form
+      className='relative flex flex-row justify-center items-center mb-6'
+      onSubmit={(e) => {
+        e.preventDefault();
+      }}
+    >
       <div className='relative flex flex-row justify-center max-lg:flex-col items-center'>
         <select
           className=' border-black border-2 rounded-xl p-2 font-sans max-lg:w-full max-lg:mr-0 max-lg:mb-2 max-lg:text-base text-lg mr-4'
