@@ -32,8 +32,12 @@ const App = () => {
   const router = useRouter();
   const userId = router.query.uid;
   const { getIp } = useIpContext();
-  const { syncBuskingData, applyOldBuskingSong, applyNewBuskingSong } =
-    useBuskingContext();
+  const {
+    syncBuskingData,
+    applyOldBuskingSong,
+    applyNewBuskingSong,
+    getBuskingData,
+  } = useBuskingContext();
   const { syncPlaylist } = usePlaylistContext();
   const { checkUser, syncUserData } = useUserDataContext();
   const valueRef = useRef();
@@ -155,7 +159,7 @@ const App = () => {
     }
   }, [userId]);
   useEffect(() => {
-    if (!isBusking) {
+    if (!isBusking && userId) {
       syncBuskingData(userId, (data) => {
         if (data) {
           setBuskingData(data);
@@ -168,7 +172,12 @@ const App = () => {
         setName(data.name);
       });
     }
-  }, [isBusking]);
+  }, [isBusking, userId]);
+  // useEffect(() => {
+  //   if (userId) {
+  //     getBuskingData(userId, () => {}).then((data) => console.log(data));
+  //   }
+  // }, [userId]);
   const handleSearchBarChange = () => {
     setPageNum(1);
     search();

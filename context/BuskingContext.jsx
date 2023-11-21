@@ -62,6 +62,10 @@ export function BuskingContextProvider({ buskingRepository, children }) {
     buskingRepository.syncBuskingData(userId, onUpdate);
   };
 
+  const getBuskingData = async (userId) => {
+    return buskingRepository.getBuskingData(userId);
+  };
+
   return (
     <BuskingContext.Provider
       value={{
@@ -73,6 +77,7 @@ export function BuskingContextProvider({ buskingRepository, children }) {
         applyOldBuskingSong,
         applyNewBuskingSong,
         syncBuskingData,
+        getBuskingData,
       }}
     >
       {children}
