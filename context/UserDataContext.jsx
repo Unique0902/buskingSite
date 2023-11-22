@@ -12,7 +12,7 @@ export function UserDataContextProvider({ userRepository, children }) {
     if (!uid) {
       return;
     }
-    userRepository.syncUserData(uid, (data) => {
+    userRepository.getUserData(uid).then((data) => {
       data && setUserData(data);
       setUserDataLoading(false);
     });
