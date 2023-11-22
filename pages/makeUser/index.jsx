@@ -1,10 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useAuthContext } from '../../context/AuthContext';
-import { useUserDataContext } from '../../context/UserDataContext';
 
 const MakeUser = ({ userRepository }) => {
   const nameRef = useRef();
-  const { userData } = useUserDataContext();
   const [name, setName] = useState('');
   const [isCanApply, setIsCanApply] = useState(false);
   const { uid } = useAuthContext();

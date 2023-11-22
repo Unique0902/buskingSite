@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
-import PageNumScreen from '../../components/PageNumScreen';
 import { useEffect } from 'react';
 import TitleBar from '../../components/TitleBar';
-import SearchResults from '../../components/SearchResults';
-import SongTableTitles from '../../components/SongTableTitles';
 import MainSec from '../../components/MainSec';
 import SongSearchBar from '../../components/SongSearchBar';
 import ArrangeMenuBtn from '../../components/ArrangeMenuBtn';

@@ -5,9 +5,7 @@ import { FaChevronRight } from 'react-icons/fa';
 const InformRow = ({ title, titleColor, handleClick, children }) => {
   return (
     <button
-      onClick={() => {
-        handleClick();
-      }}
+      onClick={handleClick}
       className={`flex w-full text-left flex-row ${
         titleColor == 'red' && 'hover:bg-gray-200'
       } items-center py-3 border-gray-300 border-b relative`}

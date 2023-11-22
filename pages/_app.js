@@ -46,6 +46,10 @@ export default function App({ Component, pageProps }) {
                     버스킹을 시작하여 공유되는 링크를 이용하여 관객들로부터 노래를
                     신청받으세요.'
                     />
+                    <meta
+                      name='google-site-verification'
+                      content='cb3rxr8OeGSZq2ejzghLOqZ_6oRA3fSZWnJGbYcb9Wg'
+                    />
                   </Head>
                   {getLayout(<Component {...pageProps} />)}
                 </IpContextProvider>

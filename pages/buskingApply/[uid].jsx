@@ -15,7 +15,6 @@ const App = () => {
   const [isUser, setIsUser] = useState(false);
   const [buskingData, setBuskingData] = useState(null);
   const [playlistData, setPlaylistData] = useState(null);
-  // const [name, setName] = useState('');
   const [results, setResults] = useState([]);
   const [pageNum, setPageNum] = useState(1);
   const [pageNum2, setPageNum2] = useState(1);
@@ -266,9 +265,6 @@ const App = () => {
                   {buskingData && buskingData.name}
                 </h1>
                 <div className='flex flex-row items-center justify-end mr-4 grow max-lg:flex-col'>
-                  {/* <h2 className='font-sans text-white text-2xl font-semibold max-lg:mb-2'>
-                    {!!name && `이름: ${name}`}
-                  </h2> */}
                   <h2 className='font-sans text-white text-2xl font-semibold ml-8'>
                     {!!playlistData &&
                       `선택된 플레이리스트: ${playlistData.name}`}
