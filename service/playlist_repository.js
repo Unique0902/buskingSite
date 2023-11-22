@@ -9,6 +9,13 @@ class PlaylistRepository {
       onUpdate(value);
     });
   }
+  getPlaylist = async (userId) => {
+    const listRef = ref(database, `playlists/${userId}/`);
+    return get(listRef).then((snapshot) => {
+      const items = snapshot.val() || {};
+      return items;
+    });
+  };
   saveSong(userId, playlist, song, onUpdate) {
     const listRef = ref(
       database,

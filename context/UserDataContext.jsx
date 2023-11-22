@@ -25,10 +25,19 @@ export function UserDataContextProvider({ userRepository, children }) {
   const syncUserData = (userId, onUpdate) => {
     userRepository.syncUserData(userId, onUpdate);
   };
+  const getUserData = (userId) => {
+    userRepository.getUserData(userId);
+  };
 
   return (
     <UserDataContext.Provider
-      value={{ userData, userDataLoading, checkUser, syncUserData }}
+      value={{
+        userData,
+        userDataLoading,
+        checkUser,
+        syncUserData,
+        getUserData,
+      }}
     >
       {children}
     </UserDataContext.Provider>

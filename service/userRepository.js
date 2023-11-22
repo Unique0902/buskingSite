@@ -10,6 +10,13 @@ class UserRepository {
       value && onUpdate(value);
     });
   }
+  getUserData = async (userId) => {
+    const listRef = ref(database, `users/${userId}/`);
+    return get(listRef).then((snapshot) => {
+      const items = snapshot.val() || {};
+      return items;
+    });
+  };
   checkUser(userId, onUpdate) {
     const listRef = ref(database, `users/${userId}`);
     onValue(listRef, (snapshot) => {
