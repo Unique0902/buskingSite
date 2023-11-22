@@ -239,8 +239,8 @@ export default function AppBusking({}) {
             className='ml-4 bg-red-600 py-2 px-3 text-lg rounded-lg text-white hover:scale-110'
             onClick={() => {
               if (window.confirm('버스킹을 종료하시겠습니까?')) {
-                removeBusking(() => {
-                  router.push('/app/makebusking');
+                removeBusking().finally(() => {
+                  router.push('/app/home');
                 });
               }
             }}

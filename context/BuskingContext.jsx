@@ -12,9 +12,7 @@ export function BuskingContextProvider({ buskingRepository, children }) {
       return;
     }
     return buskingRepository.syncBuskingData(uid, (data) => {
-      if (data) {
-        setBuskingData(data);
-      }
+      setBuskingData(data);
     });
   }, [uid]);
 
