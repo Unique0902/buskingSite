@@ -33,7 +33,6 @@ const App = () => {
     useBuskingContext();
   const { getPlaylist } = usePlaylistContext();
   const { getUserData } = useUserDataContext();
-  const valueRef = useRef();
   const search = () => {
     if (nowPlaylist && nowPlaylist.songs) {
       if (searchWord.name) {
@@ -351,7 +350,6 @@ const App = () => {
                     />
                   )}
                   <button
-                    ref={valueRef}
                     className='text-white font-sans text-xl hover:scale-110'
                     onClick={() => {
                       setIsShowPlaylistMenu(true);
