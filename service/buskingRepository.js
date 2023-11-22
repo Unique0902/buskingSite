@@ -13,7 +13,7 @@ class BuskingRepository {
   getBuskingData = async (userId) => {
     const listRef = ref(database, `buskings/${userId}/`);
     return get(listRef).then((snapshot) => {
-      const items = snapshot.val() || {};
+      const items = snapshot.val();
       return items;
     });
   };

@@ -12,7 +12,6 @@ import ArrangeMenuBtn from '../../components/ArrangeMenuBtn';
 import SongTable from '../../components/SongTable';
 
 const App = () => {
-  const [isBusking, setIsBusking] = useState(false);
   const [isUser, setIsUser] = useState(false);
   const [buskingData, setBuskingData] = useState(null);
   const [playlistData, setPlaylistData] = useState(null);
@@ -143,12 +142,7 @@ const App = () => {
 
   const handleBuskingData = async () => {
     const data = await getBuskingData(userId);
-    if (data) {
-      setBuskingData(data);
-      setIsBusking(true);
-    } else {
-      setIsBusking(false);
-    }
+    setBuskingData(data);
   };
 
   useEffect(() => {
@@ -266,7 +260,7 @@ const App = () => {
     <section className='flex py-4 px-8 max-md:px-4  h-screen w-full text-black bg-gradient-to-b from-blue-500 to-mainBlue overflow-auto'>
       <section className='w-full'>
         {isUser ? (
-          isBusking ? (
+          !!buskingData ? (
             <section className='text-black'>
               <section className='border-gray-600 border-b items-center pt-3 pb-8 flex flex-row max-lg:flex-col max-lg:text-center'>
                 <h1 className='font-sans text-white text-3xl font-semibold w-96 max-lg:w-full max-lg:mb-3'>
