@@ -16,10 +16,8 @@ const App = () => {
   const [isUser, setIsUser] = useState(false);
   const [buskingData, setBuskingData] = useState(null);
   const [playlistData, setPlaylistData] = useState(null);
-  const [name, setName] = useState('');
+  // const [name, setName] = useState('');
   const [results, setResults] = useState([]);
-  const [resultNum, setResultNum] = useState(0);
-  const [resultNum2, setResultNum2] = useState(0);
   const [pageNum, setPageNum] = useState(1);
   const [pageNum2, setPageNum2] = useState(1);
   const [appliance, setAppliance] = useState([]);
@@ -34,7 +32,7 @@ const App = () => {
   const { getIp } = useIpContext();
   const { applyOldBuskingSong, applyNewBuskingSong, getBuskingData } =
     useBuskingContext();
-  const { syncPlaylist } = usePlaylistContext();
+  const { getPlaylist } = usePlaylistContext();
   const { getUserData } = useUserDataContext();
   const valueRef = useRef();
   const search = () => {
@@ -46,14 +44,12 @@ const App = () => {
               song.title.toLowerCase().includes(searchWord.name)
             )
           );
-          setResultNum(results.length);
         } else if (searchWord.category === '가수') {
           setResults(
             Object.values(nowPlaylist.songs).filter((song) =>
               song.artist.toLowerCase().includes(searchWord.name)
             )
           );
-          setResultNum(results.length);
         }
       } else {
         setResults(Object.values(nowPlaylist.songs));
@@ -61,7 +57,7 @@ const App = () => {
     }
   };
   const handlePlus1 = () => {
-    if (pageNum < resultNum / 6) {
+    if (pageNum < results.length / 6) {
       setPageNum(pageNum + 1);
     }
   };
@@ -71,7 +67,7 @@ const App = () => {
     }
   };
   const handlePlus2 = () => {
-    if (pageNum2 < resultNum2 / 6) {
+    if (pageNum2 < appliance.length / 6) {
       setPageNum2(pageNum2 + 1);
     }
   };
@@ -82,19 +78,17 @@ const App = () => {
   };
   useEffect(() => {
     if (isUser) {
-      syncPlaylist(userId, (data) => {
+      getPlaylist(userId).then((data) => {
         setPlaylists(data);
-        setPlaylistsArr(Object.values(data));
+        const listArr = Object.values(data);
+        setPlaylistsArr(listArr);
+        if (listArr.length > 0) {
+          setNowPlaylist(listArr[0]);
+        }
       });
     }
   }, [isUser]);
-  useEffect(() => {
-    if (isUser) {
-      if (playlistsArr.length > 0) {
-        setNowPlaylist(playlistsArr[0]);
-      }
-    }
-  }, [playlistsArr, isUser]);
+
   useEffect(() => {
     if (isUser) {
       if (nowPlaylist) {
@@ -106,29 +100,27 @@ const App = () => {
     getIp().then((ip1) => setIp(ip1));
   }, []);
   useEffect(() => {
-    if ((pageNum - 1) * 6 + 1 > resultNum) {
-      if (resultNum == 0) {
+    if ((pageNum - 1) * 6 + 1 > results.length) {
+      if (results.length == 0) {
         return;
       }
       setPageNum(pageNum - 1);
     }
-  }, [resultNum]);
+  }, [results]);
   useEffect(() => {
-    if ((pageNum2 - 1) * 6 + 1 > resultNum2) {
-      if (resultNum2 == 0) {
+    if ((pageNum2 - 1) * 6 + 1 > appliance.length) {
+      if (appliance.length == 0) {
         return;
       }
       setPageNum2(pageNum2 - 1);
     }
-  }, [resultNum2]);
+  }, [appliance]);
 
   useEffect(() => {
     if (buskingData && buskingData.appliance) {
       setAppliance(Object.values(buskingData.appliance));
-      setResultNum2(Object.values(buskingData.appliance).length);
     } else {
       setAppliance([]);
-      setResultNum2(0);
     }
   }, [
     buskingData,
@@ -136,10 +128,6 @@ const App = () => {
       buskingData.appliance &&
       Object.values(buskingData.appliance).length,
   ]);
-
-  useEffect(() => {
-    setResultNum(results.length);
-  }, [results.length]);
 
   useEffect(() => {
     if (userId) {
@@ -175,7 +163,7 @@ const App = () => {
   };
   useEffect(() => {
     if (buskingData) {
-      syncPlaylist(userId, (data) => {
+      getPlaylist(userId).then((data) => {
         setPlaylistData(data[buskingData.playlistId]);
       });
     }
@@ -285,9 +273,9 @@ const App = () => {
                   {buskingData && buskingData.name}
                 </h1>
                 <div className='flex flex-row items-center justify-end mr-4 grow max-lg:flex-col'>
-                  <h2 className='font-sans text-white text-2xl font-semibold max-lg:mb-2'>
+                  {/* <h2 className='font-sans text-white text-2xl font-semibold max-lg:mb-2'>
                     {!!name && `이름: ${name}`}
-                  </h2>
+                  </h2> */}
                   <h2 className='font-sans text-white text-2xl font-semibold ml-8'>
                     {!!playlistData &&
                       `선택된 플레이리스트: ${playlistData.name}`}
@@ -321,7 +309,7 @@ const App = () => {
                   pageNum={pageNum}
                   btnText={'신청'}
                   onSongClick={handleSongClick1}
-                  resultNum={resultNum}
+                  resultNum={results.length}
                   onPagePlus={handlePlus1}
                   onPageMinus={handleMinus1}
                 />
@@ -347,7 +335,7 @@ const App = () => {
                   pageNum={pageNum}
                   btnText={'신청'}
                   onSongClick={handleSongClick2}
-                  resultNum={resultNum}
+                  resultNum={results.length}
                   onPagePlus={handlePlus2}
                   onPageMinus={handleMinus2}
                 />
@@ -415,7 +403,7 @@ const App = () => {
                     results={results}
                     pageNum={pageNum}
                     btnText={'신청가능'}
-                    resultNum={resultNum}
+                    resultNum={results.length}
                     onPagePlus={handlePlus1}
                     onPageMinus={handleMinus1}
                   />

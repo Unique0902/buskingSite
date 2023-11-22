@@ -12,8 +12,7 @@ import SongTable from '../../components/SongTable';
 import { getAppLayOut } from '../../layouts/appLayout';
 
 export default function AppPlaylist() {
-  const [results, setResults] = useState(null);
-  const [resultNum, setResultNum] = useState(0);
+  const [results, setResults] = useState([]);
   const [pageNum, setPageNum] = useState(1);
   const [searchWord, setSearchWord] = useState({ name: '', category: '제목' });
   const { nowPlaylist, addBasicPlaylist, removeSongInPlaylist } =
@@ -27,18 +26,15 @@ export default function AppPlaylist() {
       setResults([]);
     }
   }, [nowPlaylist]);
-  useEffect(() => {
-    results && setResultNum(results.length);
-  }, [results]);
 
   useEffect(() => {
-    if ((pageNum - 1) * 6 + 1 > resultNum) {
-      if (resultNum == 0) {
+    if ((pageNum - 1) * 6 + 1 > results.length) {
+      if (results.length == 0) {
         return;
       }
       setPageNum(pageNum - 1);
     }
-  }, [resultNum]);
+  }, [results]);
 
   const search = () => {
     if (nowPlaylist && nowPlaylist.songs) {
@@ -49,14 +45,12 @@ export default function AppPlaylist() {
               song.title.toLowerCase().includes(searchWord.name)
             )
           );
-          setResultNum(results.length);
         } else if (searchWord.category === '가수') {
           setResults(
             Object.values(nowPlaylist.songs).filter((song) =>
               song.artist.toLowerCase().includes(searchWord.name)
             )
           );
-          setResultNum(results.length);
         }
       } else {
         setResults(Object.values(nowPlaylist.songs));
@@ -64,7 +58,7 @@ export default function AppPlaylist() {
     }
   };
   const handelPlus = () => {
-    if (pageNum < resultNum / 6) {
+    if (pageNum < results.length / 6) {
       setPageNum(pageNum + 1);
     }
   };
@@ -116,7 +110,7 @@ export default function AppPlaylist() {
             pageNum={pageNum}
             btnText={'제거'}
             onSongClick={removeSongInPlaylist}
-            resultNum={resultNum}
+            resultNum={results.length}
             onPagePlus={handelPlus}
             onPageMinus={handelMinus}
           />
