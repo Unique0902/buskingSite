@@ -2,10 +2,11 @@ import { database } from './firebase';
 import { onValue, ref, remove, set, get } from 'firebase/database';
 
 class BuskingRepository {
-  syncBuskingData = (userId) => {
+  syncBuskingData = (userId, onUpdate) => {
     const listRef = ref(database, `buskings/${userId}/`);
-    onValue(listRef, (snapshot) => {
+    return onValue(listRef, (snapshot) => {
       const value = snapshot.val();
+      onUpdate(value);
     });
   };
 

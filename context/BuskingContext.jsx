@@ -4,15 +4,17 @@ import { useAuthContext } from './AuthContext';
 const BuskingContext = createContext();
 
 export function BuskingContextProvider({ buskingRepository, children }) {
-  const [buskingData, setBuskingData] = useState(null);
+  const [buskingData, setBuskingData] = useState();
   const { uid } = useAuthContext();
 
   useEffect(() => {
     if (!uid) {
       return;
     }
-    buskingRepository.syncBuskingData(uid, (buskingData) => {
-      setBuskingData(buskingData ? buskingData : null);
+    return buskingRepository.syncBuskingData(uid, (data) => {
+      if (data) {
+        setBuskingData(data);
+      }
     });
   }, [uid]);
 
@@ -51,8 +53,8 @@ export function BuskingContextProvider({ buskingRepository, children }) {
     );
   };
 
-  const syncBuskingData = (userId) => {
-    buskingRepository.syncBuskingData(userId);
+  const syncBuskingData = (userId, onUpdate) => {
+    return buskingRepository.syncBuskingData(userId, onUpdate);
   };
 
   const getBuskingData = async (userId) => {

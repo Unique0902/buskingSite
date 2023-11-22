@@ -204,7 +204,9 @@ const App = () => {
           return;
         }
         const song = results.find((s) => s.id == sid);
-        applyNewBuskingSong(userId, song.title, song.artist, sid, ip);
+        applyNewBuskingSong(userId, song.title, song.artist, sid, ip).finally(
+          handleBuskingData
+        );
       }
     } else {
       if (appliance.length == parseInt(buskingData.maxNum)) {
