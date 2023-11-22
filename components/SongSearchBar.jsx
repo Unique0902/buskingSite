@@ -6,12 +6,16 @@ const SongSearchBar = ({
   onSearchBarChange,
   children,
 }) => {
-  useEffect(() => {
+  // useEffect(() => {
+  //   if (searchWord.category) {
+  //     onSearchBarChange();
+  //   }
+  // }, [searchWord]);
+  const handleClickBtn = () => {
     if (searchWord.category) {
       onSearchBarChange();
     }
-  }, [searchWord]);
-
+  };
   return (
     <form
       className='relative flex flex-row justify-center items-center mb-6'
@@ -39,6 +43,12 @@ const SongSearchBar = ({
             setSearchWord({ ...searchWord, name: e.target.value });
           }}
         />
+        <button
+          onClick={handleClickBtn}
+          className=' bg-blue-600 text-white font-sans p-3 rounded-lg ml-2 hover:scale-105'
+        >
+          검색
+        </button>
       </div>
       {children}
     </form>
