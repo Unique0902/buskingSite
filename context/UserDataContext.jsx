@@ -18,15 +18,11 @@ export function UserDataContextProvider({ userRepository, children }) {
     });
   }, [uid]);
 
-  const checkUser = (userId, onUpdate) => {
-    userRepository.checkUser(userId, onUpdate);
-  };
-
   const syncUserData = (userId, onUpdate) => {
     userRepository.syncUserData(userId, onUpdate);
   };
-  const getUserData = (userId) => {
-    userRepository.getUserData(userId);
+  const getUserData = async (userId) => {
+    return userRepository.getUserData(userId);
   };
 
   return (
@@ -34,7 +30,6 @@ export function UserDataContextProvider({ userRepository, children }) {
       value={{
         userData,
         userDataLoading,
-        checkUser,
         syncUserData,
         getUserData,
       }}

@@ -1,5 +1,5 @@
 import { database } from './firebase';
-import { onValue, ref, remove, set } from 'firebase/database';
+import { get, onValue, ref, remove, set } from 'firebase/database';
 
 class PlaylistRepository {
   syncPlaylist(userId, onUpdate) {

@@ -39,7 +39,7 @@ const App = () => {
     getBuskingData,
   } = useBuskingContext();
   const { syncPlaylist } = usePlaylistContext();
-  const { checkUser, syncUserData } = useUserDataContext();
+  const { syncUserData, getUserData } = useUserDataContext();
   const valueRef = useRef();
   const search = () => {
     if (nowPlaylist && nowPlaylist.songs) {
@@ -147,15 +147,13 @@ const App = () => {
 
   useEffect(() => {
     if (userId) {
-      checkUser(userId, (ischeck) => {
-        if (ischeck) {
+      getUserData(userId).then((data) => {
+        if (data) {
           setIsUser(true);
         } else {
           setIsUser(false);
         }
       });
-    } else {
-      setIsUser(false);
     }
   }, [userId]);
   useEffect(() => {
@@ -173,11 +171,16 @@ const App = () => {
       });
     }
   }, [isBusking, userId]);
-  // useEffect(() => {
-  //   if (userId) {
-  //     getBuskingData(userId, () => {}).then((data) => console.log(data));
-  //   }
-  // }, [userId]);
+  const handleBuskingData = async () => {
+    const data = await getBuskingData(userId);
+    if (data) {
+    }
+  };
+  useEffect(() => {
+    if (userId) {
+      getBuskingData(userId, () => {}).then((data) => console.log(data));
+    }
+  }, [userId]);
   const handleSearchBarChange = () => {
     setPageNum(1);
     search();

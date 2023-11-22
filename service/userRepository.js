@@ -1,5 +1,5 @@
 import { database } from './firebase';
-import { onValue, ref, remove, set } from 'firebase/database';
+import { get, onValue, ref, remove, set } from 'firebase/database';
 import { async } from '@firebase/util';
 
 class UserRepository {
@@ -17,15 +17,9 @@ class UserRepository {
       return items;
     });
   };
-  checkUser(userId, onUpdate) {
-    const listRef = ref(database, `users/${userId}`);
-    onValue(listRef, (snapshot) => {
-      const value = snapshot.val();
-      onUpdate(!!value);
-    });
-  }
+
   makeUser = (userId, name, onUpdate) => {
-    this.checkUser(userId, (userData) => {
+    this.getUserData(userData).then((userData) => {
       if (!userData) {
         const listRef = ref(database, `users/${userId}/`);
         const userData = { name, date: Date() };
