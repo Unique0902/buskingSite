@@ -32,14 +32,10 @@ const App = () => {
   const router = useRouter();
   const userId = router.query.uid;
   const { getIp } = useIpContext();
-  const {
-    syncBuskingData,
-    applyOldBuskingSong,
-    applyNewBuskingSong,
-    getBuskingData,
-  } = useBuskingContext();
+  const { applyOldBuskingSong, applyNewBuskingSong, getBuskingData } =
+    useBuskingContext();
   const { syncPlaylist } = usePlaylistContext();
-  const { syncUserData, getUserData } = useUserDataContext();
+  const { getUserData } = useUserDataContext();
   const valueRef = useRef();
   const search = () => {
     if (nowPlaylist && nowPlaylist.songs) {
@@ -156,31 +152,23 @@ const App = () => {
       });
     }
   }, [userId]);
-  useEffect(() => {
-    if (!isBusking && userId) {
-      syncBuskingData(userId, (data) => {
-        if (data) {
-          setBuskingData(data);
-          setIsBusking(true);
-        } else {
-          setIsBusking(false);
-        }
-      });
-      syncUserData(userId, (data) => {
-        setName(data.name);
-      });
-    }
-  }, [isBusking, userId]);
+
   const handleBuskingData = async () => {
     const data = await getBuskingData(userId);
     if (data) {
+      setBuskingData(data);
+      setIsBusking(true);
+    } else {
+      setIsBusking(false);
     }
   };
+
   useEffect(() => {
-    if (userId) {
-      getBuskingData(userId, () => {}).then((data) => console.log(data));
+    if (userId && !buskingData) {
+      handleBuskingData();
     }
   }, [userId]);
+
   const handleSearchBarChange = () => {
     setPageNum(1);
     search();
@@ -206,14 +194,7 @@ const App = () => {
       if (song) {
         const userIp = song.applicants.find((ap) => ap.ip == ip);
         if (!userIp) {
-          applyOldBuskingSong(
-            userId,
-            sid,
-            ip,
-            song.cnt,
-            song.applicants,
-            () => {}
-          );
+          applyOldBuskingSong(userId, sid, ip, song.cnt, song.applicants);
         } else {
           window.alert('이미 투표하셨습니다!');
         }
@@ -223,7 +204,7 @@ const App = () => {
           return;
         }
         const song = results.find((s) => s.id == sid);
-        applyNewBuskingSong(userId, song.title, song.artist, sid, ip, () => {});
+        applyNewBuskingSong(userId, song.title, song.artist, sid, ip);
       }
     } else {
       if (appliance.length == parseInt(buskingData.maxNum)) {
@@ -231,7 +212,7 @@ const App = () => {
         return;
       }
       const song = results.find((s) => s.id == sid);
-      applyNewBuskingSong(userId, song.title, song.artist, sid, ip, () => {});
+      applyNewBuskingSong(userId, song.title, song.artist, sid, ip);
     }
   };
 
@@ -242,14 +223,7 @@ const App = () => {
       if (song) {
         const userIp = song.applicants.find((ap) => ap.ip == ip);
         if (!userIp) {
-          applyOldBuskingSong(
-            userId,
-            sid,
-            ip,
-            song.cnt,
-            song.applicants,
-            () => {}
-          );
+          applyOldBuskingSong(userId, sid, ip, song.cnt, song.applicants);
         } else {
           window.alert('이미 투표하셨습니다!');
         }
@@ -258,7 +232,7 @@ const App = () => {
           alert('신청 최대수에 도달했습니다! 한 곡이 끝난후 신청해보세요!');
           return;
         }
-        applyNewBuskingSong(userId, song.title, song.artist, sid, ip, () => {});
+        applyNewBuskingSong(userId, song.title, song.artist, sid, ip);
       }
     } else {
       if (appliance.length == parseInt(buskingData.maxNum)) {
@@ -266,7 +240,7 @@ const App = () => {
         return;
       }
       const song = results.find((s) => s.id == sid);
-      applyNewBuskingSong(userId, song.title, song.artist, sid, ip, () => {});
+      applyNewBuskingSong(userId, song.title, song.artist, sid, ip);
     }
   };
   const changeNowPlaylist = (id) => {

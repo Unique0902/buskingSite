@@ -2,11 +2,10 @@ import { database } from './firebase';
 import { onValue, ref, remove, set, get } from 'firebase/database';
 
 class BuskingRepository {
-  syncBuskingData = (userId, onUpdate) => {
+  syncBuskingData = (userId) => {
     const listRef = ref(database, `buskings/${userId}/`);
     onValue(listRef, (snapshot) => {
       const value = snapshot.val();
-      onUpdate(value);
     });
   };
 
@@ -18,23 +17,20 @@ class BuskingRepository {
     });
   };
 
-  makeBusking = async (userId, buskingInform, onUpdate) => {
+  makeBusking = async (userId, buskingInform) => {
     const listRef = ref(database, `buskings/${userId}/`);
     const buskingData = { id: Date.now(), ...buskingInform };
-    await set(listRef, buskingData);
-    onUpdate();
+    return set(listRef, buskingData);
   };
-  removeBusking = async (userId, onUpdate) => {
+  removeBusking = async (userId) => {
     const listRef = ref(database, `buskings/${userId}/`);
-    await remove(listRef);
-    onUpdate();
+    return remove(listRef);
   };
-  removeBuskingSong(userId, sid, onUpdate) {
+  removeBuskingSong = async (userId, sid) => {
     const listRef = ref(database, `buskings/${userId}/appliance/${sid}`);
-    remove(listRef);
-    onUpdate();
-  }
-  applyNewBuskingSong(userId, title, artist, sid, ip, onUpdate) {
+    return remove(listRef);
+  };
+  applyNewBuskingSong = async (userId, title, artist, sid, ip) => {
     const listRef = ref(database, `buskings/${userId}/appliance/${sid}`);
     const song = {
       artist,
@@ -44,26 +40,23 @@ class BuskingRepository {
       id: Date.now(),
       applicants: [{ ip }],
     };
-    set(listRef, song);
-    onUpdate();
-  }
-  applyBuskingSongAgain(userId, songObj, sid, onUpdate) {
+    return set(listRef, song);
+  };
+  applyBuskingSongAgain = async (userId, songObj, sid) => {
     const listRef = ref(database, `buskings/${userId}/appliance/${sid}`);
-    set(listRef, songObj);
-    onUpdate();
-  }
-  applyOldBuskingSong(userId, sid, ip, cnt, applicants, onUpdate) {
+    return set(listRef, songObj);
+  };
+  applyOldBuskingSong = async (userId, sid, ip, cnt, applicants) => {
     const listRef = ref(database, `buskings/${userId}/appliance/${sid}/cnt`);
     const newCnt = cnt + 1;
-    set(listRef, newCnt);
+    await set(listRef, newCnt);
     const listRef2 = ref(
       database,
       `buskings/${userId}/appliance/${sid}/applicants`
     );
     const newApplicants = [{ ip }, ...applicants];
-    set(listRef2, newApplicants);
-    onUpdate();
-  }
+    return set(listRef2, newApplicants);
+  };
 }
 
 export default BuskingRepository;

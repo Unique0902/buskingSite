@@ -16,50 +16,43 @@ export function BuskingContextProvider({ buskingRepository, children }) {
     });
   }, [uid]);
 
-  const makeBusking = (buskingInform, onUpdate) => {
-    buskingRepository.makeBusking(uid, buskingInform, onUpdate);
+  const makeBusking = async (buskingInform) => {
+    return buskingRepository.makeBusking(uid, buskingInform);
   };
 
-  const applyBuskingSongAgain = (nowSong, onUpdate) => {
-    buskingRepository.applyBuskingSongAgain(
-      uid,
-      nowSong,
-      nowSong.sid,
-      onUpdate
-    );
+  const applyBuskingSongAgain = async (nowSong) => {
+    return buskingRepository.applyBuskingSongAgain(uid, nowSong, nowSong.sid);
   };
 
-  const removeBuskingSong = (sid, onUpdate) => {
-    buskingRepository.removeBuskingSong(uid, sid, onUpdate);
+  const removeBuskingSong = async (sid) => {
+    return buskingRepository.removeBuskingSong(uid, sid);
   };
 
-  const removeBusking = (onUpdate) => {
-    buskingRepository.removeBusking(uid, onUpdate);
+  const removeBusking = async () => {
+    return buskingRepository.removeBusking(uid);
   };
-  const applyOldBuskingSong = (userId, sid, ip, cnt, applicants, onUpdate) => {
-    buskingRepository.applyOldBuskingSong(
+  const applyOldBuskingSong = async (userId, sid, ip, cnt, applicants) => {
+    return buskingRepository.applyOldBuskingSong(
       userId,
       sid,
       ip,
       cnt,
-      applicants,
-      onUpdate
+      applicants
     );
   };
 
-  const applyNewBuskingSong = (userId, title, artist, sid, ip, onUpdate) => {
-    buskingRepository.applyNewBuskingSong(
+  const applyNewBuskingSong = async (userId, title, artist, sid, ip) => {
+    return buskingRepository.applyNewBuskingSong(
       userId,
       title,
       artist,
       sid,
-      ip,
-      onUpdate
+      ip
     );
   };
 
-  const syncBuskingData = (userId, onUpdate) => {
-    buskingRepository.syncBuskingData(userId, onUpdate);
+  const syncBuskingData = (userId) => {
+    buskingRepository.syncBuskingData(userId);
   };
 
   const getBuskingData = async (userId) => {
