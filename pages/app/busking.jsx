@@ -23,9 +23,8 @@ export default function AppBusking({}) {
   } = useBuskingContext();
   const [url, setUrl] = useState('');
   const { uid } = useAuthContext();
-  const [appliance, setAppliance] = useState(null);
-  const [results, setResults] = useState(null);
-  const [resultNum, setResultNum] = useState(0);
+  const [appliance, setAppliance] = useState([]);
+  const [results, setResults] = useState([]);
   const [pageNum, setPageNum] = useState(1);
   const [beforeSong, setBeforeSong] = useState(null);
   const [nowSong, setNowSong] = useState(null);
@@ -51,7 +50,7 @@ export default function AppBusking({}) {
     }
   }, [uid]);
   const handelPlus = () => {
-    if (pageNum < resultNum / 6) {
+    if (pageNum < results.length / 6) {
       setPageNum(pageNum + 1);
     }
   };
@@ -68,19 +67,18 @@ export default function AppBusking({}) {
   useEffect(() => {
     if (appliance) {
       setResults(Object.values(appliance));
-      setResultNum(Object.values(appliance).length);
     } else {
-      setResults(null);
+      setResults([]);
     }
   }, [appliance, appliance && Object.values(appliance).length]);
   useEffect(() => {
-    if ((pageNum - 1) * 6 + 1 > resultNum) {
-      if (resultNum == 0) {
+    if ((pageNum - 1) * 6 + 1 > results.length) {
+      if (results.length == 0) {
         return;
       }
       setPageNum(pageNum - 1);
     }
-  }, [resultNum]);
+  }, [results]);
   const playBtnStyle = 'mx-3 text-4xl text-black hover:scale-110';
   return (
     <>
@@ -232,7 +230,7 @@ export default function AppBusking({}) {
           onSongClick={(sid) => {
             removeBuskingSong(sid, () => {});
           }}
-          resultNum={resultNum}
+          resultNum={results.length}
           onPagePlus={handelPlus}
           onPageMinus={handelMinus}
         />
