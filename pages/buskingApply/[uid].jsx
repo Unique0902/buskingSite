@@ -194,7 +194,13 @@ const App = () => {
       if (song) {
         const userIp = song.applicants.find((ap) => ap.ip == ip);
         if (!userIp) {
-          applyOldBuskingSong(userId, sid, ip, song.cnt, song.applicants);
+          applyOldBuskingSong(
+            userId,
+            sid,
+            ip,
+            song.cnt,
+            song.applicants
+          ).finally(handleBuskingData);
         } else {
           window.alert('이미 투표하셨습니다!');
         }
@@ -214,7 +220,9 @@ const App = () => {
         return;
       }
       const song = results.find((s) => s.id == sid);
-      applyNewBuskingSong(userId, song.title, song.artist, sid, ip);
+      applyNewBuskingSong(userId, song.title, song.artist, sid, ip).finally(
+        handleBuskingData
+      );
     }
   };
 
@@ -225,7 +233,13 @@ const App = () => {
       if (song) {
         const userIp = song.applicants.find((ap) => ap.ip == ip);
         if (!userIp) {
-          applyOldBuskingSong(userId, sid, ip, song.cnt, song.applicants);
+          applyOldBuskingSong(
+            userId,
+            sid,
+            ip,
+            song.cnt,
+            song.applicants
+          ).finally(handleBuskingData);
         } else {
           window.alert('이미 투표하셨습니다!');
         }
@@ -234,7 +248,9 @@ const App = () => {
           alert('신청 최대수에 도달했습니다! 한 곡이 끝난후 신청해보세요!');
           return;
         }
-        applyNewBuskingSong(userId, song.title, song.artist, sid, ip);
+        applyNewBuskingSong(userId, song.title, song.artist, sid, ip).finally(
+          handleBuskingData
+        );
       }
     } else {
       if (appliance.length == parseInt(buskingData.maxNum)) {
@@ -242,7 +258,9 @@ const App = () => {
         return;
       }
       const song = results.find((s) => s.id == sid);
-      applyNewBuskingSong(userId, song.title, song.artist, sid, ip);
+      applyNewBuskingSong(userId, song.title, song.artist, sid, ip).finally(
+        handleBuskingData
+      );
     }
   };
   const changeNowPlaylist = (id) => {

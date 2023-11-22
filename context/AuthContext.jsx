@@ -13,7 +13,7 @@ export function AuthContextProvider({ authService, children }) {
   };
   useEffect(() => {
     setUserLoading(true);
-    authService.onAuthChange((user) => {
+    return authService.onAuthChange((user) => {
       setUser(user);
       setUserLoading(false);
     });
