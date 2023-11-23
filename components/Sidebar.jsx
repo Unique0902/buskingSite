@@ -12,7 +12,12 @@ import {
 import { useRouter } from 'next/router';
 import { useMediaQuery } from 'react-responsive';
 import SideBarBtn from './SideBarBtn';
-
+import {
+  ArrowDownIcn,
+  ArrowLeftIcn,
+  BookIcn,
+  HomeIcn,
+} from '../assets/icon/icon';
 const Sidebar = ({ isShowSideBar, setIsShowSideBar }) => {
   const [isHide, setIsHide] = useState(false);
   const [selectedBtn, setSelectedBtn] = useState('home');
@@ -62,13 +67,19 @@ const Sidebar = ({ isShowSideBar, setIsShowSideBar }) => {
       >
         {!isHide && (
           <div className='flex items-center py-3 px-5  border-solid text-white border-gray-600 border-b'>
-            <FaBookOpen className={`mr-4 text-2xl text-blue-400`} />
+            {/* <FaBookOpen className={`mr-4 text-2xl text-blue-400`} /> */}
+            <BookIcn
+              width={32}
+              height={32}
+              fill={'#60a5fa'}
+              className={`mr-4`}
+            />
             <p className=' font-sans text-2xl font-semibold '>노래책</p>
           </div>
         )}
         {isHide && (
           <div className='flex items-center text-blue-600 justify-center text-2xl w-full text-center py-4 border-solid border-gray-600 border-b'>
-            <FaBookOpen />
+            <BookIcn width={32} height={32} fill={'#60a5fa'} />
           </div>
         )}
 
@@ -79,7 +90,13 @@ const Sidebar = ({ isShowSideBar, setIsShowSideBar }) => {
             isHide={isHide}
             text={'Home'}
           >
-            <FaHome className={`${!isHide && iconStyle} text-center`} />
+            <ArrowLeftIcn
+              width={24}
+              height={24}
+              color={'white'}
+              className={`${!isHide && iconStyle} text-center`}
+            />
+            {/* <FaHome className={`${!isHide && iconStyle} text-center`} /> */}
           </SideBarBtn>
           {!isHide && (
             <li>
