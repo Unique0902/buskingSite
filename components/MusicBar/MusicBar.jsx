@@ -20,6 +20,25 @@ const MusicBar = ({ songArr, setSongArr, setSongArrToView }) => {
     setSongArrToView(copiedSongArr);
   }, [songArr, nowSong]);
 
+  // 노래 관련 로직 상당히 복잡함
+  /*
+    buskingData가 바뀔때마다 songArr가 계속 새로 받아와지기 때문에 데이터 변화타이밍 예측이 힘듬
+    nowSong은 songArr[0]에 해당하는데 보여주는 리스트에서는 nowSong을 제외하고 보여주고싶기때문에
+    songArrToView라는 새로운 state를 만들어 이 arr를 리스트에 보여주게 될것
+
+    이렇게 하게된 이유중 하나는 play 버튼을 눌러 nowSong을 등록할때 바로 nowSong을 서버데이터에서 제거
+    해버리면 노래 재생중 다른 페이지로 이동했을때 nowSong이 삭제되기도 하고 (로컬에만 nowSong데이터가 있으니)
+    또한 pause를 누른 이후 페이지 이동에서도 nowSong이 삭제되기 때문에 (pause 했을때 nowSong을 다시 서버에 재 저장
+      하는것은 조금 비효율적이라 생각 아닌가? 물론 첫번째 이유가 커서 이런것)
+      이렇게 arr를 두개 만들게 됨 이로인해 아래 로직이 조금 복잡하게 되었다
+      
+      물론 previousBtn 로직같은 경우는 꽤 괜찮은듯
+
+      위 useEffect에서는 songArr의 변화와 nowSong의 변화를 추적하여 nowSong의 유무에 따라 songArrToView에 
+      songArr를 다르게 저장함 
+
+      핵심은 nowSong이 없을땐 songArr = songArrToView but 있을땐 songArrToView는 songArr의 첫번째 요소만 빠진 것
+  */
   const handleClickPreviousBtn = () => {
     if (beforeSongArr.length != 0) {
       applyBuskingSongAgain(beforeSongArr[0]);

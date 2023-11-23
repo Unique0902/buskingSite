@@ -26,9 +26,6 @@ export default function AppBusking({}) {
   } = useBuskingContext();
   const { uid } = useAuthContext();
   const [pageNum, setPageNum] = useState(1);
-  const [beforeSong, setBeforeSong] = useState(null);
-  const [nowSong, setNowSong] = useState(null);
-  const [isSinging, setIsSinging] = useState(false);
   const [songArr, setSongArr] = useState([]);
   const [songArrToView, setSongArrToView] = useState([]);
   const router = useRouter();
@@ -73,40 +70,7 @@ export default function AppBusking({}) {
       });
     }
   };
-  const handleClickPreviousBtn = () => {
-    if (isSinging) {
-      if (beforeSong) {
-        applyBuskingSongAgain(nowSong);
-        setNowSong(beforeSong);
-        setBeforeSong(null);
-      }
-    }
-  };
-  const handleClickPauseBtn = () => {
-    setIsSinging(false);
-  };
-  const handleClickPlayBtn = () => {
-    if (!nowSong && songArr.length != 0) {
-      setIsSinging(true);
-      setNowSong({ ...songArr[0] });
-      removeBuskingSong(songArr[0].sid);
-    } else if (nowSong) {
-      setIsSinging(true);
-    } else {
-      alert('신청된 노래가 존재하지 않습니다!');
-    }
-  };
-  const handleClickNextBtn = () => {
-    if (isSinging) {
-      if (songArr) {
-        if (nowSong) {
-          setBeforeSong(nowSong);
-        }
-        setNowSong({ ...songArr[0] });
-        removeBuskingSong(songArr[0].sid, () => {});
-      }
-    }
-  };
+
   return (
     <>
       <section className='flex flex-row items-center pt-2 pb-5 border-b border-gray-600 max-lg:flex-col'>
