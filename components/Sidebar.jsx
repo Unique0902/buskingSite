@@ -86,7 +86,6 @@ const Sidebar = ({ isShowSideBar, setIsShowSideBar }) => {
             <HomeIcn
               width={20}
               height={20}
-              color={'white'}
               className={`${!isHide && iconStyle}`}
             />
           </SideBarBtn>
@@ -106,7 +105,6 @@ const Sidebar = ({ isShowSideBar, setIsShowSideBar }) => {
             <PlusIcn
               width={20}
               height={20}
-              color={'white'}
               className={`${!isHide && iconStyle}`}
             />
           </SideBarBtn>
@@ -119,7 +117,6 @@ const Sidebar = ({ isShowSideBar, setIsShowSideBar }) => {
             <SongIcn
               width={20}
               height={20}
-              color={'white'}
               className={`${!isHide && iconStyle}`}
             />
           </SideBarBtn>
@@ -132,7 +129,6 @@ const Sidebar = ({ isShowSideBar, setIsShowSideBar }) => {
             <UserIcn
               width={20}
               height={20}
-              color={'white'}
               className={`${!isHide && iconStyle}`}
             />
           </SideBarBtn>
@@ -145,7 +141,6 @@ const Sidebar = ({ isShowSideBar, setIsShowSideBar }) => {
             <GuitarIcn
               width={20}
               height={20}
-              color={'white'}
               className={`${!isHide && iconStyle}`}
             />
           </SideBarBtn>

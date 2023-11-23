@@ -15,6 +15,7 @@ import SendIcn from './send.svg';
 import SmileIcn from './smile.svg';
 import SongIcn from './song.svg';
 import UserIcn from './user.svg';
+import CopyIcn from './copy.svg';
 export {
   BookIcn,
   PauseIcn,
@@ -33,4 +34,5 @@ export {
   InformIcn,
   MinusIcn,
   NextSongIcn,
+  CopyIcn,
 };

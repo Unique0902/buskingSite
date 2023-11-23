@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import AppHeader from './AppHeader';
 import ProtectedRoute from './ProtectedRoute';
-import Sidebar from './Sidebar';
+import SideBar from './SideBar';
 import UserDataProtectedRoute from './UserDataProtectedRoute';
 import { useMediaQuery } from 'react-responsive';
 
@@ -22,7 +22,7 @@ export default function AppLayOut({ children }) {
       <UserDataProtectedRoute>
         <section className='flex h-screen text-black bg-gradient-to-b from-blue-500 to-mainBlue '>
           {isShowSideBar && (
-            <Sidebar
+            <SideBar
               isShowSideBar={isShowSideBar}
               setIsShowSideBar={setIsShowSideBar}
             />
