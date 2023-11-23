@@ -18,12 +18,7 @@ import QRCodeSection from '../../components/QRCodeSection';
 export default function AppBusking({}) {
   const { playlists } = usePlaylistContext();
   const { userData } = useUserDataContext();
-  const {
-    buskingData,
-    applyBuskingSongAgain,
-    removeBuskingSong,
-    removeBusking,
-  } = useBuskingContext();
+  const { buskingData, removeBuskingSong, removeBusking } = useBuskingContext();
   const { uid } = useAuthContext();
   const [pageNum, setPageNum] = useState(1);
   const [songArr, setSongArr] = useState([]);
@@ -33,16 +28,19 @@ export default function AppBusking({}) {
   useEffect(() => {
     if (!buskingData) {
       router.push('/app/makebusking');
+      return;
     }
+    const appliance = buskingData.appliance;
     setSongArr(
-      buskingData
-        ? buskingData.appliance
-          ? Object.values(buskingData.appliance)
-          : []
-        : []
+      appliance ? Object.values(appliance).sort((a, b) => a.id - b.id) : []
     );
   }, [buskingData]);
 
+  /*
+  버스킹 데이터에서 노래 저장시 서버에서 sid 순서대로 저장되다보니 시간순서대로 저장되지않음
+  그래도 각 신청곡 데이터 id에 time 데이터를 저장했기때문에 위 sort 함수와 같이 buskingData를
+  받아올때마다 id 시간을 기준으로 정렬하여 보여줌
+*/
   const handelPlus = () => {
     if (pageNum < songArr.length / 6) {
       setPageNum(pageNum + 1);
@@ -94,11 +92,7 @@ export default function AppBusking({}) {
         </div>
       </section>
 
-      <MusicBar
-        songArr={songArr}
-        setSongArr={setSongArr}
-        setSongArrToView={setSongArrToView}
-      />
+      <MusicBar songArr={songArr} setSongArrToView={setSongArrToView} />
 
       <MainSec>
         <section className='relative flex flex-row items-center justify-between mb-6'>

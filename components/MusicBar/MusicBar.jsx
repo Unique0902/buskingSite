@@ -7,7 +7,7 @@ import {
 } from '../../assets/icon/icon';
 import { useBuskingContext } from '../../context/BuskingContext';
 
-const MusicBar = ({ songArr, setSongArr, setSongArrToView }) => {
+const MusicBar = ({ songArr, setSongArrToView }) => {
   const playBtnStyle = 'mx-3 text-4xl text-black hover:scale-110';
   const [beforeSongArr, setBeforeSongArr] = useState([]);
   const [nowSong, setNowSong] = useState();

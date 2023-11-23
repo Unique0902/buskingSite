@@ -115,7 +115,9 @@ const App = () => {
 
   useEffect(() => {
     if (buskingData && buskingData.appliance) {
-      setAppliance(Object.values(buskingData.appliance));
+      setAppliance(
+        Object.values(buskingData.appliance).sort((a, b) => a.id - b.id)
+      );
     } else {
       setAppliance([]);
     }
@@ -255,17 +257,17 @@ const App = () => {
   };
 
   return (
-    <section className='flex py-4 px-8 max-md:px-4  h-screen w-full text-black bg-gradient-to-b from-blue-500 to-mainBlue overflow-auto'>
+    <section className='flex w-full h-screen px-8 py-4 overflow-auto text-black max-md:px-4 bg-gradient-to-b from-blue-500 to-mainBlue'>
       <section className='w-full'>
         {isUser ? (
           !!buskingData ? (
             <section className='text-black'>
-              <section className='border-gray-600 border-b items-center pt-3 pb-8 flex flex-row max-lg:flex-col max-lg:text-center'>
-                <h1 className='font-sans text-white text-3xl font-semibold w-96 max-lg:w-full max-lg:mb-3'>
+              <section className='flex flex-row items-center pt-3 pb-8 border-b border-gray-600 max-lg:flex-col max-lg:text-center'>
+                <h1 className='font-sans text-3xl font-semibold text-white w-96 max-lg:w-full max-lg:mb-3'>
                   {buskingData && buskingData.name}
                 </h1>
                 <div className='flex flex-row items-center justify-end mr-4 grow max-lg:flex-col'>
-                  <h2 className='font-sans text-white text-2xl font-semibold ml-8'>
+                  <h2 className='ml-8 font-sans text-2xl font-semibold text-white'>
                     {!!playlistData &&
                       `선택된 플레이리스트: ${playlistData.name}`}
                   </h2>
@@ -273,11 +275,11 @@ const App = () => {
               </section>
 
               <MainSec>
-                <h2 className='font-sans text-black font-semibold text-3xl max-md:text-center'>
+                <h2 className='font-sans text-3xl font-semibold text-black max-md:text-center'>
                   신청가능 곡 리스트
                 </h2>
-                <div className='flex flex-row justify-end max-lg:justify-center mb-3'>
-                  <h3 className='font-sans font-normal  text-xl text-gray-500'>
+                <div className='flex flex-row justify-end mb-3 max-lg:justify-center'>
+                  <h3 className='font-sans text-xl font-normal text-gray-500'>
                     신청가능 곡 수 {results.length}
                   </h3>
                 </div>
@@ -305,11 +307,11 @@ const App = () => {
               </MainSec>
 
               <MainSec>
-                <h2 className='font-sans max-lg:text-center text-black font-semibold text-3xl'>
+                <h2 className='font-sans text-3xl font-semibold text-black max-lg:text-center'>
                   신청된 곡 리스트
                 </h2>
-                <section className='relative flex justify-end items-center mb-6 max-md:justify-center'>
-                  <h3 className='font-sans font-normal text-xl text-gray-500'>
+                <section className='relative flex items-center justify-end mb-6 max-md:justify-center'>
+                  <h3 className='font-sans text-xl font-normal text-gray-500'>
                     신청된 곡 수 {appliance.length}
                   </h3>
                   <ArrangeMenuBtn
@@ -333,10 +335,10 @@ const App = () => {
           ) : (
             <section>
               <MainSec>
-                <h2 className='font-sans text-black text-xl font-semibold w-96 max-lg:w-full'>
+                <h2 className='font-sans text-xl font-semibold text-black w-96 max-lg:w-full'>
                   해당 유저는 버스킹 진행중이 아닙니다.
                 </h2>
-                <div className='flex relative flex-row items-center justify-end mr-4 grow'>
+                <div className='relative flex flex-row items-center justify-end mr-4 grow'>
                   {isShowPlaylistMenu && (
                     <PlaylistMenu
                       setIsShowPlaylistMenu={setIsShowPlaylistMenu}
@@ -346,7 +348,7 @@ const App = () => {
                     />
                   )}
                   <button
-                    className='text-white font-sans text-xl hover:scale-110'
+                    className='font-sans text-xl text-white hover:scale-110'
                     onClick={() => {
                       setIsShowPlaylistMenu(true);
                     }}
@@ -363,8 +365,8 @@ const App = () => {
               </MainSec>
 
               {!nowPlaylist && (
-                <section className='bg-white rounded-2xl m-auto w-3/4 mt-8 p-10 relative'>
-                  <h2 className='text-black font-sans font-semibold text-3xl'>
+                <section className='relative w-3/4 p-10 m-auto mt-8 bg-white rounded-2xl'>
+                  <h2 className='font-sans text-3xl font-semibold text-black'>
                     해당 유저의 플레이 리스트가 존재하지 않습니다.
                   </h2>
                 </section>
@@ -372,11 +374,11 @@ const App = () => {
 
               {nowPlaylist && (
                 <MainSec>
-                  <h2 className='font-sans text-black font-semibold text-3xl max-lg:text-center'>
+                  <h2 className='font-sans text-3xl font-semibold text-black max-lg:text-center'>
                     {nowPlaylist && nowPlaylist.name}
                   </h2>
                   <div className='flex flex-row justify-end mb-3'>
-                    <h3 className='font-sans font-normal text-xl text-gray-500'>
+                    <h3 className='font-sans text-xl font-normal text-gray-500'>
                       곡 수 {results.length}
                     </h3>
                   </div>
@@ -406,7 +408,7 @@ const App = () => {
           )
         ) : (
           <MainSec>
-            <h1 className='text-black font-sans text-xl font-semibold'>
+            <h1 className='font-sans text-xl font-semibold text-black'>
               해당하는 유저가 존재하지않습니다.
             </h1>
           </MainSec>
