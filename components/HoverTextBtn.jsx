@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { FaCopy } from 'react-icons/fa';
 import { CopyIcn } from '../assets/icon/icon';
 const HoverTextBtn = ({ btnText, text }) => {
   const [isHovering, setIsHovering] = useState(false);

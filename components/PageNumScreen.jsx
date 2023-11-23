@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaChevronRight, FaChevronLeft } from 'react-icons/fa';
+import { ArrowLeftIcn, ArrowRightIcn } from '../assets/icon/icon';
 
 export default function PageNumScreen({
   resultNum,
@@ -7,12 +7,11 @@ export default function PageNumScreen({
   onPagePlus,
   onPageMinus,
 }) {
-  const btnStyle =
-    'mx-2 text-white rounded-full hover:scale-110 text-center text-lg w-8 h-8';
+  const btnStyle = 'mx-2 rounded-full hover:scale-110 w-8 h-8';
   return (
     <div className='flex justify-center mt-3'>
       <button className={btnStyle} onClick={() => onPageMinus()}>
-        <FaChevronLeft />
+        <ArrowLeftIcn width={18} height={18} color={'white'} />
       </button>
       <p className='ml-2 text-white font-sans font-normal text-xl'>
         {pageNum} /
@@ -21,7 +20,7 @@ export default function PageNumScreen({
         {parseInt((resultNum - 1) / 6) + 1}
       </p>
       <button className={btnStyle} onClick={() => onPagePlus()}>
-        <FaChevronRight />
+        <ArrowRightIcn width={18} height={18} color={'white'} />
       </button>
     </div>
   );
