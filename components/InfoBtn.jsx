@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaInfoCircle } from 'react-icons/fa';
+import { InformIcn } from '../assets/icon/icon';
 const InfoBtn = ({ text }) => {
   const [isHovering, setIsHovering] = useState(false);
 
@@ -9,7 +9,12 @@ const InfoBtn = ({ text }) => {
       onMouseOver={() => setIsHovering(true)}
       onMouseOut={() => setIsHovering(false)}
     >
-      <FaInfoCircle className='text-blue-500 text-2xl max-lg:text-xl ml-3' />
+      <InformIcn
+        color={'blue'}
+        width={24}
+        height={24}
+        className='text-blue-500 text-2xl max-lg:w-5 max-lg:h-5 ml-3'
+      />
       {isHovering && (
         <div className='absolute rounded-lg border right-0 border-gray-500 p-2 bg-white w-48 font-sans text-xs text-gray-600'>
           {text}
