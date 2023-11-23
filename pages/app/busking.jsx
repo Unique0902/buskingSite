@@ -44,9 +44,7 @@ export default function AppBusking({}) {
   }, [buskingData]);
   useEffect(() => {
     if (uid) {
-      setUrl(
-        `https://stunning-semifreddo-f035d0.netlify.app/buskingApply/${uid}`
-      );
+      setUrl(`https://noraebook.netlify.app/buskingApply/${uid}`);
     }
   }, [uid]);
   const handelPlus = () => {
