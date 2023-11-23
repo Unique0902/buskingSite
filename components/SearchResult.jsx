@@ -1,7 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { FaPlus, FaMinusSquare } from 'react-icons/fa';
-import { BiSmile, BiSend } from 'react-icons/bi';
 import { useMediaQuery } from 'react-responsive';
+import { MinusIcn, PlusIcn, SendIcn, SmileIcn } from '../assets/icon/icon';
 const SearchResult = ({ index, result, onSongClick, btnText }) => {
   const nameRef = useRef();
   const artistRef = useRef();
@@ -85,10 +84,18 @@ const SearchResult = ({ index, result, onSongClick, btnText }) => {
         }}
         className='basis-1/12 hover:scale-110'
       >
-        {btnText === '추가' && <FaPlus className='text-white' />}
-        {btnText === '제거' && <FaMinusSquare className=' text-mainRed' />}
-        {btnText === '신청가능' && <BiSmile className=' text-2xl' />}
-        {btnText === '신청' && <BiSend className=' text-2xl' />}
+        {btnText === '추가' && (
+          <PlusIcn width={24} height={24} color={'white'} />
+        )}
+        {btnText === '제거' && (
+          <MinusIcn width={24} height={24} color={'red'} />
+        )}
+        {btnText === '신청가능' && (
+          <SmileIcn width={24} height={24} color={'white'} />
+        )}
+        {btnText === '신청' && (
+          <SendIcn width={24} height={24} color={'white'} />
+        )}
       </button>
     </li>
   );
