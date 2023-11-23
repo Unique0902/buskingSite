@@ -9,16 +9,11 @@ import SongTable from '../../components/SongTable';
 import { getAppLayOut } from '../../layouts/appLayout';
 import { useBuskingContext } from '../../context/BuskingContext';
 import { useRouter } from 'next/router';
-import {
-  NextSongIcn,
-  PauseIcn,
-  PlayIcn,
-  PreviousSongIcn,
-} from '../../assets/icon/icon';
 import ArrangeMenuBtn from '../../components/ArrangeMenuBtn';
 import PrimaryBtn from '../../components/Btn/PrimaryBtn';
 import { color } from '../../styles/theme';
 import SectionCopyText from '../../components/SectionCopyText';
+import MusicBar from '../../components/MusicBar/MusicBar';
 
 export default function AppBusking({}) {
   const { playlists } = usePlaylistContext();
@@ -36,7 +31,6 @@ export default function AppBusking({}) {
   const [pageNum, setPageNum] = useState(1);
   const [beforeSong, setBeforeSong] = useState(null);
   const [nowSong, setNowSong] = useState(null);
-  const [isShowArrangeMenu, setIsShowArrangeMenu] = useState(false);
   const [isSinging, setIsSinging] = useState(false);
   const [isShowQr, setIsShowQr] = useState(true);
   const router = useRouter();
@@ -95,7 +89,40 @@ export default function AppBusking({}) {
       });
     }
   };
-  const playBtnStyle = 'mx-3 text-4xl text-black hover:scale-110';
+  const handleClickPreviousBtn = () => {
+    if (isSinging) {
+      if (beforeSong) {
+        applyBuskingSongAgain(nowSong, () => {});
+        setNowSong(beforeSong);
+        setBeforeSong(null);
+      }
+    }
+  };
+  const handleClickPauseBtn = () => {
+    setIsSinging(false);
+  };
+  const handleClickPlayBtn = () => {
+    if (!nowSong && results.length != 0) {
+      setIsSinging(true);
+      setNowSong({ ...results[0] });
+      removeBuskingSong(results[0].sid, () => {});
+    } else if (nowSong) {
+      setIsSinging(true);
+    } else {
+      alert('신청된 노래가 존재하지 않습니다!');
+    }
+  };
+  const handleClickNextBtn = () => {
+    if (isSinging) {
+      if (results) {
+        if (nowSong) {
+          setBeforeSong(nowSong);
+        }
+        setNowSong({ ...results[0] });
+        removeBuskingSong(results[0].sid, () => {});
+      }
+    }
+  };
   return (
     <>
       <section className='border-gray-600 border-b items-center pt-2 pb-5 flex flex-row max-lg:flex-col'>
@@ -133,76 +160,14 @@ export default function AppBusking({}) {
         </div>
       </section>
 
-      <section className='w-3/4 m-auto bg-gray-300 rounded-3xl text-center py-5 px-2 mt-6'>
-        <div className='font-sans text-xl text-white font-medium py-2 px-2 w-3/4 m-auto rounded-xl bg-gray-500 mb-2'>
-          {isSinging ? (
-            <>
-              <p>{nowSong && `${nowSong.title} - ${nowSong.artist}`}</p>
-            </>
-          ) : (
-            <p>정지됨..</p>
-          )}
-        </div>
-        <div className='text-center'>
-          <button
-            className={playBtnStyle}
-            onClick={() => {
-              if (isSinging) {
-                if (beforeSong) {
-                  applyBuskingSongAgain(nowSong, () => {});
-                  setNowSong(beforeSong);
-                  setBeforeSong(null);
-                }
-              }
-            }}
-          >
-            <PreviousSongIcn width={36} height={36} color={'black'} />
-          </button>
-          {isSinging ? (
-            <button
-              className={playBtnStyle}
-              onClick={() => {
-                setIsSinging(false);
-              }}
-            >
-              <PauseIcn width={36} height={36} color={'black'} />
-            </button>
-          ) : (
-            <button
-              className={playBtnStyle}
-              onClick={() => {
-                if (!nowSong && results.length != 0) {
-                  setIsSinging(true);
-                  setNowSong({ ...results[0] });
-                  removeBuskingSong(results[0].sid, () => {});
-                } else if (nowSong) {
-                  setIsSinging(true);
-                } else {
-                  alert('신청된 노래가 존재하지 않습니다!');
-                }
-              }}
-            >
-              <PlayIcn width={36} height={36} color={'black'} />
-            </button>
-          )}
-          <button
-            className={playBtnStyle}
-            onClick={() => {
-              if (isSinging) {
-                if (results) {
-                  if (nowSong) {
-                    setBeforeSong(nowSong);
-                  }
-                  setNowSong({ ...results[0] });
-                  removeBuskingSong(results[0].sid, () => {});
-                }
-              }
-            }}
-          >
-            <NextSongIcn width={36} height={36} color={'black'} />
-          </button>
-        </div>
-      </section>
+      <MusicBar
+        nowSong={nowSong}
+        handleClickNextBtn={handleClickNextBtn}
+        handleClickPauseBtn={handleClickPauseBtn}
+        handleClickPlayBtn={handleClickPlayBtn}
+        handleClickPreviousBtn={handleClickPreviousBtn}
+      />
+
       <MainSec>
         <section className='relative flex flex-row justify-between items-center mb-6'>
           <h1 className=' text-center font-sans text-zinc-500 font-semibold text-xl'>
