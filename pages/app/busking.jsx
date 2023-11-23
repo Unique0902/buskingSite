@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { FaForward, FaBackward, FaPause, FaPlay } from 'react-icons/fa';
 import ArrangeMenu from '../../components/ArrangeMenu';
 import HoverTextBtn from '../../components/HoverTextBtn';
 import MainSec from '../../components/MainSec';
@@ -11,6 +10,12 @@ import SongTable from '../../components/SongTable';
 import { getAppLayOut } from '../../layouts/appLayout';
 import { useBuskingContext } from '../../context/BuskingContext';
 import { useRouter } from 'next/router';
+import {
+  NextSongIcn,
+  PauseIcn,
+  PlayIcn,
+  PreviousSongIcn,
+} from '../../assets/icon/icon';
 
 export default function AppBusking({}) {
   const { playlists } = usePlaylistContext();
@@ -143,7 +148,7 @@ export default function AppBusking({}) {
               }
             }}
           >
-            <FaBackward className='' />
+            <PreviousSongIcn width={36} height={36} color={'black'} />
           </button>
           {isSinging ? (
             <button
@@ -152,13 +157,13 @@ export default function AppBusking({}) {
                 setIsSinging(false);
               }}
             >
-              <FaPause className='' />
+              <PauseIcn width={36} height={36} color={'black'} />
             </button>
           ) : (
             <button
               className={playBtnStyle}
               onClick={() => {
-                if (!nowSong && results) {
+                if (!nowSong && results.length != 0) {
                   setIsSinging(true);
                   setNowSong({ ...results[0] });
                   removeBuskingSong(results[0].sid, () => {});
@@ -169,7 +174,7 @@ export default function AppBusking({}) {
                 }
               }}
             >
-              <FaPlay className='' />
+              <PlayIcn width={36} height={36} color={'black'} />
             </button>
           )}
           <button
@@ -186,7 +191,7 @@ export default function AppBusking({}) {
               }
             }}
           >
-            <FaForward className='' />
+            <NextSongIcn width={36} height={36} color={'black'} />
           </button>
         </div>
       </section>
