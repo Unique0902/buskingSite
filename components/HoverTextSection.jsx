@@ -14,8 +14,13 @@ const HoverTextSection = ({
 
   return (
     <div
-      style={{ backgroundColor: bgColor, fontSize: fontSize, color: textColor }}
-      className={`relative ${radius} ${secPadding}`}
+      style={{
+        backgroundColor: bgColor,
+        fontSize: fontSize,
+        color: textColor,
+        padding: secPadding,
+      }}
+      className={`relative ${radius}`}
       onMouseOver={() => setIsHovering(true)}
       onMouseOut={() => setIsHovering(false)}
     >

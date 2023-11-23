@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import HoverTextSection from '../../components/HoverTextSection';
 import MainSec from '../../components/MainSec';
-import { useMediaQuery } from 'react-responsive';
 import { useAuthContext } from '../../context/AuthContext';
 import { useUserDataContext } from '../../context/UserDataContext';
 import { usePlaylistContext } from '../../context/PlaylistContext';
@@ -14,6 +13,7 @@ import PrimaryBtn from '../../components/Btn/PrimaryBtn';
 import { color } from '../../styles/theme';
 import SectionCopyText from '../../components/SectionCopyText';
 import MusicBar from '../../components/MusicBar/MusicBar';
+import QRCodeSection from '../../components/QRCodeSection';
 
 export default function AppBusking({}) {
   const { playlists } = usePlaylistContext();
@@ -24,31 +24,26 @@ export default function AppBusking({}) {
     removeBuskingSong,
     removeBusking,
   } = useBuskingContext();
-  const [url, setUrl] = useState('');
   const { uid } = useAuthContext();
-  const [appliance, setAppliance] = useState([]);
-  const [results, setResults] = useState([]);
   const [pageNum, setPageNum] = useState(1);
   const [beforeSong, setBeforeSong] = useState(null);
   const [nowSong, setNowSong] = useState(null);
   const [isSinging, setIsSinging] = useState(false);
-  const [isShowQr, setIsShowQr] = useState(true);
+  const [results, setResults] = useState(
+    buskingData
+      ? buskingData.appliance
+        ? Object.values(buskingData.appliance)
+        : []
+      : []
+  );
   const router = useRouter();
-  const isLgMediaQuery = useMediaQuery({
-    query: '(max-width:1024px)',
-  });
+
   useEffect(() => {
     if (!buskingData) {
       router.push('/app/makebusking');
-    } else {
-      setAppliance(buskingData.appliance);
     }
   }, [buskingData]);
-  useEffect(() => {
-    if (uid) {
-      setUrl(`https://noraebook.netlify.app/buskingApply/${uid}`);
-    }
-  }, [uid]);
+
   const handelPlus = () => {
     if (pageNum < results.length / 6) {
       setPageNum(pageNum + 1);
@@ -59,18 +54,7 @@ export default function AppBusking({}) {
       setPageNum(pageNum - 1);
     }
   };
-  useEffect(() => {
-    if (isLgMediaQuery) {
-      setIsShowQr(false);
-    }
-  }, [isLgMediaQuery]);
-  useEffect(() => {
-    if (appliance) {
-      setResults(Object.values(appliance));
-    } else {
-      setResults([]);
-    }
-  }, [appliance, appliance && Object.values(appliance).length]);
+
   useEffect(() => {
     if ((pageNum - 1) * 6 + 1 > results.length) {
       if (results.length == 0) {
@@ -79,9 +63,7 @@ export default function AppBusking({}) {
       setPageNum(pageNum - 1);
     }
   }, [results]);
-  const handleClickQRBtn = () => {
-    setIsShowQr((prev) => !prev);
-  };
+
   const handleClickEndBuskingBtn = () => {
     if (window.confirm('버스킹을 종료하시겠습니까?')) {
       removeBusking().finally(() => {
@@ -92,7 +74,7 @@ export default function AppBusking({}) {
   const handleClickPreviousBtn = () => {
     if (isSinging) {
       if (beforeSong) {
-        applyBuskingSongAgain(nowSong, () => {});
+        applyBuskingSongAgain(nowSong);
         setNowSong(beforeSong);
         setBeforeSong(null);
       }
@@ -125,37 +107,23 @@ export default function AppBusking({}) {
   };
   return (
     <>
-      <section className='border-gray-600 border-b items-center pt-2 pb-5 flex flex-row max-lg:flex-col'>
-        <h1 className='font-sans text-white text-3xl font-semibold w-96 max-lg:w-full max-lg:text-center max-lg:mb-4'>
+      <section className='flex flex-row items-center pt-2 pb-5 border-b border-gray-600 max-lg:flex-col'>
+        <h1 className='font-sans text-3xl font-semibold text-white w-96 max-lg:w-full max-lg:text-center max-lg:mb-4'>
           {userData && `${userData.name}님의 버스킹`}
         </h1>
-        <div className='flex flex-row gap-4 items-center lg:border-l border-gray-400 grow justify-center'>
-          {!isLgMediaQuery && (
-            <h2 className='font-sans text-gray-300 text-xl font-bold'>
-              곡 신청 사이트
-            </h2>
-          )}
-          {isShowQr && !isLgMediaQuery && (
-            <img
-              src={`https://chart.apis.google.com/chart?cht=qr&chs=100x100&chl=${url}`}
-            />
-          )}
-
-          {!isLgMediaQuery && (
-            <PrimaryBtn
-              handleClick={handleClickQRBtn}
-              textColor={color.gray_900}
-              bgColor={color.white}
-            >
-              QR코드 {isShowQr ? '숨기기' : '불러오기'}
-            </PrimaryBtn>
-          )}
+        <div className='flex flex-row items-center justify-center gap-4 border-gray-400 lg:border-l grow'>
+          <QRCodeSection
+            url={`https://noraebook.netlify.app/buskingApply/${uid}`}
+            title={'곡 신청 사이트'}
+          />
           <HoverTextSection
             text={'신청 URL 확인'}
             bgColor={color.white}
             textColor={color.gray_900}
           >
-            <SectionCopyText text={`${url}`} />
+            <SectionCopyText
+              text={`https://noraebook.netlify.app/buskingApply/${uid}`}
+            />
           </HoverTextSection>
         </div>
       </section>
@@ -169,14 +137,14 @@ export default function AppBusking({}) {
       />
 
       <MainSec>
-        <section className='relative flex flex-row justify-between items-center mb-6'>
-          <h1 className=' text-center font-sans text-zinc-500 font-semibold text-xl'>
+        <section className='relative flex flex-row items-center justify-between mb-6'>
+          <h1 className='font-sans text-xl font-semibold text-center text-zinc-500'>
             {buskingData &&
               playlists &&
               playlists[buskingData.playlistId] &&
               `현재 플레이리스트: ${playlists[buskingData.playlistId].name}`}
           </h1>
-          <h2 className='font-sans font-semibold text-xl text-zinc-500'>
+          <h2 className='font-sans text-xl font-semibold text-zinc-500'>
             총 노래 수 {results ? results.length : 0}
           </h2>
           <ArrangeMenuBtn
@@ -197,7 +165,7 @@ export default function AppBusking({}) {
           onPagePlus={handelPlus}
           onPageMinus={handelMinus}
         />
-        <section className='flex flex-row pt-4 justify-end'>
+        <section className='flex flex-row justify-end pt-4'>
           <PrimaryBtn
             bgColor={color.warning}
             handleClick={handleClickEndBuskingBtn}
