@@ -20,7 +20,7 @@ export default function AppLayOut({ children }) {
   return (
     <ProtectedRoute>
       <UserDataProtectedRoute>
-        <section className='flex h-screen text-black bg-gradient-to-b from-blue-500 to-mainBlue '>
+        <section className='flex h-screen text-black bg-gradient-to-b from-blue-500 to-white '>
           {isShowSideBar && (
             <SideBar
               isShowSideBar={isShowSideBar}

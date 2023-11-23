@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import TitleBar from '../../components/TitleBar';
 import MainSec from '../../components/MainSec';
-import MainRow from '../../components/MainRow';
+import MainRow from '../../components/Row/RowWithTitle';
 import { useUserDataContext } from '../../context/UserDataContext';
 import { usePlaylistContext } from '../../context/PlaylistContext';
 import { getAppLayOut } from '../../layouts/appLayout';

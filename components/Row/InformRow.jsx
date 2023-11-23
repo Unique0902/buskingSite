@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ArrowRightIcn } from '../assets/icon/icon';
+import { ArrowRightIcn } from '../../assets/icon/icon';
 
 const InformRow = ({ title, titleColor, handleClick, children }) => {
   return (

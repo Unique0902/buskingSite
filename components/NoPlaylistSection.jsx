@@ -9,7 +9,7 @@ const NoPlaylistSection = () => {
     addBasicPlaylist();
   };
   return (
-    <MainSec>
+    <MainSec isAlignCenter={true}>
       <h3 className='font-sans font-semibold text-xl text-black'>
         플레이리스트가 존재하지 않습니다. 플레이 리스트를 추가해주세요.
       </h3>

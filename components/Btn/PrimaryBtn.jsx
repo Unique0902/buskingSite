@@ -1,21 +1,26 @@
 import React from 'react';
-import { borderRadius, color, xyPadding } from '../../styles/theme';
+import {
+  bgColors,
+  borderRadius,
+  fontSizes,
+  textColors,
+  xyPadding,
+} from '../../styles/theme';
 
 const PrimaryBtn = ({
   children,
   handleClick,
-  bgColor = color.primary_500,
-  textColor = color.white,
-  fontSize = '12px',
+  bgColor = bgColors.primary_500,
+  textColor = textColors.white,
+  fontSize = fontSizes.sm,
   btnPadding = xyPadding.base,
-  radius = borderRadius.lg,
+  radius = borderRadius.xl3,
 }) => {
   return (
     <button
       type='button'
-      style={{ backgroundColor: bgColor, fontSize: fontSize, color: textColor }}
       onClick={handleClick}
-      className={`hover:opacity-70 ${radius} ${btnPadding}`}
+      className={`hover:opacity-70 ${radius} ${fontSize} ${btnPadding} ${textColor} ${bgColor}`}
     >
       {children}
     </button>

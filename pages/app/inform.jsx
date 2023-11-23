@@ -3,10 +3,11 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import TitleBar from '../../components/TitleBar';
 import MainSec from '../../components/MainSec';
-import InformRow from '../../components/InformRow';
 import { useAuthContext } from '../../context/AuthContext';
 import { useUserDataContext } from '../../context/UserDataContext';
 import { getAppLayOut } from '../../layouts/appLayout';
+import RowWithTitle from '../../components/Row/RowWithTitle';
+import RowWithTitleAndArrow from '../../components/Row/RowWithTitleAndArrow';
 export default function AppInform({
   userRepository,
   playlistRepository,
@@ -33,28 +34,22 @@ export default function AppInform({
     <>
       <TitleBar text={'내 정보'} />
       <MainSec>
-        <InformRow title={'닉네임'} titleColor={'gray'} handleClick={() => {}}>
+        <RowWithTitle title={'닉네임'}>
           <p className='font-sans text-lg text-black font-normal'>
             {userData && userData.name}
           </p>
-        </InformRow>
-        <InformRow
-          title={'가입일자'}
-          titleColor={'gray'}
-          handleClick={() => {}}
-        >
+        </RowWithTitle>
+        <RowWithTitle title={'가입일자'}>
           <p className='font-sans text-lg text-black font-normal'>
             {time &&
               `${time.getFullYear()}년 ${
                 time.getMonth() + 1
               }월 ${time.getDate()}일`}
           </p>
-        </InformRow>
-        <InformRow
-          title={'회원 탈퇴'}
-          titleColor={'red'}
-          handleClick={handleClickInformRow}
-        ></InformRow>
+        </RowWithTitle>
+        <button onClick={handleClickInformRow} className='text-left'>
+          <RowWithTitleAndArrow title={'회원 탈퇴'} />
+        </button>
       </MainSec>
     </>
   );

@@ -16,6 +16,56 @@ export const color = {
   category_item_color: '#FAFAFB',
 };
 
+export const textColors = {
+  primary_500: 'text-primary_500',
+  primary_100: 'text-primary_100',
+  white: 'text-white',
+  gray_900: 'text-gray_900',
+  gray_800: 'text-gray_800',
+  gray_700: 'text-gray_700',
+  gray_600: 'text-gray_600',
+  gray_500: 'text-gray_500',
+  gray_400: 'text-gray_400',
+  gray_200: 'text-gray_200',
+  warning: 'text-warning',
+  star: 'text-star',
+  border: 'text-border',
+  border_top: 'text-border_top',
+  category_item_color: 'text-category_item_color',
+};
+
+export const bgColors = {
+  primary_500: 'bg-primary_500',
+  primary_100: 'bg-primary_100',
+  white: 'bg-white',
+  gray_900: 'bg-gray_900',
+  gray_800: 'bg-gray_800',
+  gray_700: 'bg-gray_700',
+  gray_600: 'bg-gray_600',
+  gray_500: 'bg-gray_500',
+  gray_400: 'bg-gray_400',
+  gray_200: 'bg-gray_200',
+  warning: 'bg-warning',
+  star: 'bg-star',
+  border: 'bg-border',
+  border_top: 'bg-border_top',
+  category_item_color: 'bg-category_item_color',
+};
+export const fontSizes = {
+  xs: 'text-xs',
+  sm: 'text-sm',
+  base: 'text-base',
+  lg: 'text-lg',
+  xl: 'text-xl',
+  xl2: 'text-2xl',
+  xl3: 'text-3xl',
+  xl4: 'text-4xl',
+  xl5: 'text-5xl',
+  xl6: 'text-6xl',
+  xl7: 'text-7xl',
+  xl8: 'text-8xl',
+  xl9: 'text-9xl',
+};
 export const fontSize = {
   xs: '12px',
   xm: '16px',
@@ -28,7 +78,12 @@ export const xyPadding = {
   base: 'px-6 py-3',
 };
 export const borderRadius = {
-  lg: 'rounded-3xl',
-  base: 'rounded-2xl',
-  xm: 'rounded-xl',
+  xl3: 'rounded-3xl',
+  xl2: 'rounded-2xl',
+  xl: 'rounded-xl',
+  xs: 'rounded-xs',
+  sm: 'rounded-sm',
+  base: 'rounded-base',
+  lg: 'rounded-lg',
+  full: 'rounded-full',
 };
