@@ -29,23 +29,25 @@ export default function AppBusking({}) {
   const [beforeSong, setBeforeSong] = useState(null);
   const [nowSong, setNowSong] = useState(null);
   const [isSinging, setIsSinging] = useState(false);
-  const [results, setResults] = useState(
-    buskingData
-      ? buskingData.appliance
-        ? Object.values(buskingData.appliance)
-        : []
-      : []
-  );
+  const [songArr, setSongArr] = useState([]);
+  const [songArrToView, setSongArrToView] = useState([]);
   const router = useRouter();
 
   useEffect(() => {
     if (!buskingData) {
       router.push('/app/makebusking');
     }
+    setSongArr(
+      buskingData
+        ? buskingData.appliance
+          ? Object.values(buskingData.appliance)
+          : []
+        : []
+    );
   }, [buskingData]);
 
   const handelPlus = () => {
-    if (pageNum < results.length / 6) {
+    if (pageNum < songArr.length / 6) {
       setPageNum(pageNum + 1);
     }
   };
@@ -56,13 +58,13 @@ export default function AppBusking({}) {
   };
 
   useEffect(() => {
-    if ((pageNum - 1) * 6 + 1 > results.length) {
-      if (results.length == 0) {
+    if ((pageNum - 1) * 6 + 1 > songArr.length) {
+      if (songArr.length == 0) {
         return;
       }
       setPageNum(pageNum - 1);
     }
-  }, [results]);
+  }, [songArr]);
 
   const handleClickEndBuskingBtn = () => {
     if (window.confirm('버스킹을 종료하시겠습니까?')) {
@@ -84,10 +86,10 @@ export default function AppBusking({}) {
     setIsSinging(false);
   };
   const handleClickPlayBtn = () => {
-    if (!nowSong && results.length != 0) {
+    if (!nowSong && songArr.length != 0) {
       setIsSinging(true);
-      setNowSong({ ...results[0] });
-      removeBuskingSong(results[0].sid, () => {});
+      setNowSong({ ...songArr[0] });
+      removeBuskingSong(songArr[0].sid);
     } else if (nowSong) {
       setIsSinging(true);
     } else {
@@ -96,12 +98,12 @@ export default function AppBusking({}) {
   };
   const handleClickNextBtn = () => {
     if (isSinging) {
-      if (results) {
+      if (songArr) {
         if (nowSong) {
           setBeforeSong(nowSong);
         }
-        setNowSong({ ...results[0] });
-        removeBuskingSong(results[0].sid, () => {});
+        setNowSong({ ...songArr[0] });
+        removeBuskingSong(songArr[0].sid, () => {});
       }
     }
   };
@@ -129,11 +131,9 @@ export default function AppBusking({}) {
       </section>
 
       <MusicBar
-        nowSong={nowSong}
-        handleClickNextBtn={handleClickNextBtn}
-        handleClickPauseBtn={handleClickPauseBtn}
-        handleClickPlayBtn={handleClickPlayBtn}
-        handleClickPreviousBtn={handleClickPreviousBtn}
+        songArr={songArr}
+        setSongArr={setSongArr}
+        setSongArrToView={setSongArrToView}
       />
 
       <MainSec>
@@ -145,23 +145,23 @@ export default function AppBusking({}) {
               `현재 플레이리스트: ${playlists[buskingData.playlistId].name}`}
           </h1>
           <h2 className='font-sans text-xl font-semibold text-zinc-500'>
-            총 노래 수 {results ? results.length : 0}
+            총 노래 수 {songArrToView ? songArrToView.length : 0}
           </h2>
           <ArrangeMenuBtn
-            results={results}
-            setResults={setResults}
+            results={songArrToView}
+            setResults={setSongArrToView}
             isBusking={true}
           />
         </section>
         <SongTable
           isSearch={false}
-          results={results}
+          results={songArrToView}
           pageNum={pageNum}
           btnText={'제거'}
           onSongClick={(sid) => {
             removeBuskingSong(sid, () => {});
           }}
-          resultNum={results.length}
+          resultNum={songArrToView.length}
           onPagePlus={handelPlus}
           onPageMinus={handelMinus}
         />
