@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { getAppLayOut } from '../../layouts/appLayout';
 import InfoBtn from '../../components/InfoBtn';
 import { useLastFmContext } from '../../context/LastFmContext';
+import PrimaryBtn from '../../components/Btn/PrimaryBtn';
 
 export default function AppAdd({}) {
   const [searchResults, setSearchResults] = useState([]);
@@ -59,6 +60,9 @@ export default function AppAdd({}) {
     setPageNum(1);
     search(1);
   };
+  const handleClickAddBasicPlaylist = () => {
+    addBasicPlaylist();
+  };
   return (
     <>
       <TitleBar text={'노래추가'} />
@@ -67,14 +71,9 @@ export default function AppAdd({}) {
           <h3 className='font-sans font-semibold text-xl text-black'>
             플레이리스트가 존재하지 않습니다. 플레이 리스트를 추가해주세요.
           </h3>
-          <button
-            onClick={() => {
-              addBasicPlaylist();
-            }}
-            className='mt-4 font-sans text-2xl font-normal border border-black rounded-xl px-5 py-3 hover:bg-gray-200'
-          >
+          <PrimaryBtn handleClick={handleClickAddBasicPlaylist}>
             추가하기
-          </button>
+          </PrimaryBtn>
         </MainSec>
       ) : (
         <MainSec>
