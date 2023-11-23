@@ -5,6 +5,7 @@ import PlaylistMenu from './PlaylistMenu';
 import LoginMenu from './LoginMenu';
 import { useUserDataContext } from '../context/UserDataContext';
 import { usePlaylistContext } from '../context/PlaylistContext';
+import { ArrowDownIcn } from '../assets/icon/icon';
 
 export default function AppHeader({ isShowSideBar, setIsShowSideBar }) {
   const { userData } = useUserDataContext();
@@ -24,6 +25,12 @@ export default function AppHeader({ isShowSideBar, setIsShowSideBar }) {
             className='hidden max-lg:flex'
           >
             <FaBars className='font-sans text-white text-2xl mr-6' />
+            {/* <ArrowDownIcn
+              width={24}
+              height={24}
+              color={'white'}
+              className='mr-6'
+            /> */}
           </button>
           {isShowPlaylistMenu && (
             <PlaylistMenu setIsShowPlaylistMenu={setIsShowPlaylistMenu} />

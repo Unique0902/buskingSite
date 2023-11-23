@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { FaChevronRight } from 'react-icons/fa';
+import { ArrowRightIcn } from '../assets/icon/icon';
 
 const InformRow = ({ title, titleColor, handleClick, children }) => {
   return (
@@ -21,10 +21,11 @@ const InformRow = ({ title, titleColor, handleClick, children }) => {
         {children}
       </div>
 
-      <FaChevronRight
-        className={`absolute right-5 text-xl ${
-          titleColor == 'red' ? 'text-red-500' : 'text-gray-500'
-        }`}
+      <ArrowRightIcn
+        width={20}
+        height={20}
+        className={`absolute right-5 text-xl`}
+        color={`${titleColor == 'red' ? 'red' : 'gray'}`}
       />
     </button>
   );
