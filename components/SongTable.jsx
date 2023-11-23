@@ -1,6 +1,6 @@
 import React from 'react';
 import PageNumScreen from './PageNumScreen';
-import SearchResults from './SearchResults';
+import SearchResults from './Search/SearchResults';
 
 export default function SongTable({
   isSearch,

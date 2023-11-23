@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
-import { MinusIcn, PlusIcn, SendIcn, SmileIcn } from '../assets/icon/icon';
+import { MinusIcn, PlusIcn, SendIcn, SmileIcn } from '../../assets/icon/icon';
 const SearchResult = ({ index, result, onSongClick, btnText }) => {
   const nameRef = useRef();
   const artistRef = useRef();

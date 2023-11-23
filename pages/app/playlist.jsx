@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 import TitleBar from '../../components/TitleBar';
 import MainSec from '../../components/MainSec';
-import SongSearchBar from '../../components/SongSearchBar';
+import SongSearchBar from '../../components/Search/SongSearchBar';
 import ArrangeMenuBtn from '../../components/ArrangeMenuBtn';
 import { usePlaylistContext } from '../../context/PlaylistContext';
 import SongTable from '../../components/SongTable';

@@ -1,6 +1,6 @@
 import React from 'react';
-import { borderRadius, xyPadding } from '../styles/theme';
-import PrimaryBtn from './Btn/PrimaryBtn';
+import { borderRadius, xyPadding } from '../../styles/theme';
+import PrimaryBtn from '../Btn/PrimaryBtn';
 
 const SongSearchBar = ({
   searchWord,

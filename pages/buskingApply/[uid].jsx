@@ -4,7 +4,7 @@ import { useBuskingContext } from '../../context/BuskingContext';
 import { usePlaylistContext } from '../../context/PlaylistContext';
 import { useUserDataContext } from '../../context/UserDataContext';
 import MainSec from '../../components/MainSec';
-import SongSearchBar from '../../components/SongSearchBar';
+import SongSearchBar from '../../components/Search/SongSearchBar';
 import PlaylistMenu from '../../components/PlaylistMenu';
 import { useRouter } from 'next/router';
 import ArrangeMenuBtn from '../../components/ArrangeMenuBtn';
