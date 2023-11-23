@@ -1,20 +1,23 @@
 import React, { useState } from 'react';
+import { borderRadius, color, xyPadding } from '../styles/theme';
 import ArrangeMenu from './ArrangeMenu';
+import PrimaryBtn from './Btn/PrimaryBtn';
 
 const ArrangeMenuBtn = ({ results, setResults, isBusking }) => {
   const [isShowArrangeMenu, setIsShowArrangeMenu] = useState(false);
-  const handelClick = (e) => {
-    e.preventDefault();
+  const handleClick = () => {
     setIsShowArrangeMenu(true);
   };
   return (
     <div className='relative'>
-      <button
-        className='ml-5 bg-blue-600 max-lg:ml-2 max-lg:px-2 py-2 px-3 text-lg rounded-lg text-white hover:scale-125'
-        onClick={handelClick}
+      <PrimaryBtn
+        handleClick={handleClick}
+        bgColor={color.gray_400}
+        radius={borderRadius.xm}
+        btnPadding={xyPadding.lg}
       >
         정렬
-      </button>
+      </PrimaryBtn>
       {isShowArrangeMenu && (
         <ArrangeMenu
           setIsShowArrangeMenu={setIsShowArrangeMenu}

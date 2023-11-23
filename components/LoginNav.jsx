@@ -1,15 +1,20 @@
 import React from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
+import PrimaryBtn from './Btn/PrimaryBtn';
+import { fontSize } from '../styles/theme';
 
 export default function LoginNav({ scrollToTutorial }) {
+  const router = useRouter();
+  const handleClickLogoBtn = () => {
+    router.push('/');
+  };
+  const handleClickTutorialBtn = () => {
+    scrollToTutorial();
+  };
   return (
     <nav className='flex items-center justify-around'>
-      <button
-        className='flex items-center'
-        onClick={() => {
-          // navigate('/');
-        }}
-      >
+      <button className='flex items-center' onClick={handleClickLogoBtn}>
         <Image
           src={'/img/bookLogo.png'}
           alt=''
@@ -33,14 +38,9 @@ export default function LoginNav({ scrollToTutorial }) {
           <button className='hover:scale-110'>다운로드</button>
         </li>
       </ul>
-      <button
-        onClick={() => {
-          scrollToTutorial();
-        }}
-        className='text-white hover:scale-110 py-2 px-5 font-light font-sans text-base bg-blue-700 rounded-3xl'
-      >
+      <PrimaryBtn handleClick={handleClickTutorialBtn} fontSize={fontSize.xm}>
         튜토리얼
-      </button>
+      </PrimaryBtn>
     </nav>
   );
 }

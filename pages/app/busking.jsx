@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import ArrangeMenu from '../../components/ArrangeMenu';
-import HoverTextBtn from '../../components/HoverTextBtn';
+import HoverTextSection from '../../components/HoverTextBtn';
 import MainSec from '../../components/MainSec';
 import { useMediaQuery } from 'react-responsive';
 import { useAuthContext } from '../../context/AuthContext';
@@ -16,6 +15,9 @@ import {
   PlayIcn,
   PreviousSongIcn,
 } from '../../assets/icon/icon';
+import ArrangeMenuBtn from '../../components/ArrangeMenuBtn';
+import PrimaryBtn from '../../components/Btn/PrimaryBtn';
+import { color } from '../../styles/theme';
 
 export default function AppBusking({}) {
   const { playlists } = usePlaylistContext();
@@ -82,6 +84,16 @@ export default function AppBusking({}) {
       setPageNum(pageNum - 1);
     }
   }, [results]);
+  const handleClickQRBtn = () => {
+    setIsShowQr((prev) => !prev);
+  };
+  const handleClickEndBuskingBtn = () => {
+    if (window.confirm('버스킹을 종료하시겠습니까?')) {
+      removeBusking().finally(() => {
+        router.push('/app/home');
+      });
+    }
+  };
   const playBtnStyle = 'mx-3 text-4xl text-black hover:scale-110';
   return (
     <>
@@ -92,7 +104,7 @@ export default function AppBusking({}) {
         <div className='flex flex-row items-center lg:border-l border-gray-400 grow justify-center'>
           {!isLgMediaQuery && (
             <h2 className='font-sans text-gray-300 text-xl font-bold'>
-              곡 신청하기
+              곡 신청 사이트
             </h2>
           )}
           {isShowQr && !isLgMediaQuery && (
@@ -101,27 +113,17 @@ export default function AppBusking({}) {
               src={`https://chart.apis.google.com/chart?cht=qr&chs=100x100&chl=${url}`}
             />
           )}
-          {isShowQr && !isLgMediaQuery && (
-            <button
-              className='relative font-sans text-lg text-black hover:scale-110 bg-white rounded-lg px-4 py-2 mr-3'
-              onClick={() => {
-                setIsShowQr(false);
-              }}
+
+          {!isLgMediaQuery && (
+            <PrimaryBtn
+              handleClick={handleClickQRBtn}
+              textColor={color.gray_900}
+              bgColor={color.white}
             >
-              QR코드 숨기기
-            </button>
+              QR코드 {isShowQr ? '숨기기' : '불러오기'}
+            </PrimaryBtn>
           )}
-          {!isShowQr && !isLgMediaQuery && (
-            <button
-              className='relative font-sans text-lg ml-6 hover:scale-110 text-black bg-white rounded-lg px-4 py-2 mr-3'
-              onClick={() => {
-                setIsShowQr(true);
-              }}
-            >
-              QR코드 불러오기
-            </button>
-          )}
-          <HoverTextBtn btnText={'신청 URL 확인'} text={`${url}`} />
+          <HoverTextSection text={`${url}`}>신청 URL 확인</HoverTextSection>
         </div>
       </section>
 
@@ -206,24 +208,11 @@ export default function AppBusking({}) {
           <h2 className='font-sans font-semibold text-xl text-zinc-500'>
             총 노래 수 {results ? results.length : 0}
           </h2>
-          <div className='relative'>
-            <button
-              className='ml-4 bg-gray-500 max-lg:ml-2 max-lg:px-2 py-2 px-3 text-lg rounded-lg text-white hover:scale-110'
-              onClick={() => {
-                setIsShowArrangeMenu(true);
-              }}
-            >
-              정렬
-            </button>
-            {isShowArrangeMenu && (
-              <ArrangeMenu
-                setIsShowArrangeMenu={setIsShowArrangeMenu}
-                results={results}
-                setResults={setResults}
-                isBusking={true}
-              />
-            )}
-          </div>
+          <ArrangeMenuBtn
+            results={results}
+            setResults={setResults}
+            isBusking={true}
+          />
         </section>
         <SongTable
           isSearch={false}
@@ -238,18 +227,12 @@ export default function AppBusking({}) {
           onPageMinus={handelMinus}
         />
         <section className='flex flex-row pt-4 justify-end'>
-          <button
-            className='ml-4 bg-red-600 py-2 px-3 text-lg rounded-lg text-white hover:scale-110'
-            onClick={() => {
-              if (window.confirm('버스킹을 종료하시겠습니까?')) {
-                removeBusking().finally(() => {
-                  router.push('/app/home');
-                });
-              }
-            }}
+          <PrimaryBtn
+            bgColor={color.warning}
+            handleClick={handleClickEndBuskingBtn}
           >
             버스킹 종료
-          </button>
+          </PrimaryBtn>
         </section>
       </MainSec>
     </>

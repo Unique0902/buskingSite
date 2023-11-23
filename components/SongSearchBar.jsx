@@ -1,4 +1,6 @@
 import React from 'react';
+import { borderRadius, xyPadding } from '../styles/theme';
+import PrimaryBtn from './Btn/PrimaryBtn';
 
 const SongSearchBar = ({
   searchWord,
@@ -18,14 +20,14 @@ const SongSearchBar = ({
   };
   return (
     <form
-      className='relative flex flex-row justify-center items-center mb-6'
+      className='relative flex flex-row justify-center gap-2 items-center mb-6'
       onSubmit={(e) => {
         e.preventDefault();
       }}
     >
-      <div className='relative flex flex-row justify-center max-lg:flex-col items-center'>
+      <div className='relative flex flex-row gap-2 justify-center max-lg:flex-col items-center'>
         <select
-          className=' border-black border-2 rounded-xl p-2 font-sans max-lg:w-full max-lg:mr-0 max-lg:mb-2 max-lg:text-base text-lg mr-4'
+          className=' border-black border-2 rounded-xl p-2 font-sans max-lg:w-full max-lg:mr-0 max-lg:mb-2 max-lg:text-base text-lg'
           value={searchWord.category}
           onChange={(e) => {
             setSearchWord({ ...searchWord, category: e.target.value });
@@ -43,12 +45,13 @@ const SongSearchBar = ({
             setSearchWord({ ...searchWord, name: e.target.value });
           }}
         />
-        <button
-          onClick={handleClickBtn}
-          className=' bg-blue-600 text-white font-sans p-3 rounded-lg ml-2 hover:scale-105'
+        <PrimaryBtn
+          handleClick={handleClickBtn}
+          btnPadding={xyPadding.lg}
+          radius={borderRadius.xm}
         >
           검색
-        </button>
+        </PrimaryBtn>
       </div>
       {children}
     </form>

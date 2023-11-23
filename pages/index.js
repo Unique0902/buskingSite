@@ -3,6 +3,8 @@ import Image from 'next/image';
 import LoginNav from '../components/LoginNav';
 import { useAuthContext } from '../context/AuthContext';
 import { useRouter } from 'next/router';
+import PrimaryBtn from '../components/Btn/PrimaryBtn';
+import { fontSize, xyPadding } from '../styles/theme';
 
 export default function Home() {
   const tutorialRef = useRef(null);
@@ -14,11 +16,14 @@ export default function Home() {
       router.push('/app/home');
     }
   }, [user]);
+  const handleClickLoginBtn = () => {
+    login('Google');
+  };
   return (
     <section className='w-screen h-screen bg-black'>
       <section className='p-6 bg-white'>
         <LoginNav scrollToTutorial={scrollToTutorial} />
-        <main className=' w-2/5 pt-24 pb-24 m-auto max-lg:w-full'>
+        <main className=' w-3/5 pt-24 pb-24 m-auto max-lg:w-full'>
           <h1 className='font-sans text-6xl font-semibold text-black text-center max-lg:text-4xl'>
             당신만의{' '}
             <div className='inline text-blue-600 font-extrabold'>
@@ -33,14 +38,13 @@ export default function Home() {
           </h2>
           <ul className='flex justify-center mt-10'>
             <li>
-              <button
-                onClick={() => {
-                  login('Google');
-                }}
-                className='text-white hover:scale-105 py-4 px-8 font-sans text-xl bg-slate-900 rounded-3xl'
+              <PrimaryBtn
+                handleClick={handleClickLoginBtn}
+                fontSize={fontSize.base}
+                btnPadding={xyPadding.lg}
               >
                 Google로 로그인하기
-              </button>
+              </PrimaryBtn>
             </li>
           </ul>
         </main>
