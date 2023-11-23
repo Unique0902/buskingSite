@@ -30,7 +30,7 @@ const App = () => {
   const { getIp } = useIpContext();
   const { applyOldBuskingSong, applyNewBuskingSong, getBuskingData } =
     useBuskingContext();
-  const { getPlaylist } = usePlaylistContext();
+  const { getPlaylists } = usePlaylistContext();
   const { getUserData } = useUserDataContext();
   const search = () => {
     if (nowPlaylist && nowPlaylist.songs) {
@@ -75,7 +75,7 @@ const App = () => {
   };
   useEffect(() => {
     if (isUser) {
-      getPlaylist(userId).then((data) => {
+      getPlaylists(userId).then((data) => {
         setPlaylists(data);
         const listArr = Object.values(data);
         setPlaylistsArr(listArr);
@@ -121,12 +121,7 @@ const App = () => {
     } else {
       setAppliance([]);
     }
-  }, [
-    buskingData,
-    buskingData &&
-      buskingData.appliance &&
-      Object.values(buskingData.appliance).length,
-  ]);
+  }, [buskingData]);
 
   useEffect(() => {
     if (userId) {
@@ -157,7 +152,7 @@ const App = () => {
   };
   useEffect(() => {
     if (buskingData) {
-      getPlaylist(userId).then((data) => {
+      getPlaylists(userId).then((data) => {
         setPlaylistData(data[buskingData.playlistId]);
       });
     }

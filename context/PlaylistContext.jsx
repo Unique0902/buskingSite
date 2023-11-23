@@ -111,8 +111,11 @@ export function PlaylistContextProvider({ playlistRepository, children }) {
     playlistRepository.syncPlaylist(userId, onUpdate);
   };
 
-  const getPlaylist = async (userId) => {
-    return playlistRepository.getPlaylist(userId);
+  const getPlaylists = async (userId) => {
+    return playlistRepository.getPlaylists(userId);
+  };
+  const getPlaylist = async (userId, playlistId) => {
+    return playlistRepository.getPlaylist(userId, playlistId);
   };
 
   return (
@@ -129,7 +132,7 @@ export function PlaylistContextProvider({ playlistRepository, children }) {
         addPlaylist,
         changeNowPlaylist,
         syncPlaylist,
-        getPlaylist,
+        getPlaylists,
       }}
     >
       {children}
