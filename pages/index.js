@@ -7,7 +7,7 @@ import PrimaryBtn from '../components/Btn/PrimaryBtn';
 import { fontSize, xyPadding } from '../styles/theme';
 
 export default function Home() {
-  const tutorialRef = useRef(null);
+  const tutorialRef = useRef();
   const scrollToTutorial = () => tutorialRef.current.scrollIntoView();
   const { login, user } = useAuthContext();
   const router = useRouter();
@@ -153,14 +153,13 @@ export default function Home() {
         <h2 className='text-black font-sans text-5xl font-semibold mb-6 max-lg:text-center'>
           자 그럼 시작하러 가볼까요?
         </h2>
-        <button
-          onClick={() => {
-            login('Google');
-          }}
-          className='text-white hover:scale-105 py-4 px-8 font-sans text-xl bg-slate-900 rounded-3xl mt-6'
+        <PrimaryBtn
+          handleClick={handleClickLoginBtn}
+          fontSize={fontSize.base}
+          btnPadding={xyPadding.lg}
         >
-          Google로 시작하기
-        </button>
+          Google로 로그인하기
+        </PrimaryBtn>
       </section>
     </section>
   );

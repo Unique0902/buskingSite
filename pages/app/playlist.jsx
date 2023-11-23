@@ -7,13 +7,13 @@ import ArrangeMenuBtn from '../../components/ArrangeMenuBtn';
 import { usePlaylistContext } from '../../context/PlaylistContext';
 import SongTable from '../../components/SongTable';
 import { getAppLayOut } from '../../layouts/appLayout';
+import NoPlaylistSection from '../../components/NoPlaylistSection';
 
 export default function AppPlaylist() {
   const [results, setResults] = useState([]);
   const [pageNum, setPageNum] = useState(1);
   const [searchWord, setSearchWord] = useState({ name: '', category: '제목' });
-  const { nowPlaylist, addBasicPlaylist, removeSongInPlaylist } =
-    usePlaylistContext();
+  const { nowPlaylist, removeSongInPlaylist } = usePlaylistContext();
   useEffect(() => {
     if (nowPlaylist) {
       nowPlaylist.songs
@@ -72,19 +72,7 @@ export default function AppPlaylist() {
     <>
       <TitleBar text={'플레이리스트 관리'} />
       {!nowPlaylist ? (
-        <MainSec>
-          <h3 className='font-sans font-semibold text-xl text-black'>
-            플레이리스트가 존재하지 않습니다. 플레이 리스트를 추가해주세요.
-          </h3>
-          <button
-            onClick={() => {
-              addBasicPlaylist();
-            }}
-            className='mt-4 font-sans text-2xl font-normal border border-black rounded-xl px-5 py-3 hover:bg-gray-200'
-          >
-            추가하기
-          </button>
-        </MainSec>
+        <NoPlaylistSection />
       ) : (
         <MainSec>
           <SongSearchBar

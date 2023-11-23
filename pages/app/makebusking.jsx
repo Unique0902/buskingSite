@@ -7,6 +7,7 @@ import { usePlaylistContext } from '../../context/PlaylistContext';
 import { getAppLayOut } from '../../layouts/appLayout';
 import { useRouter } from 'next/router';
 import { useBuskingContext } from '../../context/BuskingContext';
+import NoPlaylistSection from '../../components/NoPlaylistSection';
 
 export default function AppMakeBusking({}) {
   const [playlistArr, setPlaylistArr] = useState(null);
@@ -16,7 +17,7 @@ export default function AppMakeBusking({}) {
     name: '',
   });
   const { buskingData, makeBusking } = useBuskingContext();
-  const { playlists, nowPlaylist, addBasicPlaylist } = usePlaylistContext();
+  const { playlists, nowPlaylist } = usePlaylistContext();
   const { userData } = useUserDataContext();
   const router = useRouter();
   useEffect(() => {
@@ -68,19 +69,7 @@ export default function AppMakeBusking({}) {
     <>
       <TitleBar text={'버스킹하기'} />
       {!nowPlaylist ? (
-        <MainSec>
-          <h3 className='font-sans font-semibold text-xl text-black'>
-            플레이리스트가 존재하지 않습니다. 플레이 리스트를 추가해주세요.
-          </h3>
-          <button
-            onClick={() => {
-              addBasicPlaylist();
-            }}
-            className='mt-4 font-sans text-2xl font-normal border border-black rounded-xl px-5 py-3 hover:bg-gray-200'
-          >
-            추가하기
-          </button>
-        </MainSec>
+        <NoPlaylistSection />
       ) : (
         <MainSec>
           <MainRow title={'플레이리스트 선택'}>

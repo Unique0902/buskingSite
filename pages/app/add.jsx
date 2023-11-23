@@ -8,15 +8,14 @@ import { useEffect } from 'react';
 import { getAppLayOut } from '../../layouts/appLayout';
 import InfoBtn from '../../components/InfoBtn';
 import { useLastFmContext } from '../../context/LastFmContext';
-import PrimaryBtn from '../../components/Btn/PrimaryBtn';
+import NoPlaylistSection from '../../components/NoPlaylistSection';
 
 export default function AppAdd({}) {
   const [searchResults, setSearchResults] = useState([]);
   const [resultNum, setResultNum] = useState(0);
   const [pageNum, setPageNum] = useState(1);
   const [searchWord, setSearchWord] = useState({ name: '', category: '제목' });
-  const { nowPlaylist, addBasicPlaylist, addSongToPlaylist } =
-    usePlaylistContext();
+  const { nowPlaylist, addSongToPlaylist } = usePlaylistContext();
   const { searchSongByName, searchSongByArtist, getTopTracks } =
     useLastFmContext();
   const search = (pageNum) => {
@@ -60,21 +59,12 @@ export default function AppAdd({}) {
     setPageNum(1);
     search(1);
   };
-  const handleClickAddBasicPlaylist = () => {
-    addBasicPlaylist();
-  };
+
   return (
     <>
       <TitleBar text={'노래추가'} />
       {!nowPlaylist ? (
-        <MainSec>
-          <h3 className='font-sans font-semibold text-xl text-black'>
-            플레이리스트가 존재하지 않습니다. 플레이 리스트를 추가해주세요.
-          </h3>
-          <PrimaryBtn handleClick={handleClickAddBasicPlaylist}>
-            추가하기
-          </PrimaryBtn>
-        </MainSec>
+        <NoPlaylistSection />
       ) : (
         <MainSec>
           <SongSearchBar

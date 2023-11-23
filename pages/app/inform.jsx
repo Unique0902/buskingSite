@@ -20,6 +20,15 @@ export default function AppInform({
       setTime(new Date(userData.date));
     }
   }, [userData]);
+  const handleClickInformRow = () => {
+    if (window.confirm('정말 탈퇴하시겠습니까?')) {
+      userRepository.removeUser(uid, () => {
+        playlistRepository.removeUserPlaylists(uid);
+        buskingRepository.removeBusking(uid, () => {});
+        logout();
+      });
+    }
+  };
   return (
     <>
       <TitleBar text={'내 정보'} />
@@ -44,15 +53,7 @@ export default function AppInform({
         <InformRow
           title={'회원 탈퇴'}
           titleColor={'red'}
-          handleClick={() => {
-            if (window.confirm('정말 탈퇴하시겠습니까?')) {
-              userRepository.removeUser(uid, () => {
-                playlistRepository.removeUserPlaylists(uid);
-                buskingRepository.removeBusking(uid, () => {});
-                logout();
-              });
-            }
-          }}
+          handleClick={handleClickInformRow}
         ></InformRow>
       </MainSec>
     </>
