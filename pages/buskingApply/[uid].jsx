@@ -14,13 +14,11 @@ import { ArrowDownIcn } from '../../assets/icon/icon';
 const App = () => {
   const [isUser, setIsUser] = useState(false);
   const [buskingData, setBuskingData] = useState(null);
-  const [playlistData, setPlaylistData] = useState(null);
   const [results, setResults] = useState([]);
   const [pageNum, setPageNum] = useState(1);
   const [pageNum2, setPageNum2] = useState(1);
   const [appliance, setAppliance] = useState([]);
   const [playlists, setPlaylists] = useState(null);
-  const [playlistsArr, setPlaylistsArr] = useState([]);
   const [nowPlaylist, setNowPlaylist] = useState(null);
   const [isShowPlaylistMenu, setIsShowPlaylistMenu] = useState(false);
   const [ip, setIp] = useState('');
@@ -76,23 +74,20 @@ const App = () => {
   useEffect(() => {
     if (isUser) {
       getPlaylists(userId).then((data) => {
+        if (!data) return;
         setPlaylists(data);
         const listArr = Object.values(data);
-        setPlaylistsArr(listArr);
         if (listArr.length > 0) {
           setNowPlaylist(listArr[0]);
+          // nowPlaylist.songs && setResults(Object.values(nowPlaylist.songs));
+          // setState함수는 비동기적으로 동작하므로 위 코드에 nowPlaylist가 잘들어갔는지 보장할 수 없다!
+          //따라서 아래처럼 코드를 바꾸었다.
+          listArr[0].songs && setResults(Object.values(listArr[0].songs));
         }
       });
     }
   }, [isUser]);
 
-  useEffect(() => {
-    if (isUser) {
-      if (nowPlaylist) {
-        nowPlaylist.songs && setResults(Object.values(nowPlaylist.songs));
-      }
-    }
-  }, [isUser, nowPlaylist]);
   useEffect(() => {
     getIp().then((ip1) => setIp(ip1));
   }, []);
@@ -123,15 +118,15 @@ const App = () => {
     }
   }, [buskingData]);
 
+  const checkIsUser = async () => {
+    const data = await getUserData(userId);
+    console.log(data);
+    setIsUser(!!data);
+  };
+
   useEffect(() => {
     if (userId) {
-      getUserData(userId).then((data) => {
-        if (data) {
-          setIsUser(true);
-        } else {
-          setIsUser(false);
-        }
-      });
+      checkIsUser();
     }
   }, [userId]);
 
@@ -141,28 +136,15 @@ const App = () => {
   };
 
   useEffect(() => {
-    if (userId && !buskingData) {
+    if (userId && !buskingData && isUser) {
       handleBuskingData();
     }
-  }, [userId]);
+  }, [userId, isUser]);
 
   const handleSearchBarChange = () => {
     setPageNum(1);
     search();
   };
-  useEffect(() => {
-    if (buskingData) {
-      getPlaylists(userId).then((data) => {
-        setPlaylistData(data[buskingData.playlistId]);
-      });
-    }
-  }, [buskingData]);
-  useEffect(() => {
-    if (playlistData) {
-      playlistData.songs && setResults(Object.values(playlistData.songs));
-    } else {
-    }
-  }, [playlistData]);
 
   const handleSongClick1 = (sid) => {
     if (buskingData.appliance) {
@@ -254,8 +236,15 @@ const App = () => {
   return (
     <section className='flex w-full h-screen px-8 py-4 overflow-auto text-black max-md:px-4 bg-gradient-to-b from-blue-500 to-mainBlue'>
       <section className='w-full'>
-        {isUser ? (
-          !!buskingData ? (
+        {!isUser && (
+          <MainSec>
+            <h1 className='font-sans text-xl font-semibold text-black'>
+              해당하는 유저가 존재하지않습니다.
+            </h1>
+          </MainSec>
+        )}
+        {isUser &&
+          (buskingData ? (
             <section className='text-black'>
               <section className='flex flex-row items-center pt-3 pb-8 border-b border-gray-600 max-lg:flex-col max-lg:text-center'>
                 <h1 className='font-sans text-3xl font-semibold text-white w-96 max-lg:w-full max-lg:mb-3'>
@@ -263,8 +252,8 @@ const App = () => {
                 </h1>
                 <div className='flex flex-row items-center justify-end mr-4 grow max-lg:flex-col'>
                   <h2 className='ml-8 font-sans text-2xl font-semibold text-white'>
-                    {!!playlistData &&
-                      `선택된 플레이리스트: ${playlistData.name}`}
+                    {!!nowPlaylist &&
+                      `선택된 플레이리스트: ${nowPlaylist.name}`}
                   </h2>
                 </div>
               </section>
@@ -400,14 +389,7 @@ const App = () => {
                 </MainSec>
               )}
             </section>
-          )
-        ) : (
-          <MainSec>
-            <h1 className='font-sans text-xl font-semibold text-black'>
-              해당하는 유저가 존재하지않습니다.
-            </h1>
-          </MainSec>
-        )}
+          ))}
       </section>
     </section>
   );

@@ -1,6 +1,5 @@
 import { database } from './firebase';
 import { get, onValue, ref, remove, set } from 'firebase/database';
-import { async } from '@firebase/util';
 
 class UserRepository {
   syncUserData(userId, onUpdate) {
@@ -13,7 +12,7 @@ class UserRepository {
   getUserData = async (userId) => {
     const listRef = ref(database, `users/${userId}/`);
     return get(listRef).then((snapshot) => {
-      const items = snapshot.val() || {};
+      const items = snapshot.val() || null;
       return items;
     });
   };
