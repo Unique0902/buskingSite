@@ -2,7 +2,6 @@ import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import LoginNav from '../components/LoginNav';
 import { useAuthContext } from '../context/AuthContext';
-import { useUserDataContext } from '../context/UserDataContext';
 import { useRouter } from 'next/router';
 
 export default function Home() {
