@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { FaCaretDown } from 'react-icons/fa';
+import React, { useState, useEffect } from 'react';
 import { useIpContext } from '../../context/IpContext';
 import { useBuskingContext } from '../../context/BuskingContext';
 import { usePlaylistContext } from '../../context/PlaylistContext';
@@ -10,6 +9,7 @@ import PlaylistMenu from '../../components/PlaylistMenu';
 import { useRouter } from 'next/router';
 import ArrangeMenuBtn from '../../components/ArrangeMenuBtn';
 import SongTable from '../../components/SongTable';
+import { ArrowDownIcn } from '../../assets/icon/icon';
 
 const App = () => {
   const [isUser, setIsUser] = useState(false);
@@ -352,7 +352,12 @@ const App = () => {
                     }}
                   >
                     {nowPlaylist ? nowPlaylist.name : 'No Playlist..'}
-                    <FaCaretDown className='ml-2' />
+                    <ArrowDownIcn
+                      width={16}
+                      height={16}
+                      color={'white'}
+                      className='ml-2'
+                    />
                   </button>
                 </div>
               </MainSec>
