@@ -1,5 +1,5 @@
 import React from 'react';
-import { borderRadius, xyPadding } from '../../styles/theme';
+import { bgColors, borderRadius, xyPadding } from '../../styles/theme';
 import PrimaryBtn from '../Btn/PrimaryBtn';
 
 const SongSearchBar = ({
@@ -20,14 +20,14 @@ const SongSearchBar = ({
   };
   return (
     <form
-      className='relative flex flex-row justify-center gap-2 items-center mb-6'
+      className='relative flex flex-row items-center justify-center gap-2 mb-6'
       onSubmit={(e) => {
         e.preventDefault();
       }}
     >
-      <div className='relative flex flex-row gap-2 justify-center max-lg:flex-col items-center'>
+      <div className='relative flex flex-row items-center justify-center gap-2 max-lg:flex-col'>
         <select
-          className=' border-black border-2 rounded-xl p-2 font-sans max-lg:w-full max-lg:mr-0 max-lg:mb-2 max-lg:text-base text-lg'
+          className='p-2 font-sans text-lg border-2 border-black rounded-xl max-lg:w-full max-lg:mr-0 max-lg:mb-2 max-lg:text-base'
           value={searchWord.category}
           onChange={(e) => {
             setSearchWord({ ...searchWord, category: e.target.value });
@@ -38,7 +38,7 @@ const SongSearchBar = ({
         </select>
         <input
           type='search'
-          className='border-black border-2 p-2 rounded-xl w-96 max-lg:text-base max-lg:w-full font-sans text-lg'
+          className='p-2 font-sans text-lg border-2 border-black rounded-xl w-96 max-lg:text-base max-lg:w-full'
           placeholder='검색어를 입력하세요..'
           value={searchWord.name}
           onChange={(e) => {

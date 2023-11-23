@@ -35,12 +35,12 @@ export default function AppInform({
       <TitleBar text={'내 정보'} />
       <MainSec>
         <RowWithTitle title={'닉네임'}>
-          <p className='font-sans text-lg text-black font-normal'>
+          <p className='font-sans text-lg font-normal text-black'>
             {userData && userData.name}
           </p>
         </RowWithTitle>
         <RowWithTitle title={'가입일자'}>
-          <p className='font-sans text-lg text-black font-normal'>
+          <p className='font-sans text-lg font-normal text-black'>
             {time &&
               `${time.getFullYear()}년 ${
                 time.getMonth() + 1
