@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import HoverTextSection from '../../components/HoverTextBtn';
+import HoverTextSection from '../../components/HoverTextSection';
 import MainSec from '../../components/MainSec';
 import { useMediaQuery } from 'react-responsive';
 import { useAuthContext } from '../../context/AuthContext';
@@ -18,6 +18,7 @@ import {
 import ArrangeMenuBtn from '../../components/ArrangeMenuBtn';
 import PrimaryBtn from '../../components/Btn/PrimaryBtn';
 import { color } from '../../styles/theme';
+import SectionCopyText from '../../components/SectionCopyText';
 
 export default function AppBusking({}) {
   const { playlists } = usePlaylistContext();
@@ -101,7 +102,7 @@ export default function AppBusking({}) {
         <h1 className='font-sans text-white text-3xl font-semibold w-96 max-lg:w-full max-lg:text-center max-lg:mb-4'>
           {userData && `${userData.name}님의 버스킹`}
         </h1>
-        <div className='flex flex-row items-center lg:border-l border-gray-400 grow justify-center'>
+        <div className='flex flex-row gap-4 items-center lg:border-l border-gray-400 grow justify-center'>
           {!isLgMediaQuery && (
             <h2 className='font-sans text-gray-300 text-xl font-bold'>
               곡 신청 사이트
@@ -109,7 +110,6 @@ export default function AppBusking({}) {
           )}
           {isShowQr && !isLgMediaQuery && (
             <img
-              className='ml-8 mr-4'
               src={`https://chart.apis.google.com/chart?cht=qr&chs=100x100&chl=${url}`}
             />
           )}
@@ -123,7 +123,13 @@ export default function AppBusking({}) {
               QR코드 {isShowQr ? '숨기기' : '불러오기'}
             </PrimaryBtn>
           )}
-          <HoverTextSection text={`${url}`}>신청 URL 확인</HoverTextSection>
+          <HoverTextSection
+            text={'신청 URL 확인'}
+            bgColor={color.white}
+            textColor={color.gray_900}
+          >
+            <SectionCopyText text={`${url}`} />
+          </HoverTextSection>
         </div>
       </section>
 
