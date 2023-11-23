@@ -1,22 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
-import {
-  FaGuitar,
-  FaHome,
-  FaMusic,
-  FaPlus,
-  FaUser,
-  FaBookOpen,
-  FaChevronLeft,
-  FaChevronRight,
-} from 'react-icons/fa';
 import { useRouter } from 'next/router';
 import { useMediaQuery } from 'react-responsive';
 import SideBarBtn from './SideBarBtn';
 import {
-  ArrowDownIcn,
   ArrowLeftIcn,
+  ArrowRightIcn,
   BookIcn,
+  GuitarIcn,
   HomeIcn,
+  PlusIcn,
+  SongIcn,
+  UserIcn,
 } from '../assets/icon/icon';
 const Sidebar = ({ isShowSideBar, setIsShowSideBar }) => {
   const [isHide, setIsHide] = useState(false);
@@ -67,11 +61,10 @@ const Sidebar = ({ isShowSideBar, setIsShowSideBar }) => {
       >
         {!isHide && (
           <div className='flex items-center py-3 px-5  border-solid text-white border-gray-600 border-b'>
-            {/* <FaBookOpen className={`mr-4 text-2xl text-blue-400`} /> */}
             <BookIcn
               width={32}
               height={32}
-              fill={'#60a5fa'}
+              color={'#60a5fa'}
               className={`mr-4`}
             />
             <p className=' font-sans text-2xl font-semibold '>노래책</p>
@@ -79,7 +72,7 @@ const Sidebar = ({ isShowSideBar, setIsShowSideBar }) => {
         )}
         {isHide && (
           <div className='flex items-center text-blue-600 justify-center text-2xl w-full text-center py-4 border-solid border-gray-600 border-b'>
-            <BookIcn width={32} height={32} fill={'#60a5fa'} />
+            <BookIcn width={32} height={32} color={'#60a5fa'} />
           </div>
         )}
 
@@ -90,13 +83,12 @@ const Sidebar = ({ isShowSideBar, setIsShowSideBar }) => {
             isHide={isHide}
             text={'Home'}
           >
-            <ArrowLeftIcn
-              width={24}
-              height={24}
+            <HomeIcn
+              width={20}
+              height={20}
               color={'white'}
-              className={`${!isHide && iconStyle} text-center`}
+              className={`${!isHide && iconStyle}`}
             />
-            {/* <FaHome className={`${!isHide && iconStyle} text-center`} /> */}
           </SideBarBtn>
           {!isHide && (
             <li>
@@ -111,7 +103,12 @@ const Sidebar = ({ isShowSideBar, setIsShowSideBar }) => {
             isHide={isHide}
             text={'노래 추가'}
           >
-            <FaPlus className={`${!isHide && iconStyle}`} />
+            <PlusIcn
+              width={20}
+              height={20}
+              color={'white'}
+              className={`${!isHide && iconStyle}`}
+            />
           </SideBarBtn>
           <SideBarBtn
             name={'playlist'}
@@ -119,7 +116,12 @@ const Sidebar = ({ isShowSideBar, setIsShowSideBar }) => {
             isHide={isHide}
             text={'Playlist 관리'}
           >
-            <FaMusic className={`${!isHide && iconStyle}`} />
+            <SongIcn
+              width={20}
+              height={20}
+              color={'white'}
+              className={`${!isHide && iconStyle}`}
+            />
           </SideBarBtn>
           <SideBarBtn
             name={'inform'}
@@ -127,7 +129,12 @@ const Sidebar = ({ isShowSideBar, setIsShowSideBar }) => {
             isHide={isHide}
             text={'내 정보'}
           >
-            <FaUser className={`${!isHide && iconStyle}`} />
+            <UserIcn
+              width={20}
+              height={20}
+              color={'white'}
+              className={`${!isHide && iconStyle}`}
+            />
           </SideBarBtn>
           <SideBarBtn
             name={'makebusking'}
@@ -135,22 +142,27 @@ const Sidebar = ({ isShowSideBar, setIsShowSideBar }) => {
             isHide={isHide}
             text={'버스킹하기'}
           >
-            <FaGuitar className={`${!isHide && iconStyle}`} />
+            <GuitarIcn
+              width={20}
+              height={20}
+              color={'white'}
+              className={`${!isHide && iconStyle}`}
+            />
           </SideBarBtn>
 
           <li>
             {isHide ? (
               <button
-                className='absolute border-solid flex justify-center hover:text-gray-400 border-gray-600 border-t bottom-0 py-7 w-full text-white'
+                className='absolute border-solid flex justify-center hover:opacity-70 border-gray-600 border-t bottom-0 py-7 w-full text-white'
                 onClick={() => {
                   setIsHide(false);
                 }}
               >
-                <FaChevronRight />
+                <ArrowRightIcn width={20} height={20} color={'white'} />
               </button>
             ) : (
               <button
-                className='absolute flex justify-end hover:text-gray-400 border-solid border-gray-600 border-t bottom-0 py-7 w-full text-right pr-5 text-white'
+                className='absolute flex justify-end hover:opacity-70 border-solid border-gray-600 border-t bottom-0 py-7 w-full text-right pr-5 text-white'
                 onClick={() => {
                   if (isLgMediaQuery) {
                     setIsShowSideBar(false);
@@ -159,7 +171,7 @@ const Sidebar = ({ isShowSideBar, setIsShowSideBar }) => {
                   }
                 }}
               >
-                <FaChevronLeft />
+                <ArrowLeftIcn width={20} height={20} color={'white'} />
               </button>
             )}
           </li>

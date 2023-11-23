@@ -19,7 +19,9 @@ export default function SideBarBtn({
         selectedBtn === name ? 'text-blue-400' : 'text-white'
       } `}
     >
-      {children}
+      {React.cloneElement(children, {
+        color: `${selectedBtn === name ? '#60a5fa' : 'white'}`,
+      })}
       {!isHide && text}
     </Link>
   );
