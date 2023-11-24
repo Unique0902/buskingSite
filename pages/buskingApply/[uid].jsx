@@ -8,7 +8,6 @@ import SongSearchBar from '../../components/Search/SongSearchBar';
 import PlaylistMenu from '../../components/PlaylistMenu';
 import { useRouter } from 'next/router';
 import ArrangeMenuBtn from '../../components/ArrangeMenuBtn';
-import SongTable from '../../components/SongTable';
 import { ArrowDownIcn } from '../../assets/icon/icon';
 import ResultsTable from '../../components/Table/ResultsTable';
 
