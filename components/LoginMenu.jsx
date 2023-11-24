@@ -15,8 +15,8 @@ const LoginMenu = ({ userData, setIsShowLoginMenu }) => {
       }}
       isLeft={false}
     >
-      <section className=' border-b border-gray-400 border-solid flex flex-col pt-2 pb-2'>
-        <p className=' text-center text-blue-600 font-sans text-xl py-3 px-4'>
+      <section className='flex flex-col pt-2 pb-2 border-b border-gray-400 border-solid '>
+        <p className='px-4 py-3 font-sans text-xl text-center text-blue-600 '>
           {userData && userData.name}
         </p>
         <button
@@ -37,11 +37,11 @@ const LoginMenu = ({ userData, setIsShowLoginMenu }) => {
           로그아웃
         </button>
       </section>
-      <section className='flex flex-row justify-around py-4 px-4'>
-        <button className='text-gray-500 font-sans text-sm hover:bg-gray-200'>
+      <section className='flex flex-row justify-around px-4 py-4'>
+        <button className='font-sans text-sm text-gray-500 hover:bg-gray-200'>
           개인정보 처리 방침
         </button>
-        <button className='text-gray-500 font-sans text-sm hover:bg-gray-200'>
+        <button className='font-sans text-sm text-gray-500 hover:bg-gray-200'>
           서비스 약관
         </button>
       </section>

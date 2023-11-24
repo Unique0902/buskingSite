@@ -10,34 +10,31 @@ import InfoBtn from '../../components/InfoBtn';
 import { useLastFmContext } from '../../context/LastFmContext';
 import NoPlaylistSection from '../../components/NoPlaylistSection';
 import { PlusIcn } from '../../assets/icon/icon';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
 export default function AppAdd({}) {
   const [searchResults, setSearchResults] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [resultNum, setResultNum] = useState(0);
   const [pageNum, setPageNum] = useState(1);
   const [searchWord, setSearchWord] = useState({ name: '', category: '제목' });
   const { nowPlaylist, addSongToPlaylist } = usePlaylistContext();
   const { searchSongByName, searchSongByArtist, getTopTracks } =
     useLastFmContext();
-  const search = (pageNum) => {
+  const search = async (pageNum) => {
+    setIsLoading(true);
     if (searchWord.name) {
       if (searchWord.category === '제목') {
-        searchSongByName(searchWord.name, pageNum).then((result) => {
-          setSearchResults(result.trackmatches.track);
-          setResultNum(parseInt(result['opensearch:totalResults']));
-        });
+        const result = await searchSongByName(searchWord.name, pageNum);
+        setSearchResults(result.trackmatches.track);
+        setResultNum(parseInt(result['opensearch:totalResults']));
       } else if (searchWord.category === '가수') {
-        searchSongByArtist(searchWord.name, pageNum).then((result) => {
-          setSearchResults(result.trackmatches.track);
-          setResultNum(parseInt(result['opensearch:totalResults']));
-        });
+        const result = await searchSongByArtist(searchWord.name, pageNum);
+        setSearchResults(result.trackmatches.track);
+        setResultNum(parseInt(result['opensearch:totalResults']));
       }
-    } else {
-      getTopTracks(pageNum).then((result) => {
-        setSearchResults(result.track);
-        setResultNum(parseInt(result['@attr'].total));
-      });
     }
+    setIsLoading(false);
   };
   useEffect(() => {
     if (searchResults) {
@@ -79,16 +76,20 @@ export default function AppAdd({}) {
               }
             />
           </SongSearchBar>
-          <SongAddTable
-            results={searchResults}
-            pageNum={pageNum}
-            onSongClick={addSongToPlaylist}
-            resultNum={resultNum}
-            onPagePlus={handelPlus}
-            onPageMinus={handelMinus}
-          >
-            <PlusIcn width={24} height={24} color={'white'} />
-          </SongAddTable>
+          {isLoading ? (
+            <LoadingSpinner />
+          ) : (
+            <SongAddTable
+              results={searchResults}
+              pageNum={pageNum}
+              onSongClick={addSongToPlaylist}
+              resultNum={resultNum}
+              onPagePlus={handelPlus}
+              onPageMinus={handelMinus}
+            >
+              <PlusIcn width={24} height={24} color={'white'} />
+            </SongAddTable>
+          )}
         </MainSec>
       )}
     </>
