@@ -8,8 +8,9 @@ import SongSearchBar from '../../components/Search/SongSearchBar';
 import PlaylistMenu from '../../components/PlaylistMenu';
 import { useRouter } from 'next/router';
 import ArrangeMenuBtn from '../../components/ArrangeMenuBtn';
-import { ArrowDownIcn } from '../../assets/icon/icon';
-import ResultsTable from '../../components/Table/ResultsTable';
+import { ArrowDownIcn, SendIcn, SmileIcn } from '../../assets/icon/icon';
+import RequestSongTable from '../../components/Table/RequestSongTable';
+import PrimarySongTable from '../../components/Table/PrimarySongTable';
 
 const App = () => {
   const [isUser, setIsUser] = useState(false);
@@ -239,11 +240,13 @@ const App = () => {
                     isBusking={false}
                   />
                 </SongSearchBar>
-                <ResultsTable
+
+                <PrimarySongTable
                   results={results}
-                  btnText={'신청'}
                   handleClickResult={handleSongClick1}
-                />
+                >
+                  <SendIcn width={24} height={24} color={'white'} />
+                </PrimarySongTable>
               </MainSec>
 
               <MainSec>
@@ -255,11 +258,13 @@ const App = () => {
                     신청된 곡 수 {appliance.length}
                   </h3>
                 </section>
-                <ResultsTable
+
+                <RequestSongTable
                   results={appliance}
-                  btnText={'신청'}
                   handleClickResult={handleSongClick2}
-                />
+                >
+                  <SendIcn width={24} height={24} color={'white'} />
+                </RequestSongTable>
               </MainSec>
             </section>
           ) : (
@@ -323,11 +328,13 @@ const App = () => {
                       isBusking={false}
                     />
                   </SongSearchBar>
-                  <ResultsTable
+
+                  <PrimarySongTable
                     results={results}
-                    btnText={'신청가능'}
                     handleClickResult={() => {}}
-                  />
+                  >
+                    <SmileIcn width={24} height={24} color={'white'} />
+                  </PrimarySongTable>
                 </MainSec>
               )}
             </section>

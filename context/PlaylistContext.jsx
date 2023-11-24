@@ -133,6 +133,7 @@ export function PlaylistContextProvider({ playlistRepository, children }) {
         changeNowPlaylist,
         syncPlaylist,
         getPlaylists,
+        getPlaylist,
       }}
     >
       {children}

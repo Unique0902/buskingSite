@@ -1,25 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { useMediaQuery } from 'react-responsive';
+import React from 'react';
 import { MinusIcn, PlusIcn, SendIcn, SmileIcn } from '../../assets/icon/icon';
 import SlicedHoverText from '../Hover/SlicedHoverText';
 const Result = ({ index, result, onSongClick, btnText }) => {
-  const [sid, getSid] = useState('');
-  const [isHovering1, setIsHovering1] = useState(false);
-  const [isHovering2, setIsHovering2] = useState(false);
-  const [maxLeng, setMaxLeng] = useState(30);
-  const isPc = useMediaQuery({
-    query: '(min-width:1024px)',
-  });
-  useEffect(() => {
-    if (isPc) {
-      setMaxLeng(30);
-    } else {
-      setMaxLeng(20);
-    }
-  }, [isPc]);
-  useEffect(() => {
-    result.sid ? getSid(result.sid) : getSid(result.id);
-  }, [result]);
+  console.log(result);
   return (
     <li className='flex flex-row items-center justify-between w-full px-2 py-2 mb-1 font-sans text-base font-light text-center text-white rounded-xl'>
       <p className='basis-1/12'>{index}</p>
@@ -36,7 +19,7 @@ const Result = ({ index, result, onSongClick, btnText }) => {
         onClick={() => {
           btnText === '추가'
             ? onSongClick(result.name, result.artist)
-            : onSongClick && onSongClick(sid);
+            : onSongClick && onSongClick(result.sid || result.id);
         }}
         className='basis-1/12 hover:scale-110'
       >

@@ -9,6 +9,7 @@ import { getAppLayOut } from '../../layouts/appLayout';
 import InfoBtn from '../../components/InfoBtn';
 import { useLastFmContext } from '../../context/LastFmContext';
 import NoPlaylistSection from '../../components/NoPlaylistSection';
+import { PlusIcn } from '../../assets/icon/icon';
 
 export default function AppAdd({}) {
   const [searchResults, setSearchResults] = useState([]);
@@ -81,12 +82,13 @@ export default function AppAdd({}) {
           <SongAddTable
             results={searchResults}
             pageNum={pageNum}
-            btnText={'추가'}
             onSongClick={addSongToPlaylist}
             resultNum={resultNum}
             onPagePlus={handelPlus}
             onPageMinus={handelMinus}
-          />
+          >
+            <PlusIcn width={24} height={24} color={'white'} />
+          </SongAddTable>
         </MainSec>
       )}
     </>

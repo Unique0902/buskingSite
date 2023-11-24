@@ -1,27 +1,31 @@
 import React from 'react';
 import PageNumScreen from '../PageNumScreen';
-import Results from './Results';
+import SongAddResult from './SongAddResult';
 
 export default function SongAddTable({
   results,
   pageNum,
-  btnText,
   onSongClick,
   resultNum,
   onPagePlus,
   onPageMinus,
+  children,
 }) {
   return (
     <section className='w-full'>
       <ul className='p-1 bg-gray-800 rounded-xl'>
         {results && results.length !== 0 && (
           <>
-            <Results
-              results={results}
-              pageNum={pageNum}
-              btnText={btnText}
-              onSongClick={onSongClick}
-            />
+            {results.map((result) => (
+              <SongAddResult
+                key={results.indexOf(result)}
+                index={results.indexOf(result) + 1 + (pageNum - 1) * 6}
+                result={result}
+                handleSongClick={onSongClick}
+              >
+                {children}
+              </SongAddResult>
+            ))}
             <PageNumScreen
               resultNum={resultNum}
               pageNum={pageNum}

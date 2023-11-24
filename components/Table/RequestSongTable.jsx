@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import PageNumScreen from '../PageNumScreen';
-import Result from './Result';
+import RequestSongResult from './RequestSongResult';
 
-export default function ResultsTable({ results, btnText, handleClickResult }) {
+export default function RequestSongTable({
+  results,
+  handleClickResult,
+  children,
+}) {
   const [nowPageNum, setNowPageNum] = useState(1);
   const handelPlusPage = () => {
     if (nowPageNum < results.length / 6) {
@@ -26,13 +30,14 @@ export default function ResultsTable({ results, btnText, handleClickResult }) {
         {results && results.length !== 0 && (
           <>
             {resultsToView.map((result) => (
-              <Result
+              <RequestSongResult
                 key={resultsToView.indexOf(result)}
                 index={resultsToView.indexOf(result) + 1 + (nowPageNum - 1) * 6}
                 result={result}
-                btnText={btnText}
-                onSongClick={handleClickResult}
-              />
+                handleSongClick={handleClickResult}
+              >
+                {children}
+              </RequestSongResult>
             ))}
             <PageNumScreen
               resultNum={results.length}

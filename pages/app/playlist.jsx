@@ -7,7 +7,8 @@ import ArrangeMenuBtn from '../../components/ArrangeMenuBtn';
 import { usePlaylistContext } from '../../context/PlaylistContext';
 import { getAppLayOut } from '../../layouts/appLayout';
 import NoPlaylistSection from '../../components/NoPlaylistSection';
-import ResultsTable from '../../components/Table/ResultsTable';
+import PrimarySongTable from '../../components/Table/PrimarySongTable';
+import { MinusIcn } from '../../assets/icon/icon';
 
 export default function AppPlaylist() {
   const [songArr, setSongArr] = useState([]);
@@ -69,11 +70,13 @@ export default function AppPlaylist() {
           <h2 className='mb-2 font-sans text-xl font-semibold text-zinc-500'>
             총 노래 수 {songArr && songArr.length}
           </h2>
-          <ResultsTable
+
+          <PrimarySongTable
             results={songArr}
-            btnText={'제거'}
             handleClickResult={removeSongInPlaylist}
-          />
+          >
+            <MinusIcn width={24} height={24} color={'red'} />
+          </PrimarySongTable>
         </MainSec>
       )}
     </>

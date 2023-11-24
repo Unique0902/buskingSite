@@ -13,7 +13,8 @@ import { color } from '../../styles/theme';
 import SectionCopyText from '../../components/SectionCopyText';
 import MusicBar from '../../components/MusicBar/MusicBar';
 import QRCodeSection from '../../components/QRCodeSection';
-import ResultsTable from '../../components/Table/ResultsTable';
+import RequestSongTable from '../../components/Table/RequestSongTable';
+import { MinusIcn } from '../../assets/icon/icon';
 
 export default function AppBusking({}) {
   const { playlists } = usePlaylistContext();
@@ -95,11 +96,13 @@ export default function AppBusking({}) {
             isBusking={true}
           />
         </section>
-        <ResultsTable
+
+        <RequestSongTable
           results={songArrToView}
-          btnText={'제거'}
           handleClickResult={handleRemoveRequestSong}
-        />
+        >
+          <MinusIcn width={24} height={24} color={'red'} />
+        </RequestSongTable>
 
         <section className='flex flex-row justify-end pt-4'>
           <PrimaryBtn
