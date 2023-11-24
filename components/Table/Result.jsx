@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import { MinusIcn, PlusIcn, SendIcn, SmileIcn } from '../../assets/icon/icon';
-const SearchResult = ({ index, result, onSongClick, btnText }) => {
+const Result = ({ index, result, onSongClick, btnText }) => {
   const nameRef = useRef();
   const artistRef = useRef();
   const [sid, getSid] = useState('');
@@ -22,9 +22,9 @@ const SearchResult = ({ index, result, onSongClick, btnText }) => {
     result.sid ? getSid(result.sid) : getSid(result.id);
   }, [result]);
   return (
-    <li className='flex flex-row w-full text-white font-sans items-center font-light  rounded-xl mb-1 text-base justify-between px-2 py-2 text-center'>
+    <li className='flex flex-row items-center justify-between w-full px-2 py-2 mb-1 font-sans text-base font-light text-center text-white rounded-xl'>
       <p className='basis-1/12'>{index}</p>
-      <div className='basis-5/6 text-left pl-2'>
+      <div className='pl-2 text-left basis-5/6'>
         <div
           ref={nameRef}
           className={`relative text-white font-sans font-medium text-lg`}
@@ -44,19 +44,19 @@ const SearchResult = ({ index, result, onSongClick, btnText }) => {
             btnText === '신청가능' ||
             btnText === '신청') &&
             isHovering1 && (
-              <p className='absolute bg-white rounded-lg border border-gray-500 p-2 text-black'>
+              <p className='absolute p-2 text-black bg-white border border-gray-500 rounded-lg'>
                 {result.title}
               </p>
             )}
           {btnText === '추가' && isHovering1 && (
-            <p className='absolute bg-white rounded-lg border border-gray-500 p-2 text-black'>
+            <p className='absolute p-2 text-black bg-white border border-gray-500 rounded-lg'>
               {result.name}
             </p>
           )}
         </div>
         <div
           ref={artistRef}
-          className='relative text-gray-200 font-sans'
+          className='relative font-sans text-gray-200'
           onMouseOver={() => setIsHovering2(true)}
           onMouseOut={() => setIsHovering2(false)}
         >
@@ -68,7 +68,7 @@ const SearchResult = ({ index, result, onSongClick, btnText }) => {
             ? result.artist.slice(0, 15) + '..'
             : result.artist}
           {isHovering2 && (
-            <p className='absolute rounded-lg border border-gray-500 p-2 bg-white text-black'>
+            <p className='absolute p-2 text-black bg-white border border-gray-500 rounded-lg'>
               {result.artist.name || result.artist}
             </p>
           )}
@@ -101,4 +101,4 @@ const SearchResult = ({ index, result, onSongClick, btnText }) => {
   );
 };
 
-export default SearchResult;
+export default Result;

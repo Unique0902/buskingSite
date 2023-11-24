@@ -231,7 +231,7 @@ const App = () => {
                 <SongSearchBar
                   searchWord={searchWord}
                   setSearchWord={setSearchWord}
-                  onSearchBarChange={handleSearchBarChange}
+                  handleSearchBtnClick={handleSearchBarChange}
                 >
                   <ArrangeMenuBtn
                     results={results}
@@ -240,7 +240,6 @@ const App = () => {
                   />
                 </SongSearchBar>
                 <ResultsTable
-                  isSearch={false}
                   results={results}
                   btnText={'신청'}
                   handleClickResult={handleSongClick1}
@@ -257,7 +256,6 @@ const App = () => {
                   </h3>
                 </section>
                 <ResultsTable
-                  isSearch={false}
                   results={appliance}
                   btnText={'신청'}
                   handleClickResult={handleSongClick2}
@@ -317,7 +315,7 @@ const App = () => {
                   <SongSearchBar
                     searchWord={searchWord}
                     setSearchWord={setSearchWord}
-                    onSearchBarChange={handleSearchBarChange}
+                    handleSearchBtnClick={handleSearchBarChange}
                   >
                     <ArrangeMenuBtn
                       results={results}
@@ -326,7 +324,6 @@ const App = () => {
                     />
                   </SongSearchBar>
                   <ResultsTable
-                    isSearch={false}
                     results={results}
                     btnText={'신청가능'}
                     handleClickResult={() => {}}

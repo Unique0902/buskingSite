@@ -3,7 +3,7 @@ import TitleBar from '../../components/TitleBar';
 import MainSec from '../../components/MainSec';
 import SongSearchBar from '../../components/Search/SongSearchBar';
 import { usePlaylistContext } from '../../context/PlaylistContext';
-import SongTable from '../../components/SongTable';
+import SongAddTable from '../../components/Table/SongAddTable';
 import { useEffect } from 'react';
 import { getAppLayOut } from '../../layouts/appLayout';
 import InfoBtn from '../../components/InfoBtn';
@@ -70,7 +70,7 @@ export default function AppAdd({}) {
           <SongSearchBar
             searchWord={searchWord}
             setSearchWord={setSearchWord}
-            onSearchBarChange={handelChange}
+            handleSearchBtnClick={handelChange}
           >
             <InfoBtn
               text={
@@ -78,8 +78,7 @@ export default function AppAdd({}) {
               }
             />
           </SongSearchBar>
-          <SongTable
-            isSearch={true}
+          <SongAddTable
             results={searchResults}
             pageNum={pageNum}
             btnText={'추가'}

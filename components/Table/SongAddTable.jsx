@@ -1,9 +1,8 @@
 import React from 'react';
-import PageNumScreen from './PageNumScreen';
-import SearchResults from './Search/SearchResults';
+import PageNumScreen from '../PageNumScreen';
+import Results from './Results';
 
-export default function SongTable({
-  isSearch,
+export default function SongAddTable({
   results,
   pageNum,
   btnText,
@@ -17,8 +16,7 @@ export default function SongTable({
       <ul className='p-1 bg-gray-800 rounded-xl'>
         {results && results.length !== 0 && (
           <>
-            <SearchResults
-              isSearch={isSearch}
+            <Results
               results={results}
               pageNum={pageNum}
               btnText={btnText}

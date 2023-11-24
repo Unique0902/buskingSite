@@ -1,13 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import PageNumScreen from '../PageNumScreen';
-import SearchResults from '../Search/SearchResults';
+import Results from './Results';
 
-export default function ResultsTable({
-  isSearch,
-  results,
-  btnText,
-  handleClickResult,
-}) {
+export default function ResultsTable({ results, btnText, handleClickResult }) {
   const [nowPageNum, setNowPageNum] = useState(1);
   const handelPlusPage = () => {
     if (nowPageNum < results.length / 6) {
@@ -24,14 +19,14 @@ export default function ResultsTable({
       setNowPageNum(1);
     }
   }, [results]);
+  const resultsToView = results.slice((nowPageNum - 1) * 6, nowPageNum * 6);
   return (
     <section className='w-full'>
       <ul className='p-1 bg-gray-800 rounded-xl'>
         {results && results.length !== 0 && (
           <>
-            <SearchResults
-              isSearch={isSearch}
-              results={results}
+            <Results
+              results={resultsToView}
               pageNum={nowPageNum}
               btnText={btnText}
               onSongClick={handleClickResult}

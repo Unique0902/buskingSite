@@ -96,7 +96,6 @@ export default function AppBusking({}) {
           />
         </section>
         <ResultsTable
-          isSearch={false}
           results={songArrToView}
           btnText={'제거'}
           handleClickResult={handleRemoveRequestSong}

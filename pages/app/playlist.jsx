@@ -58,7 +58,7 @@ export default function AppPlaylist() {
           <SongSearchBar
             searchWord={searchWord}
             setSearchWord={setSearchWord}
-            onSearchBarChange={handelChange}
+            handleSearchBtnClick={handelChange}
           >
             <ArrangeMenuBtn
               results={songArr}
@@ -70,7 +70,6 @@ export default function AppPlaylist() {
             총 노래 수 {songArr && songArr.length}
           </h2>
           <ResultsTable
-            isSearch={false}
             results={songArr}
             btnText={'제거'}
             handleClickResult={removeSongInPlaylist}

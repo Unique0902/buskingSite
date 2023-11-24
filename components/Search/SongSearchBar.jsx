@@ -1,11 +1,11 @@
 import React from 'react';
-import { bgColors, borderRadius, xyPadding } from '../../styles/theme';
+import { borderRadius, xyPadding } from '../../styles/theme';
 import PrimaryBtn from '../Btn/PrimaryBtn';
 
 const SongSearchBar = ({
   searchWord,
   setSearchWord,
-  onSearchBarChange,
+  handleSearchBtnClick,
   children,
 }) => {
   // useEffect(() => {
@@ -15,7 +15,7 @@ const SongSearchBar = ({
   // }, [searchWord]);
   const handleClickBtn = () => {
     if (searchWord.category) {
-      onSearchBarChange();
+      handleSearchBtnClick();
     }
   };
   return (
