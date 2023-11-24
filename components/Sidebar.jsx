@@ -12,7 +12,7 @@ import {
   SongIcn,
   UserIcn,
 } from '../assets/icon/icon';
-const Sidebar = ({ isShowSideBar, setIsShowSideBar }) => {
+const SideBar = ({ isShowSideBar, setIsShowSideBar }) => {
   const [isHide, setIsHide] = useState(false);
   const [selectedBtn, setSelectedBtn] = useState('home');
   const wrapperRef = useRef();
@@ -60,18 +60,18 @@ const Sidebar = ({ isShowSideBar, setIsShowSideBar }) => {
         }`}
       >
         {!isHide && (
-          <div className='flex items-center py-3 px-5  border-solid text-white border-gray-600 border-b'>
+          <div className='flex items-center px-5 py-3 text-white border-b border-gray-600 border-solid'>
             <BookIcn
               width={32}
               height={32}
               color={'#60a5fa'}
               className={`mr-4`}
             />
-            <p className=' font-sans text-2xl font-semibold '>노래책</p>
+            <p className='font-sans text-2xl font-semibold '>노래책</p>
           </div>
         )}
         {isHide && (
-          <div className='flex items-center text-blue-600 justify-center text-2xl w-full text-center py-4 border-solid border-gray-600 border-b'>
+          <div className='flex items-center justify-center w-full py-4 text-2xl text-center text-blue-600 border-b border-gray-600 border-solid'>
             <BookIcn width={32} height={32} color={'#60a5fa'} />
           </div>
         )}
@@ -91,7 +91,7 @@ const Sidebar = ({ isShowSideBar, setIsShowSideBar }) => {
           </SideBarBtn>
           {!isHide && (
             <li>
-              <p className='border-solid border-gray-600 border-t text-gray-400 text-sm pt-3 pb-3 pl-5'>
+              <p className='pt-3 pb-3 pl-5 text-sm text-gray-400 border-t border-gray-600 border-solid'>
                 기능 카테고리
               </p>
             </li>
@@ -148,7 +148,7 @@ const Sidebar = ({ isShowSideBar, setIsShowSideBar }) => {
           <li>
             {isHide ? (
               <button
-                className='absolute border-solid flex justify-center hover:opacity-70 border-gray-600 border-t bottom-0 py-7 w-full text-white'
+                className='absolute bottom-0 flex justify-center w-full text-white border-t border-gray-600 border-solid hover:opacity-70 py-7'
                 onClick={() => {
                   setIsHide(false);
                 }}
@@ -157,7 +157,7 @@ const Sidebar = ({ isShowSideBar, setIsShowSideBar }) => {
               </button>
             ) : (
               <button
-                className='absolute flex justify-end hover:opacity-70 border-solid border-gray-600 border-t bottom-0 py-7 w-full text-right pr-5 text-white'
+                className='absolute bottom-0 flex justify-end w-full pr-5 text-right text-white border-t border-gray-600 border-solid hover:opacity-70 py-7'
                 onClick={() => {
                   if (isLgMediaQuery) {
                     setIsShowSideBar(false);
@@ -176,4 +176,4 @@ const Sidebar = ({ isShowSideBar, setIsShowSideBar }) => {
   );
 };
 
-export default Sidebar;
+export default SideBar;
