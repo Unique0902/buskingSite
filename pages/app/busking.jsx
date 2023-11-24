@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import HoverTextSection from '../../components/HoverTextSection';
+import HoverTextSection from '../../components/Hover/HoverTextSection';
 import MainSec from '../../components/MainSec';
 import { useAuthContext } from '../../context/AuthContext';
 import { useUserDataContext } from '../../context/UserDataContext';

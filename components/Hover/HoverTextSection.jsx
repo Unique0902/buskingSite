@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { borderRadius, color, xyPadding } from '../styles/theme';
+import { borderRadius, color, xyPadding } from '../../styles/theme';
 
 const HoverTextSection = ({
   children,
