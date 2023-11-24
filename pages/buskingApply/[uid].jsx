@@ -10,13 +10,12 @@ import { useRouter } from 'next/router';
 import ArrangeMenuBtn from '../../components/ArrangeMenuBtn';
 import SongTable from '../../components/SongTable';
 import { ArrowDownIcn } from '../../assets/icon/icon';
+import ResultsTable from '../../components/Table/ResultsTable';
 
 const App = () => {
   const [isUser, setIsUser] = useState(false);
   const [buskingData, setBuskingData] = useState(null);
   const [results, setResults] = useState([]);
-  const [pageNum, setPageNum] = useState(1);
-  const [pageNum2, setPageNum2] = useState(1);
   const [appliance, setAppliance] = useState([]);
   const [playlists, setPlaylists] = useState(null);
   const [nowPlaylist, setNowPlaylist] = useState(null);
@@ -51,26 +50,7 @@ const App = () => {
       }
     }
   };
-  const handlePlus1 = () => {
-    if (pageNum < results.length / 6) {
-      setPageNum(pageNum + 1);
-    }
-  };
-  const handleMinus1 = () => {
-    if (pageNum !== 1) {
-      setPageNum(pageNum - 1);
-    }
-  };
-  const handlePlus2 = () => {
-    if (pageNum2 < appliance.length / 6) {
-      setPageNum2(pageNum2 + 1);
-    }
-  };
-  const handleMinus2 = () => {
-    if (pageNum2 !== 1) {
-      setPageNum2(pageNum2 - 1);
-    }
-  };
+
   useEffect(() => {
     if (isUser) {
       getPlaylists(userId).then((data) => {
@@ -91,22 +71,6 @@ const App = () => {
   useEffect(() => {
     getIp().then((ip1) => setIp(ip1));
   }, []);
-  useEffect(() => {
-    if ((pageNum - 1) * 6 + 1 > results.length) {
-      if (results.length == 0) {
-        return;
-      }
-      setPageNum(pageNum - 1);
-    }
-  }, [results]);
-  useEffect(() => {
-    if ((pageNum2 - 1) * 6 + 1 > appliance.length) {
-      if (appliance.length == 0) {
-        return;
-      }
-      setPageNum2(pageNum2 - 1);
-    }
-  }, [appliance]);
 
   useEffect(() => {
     if (buskingData && buskingData.appliance) {
@@ -141,7 +105,6 @@ const App = () => {
   }, [userId, isUser]);
 
   const handleSearchBarChange = () => {
-    setPageNum(1);
     search();
   };
 
@@ -277,15 +240,11 @@ const App = () => {
                     isBusking={false}
                   />
                 </SongSearchBar>
-                <SongTable
+                <ResultsTable
                   isSearch={false}
                   results={results}
-                  pageNum={pageNum}
                   btnText={'신청'}
-                  onSongClick={handleSongClick1}
-                  resultNum={results.length}
-                  onPagePlus={handlePlus1}
-                  onPageMinus={handleMinus1}
+                  handleClickResult={handleSongClick1}
                 />
               </MainSec>
 
@@ -298,15 +257,11 @@ const App = () => {
                     신청된 곡 수 {appliance.length}
                   </h3>
                 </section>
-                <SongTable
+                <ResultsTable
                   isSearch={false}
                   results={appliance}
-                  pageNum={pageNum}
                   btnText={'신청'}
-                  onSongClick={handleSongClick2}
-                  resultNum={appliance.length}
-                  onPagePlus={handlePlus2}
-                  onPageMinus={handleMinus2}
+                  handleClickResult={handleSongClick2}
                 />
               </MainSec>
             </section>
@@ -371,14 +326,11 @@ const App = () => {
                       isBusking={false}
                     />
                   </SongSearchBar>
-                  <SongTable
+                  <ResultsTable
                     isSearch={false}
                     results={results}
-                    pageNum={pageNum}
                     btnText={'신청가능'}
-                    resultNum={results.length}
-                    onPagePlus={handlePlus1}
-                    onPageMinus={handleMinus1}
+                    handleClickResult={() => {}}
                   />
                 </MainSec>
               )}
