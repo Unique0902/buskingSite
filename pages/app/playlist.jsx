@@ -8,10 +8,10 @@ import { usePlaylistContext } from '../../context/PlaylistContext';
 import SongTable from '../../components/SongTable';
 import { getAppLayOut } from '../../layouts/appLayout';
 import NoPlaylistSection from '../../components/NoPlaylistSection';
+import ResultsTable from '../../components/Table/ResultsTable';
 
 export default function AppPlaylist() {
   const [results, setResults] = useState([]);
-  const [pageNum, setPageNum] = useState(1);
   const [searchWord, setSearchWord] = useState({ name: '', category: '제목' });
   const { nowPlaylist, removeSongInPlaylist } = usePlaylistContext();
   useEffect(() => {
@@ -23,15 +23,6 @@ export default function AppPlaylist() {
       setResults([]);
     }
   }, [nowPlaylist]);
-
-  useEffect(() => {
-    if ((pageNum - 1) * 6 + 1 > results.length) {
-      if (results.length == 0) {
-        return;
-      }
-      setPageNum(pageNum - 1);
-    }
-  }, [results]);
 
   const search = () => {
     if (nowPlaylist && nowPlaylist.songs) {
@@ -54,18 +45,8 @@ export default function AppPlaylist() {
       }
     }
   };
-  const handelPlus = () => {
-    if (pageNum < results.length / 6) {
-      setPageNum(pageNum + 1);
-    }
-  };
-  const handelMinus = () => {
-    if (pageNum !== 1) {
-      setPageNum(pageNum - 1);
-    }
-  };
+
   const handelChange = () => {
-    setPageNum(1);
     search();
   };
   return (
@@ -86,18 +67,14 @@ export default function AppPlaylist() {
               isBusking={false}
             />
           </SongSearchBar>
-          <h2 className='font-sans font-semibold mb-2 text-xl text-zinc-500'>
+          <h2 className='mb-2 font-sans text-xl font-semibold text-zinc-500'>
             총 노래 수 {results && results.length}
           </h2>
-          <SongTable
+          <ResultsTable
             isSearch={false}
             results={results}
-            pageNum={pageNum}
             btnText={'제거'}
-            onSongClick={removeSongInPlaylist}
-            resultNum={results.length}
-            onPagePlus={handelPlus}
-            onPageMinus={handelMinus}
+            handleClickResult={removeSongInPlaylist}
           />
         </MainSec>
       )}

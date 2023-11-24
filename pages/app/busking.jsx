@@ -14,13 +14,13 @@ import { color } from '../../styles/theme';
 import SectionCopyText from '../../components/SectionCopyText';
 import MusicBar from '../../components/MusicBar/MusicBar';
 import QRCodeSection from '../../components/QRCodeSection';
+import ResultsTable from '../../components/Table/ResultsTable';
 
 export default function AppBusking({}) {
   const { playlists } = usePlaylistContext();
   const { userData } = useUserDataContext();
   const { buskingData, removeBuskingSong, removeBusking } = useBuskingContext();
   const { uid } = useAuthContext();
-  const [pageNum, setPageNum] = useState(1);
   const [songArr, setSongArr] = useState([]);
   const [songArrToView, setSongArrToView] = useState([]);
   const router = useRouter();
@@ -41,25 +41,6 @@ export default function AppBusking({}) {
   그래도 각 신청곡 데이터 id에 time 데이터를 저장했기때문에 위 sort 함수와 같이 buskingData를
   받아올때마다 id 시간을 기준으로 정렬하여 보여줌
 */
-  const handelPlus = () => {
-    if (pageNum < songArr.length / 6) {
-      setPageNum(pageNum + 1);
-    }
-  };
-  const handelMinus = () => {
-    if (pageNum !== 1) {
-      setPageNum(pageNum - 1);
-    }
-  };
-
-  useEffect(() => {
-    if ((pageNum - 1) * 6 + 1 > songArr.length) {
-      if (songArr.length == 0) {
-        return;
-      }
-      setPageNum(pageNum - 1);
-    }
-  }, [songArr]);
 
   const handleClickEndBuskingBtn = () => {
     if (window.confirm('버스킹을 종료하시겠습니까?')) {
@@ -67,6 +48,10 @@ export default function AppBusking({}) {
         router.push('/app/home');
       });
     }
+  };
+
+  const handleRemoveRequestSong = (sid) => {
+    removeBuskingSong(sid, () => {});
   };
 
   return (
@@ -111,18 +96,13 @@ export default function AppBusking({}) {
             isBusking={true}
           />
         </section>
-        <SongTable
+        <ResultsTable
           isSearch={false}
           results={songArrToView}
-          pageNum={pageNum}
           btnText={'제거'}
-          onSongClick={(sid) => {
-            removeBuskingSong(sid, () => {});
-          }}
-          resultNum={songArrToView.length}
-          onPagePlus={handelPlus}
-          onPageMinus={handelMinus}
+          handleClickResult={handleRemoveRequestSong}
         />
+
         <section className='flex flex-row justify-end pt-4'>
           <PrimaryBtn
             bgColor={color.warning}

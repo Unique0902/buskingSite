@@ -14,7 +14,7 @@ export default function SongTable({
 }) {
   return (
     <section className='w-full'>
-      <ul className='bg-gray-800 rounded-xl p-1'>
+      <ul className='p-1 bg-gray-800 rounded-xl'>
         {results && results.length !== 0 && (
           <>
             <SearchResults
@@ -34,7 +34,7 @@ export default function SongTable({
         )}
         {(!results || results.length === 0) && (
           <>
-            <h2 className='text-white font-normal text-center my-5 text-2xl font-sans'>
+            <h2 className='my-5 font-sans text-2xl font-normal text-center text-white'>
               노래가 존재하지 않습니다.
             </h2>
           </>

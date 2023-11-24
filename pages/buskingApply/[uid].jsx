@@ -120,7 +120,6 @@ const App = () => {
 
   const checkIsUser = async () => {
     const data = await getUserData(userId);
-    console.log(data);
     setIsUser(!!data);
   };
 
@@ -298,11 +297,6 @@ const App = () => {
                   <h3 className='font-sans text-xl font-normal text-gray-500'>
                     신청된 곡 수 {appliance.length}
                   </h3>
-                  <ArrangeMenuBtn
-                    results={appliance}
-                    setResults={setAppliance}
-                    isBusking={true}
-                  />
                 </section>
                 <SongTable
                   isSearch={false}
@@ -310,7 +304,7 @@ const App = () => {
                   pageNum={pageNum}
                   btnText={'신청'}
                   onSongClick={handleSongClick2}
-                  resultNum={results.length}
+                  resultNum={appliance.length}
                   onPagePlus={handlePlus2}
                   onPageMinus={handleMinus2}
                 />
