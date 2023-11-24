@@ -3,7 +3,7 @@ import AppHeader from './AppHeader';
 import ProtectedRoute from './ProtectedRoute';
 import UserDataProtectedRoute from './UserDataProtectedRoute';
 import { useMediaQuery } from 'react-responsive';
-import SideBar from './SideBar';
+import SideBar from './SideBar.jsx';
 
 export default function AppLayOut({ children }) {
   const [isShowSideBar, setIsShowSideBar] = useState(true);
