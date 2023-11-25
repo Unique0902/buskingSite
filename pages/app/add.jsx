@@ -6,11 +6,11 @@ import { usePlaylistContext } from '../../context/PlaylistContext';
 import SongAddTable from '../../components/Table/SongAddTable';
 import { useEffect } from 'react';
 import { getAppLayOut } from '../../layouts/appLayout';
-import InfoBtn from '../../components/InfoBtn';
 import { useLastFmContext } from '../../context/LastFmContext';
 import NoPlaylistSection from '../../components/NoPlaylistSection';
-import { PlusIcn } from '../../assets/icon/icon';
+import { InformIcn, PlusIcn } from '../../assets/icon/icon';
 import LoadingSpinner from '../../components/LoadingSpinner';
+import HoverIcon from '../../components/Hover/HoverIcon';
 
 export default function AppAdd({}) {
   const [searchResults, setSearchResults] = useState([]);
@@ -70,11 +70,18 @@ export default function AppAdd({}) {
             setSearchWord={setSearchWord}
             handleSearchBtnClick={handelChange}
           >
-            <InfoBtn
+            <HoverIcon
               text={
                 'Api 특성상 제목, 가수명을 영어로 입력하시면 더 잘나옵니다.'
               }
-            />
+            >
+              <InformIcn
+                color={'blue'}
+                width={24}
+                height={24}
+                className='ml-3 text-2xl text-blue-500 max-lg:w-5 max-lg:h-5'
+              />
+            </HoverIcon>
           </SongSearchBar>
           {isLoading ? (
             <LoadingSpinner />
