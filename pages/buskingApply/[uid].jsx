@@ -5,7 +5,7 @@ import { usePlaylistContext } from '../../context/PlaylistContext';
 import { useUserDataContext } from '../../context/UserDataContext';
 import MainSec from '../../components/MainSec';
 import SongSearchBar from '../../components/Search/SongSearchBar';
-import PlaylistMenu from '../../components/PlaylistMenu';
+import PlaylistMenu from '../../components/PlaylistMenu/PlaylistMenu';
 import { useRouter } from 'next/router';
 import ArrangeMenuBtn from '../../components/ArrangeMenuBtn';
 import { ArrowDownIcn, SendIcn, SmileIcn } from '../../assets/icon/icon';

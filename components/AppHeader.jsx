@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { useState } from 'react';
-import PlaylistMenu from './PlaylistMenu';
+import PlaylistMenu from './PlaylistMenu/PlaylistMenu';
 import LoginMenu from './LoginMenu';
 import { useUserDataContext } from '../context/UserDataContext';
 import { usePlaylistContext } from '../context/PlaylistContext';
@@ -16,7 +16,7 @@ export default function AppHeader({ isShowSideBar, setIsShowSideBar }) {
   return (
     <>
       <header className='flex justify-between mb-10 '>
-        <div className='flex items-center relative'>
+        <div className='relative flex items-center'>
           <button
             onClick={() => {
               setIsShowSideBar(!isShowSideBar);
@@ -30,7 +30,7 @@ export default function AppHeader({ isShowSideBar, setIsShowSideBar }) {
           )}
           <button
             ref={valueRef}
-            className='text-white font-sans text-xl hover:scale-110 flex items-center'
+            className='flex items-center font-sans text-xl text-white hover:scale-110'
             onClick={() => {
               setIsShowPlaylistMenu(true);
             }}
@@ -46,7 +46,7 @@ export default function AppHeader({ isShowSideBar, setIsShowSideBar }) {
         </div>
         <div className='relative'>
           <button
-            className='font-sans text-white text-xl hover:scale-110'
+            className='font-sans text-xl text-white hover:scale-110'
             onClick={() => {
               setIsShowLoginMenu(true);
             }}
