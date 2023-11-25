@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import PageNumScreen from '../PageNumScreen';
+import PagingBar from './PagingBar';
 import PrimarySongResult from './PrimarySongResult';
 
 export default function PrimarySongTable({
@@ -39,7 +39,7 @@ export default function PrimarySongTable({
                 {children}
               </PrimarySongResult>
             ))}
-            <PageNumScreen
+            <PagingBar
               resultNum={results.length}
               pageNum={nowPageNum}
               onPagePlus={handelPlusPage}

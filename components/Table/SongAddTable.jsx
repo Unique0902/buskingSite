@@ -1,5 +1,5 @@
 import React from 'react';
-import PageNumScreen from '../PageNumScreen';
+import PagingBar from './PagingBar';
 import SongAddResult from './SongAddResult';
 
 export default function SongAddTable({
@@ -26,7 +26,7 @@ export default function SongAddTable({
                 {children}
               </SongAddResult>
             ))}
-            <PageNumScreen
+            <PagingBar
               resultNum={resultNum}
               pageNum={pageNum}
               onPagePlus={onPagePlus}
