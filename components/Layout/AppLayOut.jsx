@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import AppHeader from './AppHeader';
-import ProtectedRoute from './ProtectedRoute';
-import UserDataProtectedRoute from './UserDataProtectedRoute';
+import AppHeader from './Header/AppHeader';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import UserDataProtectedRoute from '../ProtectedRoute/UserDataProtectedRoute';
 import { useMediaQuery } from 'react-responsive';
-import SideBar from './SideBar.jsx';
+import SideBar from './SideBar/SideBar.jsx';
 
 export default function AppLayOut({ children }) {
   const [isShowSideBar, setIsShowSideBar] = useState(true);

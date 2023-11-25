@@ -1,10 +1,10 @@
 import React, { useRef } from 'react';
 import { useState } from 'react';
-import PlaylistMenu from './PlaylistMenu/PlaylistMenu';
-import LoginMenu from './LoginMenu/LoginMenu';
-import { useUserDataContext } from '../context/UserDataContext';
-import { usePlaylistContext } from '../context/PlaylistContext';
-import { ArrowDownIcn, MenuIcn } from '../assets/icon/icon';
+import PlaylistMenu from '../../PlaylistMenu/PlaylistMenu';
+import LoginMenu from '../../LoginMenu/LoginMenu';
+import { useUserDataContext } from '../../../context/UserDataContext';
+import { usePlaylistContext } from '../../../context/PlaylistContext';
+import { ArrowDownIcn, MenuIcn } from '../../../assets/icon/icon';
 
 export default function AppHeader({ isShowSideBar, setIsShowSideBar }) {
   const { userData } = useUserDataContext();

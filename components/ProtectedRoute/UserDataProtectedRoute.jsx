@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import { useUserDataContext } from '../context/UserDataContext';
+import { useUserDataContext } from '../../context/UserDataContext';
 import { useRouter } from 'next/router';
-import { useAuthContext } from '../context/AuthContext';
+import { useAuthContext } from '../../context/AuthContext';
 
 export default function UserDataProtectedRoute({ children }) {
   const { userLoading } = useAuthContext();

@@ -11,7 +11,7 @@ import {
   PlusIcn,
   SongIcn,
   UserIcn,
-} from '../assets/icon/icon';
+} from '../../../assets/icon/icon';
 const SideBar = ({ isShowSideBar, setIsShowSideBar }) => {
   const [isHide, setIsHide] = useState(false);
   const [selectedBtn, setSelectedBtn] = useState('home');
