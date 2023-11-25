@@ -1,6 +1,6 @@
 import React from 'react';
 import ArrangeBtn from './ArrangeBtn';
-import PopupWrapper from '../PopupWrapper';
+import PopupWrapper from '../PopUp/PopupWrapper';
 
 const ArrangeMenu = ({
   setIsShowArrangeMenu,

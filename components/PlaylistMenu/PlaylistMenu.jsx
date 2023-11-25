@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { usePlaylistContext } from '../../context/PlaylistContext';
-import PopupWrapper from '../PopupWrapper';
+import PopupWrapper from '../PopUp/PopupWrapper';
 import PlaylistBtn from './PlaylistBtn';
 import PlaylistMenuBtn from './PlaylistMenuBtn';
 import PlaylistMenuInputBtn from './PlaylistMenuInputBtn';
