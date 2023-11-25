@@ -82,7 +82,7 @@ export default function AppMakeBusking({}) {
                   playlistId: e.target.value,
                 });
               }}
-              className='border-2 border-black rounded-lg px-3 font-sans font-normal text-xl py-2'
+              className='px-3 py-2 font-sans text-xl font-normal border-2 border-black rounded-lg'
             >
               {playlistArr &&
                 playlistArr.map((playlist) => (
@@ -102,7 +102,7 @@ export default function AppMakeBusking({}) {
                   maxNum: e.target.value,
                 });
               }}
-              className='border-black border-2 p-2 rounded-xl w-2/12 max-md:w-5/6 font-sans text-lg'
+              className='w-2/12 p-2 font-sans text-lg border-2 border-black rounded-xl max-md:w-5/6'
             />
           </MainRow>
           <MainRow title={'방 제목 설정'}>
@@ -115,14 +115,14 @@ export default function AppMakeBusking({}) {
                   name: e.target.value,
                 });
               }}
-              className='border-black border-2 p-2 rounded-xl w-1/3 max-md:w-5/6 font-sans text-lg'
+              className='w-1/3 p-2 font-sans text-lg border-2 border-black rounded-xl max-md:w-5/6'
             />
           </MainRow>
           <button
             onClick={() => {
               startBusking();
             }}
-            className='  hover:bg-gray-200 text-start w-full font-sans  text-2xl font-normal text-blue-500 py-5 max-lg:pl-4 border-gray-300 border-b relative'
+            className='relative w-full py-5 font-sans text-2xl font-normal text-blue-500 border-b border-gray-300  hover:bg-gray-200 text-start max-lg:pl-4'
           >
             버스킹 시작하기
           </button>
