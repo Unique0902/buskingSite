@@ -7,7 +7,7 @@ import MainSec from '../../components/MainSec';
 import SongSearchBar from '../../components/Search/SongSearchBar';
 import PlaylistMenu from '../../components/PlaylistMenu/PlaylistMenu';
 import { useRouter } from 'next/router';
-import ArrangeMenuBtn from '../../components/ArrangeMenuBtn';
+import ArrangeMenuBtn from '../../components/ArrangeMenu/ArrangeMenuBtn';
 import { ArrowDownIcn, SendIcn, SmileIcn } from '../../assets/icon/icon';
 import RequestSongTable from '../../components/Table/RequestSongTable';
 import PrimarySongTable from '../../components/Table/PrimarySongTable';

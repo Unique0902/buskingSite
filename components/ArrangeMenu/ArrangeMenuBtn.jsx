@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { borderRadius, color, xyPadding } from '../styles/theme';
+import { borderRadius, color, xyPadding } from '../../styles/theme';
 import ArrangeMenu from './ArrangeMenu';
-import PrimaryBtn from './Btn/PrimaryBtn';
+import PrimaryBtn from '../Btn/PrimaryBtn';
 
 const ArrangeMenuBtn = ({ results, setResults, isBusking }) => {
   const [isShowArrangeMenu, setIsShowArrangeMenu] = useState(false);

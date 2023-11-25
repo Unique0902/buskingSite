@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import TitleBar from '../../components/TitleBar';
 import MainSec from '../../components/MainSec';
 import SongSearchBar from '../../components/Search/SongSearchBar';
-import ArrangeMenuBtn from '../../components/ArrangeMenuBtn';
+import ArrangeMenuBtn from '../../components/ArrangeMenu/ArrangeMenuBtn';
 import { usePlaylistContext } from '../../context/PlaylistContext';
 import { getAppLayOut } from '../../layouts/appLayout';
 import NoPlaylistSection from '../../components/NoPlaylistSection';

@@ -7,7 +7,7 @@ import { usePlaylistContext } from '../../context/PlaylistContext';
 import { getAppLayOut } from '../../layouts/appLayout';
 import { useBuskingContext } from '../../context/BuskingContext';
 import { useRouter } from 'next/router';
-import ArrangeMenuBtn from '../../components/ArrangeMenuBtn';
+import ArrangeMenuBtn from '../../components/ArrangeMenu/ArrangeMenuBtn';
 import PrimaryBtn from '../../components/Btn/PrimaryBtn';
 import { color } from '../../styles/theme';
 import SectionCopyText from '../../components/SectionCopyText';
