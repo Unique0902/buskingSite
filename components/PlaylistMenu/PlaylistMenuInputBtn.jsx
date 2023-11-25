@@ -31,6 +31,7 @@ const PlaylistMenuInputBtn = ({
         <input
           type='text'
           placeholder='Playlist Name'
+          autoFocus
           className='px-4 py-3 font-sans text-lg font-normal border-gray-800 border-solid border-1 rounded-xl'
           value={playlistName}
           onChange={handleInputChange}
