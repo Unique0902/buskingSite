@@ -6,25 +6,23 @@ const PlaylistContext = createContext();
 export function PlaylistContextProvider({ playlistRepository, children }) {
   const [playlists, setPlaylists] = useState(null);
   const [nowPlaylist, setNowPlaylist] = useState(null);
-  const [nowPlaylistId, setNowPlaylistId] = useState(null);
   const { uid } = useAuthContext();
 
   useEffect(() => {
     if (!uid) {
       return;
     }
-    playlistRepository.syncPlaylist(uid, (playlists) => {
+    return playlistRepository.syncPlaylist(uid, (playlists) => {
       setPlaylists(playlists ? playlists : null);
     });
   }, [uid]);
 
   useEffect(() => {
     if (playlists) {
-      if (nowPlaylistId && playlists[nowPlaylistId]) {
-        setNowPlaylist(playlists[nowPlaylistId]);
+      if (nowPlaylist && playlists[nowPlaylist.id]) {
+        setNowPlaylist(playlists[nowPlaylist.id]);
       } else {
         setNowPlaylist(Object.values(playlists)[0]);
-        setNowPlaylistId(Object.values(playlists)[0].id);
       }
     } else {
       setNowPlaylist(null);
@@ -69,7 +67,6 @@ export function PlaylistContextProvider({ playlistRepository, children }) {
         (song) => song.id === sid
       );
       if (song) {
-        setNowPlaylistId(null);
         playlistRepository.removeSong(uid, nowPlaylist, song, () => {
           window.alert('제거되었습니다.');
         });
@@ -84,7 +81,7 @@ export function PlaylistContextProvider({ playlistRepository, children }) {
       id: Date.now(),
       name: 'playlist',
     };
-    setNowPlaylistId(playlist.id);
+    setNowPlaylist(playlist);
     playlistRepository.makePlaylist(uid, playlist);
   };
   const updateNowPlaylistName = (name) => {
@@ -96,14 +93,13 @@ export function PlaylistContextProvider({ playlistRepository, children }) {
       id: Date.now(),
       name,
     };
-    setNowPlaylistId(playlist.id);
+    setNowPlaylist(playlist);
     playlistRepository.makePlaylist(uid, playlist);
   };
 
   const changeNowPlaylist = (id) => {
     if (playlists[id]) {
       setNowPlaylist(playlists[id]);
-      setNowPlaylistId(parseInt(id));
     }
   };
 
@@ -123,7 +119,6 @@ export function PlaylistContextProvider({ playlistRepository, children }) {
       value={{
         playlists,
         nowPlaylist,
-        nowPlaylistId,
         addSongToPlaylist,
         removeNowPlaylist,
         removeSongInPlaylist,
