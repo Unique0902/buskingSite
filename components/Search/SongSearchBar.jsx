@@ -38,7 +38,7 @@ const SongSearchBar = ({
         </select>
         <input
           type='search'
-          className='p-2 font-sans text-lg border-2 border-black rounded-xl w-96 max-lg:text-base max-lg:w-full'
+          className='p-2 font-sans text-lg border-2 border-black rounded-xl w-80 max-lg:text-base max-lg:w-full'
           placeholder='검색어를 입력하세요..'
           value={searchWord.name}
           onChange={(e) => {
@@ -47,7 +47,7 @@ const SongSearchBar = ({
         />
         <PrimaryBtn
           handleClick={handleClickBtn}
-          btnPadding={xyPadding.lg}
+          btnPadding={xyPadding.base}
           radius={borderRadius.xm}
         >
           검색

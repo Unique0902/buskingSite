@@ -14,7 +14,7 @@ const ArrangeMenuBtn = ({ results, setResults, isBusking }) => {
         handleClick={handleClick}
         bgColor={color.gray_400}
         radius={borderRadius.xm}
-        btnPadding={xyPadding.lg}
+        btnPadding={xyPadding.base}
       >
         정렬
       </PrimaryBtn>

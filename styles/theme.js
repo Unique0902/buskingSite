@@ -77,6 +77,7 @@ export const fontSize = {
 export const xyPadding = {
   lg: '16px 32px',
   base: '12px 24px',
+  xm: '8px 16px',
 };
 export const borderRadius = {
   xl3: 'rounded-3xl',
