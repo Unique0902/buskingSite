@@ -25,12 +25,15 @@ export function UserDataContextProvider({ userRepository, children }) {
     return userRepository.getUserData(userId);
   };
   const removeUserData = async (userId) => {
+    setUserData(null);
     return userRepository.removeUser(userId);
   };
   const makeUserData = async (userId, name) => {
-    return userRepository.makeUser(userId, name);
+    const data = await userRepository.makeUser(userId, name);
+    setUserData(data);
+    return data;
   };
-
+  // 유저 데이터가 서버에 만들어졌을때 응답 받을수있게, setUserData할수있게
   return (
     <UserDataContext.Provider
       value={{
