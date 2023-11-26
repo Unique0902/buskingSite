@@ -46,7 +46,12 @@ export default function AppMakeBusking({}) {
     }
     makeBusking(buskingInform);
   };
-
+  // 무작정 useEffect를 지운다고 성능이 좋아지는게 아니구나
+  // 이런식으로 다 useEffect를 지운다면 이 컴포넌트가 받는 props, 부모가 리렌더링될때마다
+  // 해당 코드가 계속 재실행될텐데 useEffect에 등록된다면 변수가 변할때만 코드가 실행되므로 오히려
+  // useEffect로 인해 성능이 향상됨
+  // useEffect를 사용하는 이유에 대해서 잘알자.. useEffect의 사용이유를 알지않고 무작정 성능 저하가 온다고 생각하고 사용하면서
+  // 겪은 문제
   if (buskingData) {
     router.push('/app/busking');
     return <div>move to busking page..</div>;
