@@ -64,15 +64,15 @@ export default function AppBusking({}) {
 
   return (
     <>
-      <section className='flex flex-row items-center pt-2 pb-5 border-b border-gray-600 max-lg:flex-col'>
+      <section className='flex flex-row items-center justify-between pt-2 pb-5 border-b border-gray-600 max-lg:flex-col'>
         <h1 className='font-sans text-3xl font-semibold text-white w-96 max-lg:w-full max-lg:text-center max-lg:mb-4'>
           {userData && `${userData.name}님의 버스킹`}
         </h1>
-        <div className='flex flex-row items-center justify-center gap-4 border-gray-400 lg:border-l grow'>
-          <QRCodeSection
+        <div className='flex flex-row items-center justify-end gap-4 border-gray-400 lg:border-l grow'>
+          {/* <QRCodeSection
             url={`https://noraebook.netlify.app/buskingApply/${uid}`}
             title={'곡 신청 사이트'}
-          />
+          /> */}
           <HoverTextSection
             text={'신청 URL 확인'}
             bgColor={color.white}
@@ -88,22 +88,23 @@ export default function AppBusking({}) {
       <MusicBar songArr={songArr} setSongArrToView={setSongArrToView} />
 
       <MainSec>
-        <section className='relative flex flex-row items-center justify-between mb-6'>
+        <section className='relative flex flex-row items-center justify-between max-lg:flex-col max-lg:items-start max-lg:px-4'>
           <h1 className='font-sans text-xl font-semibold text-center text-zinc-500'>
-            {buskingData &&
-              playlists &&
+            {playlists &&
               playlists[buskingData.playlistId] &&
               `현재 플레이리스트: ${playlists[buskingData.playlistId].name}`}
           </h1>
           <h2 className='font-sans text-xl font-semibold text-zinc-500'>
             총 노래 수 {songArrToView ? songArrToView.length : 0}
           </h2>
+        </section>
+        <div className='flex flex-row justify-end'>
           <ArrangeMenuBtn
             results={songArrToView}
             setResults={setSongArrToView}
             isBusking={true}
           />
-        </section>
+        </div>
 
         <RequestSongTable
           results={songArrToView}
