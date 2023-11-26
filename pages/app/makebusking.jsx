@@ -28,6 +28,18 @@ export default function AppMakeBusking({}) {
       });
     }
   }, [userData]);
+  const handleChange = (value, label) => {
+    setBuskingInform({ ...buskingInform, [label]: value });
+  };
+  const handleChangePlaylistId = (e) => {
+    handleChange(e.target.value, 'playlistId');
+  };
+  const handleChangeMaxNum = (e) => {
+    handleChange(e.target.value, 'maxNum');
+  };
+  const handleChangeName = (e) => {
+    handleChange(e.target.value, 'name');
+  };
   useEffect(() => {
     if (playlists) {
       setPlaylistArr(Object.values(playlists));
@@ -76,12 +88,7 @@ export default function AppMakeBusking({}) {
             <select
               name='playlists'
               value={buskingInform.playlistId}
-              onChange={(e) => {
-                setBuskingInform({
-                  ...buskingInform,
-                  playlistId: e.target.value,
-                });
-              }}
+              onChange={handleChangePlaylistId}
               className='px-3 py-2 font-sans text-xl font-normal border-2 border-black rounded-lg'
             >
               {playlistArr &&
@@ -96,12 +103,7 @@ export default function AppMakeBusking({}) {
             <input
               type='number'
               value={buskingInform.maxNum}
-              onChange={(e) => {
-                setBuskingInform({
-                  ...buskingInform,
-                  maxNum: e.target.value,
-                });
-              }}
+              onChange={handleChangeMaxNum}
               className='w-2/12 p-2 font-sans text-lg border-2 border-black rounded-xl max-md:w-5/6'
             />
           </MainRow>
@@ -109,12 +111,7 @@ export default function AppMakeBusking({}) {
             <input
               type='text'
               value={buskingInform.name}
-              onChange={(e) => {
-                setBuskingInform({
-                  ...buskingInform,
-                  name: e.target.value,
-                });
-              }}
+              onChange={handleChangeName}
               className='w-1/3 p-2 font-sans text-lg border-2 border-black rounded-xl max-md:w-5/6'
             />
           </MainRow>
@@ -122,7 +119,7 @@ export default function AppMakeBusking({}) {
             onClick={() => {
               startBusking();
             }}
-            className='relative w-full py-5 font-sans text-2xl font-normal text-blue-500 border-b border-gray-300  hover:bg-gray-200 text-start max-lg:pl-4'
+            className='relative w-full py-5 font-sans text-2xl font-normal text-blue-500 border-b border-gray-300 hover:bg-gray-200 text-start max-lg:pl-4'
           >
             버스킹 시작하기
           </button>
