@@ -25,14 +25,14 @@ const SongSearchBar = ({
   });
   return (
     <form
-      className='relative flex flex-row items-center justify-center gap-2 mb-6'
+      className='relative flex flex-row items-center justify-center gap-2 mb-6 max-lg:flex-col'
       onSubmit={(e) => {
         e.preventDefault();
       }}
     >
-      <div className='relative flex flex-row items-center justify-center flex-1 gap-2 max-lg:flex-col max-lg:mx-6'>
+      <div className='relative flex flex-row items-center justify-center flex-1 gap-2 max-lg:w-full max-lg:mx-2'>
         <select
-          className='p-2 font-sans text-lg border-2 border-black rounded-xl max-lg:w-full max-lg:mr-0 max-lg:mb-2 max-lg:text-base'
+          className='p-2 font-sans text-lg border-2 border-black rounded-xl max-lg:mr-0 max-lg:text-base'
           value={searchWord.category}
           onChange={(e) => {
             setSearchWord({ ...searchWord, category: e.target.value });
@@ -41,7 +41,7 @@ const SongSearchBar = ({
           <option value='제목'>제목</option>
           <option value='가수'>가수</option>
         </select>
-        <div className='relative flex flex-row items-center w-80 max-lg:w-full'>
+        <div className='relative flex flex-row items-center flex-1'>
           <input
             type='search'
             className='w-full p-2 font-sans text-lg border-2 border-black rounded-xl max-lg:text-base'
