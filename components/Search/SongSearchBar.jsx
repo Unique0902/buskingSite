@@ -1,6 +1,8 @@
 import React from 'react';
-import { borderRadius, xyPadding } from '../../styles/theme';
+import { SearchIcn } from '../../assets/icon/icon';
+import { borderRadius, color, xyPadding } from '../../styles/theme';
 import PrimaryBtn from '../Btn/PrimaryBtn';
+import { useMediaQuery } from 'react-responsive';
 
 const SongSearchBar = ({
   searchWord,
@@ -18,6 +20,9 @@ const SongSearchBar = ({
       handleSearchBtnClick();
     }
   };
+  const isLgMediaQuery = useMediaQuery({
+    query: '(max-width:1024px)',
+  });
   return (
     <form
       className='relative flex flex-row items-center justify-center gap-2 mb-6'
@@ -25,7 +30,7 @@ const SongSearchBar = ({
         e.preventDefault();
       }}
     >
-      <div className='relative flex flex-row items-center justify-center gap-2 max-lg:flex-col'>
+      <div className='relative flex flex-row items-center justify-center flex-1 gap-2 max-lg:flex-col max-lg:mx-6'>
         <select
           className='p-2 font-sans text-lg border-2 border-black rounded-xl max-lg:w-full max-lg:mr-0 max-lg:mb-2 max-lg:text-base'
           value={searchWord.category}
@@ -36,22 +41,33 @@ const SongSearchBar = ({
           <option value='제목'>제목</option>
           <option value='가수'>가수</option>
         </select>
-        <input
-          type='search'
-          className='p-2 font-sans text-lg border-2 border-black rounded-xl w-80 max-lg:text-base max-lg:w-full'
-          placeholder='검색어를 입력하세요..'
-          value={searchWord.name}
-          onChange={(e) => {
-            setSearchWord({ ...searchWord, name: e.target.value });
-          }}
-        />
-        <PrimaryBtn
-          handleClick={handleClickBtn}
-          btnPadding={xyPadding.base}
-          radius={borderRadius.xm}
-        >
-          검색
-        </PrimaryBtn>
+        <div className='relative flex flex-row items-center w-80 max-lg:w-full'>
+          <input
+            type='search'
+            className='w-full p-2 font-sans text-lg border-2 border-black rounded-xl max-lg:text-base'
+            placeholder='검색어를 입력하세요..'
+            value={searchWord.name}
+            onChange={(e) => {
+              setSearchWord({ ...searchWord, name: e.target.value });
+            }}
+          />
+          <button
+            className='absolute right-4 lg:hidden'
+            onClick={handleClickBtn}
+          >
+            <SearchIcn width={18} height={18} color={color.gray_600} />
+          </button>
+        </div>
+
+        {!isLgMediaQuery && (
+          <PrimaryBtn
+            handleClick={handleClickBtn}
+            btnPadding={xyPadding.base}
+            radius={borderRadius.xm}
+          >
+            검색
+          </PrimaryBtn>
+        )}
       </div>
       {children}
     </form>

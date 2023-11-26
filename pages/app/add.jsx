@@ -78,7 +78,7 @@ export default function AppAdd({}) {
                 color={'blue'}
                 width={24}
                 height={24}
-                className='ml-3 text-2xl text-blue-500 max-lg:w-5 max-lg:h-5'
+                className='ml-3 text-2xl text-blue-500 max-lg:w-5 max-lg:h-5 max-lg:hidden'
               />
             </HoverIcon>
           </SongSearchBar>

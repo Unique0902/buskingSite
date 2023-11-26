@@ -17,6 +17,7 @@ import SongIcn from './song.svg';
 import UserIcn from './user.svg';
 import CopyIcn from './copy.svg';
 import MenuIcn from './menu.svg';
+import SearchIcn from './search.svg';
 export {
   BookIcn,
   PauseIcn,
@@ -37,4 +38,5 @@ export {
   MinusIcn,
   NextSongIcn,
   CopyIcn,
+  SearchIcn,
 };
