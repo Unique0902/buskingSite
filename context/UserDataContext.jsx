@@ -10,6 +10,7 @@ export function UserDataContextProvider({ userRepository, children }) {
   useEffect(() => {
     setUserDataLoading(true);
     if (!uid) {
+      setUserData(null);
       return;
     }
     userRepository.getUserData(uid).then((data) => {
@@ -25,7 +26,6 @@ export function UserDataContextProvider({ userRepository, children }) {
     return userRepository.getUserData(userId);
   };
   const removeUserData = async (userId) => {
-    setUserData(null);
     return userRepository.removeUser(userId);
   };
   const makeUserData = async (userId, name) => {
