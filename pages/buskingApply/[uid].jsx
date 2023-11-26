@@ -66,11 +66,11 @@ const App = () => {
         }
       });
     }
-  }, [isUser]);
+  }, [isUser, userId, getPlaylists]);
 
   useEffect(() => {
     getIp().then((ip1) => setIp(ip1));
-  }, []);
+  }, [getIp]);
 
   useEffect(() => {
     if (buskingData && buskingData.appliance) {
@@ -87,6 +87,7 @@ const App = () => {
     setIsUser(!!data);
   };
 
+  // 왜 checkIsUser를 dependency에 넣어주어야하지?
   useEffect(() => {
     if (userId) {
       checkIsUser();
@@ -98,11 +99,13 @@ const App = () => {
     setBuskingData(data);
   };
 
+  // 왜 handleBuskingData를 dependency에 넣어주어야하지?
+
   useEffect(() => {
     if (userId && !buskingData && isUser) {
       handleBuskingData();
     }
-  }, [userId, isUser]);
+  }, [userId, isUser, buskingData]);
 
   const handleSearchBarChange = () => {
     search();
