@@ -9,18 +9,21 @@ const PrimaryBtn = ({
   fontSize = '12px',
   btnPadding = xyPadding.base,
   radius = borderRadius.lg,
+  isActivated = true,
 }) => {
   return (
     <button
       type='button'
       style={{
-        backgroundColor: bgColor,
+        backgroundColor: isActivated ? bgColor : color.gray_400,
         fontSize: fontSize,
         color: textColor,
         padding: btnPadding,
       }}
       onClick={handleClick}
-      className={`hover:opacity-70 ${radius}`}
+      className={`${
+        isActivated ? 'hover:opacity-70 cursor-pointer' : 'cursor-default'
+      } ${radius}`}
     >
       {children}
     </button>
