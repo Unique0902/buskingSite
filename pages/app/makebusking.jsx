@@ -11,23 +11,16 @@ import NoPlaylistSection from '../../components/NoPlaylistSection';
 
 export default function AppMakeBusking({}) {
   const [playlistArr, setPlaylistArr] = useState(null);
-  const [buskingInform, setBuskingInform] = useState({
-    playlistId: '',
-    maxNum: 10,
-    name: '',
-  });
   const { buskingData, makeBusking } = useBuskingContext();
   const { playlists, nowPlaylist } = usePlaylistContext();
   const { userData } = useUserDataContext();
+  const [buskingInform, setBuskingInform] = useState({
+    playlistId: '',
+    maxNum: 10,
+    name: `${userData.name}님의 버스킹`,
+  });
   const router = useRouter();
-  useEffect(() => {
-    if (userData) {
-      setBuskingInform({
-        ...buskingInform,
-        name: `${userData.name}님의 버스킹`,
-      });
-    }
-  }, [userData]);
+
   const handleChange = (value, label) => {
     setBuskingInform({ ...buskingInform, [label]: value });
   };
