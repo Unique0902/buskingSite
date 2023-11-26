@@ -3,19 +3,19 @@ import { createContext, useContext } from 'react';
 const LastFmContext = createContext();
 
 export function LastFmContextProvider({ lastfm, children }) {
-  const searchSongByName = (title, pageNum) => {
+  const searchSongByName = async (title, pageNum) => {
     return lastfm.searchSongByName(title, pageNum);
   };
-  const searchSongByArtist = (artist, pageNum) => {
+  const searchSongByArtist = async (artist, pageNum) => {
     return lastfm.searchSongByArtist(artist, pageNum);
   };
-  // const searchArtist = (artist) => {
+  // const searchArtist = async (artist) => {
   //   return lastfm.searchArtist(artist);
   // };
-  // const searchTopTrackByCorrectArtist = (mbid) => {
+  // const searchTopTrackByCorrectArtist = async (mbid) => {
   //   return lastfm.searchTopTrackByCorrectArtist(mbid);
   // };
-  const getTopTracks = (pageNum) => {
+  const getTopTracks = async (pageNum) => {
     return lastfm.getTopTracks(pageNum);
   };
 
