@@ -19,8 +19,7 @@ export default function AppAdd({}) {
   const [pageNum, setPageNum] = useState(1);
   const [searchWord, setSearchWord] = useState({ name: '', category: '제목' });
   const { nowPlaylist, addSongToPlaylist } = usePlaylistContext();
-  const { searchSongByName, searchSongByArtist, getTopTracks } =
-    useLastFmContext();
+  const { searchSongByName, searchSongByArtist } = useLastFmContext();
   const search = async (pageNum) => {
     setIsLoading(true);
     if (searchWord.name) {

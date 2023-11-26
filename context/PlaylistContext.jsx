@@ -31,7 +31,7 @@ export function PlaylistContextProvider({ playlistRepository, children }) {
     }
   }, [playlists]);
 
-  const addSongToPlaylist = (title, artist) => {
+  const addSongToPlaylist = async (title, artist) => {
     if (nowPlaylist.length === 0) {
       alert('플레이리스트가 존재하지않습니다! 추가해주세요!');
       return;
@@ -48,19 +48,17 @@ export function PlaylistContextProvider({ playlistRepository, children }) {
         title: title,
         artist: artist,
       };
-      playlistRepository.saveSong(uid, nowPlaylist, song, () => {
-        alert(`${artist}의 ${title}가 추가되었습니다.`);
-      });
+      await playlistRepository.saveSong(uid, nowPlaylist, song);
+      alert(`${artist}의 ${title}가 추가되었습니다.`);
     }
   };
 
-  const removeNowPlaylist = () => {
-    playlistRepository.removePlaylist(uid, nowPlaylist, () => {
-      alert('제거되었습니다.');
-    });
+  const removeNowPlaylist = async () => {
+    await playlistRepository.removePlaylist(uid, nowPlaylist);
+    alert('제거되었습니다.');
   };
 
-  const removeSongInPlaylist = (sid) => {
+  const removeSongInPlaylist = async (sid) => {
     if (!nowPlaylist) {
       return;
     }
@@ -69,34 +67,34 @@ export function PlaylistContextProvider({ playlistRepository, children }) {
         (song) => song.id === sid
       );
       if (song) {
-        playlistRepository.removeSong(uid, nowPlaylist, song, () => {
-          window.alert('제거되었습니다.');
-        });
+        await playlistRepository.removeSong(uid, nowPlaylist, song);
+        window.alert('제거되었습니다.');
       } else {
-        console.log('노래없음');
+        throw new Error('cant remove because no song exists');
       }
     }
   };
 
-  const addBasicPlaylist = () => {
+  const addBasicPlaylist = async () => {
     const playlist = {
       id: Date.now(),
       name: 'playlist',
     };
-    setNowPlaylist(playlist);
-    playlistRepository.makePlaylist(uid, playlist);
-  };
-  const updateNowPlaylistName = (name) => {
-    playlistRepository.updatePlaylistName(uid, nowPlaylist, name);
+    await playlistRepository.makePlaylist(uid, playlist);
+    alert('플레이 리스트가 생성되었습니다!');
   };
 
-  const addPlaylist = (name) => {
+  const updateNowPlaylistName = async (name) => {
+    return playlistRepository.updatePlaylistName(uid, nowPlaylist, name);
+  };
+
+  const addPlaylist = async (name) => {
     const playlist = {
       id: Date.now(),
       name,
     };
     setNowPlaylist(playlist);
-    playlistRepository.makePlaylist(uid, playlist);
+    return playlistRepository.makePlaylist(uid, playlist);
   };
 
   const changeNowPlaylist = (id) => {
