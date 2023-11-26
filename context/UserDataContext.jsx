@@ -27,6 +27,9 @@ export function UserDataContextProvider({ userRepository, children }) {
   const removeUserData = async (userId) => {
     return userRepository.removeUser(userId);
   };
+  const makeUserData = async (userId, name) => {
+    return userRepository.makeUser(userId, name);
+  };
 
   return (
     <UserDataContext.Provider
@@ -36,6 +39,7 @@ export function UserDataContextProvider({ userRepository, children }) {
         syncUserData,
         getUserData,
         removeUserData,
+        makeUserData,
       }}
     >
       {children}

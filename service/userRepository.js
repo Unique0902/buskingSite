@@ -17,15 +17,15 @@ class UserRepository {
     });
   };
 
-  makeUser = (userId, name, onUpdate) => {
-    this.getUserData(userData).then((userData) => {
-      if (!userData) {
-        const listRef = ref(database, `users/${userId}/`);
-        const userData = { name, date: Date() };
-        set(listRef, userData);
-        onUpdate();
-      }
-    });
+  makeUser = async (userId, name) => {
+    const userData = this.getUserData(userData);
+    if (!userData) {
+      const listRef = ref(database, `users/${userId}/`);
+      const userData = { name, date: Date() };
+      return set(listRef, userData);
+    } else {
+      throw new Error('already userData exists!');
+    }
   };
   removeUser = async (userId) => {
     const listRef = ref(database, `users/${userId}`);
