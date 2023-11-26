@@ -9,13 +9,13 @@ export function PlaylistContextProvider({ playlistRepository, children }) {
   const { uid } = useAuthContext();
 
   useEffect(() => {
-    if (!uid) {
+    if (!uid || !userData) {
       return;
     }
     return playlistRepository.syncPlaylist(uid, (playlists) => {
       setPlaylists(playlists ? playlists : null);
     });
-  }, [uid]);
+  }, [uid, userData]);
 
   useEffect(() => {
     if (playlists) {

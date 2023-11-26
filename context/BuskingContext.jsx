@@ -1,20 +1,22 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useAuthContext } from './AuthContext';
+import { useUserDataContext } from './UserDataContext';
 
 const BuskingContext = createContext();
 
 export function BuskingContextProvider({ buskingRepository, children }) {
   const [buskingData, setBuskingData] = useState();
   const { uid } = useAuthContext();
+  const { userData } = useUserDataContext();
 
   useEffect(() => {
-    if (!uid) {
+    if (!uid || !userData) {
       return;
     }
     return buskingRepository.syncBuskingData(uid, (data) => {
       setBuskingData(data);
     });
-  }, [uid]);
+  }, [uid, userData]);
 
   const makeBusking = async (buskingInform) => {
     return buskingRepository.makeBusking(uid, buskingInform);
