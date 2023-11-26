@@ -8,13 +8,12 @@ export function BuskingContextProvider({ buskingRepository, children }) {
   const [buskingData, setBuskingData] = useState();
   const { uid } = useAuthContext();
   const { userData } = useUserDataContext();
-
+  const [isbuskingDataLoading, setIsbuskingDataLoading] = useState(true);
   useEffect(() => {
-    if (!uid || !userData) {
-      return;
-    }
+    setIsbuskingDataLoading(true);
     return buskingRepository.syncBuskingData(uid, (data) => {
       setBuskingData(data);
+      setIsbuskingDataLoading(false);
     });
   }, [uid, userData]);
 
@@ -73,6 +72,7 @@ export function BuskingContextProvider({ buskingRepository, children }) {
         applyNewBuskingSong,
         syncBuskingData,
         getBuskingData,
+        isbuskingDataLoading,
       }}
     >
       {children}

@@ -19,17 +19,18 @@ import { MinusIcn } from '../../assets/icon/icon';
 export default function AppBusking({}) {
   const { playlists } = usePlaylistContext();
   const { userData } = useUserDataContext();
-  const { buskingData, removeBuskingSong, removeBusking } = useBuskingContext();
+  const {
+    buskingData,
+    removeBuskingSong,
+    removeBusking,
+    isbuskingDataLoading,
+  } = useBuskingContext();
   const { uid } = useAuthContext();
   const [songArr, setSongArr] = useState([]);
   const [songArrToView, setSongArrToView] = useState([]);
   const router = useRouter();
 
   useEffect(() => {
-    if (!buskingData) {
-      router.push('/app/makebusking');
-      return;
-    }
     const appliance = buskingData.appliance;
     setSongArr(
       appliance ? Object.values(appliance).sort((a, b) => a.id - b.id) : []
@@ -41,6 +42,13 @@ export default function AppBusking({}) {
   그래도 각 신청곡 데이터 id에 time 데이터를 저장했기때문에 위 sort 함수와 같이 buskingData를
   받아올때마다 id 시간을 기준으로 정렬하여 보여줌
 */
+  if (isbuskingDataLoading) {
+    return <div>checking buskingData...</div>;
+  }
+  if (!buskingData) {
+    router.push('/app/makebusking');
+    return <div>move to makeBusking...</div>;
+  }
 
   const handleClickEndBuskingBtn = () => {
     if (window.confirm('버스킹을 종료하시겠습니까?')) {
@@ -51,7 +59,7 @@ export default function AppBusking({}) {
   };
 
   const handleRemoveRequestSong = (sid) => {
-    removeBuskingSong(sid, () => {});
+    removeBuskingSong(sid);
   };
 
   return (
