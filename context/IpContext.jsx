@@ -3,7 +3,7 @@ import { createContext, useContext } from 'react';
 const IpContext = createContext();
 
 export function IpContextProvider({ ipService, children }) {
-  const getIp = () => {
+  const getIp = async () => {
     return ipService.getIp();
   };
   // const logIp = () => {
