@@ -1,6 +1,4 @@
 import React from 'react';
-import { useEffect } from 'react';
-import { useState } from 'react';
 import TitleBar from '../../components/TitleBar';
 import MainSec from '../../components/MainSec';
 import { useAuthContext } from '../../context/AuthContext';
@@ -15,22 +13,16 @@ export default function AppInform({}) {
   const { removeUserPlaylists, playlists } = usePlaylistContext();
   const { buskingData, removeBusking } = useBuskingContext();
   const { uid, logout } = useAuthContext();
-  const [time, setTime] = useState(null);
-  useEffect(() => {
-    if (userData) {
-      setTime(new Date(userData.date));
-    }
-  }, [userData]);
+
+  const dayToMakeUser = new Date(userData.date);
   const handleClickRemoveUserBtn = async () => {
     if (window.confirm('정말 탈퇴하시겠습니까?')) {
       await removeUserData(uid);
       if (playlists) {
         await removeUserPlaylists(uid);
-        console.log('플리 초기화');
       }
       if (buskingData) {
         await removeBusking();
-        console.log('버스킹 초기화');
       }
       logout();
     }
@@ -41,15 +33,14 @@ export default function AppInform({}) {
       <MainSec>
         <RowWithTitle title={'닉네임'}>
           <p className='font-sans text-lg font-normal text-black'>
-            {userData && userData.name}
+            {userData.name}
           </p>
         </RowWithTitle>
         <RowWithTitle title={'가입일자'}>
           <p className='font-sans text-lg font-normal text-black'>
-            {time &&
-              `${time.getFullYear()}년 ${
-                time.getMonth() + 1
-              }월 ${time.getDate()}일`}
+            {`${dayToMakeUser.getFullYear()}년 ${
+              dayToMakeUser.getMonth() + 1
+            }월 ${dayToMakeUser.getDate()}일`}
           </p>
         </RowWithTitle>
         <button onClick={handleClickRemoveUserBtn} className='text-left'>
