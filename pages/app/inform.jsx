@@ -8,12 +8,12 @@ import { useUserDataContext } from '../../context/UserDataContext';
 import { getAppLayOut } from '../../layouts/appLayout';
 import RowWithTitle from '../../components/Row/RowWithTitle';
 import RowWithTitleAndArrow from '../../components/Row/RowWithTitleAndArrow';
-export default function AppInform({
-  userRepository,
-  playlistRepository,
-  buskingRepository,
-}) {
-  const { userData } = useUserDataContext();
+import { usePlaylistContext } from '../../context/PlaylistContext';
+import { useBuskingContext } from '../../context/BuskingContext';
+export default function AppInform({}) {
+  const { userData, removeUserData } = useUserDataContext();
+  const { removeUserPlaylists, playlists } = usePlaylistContext();
+  const { buskingData, removeBusking } = useBuskingContext();
   const { uid, logout } = useAuthContext();
   const [time, setTime] = useState(null);
   useEffect(() => {
@@ -21,13 +21,18 @@ export default function AppInform({
       setTime(new Date(userData.date));
     }
   }, [userData]);
-  const handleClickInformRow = () => {
+  const handleClickRemoveUserBtn = async () => {
     if (window.confirm('정말 탈퇴하시겠습니까?')) {
-      userRepository.removeUser(uid, () => {
-        playlistRepository.removeUserPlaylists(uid);
-        buskingRepository.removeBusking(uid, () => {});
-        logout();
-      });
+      await removeUserData(uid);
+      if (playlists) {
+        await removeUserPlaylists(uid);
+        console.log('플리 초기화');
+      }
+      if (buskingData) {
+        await removeBusking();
+        console.log('버스킹 초기화');
+      }
+      logout();
     }
   };
   return (
@@ -47,7 +52,7 @@ export default function AppInform({
               }월 ${time.getDate()}일`}
           </p>
         </RowWithTitle>
-        <button onClick={handleClickInformRow} className='text-left'>
+        <button onClick={handleClickRemoveUserBtn} className='text-left'>
           <RowWithTitleAndArrow title={'회원 탈퇴'} />
         </button>
       </MainSec>

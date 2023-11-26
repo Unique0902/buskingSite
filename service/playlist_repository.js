@@ -12,50 +12,47 @@ class PlaylistRepository {
   getPlaylists = async (userId) => {
     const listRef = ref(database, `playlists/${userId}/`);
     return get(listRef).then((snapshot) => {
-      const items = snapshot.val() || {};
+      const items = snapshot.val() || null;
       return items;
     });
   };
   getPlaylist = async (userId, playlistId) => {
     const listRef = ref(database, `playlists/${userId}/${playlistId}`);
     return get(listRef).then((snapshot) => {
-      const items = snapshot.val() || {};
+      const items = snapshot.val() || null;
       return items;
     });
   };
-  saveSong(userId, playlist, song, onUpdate) {
+  saveSong = async (userId, playlist, song) => {
     const listRef = ref(
       database,
       `playlists/${userId}/${playlist.id}/songs/${song.id}`
     );
-    set(listRef, song);
-    onUpdate();
-  }
-  makePlaylist(userId, playlist) {
+    return set(listRef, song);
+  };
+  makePlaylist = async (userId, playlist) => {
     const listRef = ref(database, `playlists/${userId}/${playlist.id}/`);
-    set(listRef, playlist);
-  }
-  updatePlaylistName(userId, playlist, name) {
+    return set(listRef, playlist);
+  };
+  updatePlaylistName = async (userId, playlist, name) => {
     const listRef = ref(database, `playlists/${userId}/${playlist.id}/name`);
-    set(listRef, name);
-  }
-  removeUserPlaylists(userId) {
+    return set(listRef, name);
+  };
+  removeUserPlaylists = async (userId) => {
     const listRef = ref(database, `playlists/${userId}/`);
-    remove(listRef);
-  }
-  removePlaylist(userId, playlist, onUpdate) {
+    return remove(listRef);
+  };
+  removePlaylist = async (userId, playlist) => {
     const listRef = ref(database, `playlists/${userId}/${playlist.id}/`);
-    remove(listRef, playlist);
-    onUpdate();
-  }
-  removeSong(userId, playlist, song, onUpdate) {
+    return remove(listRef, playlist);
+  };
+  removeSong = async (userId, playlist, song) => {
     const listRef = ref(
       database,
       `playlists/${userId}/${playlist.id}/songs/${song.id}`
     );
-    remove(listRef, playlist);
-    onUpdate();
-  }
+    return remove(listRef, playlist);
+  };
   updateSong() {}
 }
 

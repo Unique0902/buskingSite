@@ -9,12 +9,12 @@ export function LastFmContextProvider({ lastfm, children }) {
   const searchSongByArtist = (artist, pageNum) => {
     return lastfm.searchSongByArtist(artist, pageNum);
   };
-  const searchArtist = (artist) => {
-    return lastfm.searchArtist(artist);
-  };
-  const searchTopTrackByCorrectArtist = (mbid) => {
-    return lastfm.searchTopTrackByCorrectArtist(mbid);
-  };
+  // const searchArtist = (artist) => {
+  //   return lastfm.searchArtist(artist);
+  // };
+  // const searchTopTrackByCorrectArtist = (mbid) => {
+  //   return lastfm.searchTopTrackByCorrectArtist(mbid);
+  // };
   const getTopTracks = (pageNum) => {
     return lastfm.getTopTracks(pageNum);
   };
@@ -24,8 +24,6 @@ export function LastFmContextProvider({ lastfm, children }) {
       value={{
         searchSongByName,
         searchSongByArtist,
-        searchArtist,
-        searchTopTrackByCorrectArtist,
         getTopTracks,
       }}
     >

@@ -27,10 +27,9 @@ class UserRepository {
       }
     });
   };
-  removeUser = async (userId, onUpdate) => {
+  removeUser = async (userId) => {
     const listRef = ref(database, `users/${userId}`);
-    await remove(listRef);
-    onUpdate();
+    return await remove(listRef);
   };
 }
 

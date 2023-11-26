@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useAuthContext } from './AuthContext';
+import { useUserDataContext } from './UserDataContext';
 
 const PlaylistContext = createContext();
 
@@ -7,6 +8,7 @@ export function PlaylistContextProvider({ playlistRepository, children }) {
   const [playlists, setPlaylists] = useState(null);
   const [nowPlaylist, setNowPlaylist] = useState(null);
   const { uid } = useAuthContext();
+  const { userData } = useUserDataContext();
 
   useEffect(() => {
     if (!uid || !userData) {
@@ -114,6 +116,10 @@ export function PlaylistContextProvider({ playlistRepository, children }) {
     return playlistRepository.getPlaylist(userId, playlistId);
   };
 
+  const removeUserPlaylists = async (userId) => {
+    return playlistRepository.removeUserPlaylists(userId);
+  };
+
   return (
     <PlaylistContext.Provider
       value={{
@@ -129,6 +135,7 @@ export function PlaylistContextProvider({ playlistRepository, children }) {
         syncPlaylist,
         getPlaylists,
         getPlaylist,
+        removeUserPlaylists,
       }}
     >
       {children}
