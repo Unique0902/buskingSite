@@ -12,7 +12,7 @@ export default function PopupWrapper({ handleClickOther, isLeft, children }) {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [wrapperRef]);
+  }, [wrapperRef, handleClickOther]);
   return (
     <div
       ref={wrapperRef}

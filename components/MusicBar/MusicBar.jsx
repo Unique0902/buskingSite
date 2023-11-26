@@ -18,7 +18,7 @@ const MusicBar = ({ songArr, setSongArrToView }) => {
       copiedSongArr.shift();
     }
     setSongArrToView(copiedSongArr);
-  }, [songArr, nowSong]);
+  }, [songArr, nowSong, setSongArrToView]);
 
   // 노래 관련 로직 상당히 복잡함
   /*

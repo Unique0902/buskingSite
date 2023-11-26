@@ -22,7 +22,7 @@ export default function Home() {
     <section className='w-screen h-screen bg-black'>
       <section className='p-6 bg-white'>
         <LoginNav scrollToTutorial={scrollToTutorial} />
-        <main className='w-3/5 pt-24 pb-24 m-auto  max-lg:w-full'>
+        <main className='w-3/5 pt-24 pb-24 m-auto max-lg:w-full'>
           <h1 className='font-sans text-6xl font-semibold text-center text-black max-lg:text-4xl'>
             당신만의{' '}
             <div className='inline font-extrabold text-blue-600'>

@@ -49,7 +49,7 @@ const SideBar = ({ isShowSideBar, setIsShowSideBar }) => {
         document.removeEventListener('mousedown', handleClickOutside);
       };
     }
-  }, [wrapperRef]);
+  }, [wrapperRef, isLgMediaQuery, setIsShowSideBar]);
   const iconStyle = 'mr-4';
   return (
     <>

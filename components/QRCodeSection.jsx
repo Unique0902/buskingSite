@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import { color } from '../styles/theme';
 import PrimaryBtn from './Btn/PrimaryBtn';
-
+import Image from 'next/image';
 const QRCodeSection = ({ url, title }) => {
   const [isShowQr, setIsShowQr] = useState(true);
   const isLgMediaQuery = useMediaQuery({
@@ -17,11 +17,14 @@ const QRCodeSection = ({ url, title }) => {
   return (
     <>
       <h2 className='font-sans text-xl font-bold text-gray-300'>{title}</h2>
-      {isShowQr && (
-        <img
-          src={`https://chart.apis.google.com/chart?cht=qr&chs=100x100&chl=${url}`}
-        />
-      )}
+      <Image
+        className={`${isShowQr && 'hidden'}`}
+        alt='QRCode'
+        src={`https://chart.apis.google.com/chart?cht=qr&chs=100x100&chl=${url}`}
+        width={100}
+        height={100}
+        priority
+      />
 
       <PrimaryBtn
         handleClick={handleClickQRBtn}
