@@ -9,7 +9,6 @@ import { getAppLayOut } from '../../layouts/appLayout';
 import { useLastFmContext } from '../../context/LastFmContext';
 import NoPlaylistSection from '../../components/NoPlaylistSection';
 import { InformIcn, PlusIcn } from '../../assets/icon/icon';
-import LoadingSpinner from '../../components/LoadingSpinner';
 import HoverIcon from '../../components/Hover/HoverIcon';
 import LoadingCheckWrapper from '../../components/LoadingCheckWrapper';
 
