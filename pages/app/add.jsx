@@ -80,7 +80,7 @@ export default function AppAdd({}) {
               />
             </HoverIcon>
           </SongSearchBar>
-          <LoadingCheckWrapper>
+          <LoadingCheckWrapper isLoading={isLoading}>
             <SongAddTable
               results={searchResults}
               pageNum={pageNum}
