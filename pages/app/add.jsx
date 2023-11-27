@@ -67,7 +67,7 @@ export default function AppAdd({}) {
           <SongSearchBar
             searchWord={searchWord}
             setSearchWord={setSearchWord}
-            handleSearchBtnClick={handelChange}
+            onSearch={handelChange}
           >
             <HoverIcon
               text={

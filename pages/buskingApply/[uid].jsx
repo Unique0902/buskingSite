@@ -86,7 +86,6 @@ const App = () => {
     const data = await getUserData(userId);
     setIsUser(!!data);
   };
-
   // 왜 checkIsUser를 dependency에 넣어주어야하지?
   useEffect(() => {
     if (userId) {
@@ -235,7 +234,7 @@ const App = () => {
                 <SongSearchBar
                   searchWord={searchWord}
                   setSearchWord={setSearchWord}
-                  handleSearchBtnClick={handleSearchBarChange}
+                  onSearch={handleSearchBarChange}
                 >
                   <ArrangeMenuBtn
                     results={results}
@@ -323,7 +322,7 @@ const App = () => {
                   <SongSearchBar
                     searchWord={searchWord}
                     setSearchWord={setSearchWord}
-                    handleSearchBtnClick={handleSearchBarChange}
+                    onSearch={handleSearchBarChange}
                   >
                     <ArrangeMenuBtn
                       results={results}

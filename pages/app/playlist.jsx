@@ -59,7 +59,7 @@ export default function AppPlaylist() {
           <SongSearchBar
             searchWord={searchWord}
             setSearchWord={setSearchWord}
-            handleSearchBtnClick={handelChange}
+            onSearch={handelChange}
           >
             <ArrangeMenuBtn
               results={songArr}

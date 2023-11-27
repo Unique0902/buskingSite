@@ -4,12 +4,7 @@ import { borderRadius, color, xyPadding } from '../../styles/theme';
 import PrimaryBtn from '../Btn/PrimaryBtn';
 import { useMediaQuery } from 'react-responsive';
 
-const SongSearchBar = ({
-  searchWord,
-  setSearchWord,
-  handleSearchBtnClick,
-  children,
-}) => {
+const SongSearchBar = ({ searchWord, setSearchWord, onSearch, children }) => {
   // useEffect(() => {
   //   if (searchWord.category) {
   //     onSearchBarChange();
@@ -17,7 +12,7 @@ const SongSearchBar = ({
   // }, [searchWord]);
   const handleClickBtn = () => {
     if (searchWord.category) {
-      handleSearchBtnClick();
+      onSearch();
     }
   };
   const isLgMediaQuery = useMediaQuery({
