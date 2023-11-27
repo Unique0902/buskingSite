@@ -7,7 +7,6 @@ import { usePlaylistContext } from '../../context/PlaylistContext';
 import { getAppLayOut } from '../../layouts/appLayout';
 import { useRouter } from 'next/router';
 import { useBuskingContext } from '../../context/BuskingContext';
-import NoPlaylistSection from '../../components/NoPlaylistSection';
 
 export default function AppMakeBusking({}) {
   const { buskingData, makeBusking } = useBuskingContext();
@@ -62,9 +61,7 @@ export default function AppMakeBusking({}) {
   return (
     <>
       <TitleBar text={'버스킹하기'} />
-      {!playlists ? (
-        <NoPlaylistSection />
-      ) : (
+      <NoPlaylistCheckWrapper isExistWrapper={!!playlists}>
         <MainSec>
           <MainRow title={'플레이리스트 선택'}>
             <select
@@ -103,7 +100,7 @@ export default function AppMakeBusking({}) {
             버스킹 시작하기
           </button>
         </MainSec>
-      )}
+      </NoPlaylistCheckWrapper>
     </>
   );
 }

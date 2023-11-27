@@ -7,10 +7,10 @@ import SongAddTable from '../../components/Table/SongAddTable';
 import { useEffect } from 'react';
 import { getAppLayOut } from '../../layouts/appLayout';
 import { useLastFmContext } from '../../context/LastFmContext';
-import NoPlaylistSection from '../../components/NoPlaylistSection';
 import { InformIcn, PlusIcn } from '../../assets/icon/icon';
 import HoverIcon from '../../components/Hover/HoverIcon';
 import LoadingCheckWrapper from '../../components/LoadingCheckWrapper';
+import NoPlaylistCheckWrapper from '../../components/NoPlaylistCheckWrapper';
 
 export default function AppAdd({}) {
   const [searchResults, setSearchResults] = useState([]);
@@ -60,9 +60,7 @@ export default function AppAdd({}) {
   return (
     <>
       <TitleBar text={'노래추가'} />
-      {!nowPlaylist ? (
-        <NoPlaylistSection />
-      ) : (
+      <NoPlaylistCheckWrapper isExistWrapper={!!nowPlaylist}>
         <MainSec>
           <SongSearchBar
             searchWord={searchWord}
@@ -95,7 +93,7 @@ export default function AppAdd({}) {
             </SongAddTable>
           </LoadingCheckWrapper>
         </MainSec>
-      )}
+      </NoPlaylistCheckWrapper>
     </>
   );
 }

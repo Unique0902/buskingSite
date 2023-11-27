@@ -6,9 +6,9 @@ import SongSearchBar from '../../components/Search/SongSearchBar';
 import ArrangeMenuBtn from '../../components/ArrangeMenu/ArrangeMenuBtn';
 import { usePlaylistContext } from '../../context/PlaylistContext';
 import { getAppLayOut } from '../../layouts/appLayout';
-import NoPlaylistSection from '../../components/NoPlaylistSection';
 import PrimarySongTable from '../../components/Table/PrimarySongTable';
 import { MinusIcn } from '../../assets/icon/icon';
+import NoPlaylistCheckWrapper from '../../components/NoPlaylistCheckWrapper';
 
 export default function AppPlaylist() {
   const [songArr, setSongArr] = useState([]);
@@ -52,9 +52,7 @@ export default function AppPlaylist() {
   return (
     <>
       <TitleBar text={'플레이리스트 관리'} />
-      {!nowPlaylist ? (
-        <NoPlaylistSection />
-      ) : (
+      <NoPlaylistCheckWrapper isExistWrapper={!!nowPlaylist}>
         <MainSec>
           <SongSearchBar
             searchWord={searchWord}
@@ -78,7 +76,7 @@ export default function AppPlaylist() {
             <MinusIcn width={24} height={24} color={'red'} />
           </PrimarySongTable>
         </MainSec>
-      )}
+      </NoPlaylistCheckWrapper>
     </>
   );
 }
