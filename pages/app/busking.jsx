@@ -12,7 +12,6 @@ import PrimaryBtn from '../../components/Btn/PrimaryBtn';
 import { color } from '../../styles/theme';
 import SectionCopyText from '../../components/SectionCopyText';
 import MusicBar from '../../components/MusicBar/MusicBar';
-import QRCodeSection from '../../components/QRCodeSection';
 import RequestSongTable from '../../components/Table/RequestSongTable';
 import { MinusIcn } from '../../assets/icon/icon';
 

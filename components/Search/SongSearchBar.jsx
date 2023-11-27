@@ -2,7 +2,7 @@ import React from 'react';
 import { SearchIcn } from '../../assets/icon/icon';
 import { borderRadius, color, xyPadding } from '../../styles/theme';
 import PrimaryBtn from '../Btn/PrimaryBtn';
-import { useMediaQuery } from 'react-responsive';
+import RenderedWhenFullScreen from '../Responsive/RenderedWhenFullScreen';
 
 const SongSearchBar = ({ searchWord, setSearchWord, onSearch, children }) => {
   // useEffect(() => {
@@ -15,9 +15,7 @@ const SongSearchBar = ({ searchWord, setSearchWord, onSearch, children }) => {
       onSearch();
     }
   };
-  const isLgMediaQuery = useMediaQuery({
-    query: '(max-width:1024px)',
-  });
+
   return (
     <form
       className='relative flex flex-row items-center justify-center gap-2 mb-6 max-lg:flex-col'
@@ -54,7 +52,7 @@ const SongSearchBar = ({ searchWord, setSearchWord, onSearch, children }) => {
           </button>
         </div>
 
-        {!isLgMediaQuery && (
+        <RenderedWhenFullScreen>
           <PrimaryBtn
             handleClick={handleClickBtn}
             btnPadding={xyPadding.base}
@@ -62,7 +60,7 @@ const SongSearchBar = ({ searchWord, setSearchWord, onSearch, children }) => {
           >
             검색
           </PrimaryBtn>
-        )}
+        </RenderedWhenFullScreen>
       </div>
       {children}
     </form>

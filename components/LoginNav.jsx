@@ -6,6 +6,7 @@ import { borderRadius, color, fontSize } from '../styles/theme';
 import { MenuIcn } from '../assets/icon/icon';
 import { useMediaQuery } from 'react-responsive';
 import HomeSideBar from './Layout/SideBar/HomeSideBar';
+import RenderedWhenMobile from './Responsive/RenderedWhenMobile';
 
 export default function LoginNav({ scrollToTutorial }) {
   const router = useRouter();
@@ -77,8 +78,10 @@ export default function LoginNav({ scrollToTutorial }) {
           />
         </button>
       </div>
-      {isShowSideBar && !isLgMediaQuery && (
-        <HomeSideBar setIsShowSideBar={setIsShowSideBar} />
+      {isShowSideBar && (
+        <RenderedWhenMobile>
+          <HomeSideBar setIsShowSideBar={setIsShowSideBar} />
+        </RenderedWhenMobile>
       )}
     </nav>
   );

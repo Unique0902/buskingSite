@@ -1,51 +1,26 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useRouter } from 'next/router';
-import { useMediaQuery } from 'react-responsive';
-import SideBarBtn from './SideBarBtn';
-import {
-  ArrowLeftIcn,
-  ArrowRightIcn,
-  BookIcn,
-  GuitarIcn,
-  HomeIcn,
-  PlusIcn,
-  SongIcn,
-  UserIcn,
-} from '../../../assets/icon/icon';
-import Link from 'next/link';
+import React, { useEffect, useRef } from 'react';
+import { ArrowRightIcn, BookIcn } from '../../../assets/icon/icon';
 import HomeSideBarBtn from './HomeSideBarBtn';
 const HomeSideBar = ({ setIsShowSideBar }) => {
-  const [isHide, setIsHide] = useState(false);
-  const [selectedBtn, setSelectedBtn] = useState('home');
   const wrapperRef = useRef();
-  const router = useRouter();
-
-  const isLgMediaQuery = useMediaQuery({
-    query: '(max-width:1024px)',
-  });
 
   useEffect(() => {
-    if (isLgMediaQuery) {
-      function handleClickOutside(event) {
-        if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
-          setIsShowSideBar(false);
-        }
+    function handleClickOutside(event) {
+      if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+        setIsShowSideBar(false);
       }
-      document.addEventListener('mousedown', handleClickOutside);
-      return () => {
-        document.removeEventListener('mousedown', handleClickOutside);
-      };
     }
-  }, [wrapperRef, isLgMediaQuery, setIsShowSideBar]);
-  const iconStyle = 'mr-4';
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [wrapperRef, setIsShowSideBar]);
 
   return (
     <>
       <aside
         ref={wrapperRef}
-        className={` bg-gray-100 text-black relative max-lg:absolute right-0 top-0 max-lg:h-full max-lg:z-40 ${
-          isHide ? 'w-16' : 'w-64'
-        }`}
+        className={` bg-gray-100 text-black relative max-lg:absolute right-0 top-0 max-lg:h-full max-lg:z-40 w-64`}
       >
         <div className='flex items-center px-6 py-6 text-black border-b border-gray-600 border-solid'>
           <BookIcn

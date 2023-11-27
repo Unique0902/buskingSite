@@ -1,5 +1,4 @@
 import { useRef } from 'react';
-import Image from 'next/image';
 import LoginNav from '../components/LoginNav';
 import { useAuthContext } from '../context/AuthContext';
 import { useRouter } from 'next/router';
