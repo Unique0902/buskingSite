@@ -21,12 +21,7 @@ export default function AppLayOut({ children }) {
     <ProtectedRoute>
       <UserDataProtectedRoute>
         <section className='flex h-screen text-black bg-gradient-to-b from-blue-500 to-white '>
-          {isShowSideBar && (
-            <SideBar
-              isShowSideBar={isShowSideBar}
-              setIsShowSideBar={setIsShowSideBar}
-            />
-          )}
+          {isShowSideBar && <SideBar setIsShowSideBar={setIsShowSideBar} />}
           <main className='px-8 py-6 overflow-y-auto grow max-lg:px-4'>
             <AppHeader
               isShowSideBar={isShowSideBar}

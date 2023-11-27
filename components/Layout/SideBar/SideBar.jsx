@@ -12,7 +12,7 @@ import {
   SongIcn,
   UserIcn,
 } from '../../../assets/icon/icon';
-const SideBar = ({ isShowSideBar, setIsShowSideBar }) => {
+const SideBar = ({ setIsShowSideBar }) => {
   const [isHide, setIsHide] = useState(false);
   const [selectedBtn, setSelectedBtn] = useState('home');
   const wrapperRef = useRef();
