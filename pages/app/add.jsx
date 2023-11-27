@@ -11,6 +11,7 @@ import NoPlaylistSection from '../../components/NoPlaylistSection';
 import { InformIcn, PlusIcn } from '../../assets/icon/icon';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import HoverIcon from '../../components/Hover/HoverIcon';
+import LoadingCheckWrapper from '../../components/LoadingCheckWrapper';
 
 export default function AppAdd({}) {
   const [searchResults, setSearchResults] = useState([]);
@@ -82,9 +83,7 @@ export default function AppAdd({}) {
               />
             </HoverIcon>
           </SongSearchBar>
-          {isLoading ? (
-            <LoadingSpinner />
-          ) : (
+          <LoadingCheckWrapper>
             <SongAddTable
               results={searchResults}
               pageNum={pageNum}
@@ -95,7 +94,7 @@ export default function AppAdd({}) {
             >
               <PlusIcn width={24} height={24} color={'white'} />
             </SongAddTable>
-          )}
+          </LoadingCheckWrapper>
         </MainSec>
       )}
     </>
