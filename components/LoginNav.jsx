@@ -1,18 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
 import PrimaryBtn from './Btn/PrimaryBtn';
 import { borderRadius, color, fontSize } from '../styles/theme';
 import { MenuIcn } from '../assets/icon/icon';
 import { useMediaQuery } from 'react-responsive';
 import HomeSideBar from './Layout/SideBar/HomeSideBar';
 import RenderedWhenMobile from './Responsive/RenderedWhenMobile';
+import Link from 'next/link';
 
 export default function LoginNav({ scrollToTutorial }) {
-  const router = useRouter();
-  const handleClickLogoBtn = () => {
-    router.push('/');
-  };
   const handleClickTutorialBtn = () => {
     scrollToTutorial();
   };
@@ -29,10 +25,7 @@ export default function LoginNav({ scrollToTutorial }) {
   }, [isLgMediaQuery]);
   return (
     <nav className='flex items-center justify-around max-lg:justify-between'>
-      <button
-        className='flex items-center gap-3 max-lg:gap-2'
-        onClick={handleClickLogoBtn}
-      >
+      <Link href={'/'} className='flex items-center gap-3 max-lg:gap-2'>
         <Image
           src={'/img/bookLogo.png'}
           alt=''
@@ -41,7 +34,7 @@ export default function LoginNav({ scrollToTutorial }) {
           className='w-12 h-12 '
         />
         <p className='font-sans text-3xl font-semibold text-black '>노래책</p>
-      </button>
+      </Link>
       <ul className='justify-around hidden w-2/5 font-sans text-xl font-semibold text-black lg:flex'>
         <li>
           <button className='hover:scale-110'>소개</button>

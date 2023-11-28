@@ -26,22 +26,23 @@ export default function AppPlaylist() {
 
   const search = () => {
     if (nowPlaylist && nowPlaylist.songs) {
+      const wholeSongArrary = Object.values(nowPlaylist.songs);
       if (searchWord.name) {
         if (searchWord.category === '제목') {
           setSongArr(
-            Object.values(nowPlaylist.songs).filter((song) =>
+            wholeSongArrary.filter((song) =>
               song.title.toLowerCase().includes(searchWord.name)
             )
           );
         } else if (searchWord.category === '가수') {
           setSongArr(
-            Object.values(nowPlaylist.songs).filter((song) =>
+            wholeSongArrary.filter((song) =>
               song.artist.toLowerCase().includes(searchWord.name)
             )
           );
         }
       } else {
-        setSongArr(Object.values(nowPlaylist.songs));
+        setSongArr(wholeSongArrary);
       }
     }
   };
