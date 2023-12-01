@@ -6,35 +6,23 @@ import { usePlaylistContext } from '../../context/PlaylistContext';
 import SongAddTable from '../../components/Table/SongAddTable';
 import { useEffect } from 'react';
 import { getAppLayOut } from '../../layouts/appLayout';
-import { useLastFmContext } from '../../context/LastFmContext';
 import { InformIcn, PlusIcn } from '../../assets/icon/icon';
 import HoverIcon from '../../components/Hover/HoverIcon';
 import LoadingCheckWrapper from '../../components/LoadingCheckWrapper';
 import NoPlaylistCheckWrapper from '../../components/NoPlaylistCheckWrapper';
+import useAddSearch from '../../hooks/UseAddSearch';
 
 export default function AppAdd({}) {
   const [searchResults, setSearchResults] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
   const [resultNum, setResultNum] = useState(0);
-  const [pageNum, setPageNum] = useState(1);
-  const [searchWord, setSearchWord] = useState({ name: '', category: '제목' });
+  const [nowPageNum, setNowPageNum] = useState(1);
   const { nowPlaylist, addSongToPlaylist } = usePlaylistContext();
-  const { searchSongByName, searchSongByArtist } = useLastFmContext();
-  const search = async (pageNum) => {
-    setIsLoading(true);
-    if (searchWord.name) {
-      if (searchWord.category === '제목') {
-        const result = await searchSongByName(searchWord.name, pageNum);
-        setSearchResults(result.trackmatches.track);
-        setResultNum(parseInt(result['opensearch:totalResults']));
-      } else if (searchWord.category === '가수') {
-        const result = await searchSongByArtist(searchWord.name, pageNum);
-        setSearchResults(result.trackmatches.track);
-        setResultNum(parseInt(result['opensearch:totalResults']));
-      }
-    }
-    setIsLoading(false);
-  };
+
+  const [searchWord, setSearchWord, isLoading, search] = useAddSearch(
+    setSearchResults,
+    setResultNum,
+    nowPageNum
+  );
   useEffect(() => {
     if (searchResults) {
       if (searchResults.length > 6) {
@@ -43,17 +31,17 @@ export default function AppAdd({}) {
     }
   }, [searchResults]);
   const handelPlus = () => {
-    search(pageNum + 1);
-    setPageNum(pageNum + 1);
+    search(nowPageNum + 1);
+    setNowPageNum(nowPageNum + 1);
   };
   const handelMinus = () => {
-    if (pageNum !== 1) {
-      search(pageNum - 1);
-      setPageNum(pageNum - 1);
+    if (nowPageNum !== 1) {
+      search(nowPageNum - 1);
+      setNowPageNum(nowPageNum - 1);
     }
   };
   const handelChange = () => {
-    setPageNum(1);
+    setNowPageNum(1);
     search(1);
   };
 
@@ -83,7 +71,7 @@ export default function AppAdd({}) {
           <LoadingCheckWrapper isLoading={isLoading}>
             <SongAddTable
               results={searchResults}
-              pageNum={pageNum}
+              pageNum={nowPageNum}
               onSongClick={addSongToPlaylist}
               resultNum={resultNum}
               onPagePlus={handelPlus}
