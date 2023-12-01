@@ -30,10 +30,12 @@ export default function AppBusking({}) {
   const router = useRouter();
 
   useEffect(() => {
-    const appliance = buskingData.appliance;
-    setSongArr(
-      appliance ? Object.values(appliance).sort((a, b) => a.id - b.id) : []
-    );
+    if (buskingData) {
+      const appliance = buskingData.appliance;
+      setSongArr(
+        appliance ? Object.values(appliance).sort((a, b) => a.id - b.id) : []
+      );
+    }
   }, [buskingData]);
 
   /*

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TitleBar from '../../components/TitleBar';
 import MainSec from '../../components/MainSec';
 import MainRow from '../../components/Row/RowWithTitle';
@@ -7,6 +7,7 @@ import { usePlaylistContext } from '../../context/PlaylistContext';
 import { getAppLayOut } from '../../layouts/appLayout';
 import { useRouter } from 'next/router';
 import { useBuskingContext } from '../../context/BuskingContext';
+import NoPlaylistCheckWrapper from '../../components/NoPlaylistCheckWrapper';
 
 export default function AppMakeBusking({}) {
   const { buskingData, makeBusking } = useBuskingContext();
@@ -22,15 +23,15 @@ export default function AppMakeBusking({}) {
   const handleChange = (value, label) => {
     setBuskingInform({ ...buskingInform, [label]: value });
   };
-  const handleChangePlaylistId = (e) => {
-    handleChange(e.target.value, 'playlistId');
-  };
-  const handleChangeMaxNum = (e) => {
-    handleChange(e.target.value, 'maxNum');
-  };
-  const handleChangeName = (e) => {
-    handleChange(e.target.value, 'name');
-  };
+
+  useEffect(() => {
+    if (playlists) {
+      setBuskingInform((buskingInform) => ({
+        ...buskingInform,
+        playlistId: Object.values(playlists)[0].id,
+      }));
+    }
+  }, [playlists]);
 
   const startBusking = () => {
     if (!buskingInform.playlistId) {
@@ -67,7 +68,9 @@ export default function AppMakeBusking({}) {
             <select
               name='playlists'
               value={buskingInform.playlistId}
-              onChange={handleChangePlaylistId}
+              onChange={(e) => {
+                handleChange(e.target.value, 'playlistId');
+              }}
               className='px-3 py-2 font-sans text-xl font-normal border-2 border-black rounded-lg'
             >
               {playlistArr.map((playlist) => (
@@ -81,7 +84,9 @@ export default function AppMakeBusking({}) {
             <input
               type='number'
               value={buskingInform.maxNum}
-              onChange={handleChangeMaxNum}
+              onChange={(e) => {
+                handleChange(e.target.value, 'maxNum');
+              }}
               className='w-2/12 p-2 font-sans text-lg border-2 border-black rounded-xl max-md:w-5/6'
             />
           </MainRow>
@@ -89,7 +94,9 @@ export default function AppMakeBusking({}) {
             <input
               type='text'
               value={buskingInform.name}
-              onChange={handleChangeName}
+              onChange={(e) => {
+                handleChange(e.target.value, 'name');
+              }}
               className='w-1/3 p-2 font-sans text-lg border-2 border-black rounded-xl max-md:w-5/6'
             />
           </MainRow>
