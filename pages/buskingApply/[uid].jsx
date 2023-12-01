@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useIpContext } from '../../context/IpContext';
 import { useBuskingContext } from '../../context/BuskingContext';
 import { usePlaylistContext } from '../../context/PlaylistContext';
@@ -66,10 +66,10 @@ const App = () => {
     }
   }, [buskingData]);
 
-  const checkIsUser = async () => {
+  const checkIsUser = useCallback(async () => {
     const data = await getUserData(userId);
     setIsUser(!!data);
-  };
+  });
   // 왜 checkIsUser를 dependency에 넣어주어야하지?
   useEffect(() => {
     if (userId) {
@@ -77,10 +77,10 @@ const App = () => {
     }
   }, [userId]);
 
-  const handleBuskingData = async () => {
+  const handleBuskingData = useCallback(async () => {
     const data = await getBuskingData(userId);
     setBuskingData(data);
-  };
+  });
 
   // 왜 handleBuskingData를 dependency에 넣어주어야하지?
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { useMediaQuery } from 'react-responsive';
 import SideBarBtn from './SideBarBtn';
@@ -17,14 +17,15 @@ const SideBar = ({ setIsShowSideBar }) => {
   const [selectedBtn, setSelectedBtn] = useState('home');
   const wrapperRef = useRef();
   const router = useRouter();
-  const checkSelectedBtn = () => {
+
+  const checkSelectedBtn = useCallback(() => {
     const pathArr = router.pathname.split('/');
     if (pathArr[2] === 'busking') {
       setSelectedBtn('makebusking');
     } else {
       setSelectedBtn(pathArr[2]);
     }
-  };
+  });
 
   useEffect(() => {
     checkSelectedBtn();
