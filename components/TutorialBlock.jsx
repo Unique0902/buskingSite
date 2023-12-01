@@ -20,9 +20,9 @@ const TutorialBlock = ({ imgAlt, title, isReverse = false, children }) => {
         <h2 className='font-sans text-5xl font-semibold text-center text-black max-lg:text-3xl'>
           {title}
         </h2>
-        <h4 className='font-sans text-xl font-normal text-center text-black max-lg:text-lg'>
+        <h3 className='font-sans text-xl font-normal text-center text-black max-lg:text-lg'>
           {children}
-        </h4>
+        </h3>
       </div>
     </section>
   );
