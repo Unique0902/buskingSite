@@ -1,22 +1,22 @@
 import { useEffect, useState } from 'react';
 import { useLastFmContext } from '../context/LastFmContext';
 
-const useAddSearch = (setFilteredDataArr, setResultNum, nowPageNum) => {
+const useAddSearch = (setFilteredDataArr, setResultNum) => {
   const [searchWord, setSearchWord] = useState({ name: '', category: '제목' });
   const [isLoading, setIsLoading] = useState(false);
   const { searchSongByName, searchSongByArtist, getTopTracks } =
     useLastFmContext();
 
-  const search = async () => {
+  const search = async (pageNum) => {
     setIsLoading(true);
     if (searchWord.name) {
       if (searchWord.category === '제목') {
-        const result = await searchSongByName(searchWord.name, nowPageNum);
+        const result = await searchSongByName(searchWord.name, pageNum);
         console.log(result);
         setFilteredDataArr(result.trackmatches.track);
         setResultNum(parseInt(result['opensearch:totalResults']));
       } else if (searchWord.category === '가수') {
-        const result = await searchSongByArtist(searchWord.name, nowPageNum);
+        const result = await searchSongByArtist(searchWord.name, pageNum);
         setFilteredDataArr(result.trackmatches.track);
         setResultNum(parseInt(result['opensearch:totalResults']));
       }
