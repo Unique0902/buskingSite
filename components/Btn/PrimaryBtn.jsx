@@ -4,7 +4,7 @@ import { borderRadius, color, xyPadding } from '../../styles/theme';
 const PrimaryBtn = ({
   children,
   handleClick,
-  bgColor = color.primary_500,
+  bgColor = '#0055ff',
   textColor = color.white,
   fontSize = '12px',
   btnPadding = xyPadding.base,

@@ -64,6 +64,8 @@ export default function LoginNav({ scrollToTutorial }) {
           튜토리얼
         </PrimaryBtn>
         <button
+          type='button'
+          aria-label='menu'
           onClick={() => {
             setIsShowSideBar(!isShowSideBar);
           }}
