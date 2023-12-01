@@ -11,6 +11,7 @@ import ArrangeMenuBtn from '../../components/ArrangeMenu/ArrangeMenuBtn';
 import { ArrowDownIcn, SendIcn, SmileIcn } from '../../assets/icon/icon';
 import RequestSongTable from '../../components/Table/RequestSongTable';
 import PrimarySongTable from '../../components/Table/PrimarySongTable';
+import useSearchBar from '../../hooks/UseSearchBar';
 
 const App = () => {
   const [isUser, setIsUser] = useState(false);
@@ -21,7 +22,6 @@ const App = () => {
   const [nowPlaylist, setNowPlaylist] = useState(null);
   const [isShowPlaylistMenu, setIsShowPlaylistMenu] = useState(false);
   const [ip, setIp] = useState('');
-  const [searchWord, setSearchWord] = useState({ name: '', category: '제목' });
   const router = useRouter();
   const userId = router.query.uid;
   const { getIp } = useIpContext();
@@ -29,27 +29,11 @@ const App = () => {
     useBuskingContext();
   const { getPlaylists } = usePlaylistContext();
   const { getUserData } = useUserDataContext();
-  const search = () => {
-    if (nowPlaylist && nowPlaylist.songs) {
-      if (searchWord.name) {
-        if (searchWord.category === '제목') {
-          setResults(
-            Object.values(nowPlaylist.songs).filter((song) =>
-              song.title.toLowerCase().includes(searchWord.name)
-            )
-          );
-        } else if (searchWord.category === '가수') {
-          setResults(
-            Object.values(nowPlaylist.songs).filter((song) =>
-              song.artist.toLowerCase().includes(searchWord.name)
-            )
-          );
-        }
-      } else {
-        setResults(Object.values(nowPlaylist.songs));
-      }
-    }
-  };
+
+  const [searchWord, setSearchWord, search] = useSearchBar(
+    nowPlaylist && nowPlaylist.songs,
+    setResults
+  );
 
   useEffect(() => {
     if (isUser) {

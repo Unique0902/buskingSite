@@ -10,10 +10,11 @@ const PrimaryBtn = ({
   btnPadding = xyPadding.base,
   radius = borderRadius.lg,
   isActivated = true,
+  isSubmit = false,
 }) => {
   return (
     <button
-      type='button'
+      type={isSubmit ? 'submit' : 'button'}
       style={{
         backgroundColor: isActivated ? bgColor : color.gray_400,
         fontSize: fontSize,

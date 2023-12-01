@@ -9,10 +9,10 @@ import { getAppLayOut } from '../../layouts/appLayout';
 import PrimarySongTable from '../../components/Table/PrimarySongTable';
 import { MinusIcn } from '../../assets/icon/icon';
 import NoPlaylistCheckWrapper from '../../components/NoPlaylistCheckWrapper';
+import useSearchBar from '../../hooks/UseSearchBar';
 
 export default function AppPlaylist() {
   const [songArr, setSongArr] = useState([]);
-  const [searchWord, setSearchWord] = useState({ name: '', category: '제목' });
   const { nowPlaylist, removeSongInPlaylist } = usePlaylistContext();
   useEffect(() => {
     if (nowPlaylist) {
@@ -24,32 +24,11 @@ export default function AppPlaylist() {
     }
   }, [nowPlaylist]);
 
-  const search = () => {
-    if (nowPlaylist && nowPlaylist.songs) {
-      const wholeSongArrary = Object.values(nowPlaylist.songs);
-      if (searchWord.name) {
-        if (searchWord.category === '제목') {
-          setSongArr(
-            wholeSongArrary.filter((song) =>
-              song.title.toLowerCase().includes(searchWord.name)
-            )
-          );
-        } else if (searchWord.category === '가수') {
-          setSongArr(
-            wholeSongArrary.filter((song) =>
-              song.artist.toLowerCase().includes(searchWord.name)
-            )
-          );
-        }
-      } else {
-        setSongArr(wholeSongArrary);
-      }
-    }
-  };
+  const [searchWord, setSearchWord, search] = useSearchBar(
+    nowPlaylist && nowPlaylist.songs,
+    setSongArr
+  );
 
-  const handelChange = () => {
-    search();
-  };
   return (
     <>
       <TitleBar text={'플레이리스트 관리'} />
@@ -58,7 +37,7 @@ export default function AppPlaylist() {
           <SongSearchBar
             searchWord={searchWord}
             setSearchWord={setSearchWord}
-            onSearch={handelChange}
+            onSearch={search}
           >
             <ArrangeMenuBtn
               results={songArr}

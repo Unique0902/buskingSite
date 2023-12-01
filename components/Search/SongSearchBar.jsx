@@ -15,7 +15,6 @@ const SongSearchBar = ({ searchWord, setSearchWord, onSearch, children }) => {
       onSearch();
     }
   };
-
   return (
     <form
       className='relative flex flex-row items-center justify-center gap-2 mb-6 max-lg:flex-col'
@@ -47,6 +46,7 @@ const SongSearchBar = ({ searchWord, setSearchWord, onSearch, children }) => {
           <button
             className='absolute right-4 lg:hidden'
             onClick={handleClickBtn}
+            type='submit'
           >
             <SearchIcn width={18} height={18} color={color.gray_600} />
           </button>
@@ -57,6 +57,7 @@ const SongSearchBar = ({ searchWord, setSearchWord, onSearch, children }) => {
             handleClick={handleClickBtn}
             btnPadding={xyPadding.base}
             radius={borderRadius.xm}
+            isSubmit={true}
           >
             검색
           </PrimaryBtn>
