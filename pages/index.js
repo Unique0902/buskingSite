@@ -25,9 +25,9 @@ export default function Home() {
         <main className='w-3/5 pt-24 pb-24 m-auto max-lg:w-full'>
           <h1 className='font-sans text-6xl font-semibold text-center text-black max-lg:text-4xl'>
             당신만의{' '}
-            <p className='inline font-extrabold text-blue-600'>
+            <div className='inline font-extrabold text-blue-600'>
               온라인, 오프라인 버스킹
-            </p>
+            </div>
             을 여기서 시작하세요.
           </h1>
           <h2 className='mt-10 font-sans text-2xl font-normal text-center text-black max-lg:text-xl'>

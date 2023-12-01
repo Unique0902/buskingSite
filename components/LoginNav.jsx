@@ -12,7 +12,7 @@ export default function LoginNav({ scrollToTutorial }) {
   const handleClickTutorialBtn = () => {
     scrollToTutorial();
   };
-  const [isShowSideBar, setIsShowSideBar] = useState(true);
+  const [isShowSideBar, setIsShowSideBar] = useState(false);
   const isLgMediaQuery = useMediaQuery({
     query: '(min-width:1024px)',
   });
@@ -23,6 +23,11 @@ export default function LoginNav({ scrollToTutorial }) {
       setIsShowSideBar(true);
     }
   }, [isLgMediaQuery]);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   return (
     <nav className='flex items-center justify-around max-lg:justify-between'>
       <Link href={'/'} className='flex items-center gap-3 max-lg:gap-2'>
@@ -33,7 +38,7 @@ export default function LoginNav({ scrollToTutorial }) {
           height={500}
           className='w-12 h-12 '
         />
-        <p className='font-sans text-3xl font-semibold text-black '>노래책</p>
+        <h1 className='font-sans text-3xl font-semibold text-black '>노래책</h1>
       </Link>
       <ul className='justify-around hidden w-2/5 font-sans text-xl font-semibold text-black lg:flex'>
         <li>
@@ -71,7 +76,7 @@ export default function LoginNav({ scrollToTutorial }) {
           />
         </button>
       </div>
-      {isShowSideBar && (
+      {mounted && isShowSideBar && (
         <RenderedWhenMobile>
           <HomeSideBar setIsShowSideBar={setIsShowSideBar} />
         </RenderedWhenMobile>
