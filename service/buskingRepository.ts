@@ -1,37 +1,54 @@
 import { database } from './firebase';
 import { onValue, ref, remove, set, get } from 'firebase/database';
+import {
+  ApplicantData,
+  BuskingData,
+  BuskingInform,
+} from '../store/type/busking';
 
 class BuskingRepository {
-  syncBuskingData = (userId, onUpdate) => {
+  syncBuskingData = (
+    userId: string,
+    onUpdate: (value: BuskingData | null) => void
+  ) => {
     const listRef = ref(database, `buskings/${userId}/`);
     return onValue(listRef, (snapshot) => {
-      const value = snapshot.val();
+      const value: BuskingData | null = snapshot.val();
       onUpdate(value);
     });
   };
 
-  getBuskingData = async (userId) => {
+  getBuskingData = async (userId: string) => {
     const listRef = ref(database, `buskings/${userId}/`);
     return get(listRef).then((snapshot) => {
-      const items = snapshot.val();
+      const items: BuskingData | null = snapshot.val();
       return items;
     });
   };
 
-  makeBusking = async (userId, buskingInform) => {
+  makeBusking = async (userId: string, buskingInform: BuskingInform) => {
     const listRef = ref(database, `buskings/${userId}/`);
-    const buskingData = { id: Date.now(), ...buskingInform };
+    const buskingData: BuskingData = {
+      id: Date.now().toString(),
+      ...buskingInform,
+    };
     return set(listRef, buskingData);
   };
-  removeBusking = async (userId) => {
+  removeBusking = async (userId: string) => {
     const listRef = ref(database, `buskings/${userId}/`);
     return remove(listRef);
   };
-  removeBuskingSong = async (userId, sid) => {
+  removeBuskingSong = async (userId: string, sid: string) => {
     const listRef = ref(database, `buskings/${userId}/appliance/${sid}`);
     return remove(listRef);
   };
-  applyNewBuskingSong = async (userId, title, artist, sid, ip) => {
+  applyNewBuskingSong = async (
+    userId: string,
+    title: string,
+    artist: string,
+    sid: string,
+    ip: string
+  ) => {
     const listRef = ref(database, `buskings/${userId}/appliance/${sid}`);
     const song = {
       artist,
@@ -43,11 +60,15 @@ class BuskingRepository {
     };
     return set(listRef, song);
   };
-  applyBuskingSongAgain = async (userId, songObj, sid) => {
-    const listRef = ref(database, `buskings/${userId}/appliance/${sid}`);
-    return set(listRef, songObj);
-  };
-  applyOldBuskingSong = async (userId, sid, ip, cnt, applicants) => {
+
+  //TODO:통신한번만하게 나중에 수정
+  applyOldBuskingSong = async (
+    userId: string,
+    sid: string,
+    ip: string,
+    cnt: number,
+    applicants: ApplicantData[]
+  ) => {
     const listRef = ref(database, `buskings/${userId}/appliance/${sid}/cnt`);
     const newCnt = cnt + 1;
     await set(listRef, newCnt);

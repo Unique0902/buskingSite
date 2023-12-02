@@ -1,14 +1,27 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { UserInfo } from 'firebase/auth';
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
+import AuthService from '../service/auth_service';
 
-const AuthContext = createContext();
+const AuthContext = createContext(undefined);
 
-export function AuthContextProvider({ authService, children }) {
-  const [user, setUser] = useState();
+type Props = {
+  authService: AuthService;
+  children: ReactNode;
+};
+
+export function AuthContextProvider({ authService, children }: Props) {
+  const [user, setUser] = useState<UserInfo | undefined>();
   const [userLoading, setUserLoading] = useState(true);
   const logout = () => {
     authService.logout();
   };
-  const login = (providerName) => {
+  const login = (providerName: string) => {
     authService.login(providerName);
   };
   useEffect(() => {

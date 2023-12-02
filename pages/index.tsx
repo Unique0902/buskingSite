@@ -7,8 +7,9 @@ import { borderRadius, fontSize, xyPadding } from '../styles/theme';
 import TutorialBlock from '../components/TutorialBlock';
 
 export default function Home() {
-  const tutorialRef = useRef();
-  const scrollToTutorial = () => tutorialRef.current.scrollIntoView();
+  const tutorialRef = useRef<HTMLDivElement>();
+  const scrollToTutorial = () =>
+    tutorialRef.current && tutorialRef.current.scrollIntoView();
   const { login, user } = useAuthContext();
   const router = useRouter();
   if (user) {

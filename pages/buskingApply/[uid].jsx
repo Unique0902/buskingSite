@@ -69,7 +69,7 @@ const App = () => {
   const checkIsUser = useCallback(async () => {
     const data = await getUserData(userId);
     setIsUser(!!data);
-  });
+  }, [userId]);
   // 왜 checkIsUser를 dependency에 넣어주어야하지?
   useEffect(() => {
     if (userId) {
@@ -80,7 +80,7 @@ const App = () => {
   const handleBuskingData = useCallback(async () => {
     const data = await getBuskingData(userId);
     setBuskingData(data);
-  });
+  }, [userId]);
 
   // 왜 handleBuskingData를 dependency에 넣어주어야하지?
 

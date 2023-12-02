@@ -6,10 +6,11 @@ import {
   onAuthStateChanged,
   signOut,
   GithubAuthProvider,
+  UserInfo,
 } from 'firebase/auth';
 
 class AuthService {
-  login(providerName) {
+  login(providerName: string) {
     const authProvider = this.getProvider(providerName);
     return signInWithPopup(this.auth, authProvider);
   }
@@ -20,13 +21,13 @@ class AuthService {
     signOut(this.auth);
   }
 
-  onAuthChange(onUserChanged) {
-    onAuthStateChanged(this.auth, (user) => {
+  onAuthChange(onUserChanged: (user: UserInfo) => void) {
+    onAuthStateChanged(this.auth, (user: UserInfo) => {
       onUserChanged(user);
     });
   }
 
-  getProvider(providerName) {
+  getProvider(providerName: string) {
     switch (providerName) {
       case 'Google':
         return new GoogleAuthProvider();

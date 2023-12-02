@@ -1,9 +1,11 @@
 import '../styles/globals.css';
 import Head from 'next/head';
 import ServiceContextProviders from '../context/ServiceContextProviders';
+import { ReactElement } from 'react';
 
 export default function App({ Component, pageProps }) {
-  const getLayout = Component.getLayout || ((page) => <>{page}</>);
+  const getLayout =
+    Component.getLayout || ((page: ReactElement) => <>{page}</>);
   return (
     <ServiceContextProviders>
       <Head>
