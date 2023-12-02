@@ -12,7 +12,6 @@ const useAddSearch = (setFilteredDataArr, setResultNum) => {
     if (searchWord.name) {
       if (searchWord.category === '제목') {
         const result = await searchSongByName(searchWord.name, pageNum);
-        console.log(result);
         setFilteredDataArr(result.trackmatches.track);
         setResultNum(parseInt(result['opensearch:totalResults']));
       } else if (searchWord.category === '가수') {
@@ -26,7 +25,6 @@ const useAddSearch = (setFilteredDataArr, setResultNum) => {
   const searchTopTrack = async () => {
     setIsLoading(true);
     const result = await getTopTracks(1);
-    console.log(result);
     if (result.track) {
       setFilteredDataArr(
         result.track.map((data) => {

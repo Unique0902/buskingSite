@@ -1,11 +1,27 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
+import PlaylistRepository from '../service/playlist_repository';
+import { PlaylistDataObj, PlaylistSongData } from '../store/type/playlist';
 import { useAuthContext } from './AuthContext';
 import { useUserDataContext } from './UserDataContext';
 
-const PlaylistContext = createContext();
+type Props = {
+  playlistRepository: PlaylistRepository;
+  children: ReactNode;
+};
 
-export function PlaylistContextProvider({ playlistRepository, children }) {
-  const [playlists, setPlaylists] = useState(null);
+const PlaylistContext = createContext(undefined);
+
+export function PlaylistContextProvider({
+  playlistRepository,
+  children,
+}: Props) {
+  const [playlists, setPlaylists] = useState<PlaylistDataObj>();
   const [nowPlaylist, setNowPlaylist] = useState(null);
   const { uid } = useAuthContext();
   const { userData } = useUserDataContext();
@@ -14,9 +30,12 @@ export function PlaylistContextProvider({ playlistRepository, children }) {
     if (!uid || !userData) {
       return;
     }
-    return playlistRepository.syncPlaylist(uid, (playlists) => {
-      setPlaylists(playlists ? playlists : null);
-    });
+    return playlistRepository.syncPlaylist(
+      uid,
+      (playlists: PlaylistDataObj | null) => {
+        setPlaylists(playlists ? playlists : null);
+      }
+    );
   }, [uid, userData]);
 
   useEffect(() => {
@@ -31,12 +50,14 @@ export function PlaylistContextProvider({ playlistRepository, children }) {
     }
   }, [playlists]);
 
-  const addSongToPlaylist = async (title, artist) => {
+  const addSongToPlaylist = async (title: string, artist: string) => {
     if (nowPlaylist.length === 0) {
       alert('플레이리스트가 존재하지않습니다! 추가해주세요!');
       return;
     }
-    const songArr = nowPlaylist.songs ? Object.values(nowPlaylist.songs) : [];
+    const songArr: PlaylistSongData[] = nowPlaylist.songs
+      ? Object.values(nowPlaylist.songs)
+      : [];
     const sameSong = songArr.find(
       (song) => song.title === title && song.artist === artist
     );
@@ -44,7 +65,7 @@ export function PlaylistContextProvider({ playlistRepository, children }) {
       alert('이미 추가된 노래입니다!');
     } else {
       const song = {
-        id: Date.now(),
+        id: Date.now().toString(),
         title: title,
         artist: artist,
       };
@@ -58,14 +79,13 @@ export function PlaylistContextProvider({ playlistRepository, children }) {
     alert('제거되었습니다.');
   };
 
-  const removeSongInPlaylist = async (sid) => {
+  const removeSongInPlaylist = async (sid: string) => {
     if (!nowPlaylist) {
       return;
     }
     if (window.confirm('정말 제거하시겠습니까?')) {
-      const song = Object.values(nowPlaylist.songs).find(
-        (song) => song.id === sid
-      );
+      const songArr: PlaylistSongData[] = Object.values(nowPlaylist.songs);
+      const song = songArr.find((song) => song.id === sid);
       if (song) {
         await playlistRepository.removeSong(uid, nowPlaylist, song);
         window.alert('제거되었습니다.');
@@ -76,45 +96,49 @@ export function PlaylistContextProvider({ playlistRepository, children }) {
   };
 
   const addBasicPlaylist = async () => {
+    const PLAYLIST_BASIC_NAME = 'playlist';
     const playlist = {
-      id: Date.now(),
-      name: 'playlist',
+      id: Date.now().toString(),
+      name: PLAYLIST_BASIC_NAME,
     };
     await playlistRepository.makePlaylist(uid, playlist);
     alert('플레이 리스트가 생성되었습니다!');
   };
 
-  const updateNowPlaylistName = async (name) => {
+  const updateNowPlaylistName = async (name: string) => {
     return playlistRepository.updatePlaylistName(uid, nowPlaylist, name);
   };
 
-  const addPlaylist = async (name) => {
+  const addPlaylist = async (name: string) => {
     const playlist = {
-      id: Date.now(),
+      id: Date.now().toString(),
       name,
     };
     setNowPlaylist(playlist);
     return playlistRepository.makePlaylist(uid, playlist);
   };
 
-  const changeNowPlaylist = (id) => {
+  const changeNowPlaylist = (id: string) => {
     if (playlists[id]) {
       setNowPlaylist(playlists[id]);
     }
   };
 
-  const syncPlaylist = (userId, onUpdate) => {
+  const syncPlaylist = (
+    userId: string,
+    onUpdate: (value: PlaylistDataObj) => void
+  ) => {
     playlistRepository.syncPlaylist(userId, onUpdate);
   };
 
-  const getPlaylists = async (userId) => {
+  const getPlaylists = async (userId: string) => {
     return playlistRepository.getPlaylists(userId);
   };
-  const getPlaylist = async (userId, playlistId) => {
+  const getPlaylist = async (userId: string, playlistId: string) => {
     return playlistRepository.getPlaylist(userId, playlistId);
   };
 
-  const removeUserPlaylists = async (userId) => {
+  const removeUserPlaylists = async (userId: string) => {
     return playlistRepository.removeUserPlaylists(userId);
   };
 
