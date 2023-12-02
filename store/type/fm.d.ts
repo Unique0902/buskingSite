@@ -34,3 +34,11 @@ export type FmTopTrackData = {
   url: string;
   playcount: string;
 };
+export type FmEditedTopTrackData = {
+  artist: string;
+  listeners: string;
+  name: string;
+  mbid: string;
+  url: string;
+  playcount: string;
+};

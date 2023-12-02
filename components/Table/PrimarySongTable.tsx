@@ -1,12 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
+import { PlaylistSongData } from '../../store/type/playlist';
 import PagingBar from './PagingBar';
-import RequestSongResult from './RequestSongResult';
-
-export default function RequestSongTable({
+import PrimarySongResult from './PrimarySongResult';
+type Props = {
+  results: PlaylistSongData[];
+  handleClickResult: (sid: string) => void;
+  children: ReactNode;
+};
+export default function PrimarySongTable({
   results,
   handleClickResult,
   children,
-}) {
+}: Props) {
   const [nowPageNum, setNowPageNum] = useState(1);
   const handelPlusPage = () => {
     if (nowPageNum < results.length / 6) {
@@ -30,14 +35,14 @@ export default function RequestSongTable({
         {results && results.length !== 0 && (
           <>
             {resultsToView.map((result) => (
-              <RequestSongResult
+              <PrimarySongResult
                 key={resultsToView.indexOf(result)}
                 index={resultsToView.indexOf(result) + 1 + (nowPageNum - 1) * 6}
                 result={result}
                 handleSongClick={handleClickResult}
               >
                 {children}
-              </RequestSongResult>
+              </PrimarySongResult>
             ))}
             <PagingBar
               resultNum={results.length}

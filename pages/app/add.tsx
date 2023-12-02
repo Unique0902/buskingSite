@@ -11,11 +11,11 @@ import HoverIcon from '../../components/Hover/HoverIcon';
 import LoadingCheckWrapper from '../../components/LoadingCheckWrapper';
 import NoPlaylistCheckWrapper from '../../components/NoPlaylistCheckWrapper';
 import useAddSearch from '../../hooks/UseAddSearch';
-import { FmTopTrackData, FmTrackData } from '../../store/type/fm';
+import { FmEditedTopTrackData, FmTrackData } from '../../store/type/fm';
 
 export default function AppAdd() {
   const [searchResults, setSearchResults] = useState<
-    FmTrackData[] | FmTopTrackData[]
+    FmTrackData[] | FmEditedTopTrackData[]
   >([]);
   const [resultNum, setResultNum] = useState<number>(0);
   const [nowPageNum, setNowPageNum] = useState<number>(1);

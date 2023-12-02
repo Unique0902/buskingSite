@@ -1,7 +1,17 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import Image from 'next/image';
-
-const TutorialBlock = ({ imgAlt, title, isReverse = false, children }) => {
+type Props = {
+  imgAlt: string;
+  title: string;
+  isReverse: boolean;
+  children: ReactNode;
+};
+const TutorialBlock = ({
+  imgAlt,
+  title,
+  isReverse = false,
+  children,
+}: Props) => {
   return (
     <section
       className={`flex ${

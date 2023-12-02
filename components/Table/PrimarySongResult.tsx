@@ -1,7 +1,18 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
+import { PlaylistSongData } from '../../store/type/playlist';
 import SongResult from './SongResult';
-
-const PrimarySongResult = ({ index, result, handleSongClick, children }) => {
+type Props = {
+  index: number;
+  result: PlaylistSongData;
+  handleSongClick: (sid: string) => void;
+  children: ReactNode;
+};
+const PrimarySongResult = ({
+  index,
+  result,
+  handleSongClick,
+  children,
+}: Props) => {
   const handleBtnClick = () => {
     handleSongClick(result.id);
   };

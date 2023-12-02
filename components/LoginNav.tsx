@@ -7,12 +7,14 @@ import { useMediaQuery } from 'react-responsive';
 import HomeSideBar from './Layout/SideBar/HomeSideBar';
 import RenderedWhenMobile from './Responsive/RenderedWhenMobile';
 import Link from 'next/link';
-
-export default function LoginNav({ scrollToTutorial }) {
+type Props = {
+  scrollToTutorial: () => void;
+};
+export default function LoginNav({ scrollToTutorial }: Props) {
   const handleClickTutorialBtn = () => {
     scrollToTutorial();
   };
-  const [isShowSideBar, setIsShowSideBar] = useState(false);
+  const [isShowSideBar, setIsShowSideBar] = useState<boolean>(false);
   const isLgMediaQuery = useMediaQuery({
     query: '(min-width:1024px)',
   });
@@ -23,7 +25,7 @@ export default function LoginNav({ scrollToTutorial }) {
       setIsShowSideBar(true);
     }
   }, [isLgMediaQuery]);
-  const [mounted, setMounted] = useState(false);
+  const [mounted, setMounted] = useState<boolean>(false);
 
   useEffect(() => {
     setMounted(true);

@@ -1,7 +1,16 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
+import { FmEditedTopTrackData, FmTrackData } from '../../store/type/fm';
 import PagingBar from './PagingBar';
 import SongAddResult from './SongAddResult';
-
+type Props = {
+  results: FmTrackData[] | FmEditedTopTrackData[];
+  pageNum: number;
+  onSongClick: (title: string, artist: string) => Promise<void>;
+  resultNum: number;
+  onPagePlus: () => void;
+  onPageMinus: () => void;
+  children: ReactNode;
+};
 export default function SongAddTable({
   results,
   pageNum,
@@ -10,22 +19,24 @@ export default function SongAddTable({
   onPagePlus,
   onPageMinus,
   children,
-}) {
+}: Props) {
   return (
     <section className='w-full'>
       <ul className='p-1 bg-gray-800 rounded-xl'>
         {results && results.length !== 0 && (
           <>
-            {results.map((result) => (
-              <SongAddResult
-                key={results.indexOf(result)}
-                index={results.indexOf(result) + 1 + (pageNum - 1) * 6}
-                result={result}
-                handleSongClick={onSongClick}
-              >
-                {children}
-              </SongAddResult>
-            ))}
+            {results.map(
+              (result: FmTrackData | FmEditedTopTrackData, index: number) => (
+                <SongAddResult
+                  key={index}
+                  index={index + 1 + (pageNum - 1) * 6}
+                  result={result}
+                  handleSongClick={onSongClick}
+                >
+                  {children}
+                </SongAddResult>
+              )
+            )}
             <PagingBar
               resultNum={resultNum}
               pageNum={pageNum}

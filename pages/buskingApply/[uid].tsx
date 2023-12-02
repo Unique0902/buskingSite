@@ -323,7 +323,7 @@ const App = () => {
 
                   <PrimarySongTable
                     results={results}
-                    handleClickResult={() => {}}
+                    handleClickResult={(sid: string) => {}}
                   >
                     <SmileIcn width={24} height={24} color={'white'} />
                   </PrimarySongTable>

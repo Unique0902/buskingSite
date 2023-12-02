@@ -30,6 +30,10 @@ export default function AppPlaylist() {
     setSongArr
   );
 
+  const handleClickResult = (sid: string) => {
+    removeSongInPlaylist(sid);
+  };
+
   return (
     <>
       <TitleBar text={'플레이리스트 관리'} />
@@ -52,7 +56,7 @@ export default function AppPlaylist() {
 
           <PrimarySongTable
             results={songArr}
-            handleClickResult={removeSongInPlaylist}
+            handleClickResult={handleClickResult}
           >
             <MinusIcn width={24} height={24} color={'red'} />
           </PrimarySongTable>

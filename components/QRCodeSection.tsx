@@ -2,8 +2,12 @@ import React, { useState } from 'react';
 import { color } from '../styles/theme';
 import PrimaryBtn from './Btn/PrimaryBtn';
 import Image from 'next/image';
-const QRCodeSection = ({ url, title }) => {
-  const [isShowQr, setIsShowQr] = useState(true);
+type Props = {
+  url: string;
+  title: string;
+};
+const QRCodeSection = ({ url, title }: Props) => {
+  const [isShowQr, setIsShowQr] = useState<boolean>(true);
 
   const handleClickQRBtn = () => {
     setIsShowQr((prev) => !prev);

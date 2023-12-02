@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
+import { FmEditedTopTrackData, FmTrackData } from '../../store/type/fm';
 import SongResult from './SongResult';
-
-const SongAddResult = ({ index, result, handleSongClick, children }) => {
+type Props = {
+  index: number;
+  result: FmTrackData | FmEditedTopTrackData;
+  handleSongClick: (title: string, artist: string) => Promise<void>;
+  children: ReactNode;
+};
+const SongAddResult = ({ index, result, handleSongClick, children }: Props) => {
   const handleBtnClick = () => {
     handleSongClick(result.name, result.artist);
   };

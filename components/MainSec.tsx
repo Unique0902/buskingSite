@@ -1,6 +1,12 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
-const MainSec = ({ children, isRow = false, isAlignCenter = false }) => {
+type Props = {
+  children: ReactNode;
+  isRow?: boolean;
+  isAlignCenter?: boolean;
+};
+
+const MainSec = ({ children, isRow = false, isAlignCenter = false }: Props) => {
   return (
     <main
       className={` w-3/4 max-lg:w-full bg-white flex 

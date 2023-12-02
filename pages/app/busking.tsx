@@ -63,7 +63,7 @@ export default function AppBusking({}) {
     }
   };
 
-  const handleRemoveRequestSong = (sid) => {
+  const handleRemoveRequestSong = (sid: string) => {
     removeBuskingSong(sid);
   };
 

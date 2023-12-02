@@ -1,13 +1,17 @@
 import { useEffect, useState } from 'react';
 import { useLastFmContext } from '../context/LastFmContext';
-import { FmTopTrackData, FmTrackData } from '../store/type/fm';
+import {
+  FmEditedTopTrackData,
+  FmTopTrackData,
+  FmTrackData,
+} from '../store/type/fm';
 type SearchWord = {
   name: string;
   category: '제목' | '가수';
 };
 const useAddSearch = (
   setFilteredDataArr: React.Dispatch<
-    React.SetStateAction<FmTrackData[] | FmTopTrackData[]>
+    React.SetStateAction<FmTrackData[] | FmEditedTopTrackData[]>
   >,
   setResultNum: React.Dispatch<React.SetStateAction<number>>
 ) => {
@@ -66,7 +70,7 @@ const useAddSearch = (
     const result = await getTopTracks(pageNum);
     if (result.track) {
       setFilteredDataArr(
-        result.track.map((data: FmTopTrackData) => {
+        result.track.map((data: FmTopTrackData): FmEditedTopTrackData => {
           return { ...data, artist: data.artist.name };
         })
       );

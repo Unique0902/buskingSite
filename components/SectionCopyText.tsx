@@ -1,13 +1,17 @@
 import React from 'react';
 import { CopyIcn } from '../assets/icon/icon';
 
-const SectionCopyText = ({ text }) => {
+type Props = {
+  text: string;
+};
+
+const SectionCopyText = ({ text }: Props) => {
   const handleClickCopyBtn = () => {
     window.navigator.clipboard.writeText(text);
   };
   return (
-    <div className='absolute flex flex-row gap-3 items-center right-0 bg-white rounded-lg border border-gray-500 p-3 w-auto'>
-      <p className=' font-sans text-lg max-lg:text-sm text-black'>{text}</p>
+    <div className='absolute right-0 flex flex-row items-center w-auto gap-3 p-3 bg-white border border-gray-500 rounded-lg'>
+      <p className='font-sans text-lg text-black  max-lg:text-sm'>{text}</p>
       <button className='hover:opacity-70' onClick={handleClickCopyBtn}>
         <CopyIcn width={20} height={20} color={'gray'} />
       </button>
