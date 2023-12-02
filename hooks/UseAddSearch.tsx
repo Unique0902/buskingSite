@@ -17,6 +17,9 @@ const useAddSearch = (
   });
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isTopTrackTime, setIsTopTrackTime] = useState<boolean>(true);
+  const [savedSearchWord, setSavedSearchWord] = useState<SearchWord | null>(
+    null
+  );
   const { searchSongByName, searchSongByArtist, getTopTracks } =
     useLastFmContext();
 
@@ -33,6 +36,7 @@ const useAddSearch = (
         setFilteredDataArr(result.trackmatches.track);
         setResultNum(parseInt(result['opensearch:totalResults']));
       }
+      setSavedSearchWord({ ...searchWord });
     }
     setIsLoading(false);
   };
@@ -43,13 +47,13 @@ const useAddSearch = (
       searchTopTrack(pageNum);
       return;
     }
-    if (searchWord.name) {
-      if (searchWord.category === '제목') {
-        const result = await searchSongByName(searchWord.name, pageNum);
+    if (savedSearchWord) {
+      if (savedSearchWord.category === '제목') {
+        const result = await searchSongByName(savedSearchWord.name, pageNum);
         setFilteredDataArr(result.trackmatches.track);
         setResultNum(parseInt(result['opensearch:totalResults']));
-      } else if (searchWord.category === '가수') {
-        const result = await searchSongByArtist(searchWord.name, pageNum);
+      } else if (savedSearchWord.category === '가수') {
+        const result = await searchSongByArtist(savedSearchWord.name, pageNum);
         setFilteredDataArr(result.trackmatches.track);
         setResultNum(parseInt(result['opensearch:totalResults']));
       }
