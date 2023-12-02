@@ -11,18 +11,22 @@ import HoverIcon from '../../components/Hover/HoverIcon';
 import LoadingCheckWrapper from '../../components/LoadingCheckWrapper';
 import NoPlaylistCheckWrapper from '../../components/NoPlaylistCheckWrapper';
 import useAddSearch from '../../hooks/UseAddSearch';
+import { FmTopTrackData, FmTrackData } from '../../store/type/fm';
 
-export default function AppAdd({}) {
-  const [searchResults, setSearchResults] = useState([]);
-  const [resultNum, setResultNum] = useState(0);
-  const [nowPageNum, setNowPageNum] = useState(1);
+export default function AppAdd() {
+  const [searchResults, setSearchResults] = useState<
+    FmTrackData[] | FmTopTrackData[]
+  >([]);
+  const [resultNum, setResultNum] = useState<number>(0);
+  const [nowPageNum, setNowPageNum] = useState<number>(1);
+
   const { nowPlaylist, addSongToPlaylist } = usePlaylistContext();
 
   const [searchWord, setSearchWord, isLoading, search] = useAddSearch(
     setSearchResults,
-    setResultNum,
-    nowPageNum
+    setResultNum
   );
+
   useEffect(() => {
     if (searchResults) {
       if (searchResults.length > 6) {

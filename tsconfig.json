@@ -19,7 +19,8 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "pages/buskingApply/[uid].jsx"
+    "pages/buskingApply/[uid].jsx",
+    "hooks/UseAddSearch.jsx"
   ],
   "exclude": ["node_modules"]
 }

@@ -1,12 +1,25 @@
 import { createContext, ReactNode, useContext } from 'react';
 import Lastfm from '../service/lastfm';
+import { FmTopTracksSearchData, FmTrackSearchData } from '../store/type/fm';
 
 type Props = {
   lastfm: Lastfm;
   children: ReactNode;
 };
 
-const LastFmContext = createContext(undefined);
+type ContextProps = {
+  searchSongByName: (
+    title: string,
+    pageNum: number
+  ) => Promise<FmTrackSearchData>;
+  searchSongByArtist: (
+    artist: string,
+    pageNum: number
+  ) => Promise<FmTrackSearchData>;
+  getTopTracks: (pageNum: number) => Promise<FmTopTracksSearchData>;
+};
+
+const LastFmContext = createContext<ContextProps>(undefined);
 
 export function LastFmContextProvider({ lastfm, children }: Props) {
   const searchSongByName = async (title: string, pageNum: number) => {
