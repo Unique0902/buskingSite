@@ -1,3 +1,4 @@
+import { ApplianceData } from './../store/type/busking.d';
 import { database } from './firebase';
 import { onValue, ref, remove, set, get } from 'firebase/database';
 import {
@@ -60,7 +61,14 @@ class BuskingRepository {
     };
     return set(listRef, song);
   };
-
+  applyBuskingSongAgain = async (
+    userId: string,
+    songObj: ApplianceData,
+    sid: string
+  ) => {
+    const listRef = ref(database, `buskings/${userId}/appliance/${sid}`);
+    return set(listRef, songObj);
+  };
   //TODO:통신한번만하게 나중에 수정
   applyOldBuskingSong = async (
     userId: string,

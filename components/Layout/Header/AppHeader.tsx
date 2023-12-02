@@ -5,13 +5,15 @@ import LoginMenu from '../../LoginMenu/LoginMenu';
 import { useUserDataContext } from '../../../context/UserDataContext';
 import { usePlaylistContext } from '../../../context/PlaylistContext';
 import { ArrowDownIcn, MenuIcn } from '../../../assets/icon/icon';
-
-export default function AppHeader({ isShowSideBar, setIsShowSideBar }) {
+type Props = {
+  isShowSideBar: boolean;
+  setIsShowSideBar: React.Dispatch<React.SetStateAction<boolean>>;
+};
+export default function AppHeader({ isShowSideBar, setIsShowSideBar }: Props) {
   const { userData } = useUserDataContext();
   const { nowPlaylist } = usePlaylistContext();
-  const valueRef = useRef();
-  const [isShowPlaylistMenu, setIsShowPlaylistMenu] = useState(false);
-  const [isShowLoginMenu, setIsShowLoginMenu] = useState(false);
+  const [isShowPlaylistMenu, setIsShowPlaylistMenu] = useState<boolean>(false);
+  const [isShowLoginMenu, setIsShowLoginMenu] = useState<boolean>(false);
 
   return (
     <>
@@ -29,7 +31,6 @@ export default function AppHeader({ isShowSideBar, setIsShowSideBar }) {
             <PlaylistMenu setIsShowPlaylistMenu={setIsShowPlaylistMenu} />
           )}
           <button
-            ref={valueRef}
             className='flex items-center font-sans text-xl text-white hover:scale-110'
             onClick={() => {
               setIsShowPlaylistMenu(true);

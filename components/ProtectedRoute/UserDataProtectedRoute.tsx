@@ -1,8 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { ReactNode } from 'react';
 import { useUserDataContext } from '../../context/UserDataContext';
 import { useRouter } from 'next/router';
-
-export default function UserDataProtectedRoute({ children }) {
+type Props = {
+  children: ReactNode;
+};
+export default function UserDataProtectedRoute({ children }: Props) {
   const { userData, userDataLoading } = useUserDataContext();
   const router = useRouter();
 
@@ -18,5 +20,5 @@ export default function UserDataProtectedRoute({ children }) {
       return <div>move to makeUser Page...</div>;
     }
   }
-  return children;
+  return <>{children}</>;
 }

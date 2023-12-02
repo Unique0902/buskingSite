@@ -1,10 +1,26 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { SearchIcn } from '../../assets/icon/icon';
 import { borderRadius, color, xyPadding } from '../../styles/theme';
 import PrimaryBtn from '../Btn/PrimaryBtn';
 import RenderedWhenFullScreen from '../Responsive/RenderedWhenFullScreen';
+type SearchWord = {
+  name: string;
+  category: '제목' | '가수';
+};
 
-const SongSearchBar = ({ searchWord, setSearchWord, onSearch, children }) => {
+type Props = {
+  searchWord: SearchWord;
+  setSearchWord: React.Dispatch<React.SetStateAction<SearchWord>>;
+  onSearch: () => void;
+  children: ReactNode;
+};
+
+const SongSearchBar = ({
+  searchWord,
+  setSearchWord,
+  onSearch,
+  children,
+}: Props) => {
   // useEffect(() => {
   //   if (searchWord.category) {
   //     onSearchBarChange();
@@ -27,7 +43,10 @@ const SongSearchBar = ({ searchWord, setSearchWord, onSearch, children }) => {
           className='p-2 font-sans text-lg border-2 border-black rounded-xl max-lg:mr-0 max-lg:text-base'
           value={searchWord.category}
           onChange={(e) => {
-            setSearchWord({ ...searchWord, category: e.target.value });
+            setSearchWord({
+              ...searchWord,
+              category: e.target.value as '제목' | '가수',
+            });
           }}
         >
           <option value='제목'>제목</option>

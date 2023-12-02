@@ -8,6 +8,7 @@ import {
 } from 'react';
 import BuskingRepository from '../service/buskingRepository';
 import {
+  ApplianceData,
   ApplicantData,
   BuskingData,
   BuskingInform,
@@ -40,6 +41,7 @@ type ContextProps = {
   ) => Unsubscribe;
   getBuskingData: (userId: string) => Promise<BuskingData>;
   isbuskingDataLoading: boolean;
+  applyBuskingSongAgain: (nowSong: ApplianceData) => Promise<void>;
 };
 
 const BuskingContext = createContext<ContextProps>(undefined);
@@ -90,6 +92,10 @@ export function BuskingContextProvider({ buskingRepository, children }: Props) {
     );
   };
 
+  const applyBuskingSongAgain = async (nowSong: ApplianceData) => {
+    return buskingRepository.applyBuskingSongAgain(uid, nowSong, nowSong.sid);
+  };
+
   const applyNewBuskingSong = async (
     userId: string,
     title: string,
@@ -129,6 +135,7 @@ export function BuskingContextProvider({ buskingRepository, children }: Props) {
         syncBuskingData,
         getBuskingData,
         isbuskingDataLoading,
+        applyBuskingSongAgain,
       }}
     >
       {children}

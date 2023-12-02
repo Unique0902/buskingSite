@@ -1,7 +1,15 @@
-import React, { useEffect, useRef } from 'react';
-
-export default function PopupWrapper({ handleClickOther, isLeft, children }) {
-  const wrapperRef = useRef();
+import React, { ReactNode, useEffect, useRef } from 'react';
+type Props = {
+  handleClickOther: () => void;
+  isLeft: boolean;
+  children: ReactNode;
+};
+export default function PopupWrapper({
+  handleClickOther,
+  isLeft,
+  children,
+}: Props) {
+  const wrapperRef = useRef<HTMLDivElement>();
   useEffect(() => {
     function handleClickOutside(event) {
       if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {

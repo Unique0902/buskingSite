@@ -6,11 +6,17 @@ import {
   PreviousSongIcn,
 } from '../../assets/icon/icon';
 import { useBuskingContext } from '../../context/BuskingContext';
+import { ApplianceData } from '../../store/type/busking';
 
-const MusicBar = ({ songArr, setSongArrToView }) => {
+type Props = {
+  songArr: ApplianceData[];
+  setSongArrToView: React.Dispatch<React.SetStateAction<ApplianceData[]>>;
+};
+
+const MusicBar = ({ songArr, setSongArrToView }: Props) => {
   const playBtnStyle = 'mx-3 text-4xl text-black hover:scale-110';
-  const [beforeSongArr, setBeforeSongArr] = useState([]);
-  const [nowSong, setNowSong] = useState();
+  const [beforeSongArr, setBeforeSongArr] = useState<ApplianceData[]>([]);
+  const [nowSong, setNowSong] = useState<ApplianceData | null>(null);
   const { applyBuskingSongAgain, removeBuskingSong } = useBuskingContext();
   useEffect(() => {
     const copiedSongArr = [...songArr];

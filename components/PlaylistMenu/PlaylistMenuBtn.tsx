@@ -1,6 +1,9 @@
-import React from 'react';
-
-const PlaylistMenuBtn = ({ children, handleClick }) => {
+import React, { ReactNode } from 'react';
+type Props = {
+  children: ReactNode;
+  handleClick: () => void;
+};
+const PlaylistMenuBtn = ({ children, handleClick }: Props) => {
   const btnStyle =
     'font-sans text-black text-lg text-left py-1 px-4 hover:bg-gray-200';
   return (

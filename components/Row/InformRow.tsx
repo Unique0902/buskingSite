@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 import { ArrowRightIcn } from '../../assets/icon/icon';
-
-const InformRow = ({ title, titleColor, handleClick, children }) => {
+type Props = {
+  title: string;
+  titleColor: string;
+  handleClick: () => void;
+  children: ReactNode;
+};
+const InformRow = ({ title, titleColor, handleClick, children }: Props) => {
   return (
     <button
       onClick={handleClick}

@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { useMediaQuery } from 'react-responsive';
-
-export default function RenderedWhenMobile({ children }) {
+type Props = {
+  children: ReactNode;
+};
+export default function RenderedWhenMobile({ children }: Props) {
   const isLgMediaQuery = useMediaQuery({
     query: '(min-width:1024px)',
   });

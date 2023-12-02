@@ -1,6 +1,9 @@
-import React from 'react';
-
-const LoginMenuPrimaryBtn = ({ children, handleClick }) => {
+import React, { ReactNode } from 'react';
+type Props = {
+  children: ReactNode;
+  handleClick: () => void;
+};
+const LoginMenuPrimaryBtn = ({ children, handleClick }: Props) => {
   return (
     <button
       className={

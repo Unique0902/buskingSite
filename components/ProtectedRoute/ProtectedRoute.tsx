@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { useAuthContext } from '../../context/AuthContext';
 import { useRouter } from 'next/router';
-
-export default function ProtectedRoute({ children }) {
+type Props = {
+  children: ReactNode;
+};
+export default function ProtectedRoute({ children }: Props) {
   const { user, userLoading } = useAuthContext();
   const router = useRouter();
 
@@ -19,5 +21,5 @@ export default function ProtectedRoute({ children }) {
     }
   }
 
-  return children;
+  return <>{children}</>;
 }

@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { useMediaQuery } from 'react-responsive';
-
-export default function RenderedWhenFullScreen({ children }) {
+type Props = {
+  children: ReactNode;
+};
+export default function RenderedWhenFullScreen({ children }: Props) {
   const isLgMediaQuery = useMediaQuery({
     query: '(max-width:1024px)',
   });

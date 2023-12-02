@@ -1,6 +1,10 @@
-import React, { useState } from 'react';
-const HoverIcon = ({ children, text }) => {
-  const [isHovering, setIsHovering] = useState(false);
+import React, { ReactNode, useState } from 'react';
+type Props = {
+  children: ReactNode;
+  text: string;
+};
+const HoverIcon = ({ children, text }: Props) => {
+  const [isHovering, setIsHovering] = useState<boolean>(false);
 
   return (
     <div

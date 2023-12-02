@@ -2,9 +2,17 @@ import React, { useState } from 'react';
 import { borderRadius, color, xyPadding } from '../../styles/theme';
 import ArrangeMenu from './ArrangeMenu';
 import PrimaryBtn from '../Btn/PrimaryBtn';
-
-const ArrangeMenuBtn = ({ results, setResults, isBusking }) => {
-  const [isShowArrangeMenu, setIsShowArrangeMenu] = useState(false);
+import { PlaylistSongData } from '../../store/type/playlist';
+import { ApplianceData } from '../../store/type/busking';
+type Props = {
+  results: PlaylistSongData[] | ApplianceData[];
+  setResults: React.Dispatch<
+    React.SetStateAction<PlaylistSongData[] | ApplianceData[]>
+  >;
+  isBusking: boolean;
+};
+const ArrangeMenuBtn = ({ results, setResults, isBusking }: Props) => {
+  const [isShowArrangeMenu, setIsShowArrangeMenu] = useState<boolean>(false);
   const handleClick = () => {
     setIsShowArrangeMenu(true);
   };

@@ -1,11 +1,16 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useAuthContext } from '../../context/AuthContext';
+import { UserData } from '../../store/type/userData';
 import PopupWrapper from '../PopUp/PopupWrapper';
 import LoginMenuFooterBtn from './LoginMenuFooterBtn';
 import LoginMenuPrimaryBtn from './LoginMenuPrimaryBtn';
 
-const LoginMenu = ({ userData, setIsShowLoginMenu }) => {
+type Props = {
+  userData: UserData;
+  setIsShowLoginMenu: React.Dispatch<React.SetStateAction<boolean>>;
+};
+const LoginMenu = ({ userData, setIsShowLoginMenu }: Props) => {
   const { logout } = useAuthContext();
   const router = useRouter();
   const handleClickUserInformBtn = () => {

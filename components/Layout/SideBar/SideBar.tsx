@@ -12,10 +12,20 @@ import {
   SongIcn,
   UserIcn,
 } from '../../../assets/icon/icon';
-const SideBar = ({ setIsShowSideBar }) => {
-  const [isHide, setIsHide] = useState(false);
-  const [selectedBtn, setSelectedBtn] = useState('home');
-  const wrapperRef = useRef();
+type Props = {
+  setIsShowSideBar: React.Dispatch<React.SetStateAction<boolean>>;
+};
+type SideBarBtnType =
+  | 'home'
+  | 'add'
+  | 'playlist'
+  | 'inform'
+  | 'makebusking'
+  | 'busking';
+const SideBar = ({ setIsShowSideBar }: Props) => {
+  const [isHide, setIsHide] = useState<boolean>(false);
+  const [selectedBtn, setSelectedBtn] = useState<SideBarBtnType>('home');
+  const wrapperRef = useRef<HTMLDivElement>();
   const router = useRouter();
 
   const checkSelectedBtn = useCallback(() => {
@@ -23,9 +33,9 @@ const SideBar = ({ setIsShowSideBar }) => {
     if (pathArr[2] === 'busking') {
       setSelectedBtn('makebusking');
     } else {
-      setSelectedBtn(pathArr[2]);
+      setSelectedBtn(pathArr[2] as SideBarBtnType);
     }
-  });
+  }, [router]);
 
   useEffect(() => {
     checkSelectedBtn();
@@ -40,11 +50,14 @@ const SideBar = ({ setIsShowSideBar }) => {
   // };
   useEffect(() => {
     if (isLgMediaQuery) {
-      function handleClickOutside(event) {
-        if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+      const handleClickOutside = (event: MouseEvent) => {
+        if (
+          wrapperRef.current &&
+          !wrapperRef.current.contains(event.target as Node)
+        ) {
           setIsShowSideBar(false);
         }
-      }
+      };
       document.addEventListener('mousedown', handleClickOutside);
       return () => {
         document.removeEventListener('mousedown', handleClickOutside);

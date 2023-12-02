@@ -1,7 +1,10 @@
 import Link from 'next/link';
-import React from 'react';
-
-const HomeSideBarBtn = ({ url, children }) => {
+import React, { ReactNode } from 'react';
+type Props = {
+  url: string;
+  children: ReactNode;
+};
+const HomeSideBarBtn = ({ url, children }: Props) => {
   return (
     <li className='flex flex-row hover:opacity-70 hover:bg-gray-300'>
       <Link

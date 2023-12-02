@@ -1,6 +1,14 @@
-import React, { useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { borderRadius, color, xyPadding } from '../../styles/theme';
-
+type Props = {
+  children: ReactNode;
+  bgColor?: string;
+  textColor?: string;
+  fontSize?: string;
+  secPadding?: string;
+  radius?: string;
+  text: string;
+};
 const HoverTextSection = ({
   children,
   bgColor = color.primary_500,
@@ -9,8 +17,8 @@ const HoverTextSection = ({
   secPadding = xyPadding.base,
   radius = borderRadius.lg,
   text,
-}) => {
-  const [isHovering, setIsHovering] = useState(false);
+}: Props) => {
+  const [isHovering, setIsHovering] = useState<boolean>(false);
 
   return (
     <div

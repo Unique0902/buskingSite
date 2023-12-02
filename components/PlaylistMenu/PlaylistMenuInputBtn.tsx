@@ -1,12 +1,17 @@
-import React, { useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import PlaylistMenuBtn from './PlaylistMenuBtn';
-
+type Props = {
+  playlistName: string;
+  handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleClickOkBtn: () => void;
+  children: ReactNode;
+};
 const PlaylistMenuInputBtn = ({
   playlistName,
   handleInputChange,
   handleClickOkBtn,
   children,
-}) => {
+}: Props) => {
   const [isShowInput, setIsShowInput] = useState(false);
   const handleClickShowBtn = () => {
     setIsShowInput(true);

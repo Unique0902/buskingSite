@@ -2,12 +2,15 @@ import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { usePlaylistContext } from '../../context/PlaylistContext';
+import { PlaylistData } from '../../store/type/playlist';
 import PopupWrapper from '../PopUp/PopupWrapper';
 import PlaylistBtn from './PlaylistBtn';
 import PlaylistMenuBtn from './PlaylistMenuBtn';
 import PlaylistMenuInputBtn from './PlaylistMenuInputBtn';
-
-const PlaylistMenu = ({ setIsShowPlaylistMenu }) => {
+type Props = {
+  setIsShowPlaylistMenu: React.Dispatch<React.SetStateAction<boolean>>;
+};
+const PlaylistMenu = ({ setIsShowPlaylistMenu }: Props) => {
   const {
     playlists,
     nowPlaylist,
@@ -16,15 +19,17 @@ const PlaylistMenu = ({ setIsShowPlaylistMenu }) => {
     updateNowPlaylistName,
     changeNowPlaylist,
   } = usePlaylistContext();
-  const [playlistName, setPlaylistName] = useState('');
-  const [playlistEditedName, setPlaylistEditedName] = useState('');
+  const [playlistName, setPlaylistName] = useState<string>('');
+  const [playlistEditedName, setPlaylistEditedName] = useState<string>('');
   useEffect(() => {
     if (nowPlaylist) {
       setPlaylistEditedName(nowPlaylist.name);
     }
   }, [nowPlaylist]);
 
-  const handleChangeNewPlaylistInput = (e) => {
+  const handleChangeNewPlaylistInput = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setPlaylistName(e.target.value);
   };
   const handleClickNewPlaylistInputAddBtn = () => {
@@ -32,7 +37,9 @@ const PlaylistMenu = ({ setIsShowPlaylistMenu }) => {
     setIsShowPlaylistMenu(false);
   };
 
-  const handleChangeEditPlaylistInput = (e) => {
+  const handleChangeEditPlaylistInput = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setPlaylistEditedName(e.target.value);
   };
   const handleClickEditPlaylistInputAddBtn = () => {
@@ -88,7 +95,7 @@ const PlaylistMenu = ({ setIsShowPlaylistMenu }) => {
           모든 플레이리스트
         </p>
         {playlists &&
-          Object.values(playlists).map((playlist) => {
+          Object.values(playlists).map((playlist: PlaylistData) => {
             return (
               <PlaylistBtn
                 key={playlist.id}

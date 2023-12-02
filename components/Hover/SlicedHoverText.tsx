@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
-
-const SlicedHoverText = ({ text }) => {
-  const [isHovering, setIsHovering] = useState(false);
+type Props = {
+  text: string;
+};
+const SlicedHoverText = ({ text }: Props) => {
+  const [isHovering, setIsHovering] = useState<boolean>(false);
   const isPc = useMediaQuery({
     query: '(min-width:1024px)',
   });

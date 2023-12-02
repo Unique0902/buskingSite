@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import UserDataProtectedRoute from '../ProtectedRoute/UserDataProtectedRoute';
 
@@ -16,7 +16,10 @@ import UserDataProtectedRoute from '../ProtectedRoute/UserDataProtectedRoute';
 
     현재는 자잘한 성능보다는 가독성이 우선이지 않나싶음
 */
-const AppWrapper = ({ children }) => {
+type Props = {
+  children: ReactNode;
+};
+const AppWrapper = ({ children }: Props) => {
   return (
     <div>
       <ProtectedRoute>

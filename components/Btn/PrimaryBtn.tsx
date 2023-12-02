@@ -1,6 +1,16 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { borderRadius, color, xyPadding } from '../../styles/theme';
-
+type Props = {
+  children: ReactNode;
+  handleClick: () => void;
+  bgColor?: string;
+  textColor?: string;
+  fontSize?: string;
+  btnPadding?: string;
+  radius?: string;
+  isActivated?: boolean;
+  isSubmit?: boolean;
+};
 const PrimaryBtn = ({
   children,
   handleClick,
@@ -11,7 +21,7 @@ const PrimaryBtn = ({
   radius = borderRadius.lg,
   isActivated = true,
   isSubmit = false,
-}) => {
+}: Props) => {
   return (
     <button
       type={isSubmit ? 'submit' : 'button'}

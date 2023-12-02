@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import AppHeader from './Header/AppHeader';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import UserDataProtectedRoute from '../ProtectedRoute/UserDataProtectedRoute';
 import { useMediaQuery } from 'react-responsive';
-import SideBar from './SideBar/SideBar.jsx';
-
-export default function AppLayOut({ children }) {
-  const [isShowSideBar, setIsShowSideBar] = useState(true);
+import SideBar from './SideBar/SideBar';
+type Props = {
+  children: ReactNode;
+};
+export default function AppLayOut({ children }: Props) {
+  const [isShowSideBar, setIsShowSideBar] = useState<boolean>(true);
   const isLgMediaQuery = useMediaQuery({
     query: '(min-width:1024px)',
   });
