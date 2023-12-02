@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { ArrowRightIcn } from '../../assets/icon/icon';
 import { color } from '../../styles/theme';
 import RowWithTitle from './RowWithTitle';
 
-const RowWithTitleAndArrow = ({ title, children }) => {
+type Props = {
+  title: string;
+  children?: ReactNode;
+};
+
+const RowWithTitleAndArrow = ({ title, children }: Props) => {
   return (
     <RowWithTitle title={title}>
       {children}

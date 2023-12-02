@@ -6,11 +6,11 @@ export type BuskingData = {
   appliance?: ApplianceObjects;
 };
 
-type ApplianceObjects = {
+export type ApplianceObjects = {
   [key: string]: ApplianceData;
 };
 
-type ApplianceData = {
+export type ApplianceData = {
   artist: string;
   cnt: number;
   id: string;

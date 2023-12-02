@@ -14,6 +14,7 @@ import SectionCopyText from '../../components/SectionCopyText';
 import MusicBar from '../../components/MusicBar/MusicBar';
 import RequestSongTable from '../../components/Table/RequestSongTable';
 import { MinusIcn } from '../../assets/icon/icon';
+import { ApplianceData, ApplianceObjects } from '../../store/type/busking';
 
 export default function AppBusking({}) {
   const { playlists } = usePlaylistContext();
@@ -25,16 +26,19 @@ export default function AppBusking({}) {
     isbuskingDataLoading,
   } = useBuskingContext();
   const { uid } = useAuthContext();
-  const [songArr, setSongArr] = useState([]);
-  const [songArrToView, setSongArrToView] = useState([]);
+  const [songArr, setSongArr] = useState<ApplianceData[]>([]);
+  const [songArrToView, setSongArrToView] = useState<ApplianceData[]>([]);
   const router = useRouter();
 
   useEffect(() => {
     if (buskingData) {
-      const appliance = buskingData.appliance;
-      setSongArr(
-        appliance ? Object.values(appliance).sort((a, b) => a.id - b.id) : []
-      );
+      const appliance: ApplianceObjects | null = buskingData.appliance;
+      if (appliance) {
+        const applianceArr = Object.values(appliance);
+        setSongArr(
+          applianceArr.sort((a, b) => parseInt(a.id) - parseInt(b.id))
+        );
+      }
     }
   }, [buskingData]);
 

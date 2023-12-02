@@ -1,7 +1,17 @@
 import { useState } from 'react';
-
-const useSearchBar = (data, setFilteredDataArr) => {
-  const [searchWord, setSearchWord] = useState({ name: '', category: '제목' });
+import { PlaylistSongData, PlaylistSongObj } from '../store/type/playlist';
+type SearchWord = {
+  name: string;
+  category: '제목' | '가수';
+};
+const useSearchBar = (
+  data: PlaylistSongObj,
+  setFilteredDataArr: React.Dispatch<React.SetStateAction<PlaylistSongData[]>>
+) => {
+  const [searchWord, setSearchWord] = useState<SearchWord>({
+    name: '',
+    category: '제목',
+  });
   const search = () => {
     if (data) {
       const wholeSongArrary = Object.values(data);
@@ -24,7 +34,7 @@ const useSearchBar = (data, setFilteredDataArr) => {
       }
     }
   };
-  return [searchWord, setSearchWord, search];
+  return [searchWord, setSearchWord, search] as const;
 };
 
 export default useSearchBar;

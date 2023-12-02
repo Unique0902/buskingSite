@@ -12,18 +12,24 @@ import { ArrowDownIcn, SendIcn, SmileIcn } from '../../assets/icon/icon';
 import RequestSongTable from '../../components/Table/RequestSongTable';
 import PrimarySongTable from '../../components/Table/PrimarySongTable';
 import useSearchBar from '../../hooks/UseSearchBar';
+import { ApplianceData, BuskingData } from '../../store/type/busking';
+import {
+  PlaylistData,
+  PlaylistDataObj,
+  PlaylistSongData,
+} from '../../store/type/playlist';
 
 const App = () => {
-  const [isUser, setIsUser] = useState(false);
-  const [buskingData, setBuskingData] = useState(null);
-  const [results, setResults] = useState([]);
-  const [appliance, setAppliance] = useState([]);
-  const [playlists, setPlaylists] = useState(null);
-  const [nowPlaylist, setNowPlaylist] = useState(null);
-  const [isShowPlaylistMenu, setIsShowPlaylistMenu] = useState(false);
-  const [ip, setIp] = useState('');
+  const [isUser, setIsUser] = useState<boolean>(false);
+  const [buskingData, setBuskingData] = useState<BuskingData | null>(null);
+  const [results, setResults] = useState<PlaylistSongData[]>([]);
+  const [appliance, setAppliance] = useState<ApplianceData[]>([]);
+  const [playlists, setPlaylists] = useState<PlaylistDataObj | null>(null);
+  const [nowPlaylist, setNowPlaylist] = useState<PlaylistData | null>(null);
+  const [isShowPlaylistMenu, setIsShowPlaylistMenu] = useState<boolean>(false);
+  const [ip, setIp] = useState<string>('');
   const router = useRouter();
-  const userId = router.query.uid;
+  const userId = router.query.uid ? router.query.uid.toString() : null;
   const { getIp } = useIpContext();
   const { applyOldBuskingSong, applyNewBuskingSong, getBuskingData } =
     useBuskingContext();
@@ -59,7 +65,9 @@ const App = () => {
   useEffect(() => {
     if (buskingData && buskingData.appliance) {
       setAppliance(
-        Object.values(buskingData.appliance).sort((a, b) => a.id - b.id)
+        Object.values(buskingData.appliance).sort(
+          (a, b) => parseInt(a.id) - parseInt(b.id)
+        )
       );
     } else {
       setAppliance([]);
@@ -112,7 +120,7 @@ const App = () => {
           window.alert('이미 투표하셨습니다!');
         }
       } else {
-        if (appliance.length == parseInt(buskingData.maxNum)) {
+        if (appliance.length == buskingData.maxNum) {
           alert('신청 최대수에 도달했습니다! 한 곡이 끝난후 신청해보세요!');
           return;
         }
@@ -122,7 +130,7 @@ const App = () => {
         );
       }
     } else {
-      if (appliance.length == parseInt(buskingData.maxNum)) {
+      if (appliance.length == buskingData.maxNum) {
         alert('신청 최대수에 도달했습니다! 한 곡이 끝난후 신청해보세요!');
         return;
       }
@@ -151,7 +159,7 @@ const App = () => {
           window.alert('이미 투표하셨습니다!');
         }
       } else {
-        if (appliance.length == parseInt(buskingData.maxNum)) {
+        if (appliance.length == buskingData.maxNum) {
           alert('신청 최대수에 도달했습니다! 한 곡이 끝난후 신청해보세요!');
           return;
         }
@@ -160,7 +168,7 @@ const App = () => {
         );
       }
     } else {
-      if (appliance.length == parseInt(buskingData.maxNum)) {
+      if (appliance.length == buskingData.maxNum) {
         alert('신청 최대수에 도달했습니다! 한 곡이 끝난후 신청해보세요!');
         return;
       }
@@ -263,9 +271,6 @@ const App = () => {
                   {isShowPlaylistMenu && (
                     <PlaylistMenu
                       setIsShowPlaylistMenu={setIsShowPlaylistMenu}
-                      playlists={playlists}
-                      changeNowPlaylist={changeNowPlaylist}
-                      nowPlaylist={nowPlaylist}
                     />
                   )}
                   <button

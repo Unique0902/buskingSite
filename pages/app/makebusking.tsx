@@ -8,19 +8,20 @@ import { getAppLayOut } from '../../layouts/appLayout';
 import { useRouter } from 'next/router';
 import { useBuskingContext } from '../../context/BuskingContext';
 import NoPlaylistCheckWrapper from '../../components/NoPlaylistCheckWrapper';
+import { BuskingInform } from '../../store/type/busking';
 
 export default function AppMakeBusking({}) {
   const { buskingData, makeBusking } = useBuskingContext();
   const { playlists } = usePlaylistContext();
   const { userData } = useUserDataContext();
-  const [buskingInform, setBuskingInform] = useState({
+  const [buskingInform, setBuskingInform] = useState<BuskingInform>({
     playlistId: playlists ? Object.values(playlists)[0].id : '',
     maxNum: 10,
     name: `${userData.name}님의 버스킹`,
   });
   const router = useRouter();
 
-  const handleChange = (value, label) => {
+  const handleChange = (value: string, label: string) => {
     setBuskingInform({ ...buskingInform, [label]: value });
   };
 

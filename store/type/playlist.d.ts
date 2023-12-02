@@ -5,9 +5,11 @@ export type PlaylistDataObj = {
 export type PlaylistData = {
   id: string;
   name: string;
-  songs?: {
-    [songId: string]: PlaylistSongData;
-  };
+  songs?: PlaylistSongObj;
+};
+
+export type PlaylistSongObj = {
+  [songId: string]: PlaylistSongData;
 };
 
 export type PlaylistSongData = {

@@ -10,9 +10,10 @@ import PrimarySongTable from '../../components/Table/PrimarySongTable';
 import { MinusIcn } from '../../assets/icon/icon';
 import NoPlaylistCheckWrapper from '../../components/NoPlaylistCheckWrapper';
 import useSearchBar from '../../hooks/UseSearchBar';
+import { PlaylistSongData } from '../../store/type/playlist';
 
 export default function AppPlaylist() {
-  const [songArr, setSongArr] = useState([]);
+  const [songArr, setSongArr] = useState<PlaylistSongData[]>([]);
   const { nowPlaylist, removeSongInPlaylist } = usePlaylistContext();
   useEffect(() => {
     if (nowPlaylist) {
