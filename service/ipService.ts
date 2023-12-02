@@ -1,8 +1,10 @@
+import { IpData } from '../store/type/ip';
+
 class IpService {
-  async getIp() {
+  async getIp(): Promise<string> {
     try {
       const ipData = await fetch('https://geolocation-db.com/json/');
-      const locationIp = await ipData.json();
+      const locationIp: IpData = await ipData.json();
       return locationIp.IPv4;
     } catch (error) {
       console.error(error);
