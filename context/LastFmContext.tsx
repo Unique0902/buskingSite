@@ -1,12 +1,18 @@
-import { createContext, useContext } from 'react';
+import { createContext, ReactNode, useContext } from 'react';
+import Lastfm from '../service/lastfm';
 
-const LastFmContext = createContext();
+type Props = {
+  lastfm: Lastfm;
+  children: ReactNode;
+};
 
-export function LastFmContextProvider({ lastfm, children }) {
-  const searchSongByName = async (title, pageNum) => {
+const LastFmContext = createContext(undefined);
+
+export function LastFmContextProvider({ lastfm, children }: Props) {
+  const searchSongByName = async (title: string, pageNum: number) => {
     return lastfm.searchSongByName(title, pageNum);
   };
-  const searchSongByArtist = async (artist, pageNum) => {
+  const searchSongByArtist = async (artist: string, pageNum: number) => {
     return lastfm.searchSongByArtist(artist, pageNum);
   };
   // const searchArtist = async (artist) => {
@@ -15,7 +21,7 @@ export function LastFmContextProvider({ lastfm, children }) {
   // const searchTopTrackByCorrectArtist = async (mbid) => {
   //   return lastfm.searchTopTrackByCorrectArtist(mbid);
   // };
-  const getTopTracks = async (pageNum) => {
+  const getTopTracks = async (pageNum: number) => {
     return lastfm.getTopTracks(pageNum);
   };
 

@@ -33,7 +33,7 @@ const useAddSearch = (setFilteredDataArr, setResultNum) => {
           return { ...data, artist: data.artist.name };
         })
       );
-      setResultNum(parseInt(result['@attr'].totalPages));
+      setResultNum(parseInt(result['@attr'].total));
     }
     setIsLoading(false);
   };

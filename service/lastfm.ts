@@ -1,8 +1,16 @@
+import { FmTopTracksSearchData, FmTrackSearchData } from './../store/type/fm.d';
+import { AxiosInstance } from 'axios';
+
 class Lastfm {
-  constructor(httpClient) {
+  lastfm: AxiosInstance;
+  constructor(httpClient: AxiosInstance) {
     this.lastfm = httpClient;
   }
-  async searchSongByName(title, pageNum) {
+
+  async searchSongByName(
+    title: string,
+    pageNum: number
+  ): Promise<FmTrackSearchData> {
     const response = await this.lastfm.get('', {
       params: {
         method: 'track.search',
@@ -14,7 +22,10 @@ class Lastfm {
     });
     return response.data.results;
   }
-  async searchSongByArtist(artist, pageNum) {
+  async searchSongByArtist(
+    artist: string,
+    pageNum: number
+  ): Promise<FmTrackSearchData> {
     const response = await this.lastfm.get('', {
       params: {
         method: 'track.search',
@@ -27,7 +38,7 @@ class Lastfm {
     });
     return response.data.results;
   }
-  async searchArtist(artist) {
+  async searchArtist(artist: string) {
     const response = await this.lastfm.get('', {
       params: {
         method: 'artist.search',
@@ -37,7 +48,7 @@ class Lastfm {
     });
     return response.data.results;
   }
-  async searchTopTrackByCorrectArtist(mbid) {
+  async searchTopTrackByCorrectArtist(mbid: string) {
     const response = await this.lastfm.get('', {
       params: {
         method: 'artist.gettoptrack',
@@ -47,7 +58,7 @@ class Lastfm {
     });
     return response.data.results;
   }
-  async getTopTracks(pageNum) {
+  async getTopTracks(pageNum: number): Promise<FmTopTracksSearchData> {
     const response = await this.lastfm.get('', {
       params: {
         method: 'chart.gettoptracks',
