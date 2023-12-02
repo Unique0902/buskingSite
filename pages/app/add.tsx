@@ -22,10 +22,13 @@ export default function AppAdd() {
 
   const { nowPlaylist, addSongToPlaylist } = usePlaylistContext();
 
-  const [searchWord, setSearchWord, isLoading, search] = useAddSearch(
-    setSearchResults,
-    setResultNum
-  );
+  const [
+    searchWord,
+    setSearchWord,
+    isLoading,
+    searchBySearchBtn,
+    searchByPageChange,
+  ] = useAddSearch(setSearchResults, setResultNum);
 
   useEffect(() => {
     if (searchResults) {
@@ -35,18 +38,18 @@ export default function AppAdd() {
     }
   }, [searchResults]);
   const handelPlus = () => {
-    search(nowPageNum + 1);
+    searchByPageChange(nowPageNum + 1);
     setNowPageNum(nowPageNum + 1);
   };
   const handelMinus = () => {
     if (nowPageNum !== 1) {
-      search(nowPageNum - 1);
+      searchByPageChange(nowPageNum - 1);
       setNowPageNum(nowPageNum - 1);
     }
   };
-  const handelChange = () => {
+  const onSearchBySearchBtn = () => {
     setNowPageNum(1);
-    search(1);
+    searchBySearchBtn();
   };
 
   return (
@@ -57,7 +60,7 @@ export default function AppAdd() {
           <SongSearchBar
             searchWord={searchWord}
             setSearchWord={setSearchWord}
-            onSearch={handelChange}
+            onSearch={onSearchBySearchBtn}
           >
             <HoverIcon
               text={

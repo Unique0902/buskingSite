@@ -16,12 +16,33 @@ const useAddSearch = (
     category: '제목',
   });
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
+  const [isTopTrackTime, setIsTopTrackTime] = useState<boolean>(true);
   const { searchSongByName, searchSongByArtist, getTopTracks } =
     useLastFmContext();
 
-  const search = async (pageNum: number) => {
+  const searchBySearchBtn = async () => {
     setIsLoading(true);
+    setIsTopTrackTime(false);
+    if (searchWord.name) {
+      if (searchWord.category === '제목') {
+        const result = await searchSongByName(searchWord.name, 1);
+        setFilteredDataArr(result.trackmatches.track);
+        setResultNum(parseInt(result['opensearch:totalResults']));
+      } else if (searchWord.category === '가수') {
+        const result = await searchSongByArtist(searchWord.name, 1);
+        setFilteredDataArr(result.trackmatches.track);
+        setResultNum(parseInt(result['opensearch:totalResults']));
+      }
+    }
+    setIsLoading(false);
+  };
+
+  const searchByPageChange = async (pageNum: number) => {
+    setIsLoading(true);
+    if (isTopTrackTime) {
+      searchTopTrack(pageNum);
+      return;
+    }
     if (searchWord.name) {
       if (searchWord.category === '제목') {
         const result = await searchSongByName(searchWord.name, pageNum);
@@ -36,9 +57,9 @@ const useAddSearch = (
     setIsLoading(false);
   };
 
-  const searchTopTrack = async () => {
+  const searchTopTrack = async (pageNum: number) => {
     setIsLoading(true);
-    const result = await getTopTracks(1);
+    const result = await getTopTracks(pageNum);
     if (result.track) {
       setFilteredDataArr(
         result.track.map((data: FmTopTrackData) => {
@@ -51,10 +72,16 @@ const useAddSearch = (
   };
 
   useEffect(() => {
-    searchTopTrack();
+    searchTopTrack(1);
   }, []);
 
-  return [searchWord, setSearchWord, isLoading, search] as const;
+  return [
+    searchWord,
+    setSearchWord,
+    isLoading,
+    searchBySearchBtn,
+    searchByPageChange,
+  ] as const;
 };
 
 export default useAddSearch;
