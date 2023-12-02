@@ -92,6 +92,7 @@ const App = () => {
 
   // 왜 handleBuskingData를 dependency에 넣어주어야하지?
 
+  // eslint 업그레이드 한다
   useEffect(() => {
     if (userId && !buskingData && isUser) {
       handleBuskingData();
