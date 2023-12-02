@@ -1,3 +1,4 @@
+import { Unsubscribe } from 'firebase/auth';
 import {
   createContext,
   ReactNode,
@@ -14,7 +15,19 @@ type Props = {
   children: ReactNode;
 };
 
-const UserDataContext = createContext(undefined);
+type ContextProps = {
+  userData: UserData | null;
+  userDataLoading: boolean;
+  syncUserData: (
+    userId: string,
+    onUpdate: (value: UserData | null) => void
+  ) => Unsubscribe;
+  getUserData: (userId: string) => Promise<UserData>;
+  removeUserData: (userId: string) => Promise<void>;
+  makeUserData: (userId: string, name: string) => Promise<UserData>;
+};
+
+const UserDataContext = createContext<ContextProps>(undefined);
 
 export function UserDataContextProvider({ userRepository, children }: Props) {
   const [userData, setUserData] = useState<UserData | null>(null);
@@ -36,7 +49,7 @@ export function UserDataContextProvider({ userRepository, children }: Props) {
     userId: string,
     onUpdate: (value: UserData | null) => void
   ) => {
-    userRepository.syncUserData(userId, onUpdate);
+    return userRepository.syncUserData(userId, onUpdate);
   };
   const getUserData = async (userId: string) => {
     return userRepository.getUserData(userId);

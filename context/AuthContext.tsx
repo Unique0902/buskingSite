@@ -7,8 +7,14 @@ import {
   useState,
 } from 'react';
 import AuthService from '../service/auth_service';
-
-const AuthContext = createContext(undefined);
+type ContextProps = {
+  user: UserInfo | undefined;
+  userLoading: boolean;
+  uid: string | null;
+  login: (providerName: string) => void;
+  logout: () => void;
+};
+const AuthContext = createContext<ContextProps>(undefined);
 
 type Props = {
   authService: AuthService;
@@ -33,7 +39,7 @@ export function AuthContextProvider({ authService, children }: Props) {
   }, []);
   return (
     <AuthContext.Provider
-      value={{ user, userLoading, uid: user && user.uid, login, logout }}
+      value={{ user, userLoading, uid: user ? user.uid : null, login, logout }}
     >
       {children}
     </AuthContext.Provider>

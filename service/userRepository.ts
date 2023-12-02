@@ -5,7 +5,7 @@ import { UserData } from '../store/type/userData';
 class UserRepository {
   syncUserData(userId: string, onUpdate: (value: UserData | null) => void) {
     const listRef = ref(database, `users/${userId}`);
-    onValue(listRef, (snapshot) => {
+    return onValue(listRef, (snapshot) => {
       const value = snapshot.val();
       value && onUpdate(value);
     });

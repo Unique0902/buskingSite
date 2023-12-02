@@ -1,3 +1,4 @@
+import { Unsubscribe } from 'firebase/auth';
 import {
   createContext,
   ReactNode,
@@ -6,7 +7,11 @@ import {
   useState,
 } from 'react';
 import PlaylistRepository from '../service/playlist_repository';
-import { PlaylistDataObj, PlaylistSongData } from '../store/type/playlist';
+import {
+  PlaylistData,
+  PlaylistDataObj,
+  PlaylistSongData,
+} from '../store/type/playlist';
 import { useAuthContext } from './AuthContext';
 import { useUserDataContext } from './UserDataContext';
 
@@ -15,14 +20,33 @@ type Props = {
   children: ReactNode;
 };
 
-const PlaylistContext = createContext(undefined);
+type ContextProps = {
+  playlists: PlaylistDataObj | null;
+  nowPlaylist: PlaylistData | null;
+  addSongToPlaylist: (title: string, artist: string) => Promise<void>;
+  removeNowPlaylist: () => Promise<void>;
+  removeSongInPlaylist: (sid: string) => Promise<void>;
+  addBasicPlaylist: () => Promise<void>;
+  updateNowPlaylistName: (name: string) => Promise<void>;
+  addPlaylist: (name: string) => Promise<void>;
+  changeNowPlaylist: (id: string) => void;
+  syncPlaylist: (
+    userId: string,
+    onUpdate: (value: PlaylistDataObj) => void
+  ) => Unsubscribe;
+  getPlaylists: (userId: string) => Promise<PlaylistDataObj>;
+  getPlaylist: (userId: string, playlistId: string) => Promise<PlaylistData>;
+  removeUserPlaylists: (userId: string) => Promise<void>;
+};
+
+const PlaylistContext = createContext<ContextProps>(undefined);
 
 export function PlaylistContextProvider({
   playlistRepository,
   children,
 }: Props) {
-  const [playlists, setPlaylists] = useState<PlaylistDataObj>();
-  const [nowPlaylist, setNowPlaylist] = useState(null);
+  const [playlists, setPlaylists] = useState<PlaylistDataObj | null>();
+  const [nowPlaylist, setNowPlaylist] = useState<PlaylistData | null>(null);
   const { uid } = useAuthContext();
   const { userData } = useUserDataContext();
 
@@ -51,7 +75,7 @@ export function PlaylistContextProvider({
   }, [playlists]);
 
   const addSongToPlaylist = async (title: string, artist: string) => {
-    if (nowPlaylist.length === 0) {
+    if (!nowPlaylist) {
       alert('플레이리스트가 존재하지않습니다! 추가해주세요!');
       return;
     }
@@ -128,7 +152,7 @@ export function PlaylistContextProvider({
     userId: string,
     onUpdate: (value: PlaylistDataObj) => void
   ) => {
-    playlistRepository.syncPlaylist(userId, onUpdate);
+    return playlistRepository.syncPlaylist(userId, onUpdate);
   };
 
   const getPlaylists = async (userId: string) => {

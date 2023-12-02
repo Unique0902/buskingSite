@@ -1,12 +1,15 @@
 import { createContext, ReactNode, useContext } from 'react';
 import IpService from '../service/ipService';
-
+type ContextProps = {
+  getIp: () => Promise<string>;
+  logIp: () => Promise<void>;
+};
 type Props = {
   ipService: IpService;
   children: ReactNode;
 };
 
-const IpContext = createContext(undefined);
+const IpContext = createContext<ContextProps>(undefined);
 
 export function IpContextProvider({ ipService, children }: Props) {
   const getIp = async () => {

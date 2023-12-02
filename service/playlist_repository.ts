@@ -12,7 +12,7 @@ class PlaylistRepository {
     onUpdate: (value: PlaylistDataObj | null) => void
   ) {
     const listRef = ref(database, `playlists/${userId}`);
-    onValue(listRef, (snapshot) => {
+    return onValue(listRef, (snapshot) => {
       const value: PlaylistDataObj | null = snapshot.val();
       onUpdate(value);
     });

@@ -1,3 +1,4 @@
+import { Unsubscribe } from 'firebase/auth';
 import {
   createContext,
   ReactNode,
@@ -14,7 +15,34 @@ import {
 import { useAuthContext } from './AuthContext';
 import { useUserDataContext } from './UserDataContext';
 
-const BuskingContext = createContext(undefined);
+type ContextProps = {
+  buskingData: BuskingData | undefined;
+  makeBusking: (buskingInform: BuskingInform) => Promise<void>;
+  removeBuskingSong: (sid: string) => Promise<void>;
+  removeBusking: () => Promise<void>;
+  applyOldBuskingSong: (
+    userId: string,
+    sid: string,
+    ip: string,
+    cnt: number,
+    applicants: ApplicantData[]
+  ) => Promise<void>;
+  applyNewBuskingSong: (
+    userId: string,
+    title: string,
+    artist: string,
+    sid: string,
+    ip: string
+  ) => Promise<void>;
+  syncBuskingData: (
+    userId: string,
+    onUpdate: (value: BuskingData | undefined) => void
+  ) => Unsubscribe;
+  getBuskingData: (userId: string) => Promise<BuskingData>;
+  isbuskingDataLoading: boolean;
+};
+
+const BuskingContext = createContext<ContextProps>(undefined);
 
 type Props = {
   buskingRepository: BuskingRepository;
