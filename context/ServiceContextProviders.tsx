@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import axios from 'axios';
 import Lastfm from '../service/lastfm';
 import AuthService from '../service/auth_service';
@@ -13,7 +13,11 @@ import { BuskingContextProvider } from './BuskingContext';
 import { LastFmContextProvider } from './LastFmContext';
 import { IpContextProvider } from './IpContext';
 
-const ServiceContextProviders = ({ children }) => {
+type Props = {
+  children: ReactNode;
+};
+
+const ServiceContextProviders = ({ children }: Props) => {
   const httpClient = axios.create({
     baseURL: 'https://ws.audioscrobbler.com/2.0',
     params: { api_key: process.env.NEXT_PUBLIC_LASTFM_API_KEY },

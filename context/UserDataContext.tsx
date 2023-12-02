@@ -1,11 +1,24 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
+import UserRepository from '../service/userRepository';
+import { UserData } from '../store/type/userData';
 import { useAuthContext } from './AuthContext';
 
-const UserDataContext = createContext();
+type Props = {
+  userRepository: UserRepository;
+  children: ReactNode;
+};
 
-export function UserDataContextProvider({ userRepository, children }) {
-  const [userData, setUserData] = useState(null);
-  const [userDataLoading, setUserDataLoading] = useState(true);
+const UserDataContext = createContext(undefined);
+
+export function UserDataContextProvider({ userRepository, children }: Props) {
+  const [userData, setUserData] = useState<UserData | null>(null);
+  const [userDataLoading, setUserDataLoading] = useState<boolean>(true);
   const { uid } = useAuthContext();
   useEffect(() => {
     setUserDataLoading(true);
@@ -19,16 +32,19 @@ export function UserDataContextProvider({ userRepository, children }) {
     });
   }, [uid]);
 
-  const syncUserData = (userId, onUpdate) => {
+  const syncUserData = (
+    userId: string,
+    onUpdate: (value: UserData | null) => void
+  ) => {
     userRepository.syncUserData(userId, onUpdate);
   };
-  const getUserData = async (userId) => {
+  const getUserData = async (userId: string) => {
     return userRepository.getUserData(userId);
   };
-  const removeUserData = async (userId) => {
+  const removeUserData = async (userId: string) => {
     return userRepository.removeUser(userId);
   };
-  const makeUserData = async (userId, name) => {
+  const makeUserData = async (userId: string, name: string) => {
     const data = await userRepository.makeUser(userId, name);
     setUserData(data);
     return data;
