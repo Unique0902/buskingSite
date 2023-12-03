@@ -19,6 +19,7 @@ import { ApplianceData, ApplianceObjects } from '../../store/type/busking';
 export default function AppBusking({}) {
   const { playlists } = usePlaylistContext();
   const { userData } = useUserDataContext();
+
   const {
     buskingData,
     removeBuskingSong,
@@ -94,12 +95,12 @@ export default function AppBusking({}) {
 
       <MainSec>
         <section className='relative flex flex-row items-center justify-between max-lg:flex-col max-lg:items-start max-lg:px-4'>
-          <h1 className='text-xl font-semibold text-center text-zinc-500'>
+          <h1 className='text-xl font-semibold text-center '>
             {playlists &&
               playlists[buskingData.playlistId] &&
               `현재 플레이리스트: ${playlists[buskingData.playlistId].name}`}
           </h1>
-          <h2 className='text-xl font-semibold text-zinc-500'>
+          <h2 className='text-xl font-semibold '>
             총 노래 수 {songArrToView ? songArrToView.length : 0}
           </h2>
         </section>

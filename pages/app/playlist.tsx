@@ -50,7 +50,7 @@ export default function AppPlaylist() {
               isBusking={false}
             />
           </SongSearchBar>
-          <h2 className='mb-2 text-xl font-semibold text-zinc-500'>
+          <h2 className='mb-2 text-xl font-semibold '>
             총 노래 수 {songArr && songArr.length}
           </h2>
 

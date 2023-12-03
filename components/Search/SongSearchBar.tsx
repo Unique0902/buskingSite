@@ -40,7 +40,7 @@ const SongSearchBar = ({
     >
       <div className='relative flex flex-row items-center justify-center flex-1 gap-2 max-lg:w-full max-lg:mx-2'>
         <select
-          className='p-2 text-lg border-2 border-black rounded-xl max-lg:mr-0 max-lg:text-base'
+          className='p-2 text-lg border-2 border-black rounded-xl max-lg:mr-0 max-lg:text-base dark:bg-slate-500 '
           value={searchWord.category}
           onChange={(e) => {
             setSearchWord({
@@ -55,7 +55,7 @@ const SongSearchBar = ({
         <div className='relative flex flex-row items-center flex-1'>
           <input
             type='search'
-            className='w-full p-2 text-lg border-2 border-black rounded-xl max-lg:text-base'
+            className='w-full p-2 text-lg border-2 border-black rounded-xl max-lg:text-base dark:bg-slate-500'
             placeholder='검색어를 입력하세요..'
             value={searchWord.name}
             onChange={(e) => {
