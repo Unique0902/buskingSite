@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+/* TODO: 글꼴 불러오는 로딩 줄이거나 없애기 */
 * {
   box-sizing: border-box;
   font-family: 'Pretendard';
@@ -21,6 +21,7 @@ li {
 }
 body {
   margin: 0;
+  @apply text-black dark:text-white dark:bg-slate-600;
 }
 p,
 h1,

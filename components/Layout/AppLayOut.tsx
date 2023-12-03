@@ -4,6 +4,7 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import UserDataProtectedRoute from '../ProtectedRoute/UserDataProtectedRoute';
 import { useMediaQuery } from 'react-responsive';
 import SideBar from './SideBar/SideBar';
+import ThemeBtn from './Footer/ThemeBtn';
 type Props = {
   children: ReactNode;
 };
@@ -22,15 +23,18 @@ export default function AppLayOut({ children }: Props) {
   return (
     <ProtectedRoute>
       <UserDataProtectedRoute>
-        <section className='flex h-screen text-black bg-gradient-to-b from-blue-500 to-white '>
+        <section className='flex h-screen bg-gradient-to-b from-blue-500 to-white dark:from-slate-900 dark:to-slate-700 '>
           {isShowSideBar && <SideBar setIsShowSideBar={setIsShowSideBar} />}
-          <main className='px-8 py-6 overflow-y-auto grow max-lg:px-4'>
+          <main className='relative px-8 py-6 overflow-y-auto grow max-lg:px-4'>
             <AppHeader
               isShowSideBar={isShowSideBar}
               setIsShowSideBar={setIsShowSideBar}
             />
             {children}
           </main>
+          <footer className='absolute right-6 bottom-6'>
+            <ThemeBtn />
+          </footer>
         </section>
       </UserDataProtectedRoute>
     </ProtectedRoute>

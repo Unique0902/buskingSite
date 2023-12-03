@@ -12,12 +12,12 @@ export default function AppHome() {
     <>
       <MainSec>
         <div className=''>
-          <h1 className='mb-5 text-3xl font-bold text-black'>
+          <h1 className='mb-5 text-3xl font-bold'>
             어서오세요! {userData.name} 님!
           </h1>
         </div>
         <NoPlaylistCheckWrapper isExistWrapper={!!nowPlaylist}>
-          <h2 className='text-3xl font-normal text-black font-pretendard'>
+          <h2 className='text-3xl font-normal '>
             현재 플레이리스트는 {nowPlaylist && nowPlaylist.name}입니다.
             fdfdafafs
           </h2>

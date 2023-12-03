@@ -14,7 +14,7 @@ type Props = {
 };
 
 const MusicBar = ({ songArr, setSongArrToView }: Props) => {
-  const playBtnStyle = 'mx-3 text-4xl text-black hover:scale-110';
+  const playBtnStyle = 'mx-3 text-4xl hover:scale-110';
   const [beforeSongArr, setBeforeSongArr] = useState<ApplianceData[]>([]);
   const [nowSong, setNowSong] = useState<ApplianceData | null>(null);
   const { applyBuskingSongAgain, removeBuskingSong } = useBuskingContext();

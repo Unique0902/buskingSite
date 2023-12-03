@@ -191,18 +191,18 @@ const App = () => {
   };
 
   return (
-    <section className='flex w-full h-screen px-8 py-4 overflow-auto text-black max-md:px-4 bg-gradient-to-b from-blue-500 to-mainBlue'>
+    <section className='flex w-full h-screen px-8 py-4 overflow-auto max-md:px-4 bg-gradient-to-b from-blue-500 to-mainBlue'>
       <section className='w-full'>
         {!isUser && (
           <MainSec>
-            <h1 className='text-xl font-semibold text-black '>
+            <h1 className='text-xl font-semibold'>
               해당하는 유저가 존재하지않습니다.
             </h1>
           </MainSec>
         )}
         {isUser &&
           (buskingData ? (
-            <section className='text-black'>
+            <section className=''>
               <section className='flex flex-row items-center pt-3 pb-8 border-b border-gray-600 max-lg:flex-col max-lg:text-center'>
                 <h1 className='text-3xl font-semibold text-white w-96 max-lg:w-full max-lg:mb-3'>
                   {buskingData && buskingData.name}
@@ -216,7 +216,7 @@ const App = () => {
               </section>
 
               <MainSec>
-                <h2 className='text-3xl font-semibold text-black max-md:text-center'>
+                <h2 className='text-3xl font-semibold max-md:text-center'>
                   신청가능 곡 리스트
                 </h2>
                 <div className='flex flex-row justify-end mb-3 max-lg:justify-center'>
@@ -245,7 +245,7 @@ const App = () => {
               </MainSec>
 
               <MainSec>
-                <h2 className='text-3xl font-semibold text-black max-lg:text-center'>
+                <h2 className='text-3xl font-semibold max-lg:text-center'>
                   신청된 곡 리스트
                 </h2>
                 <section className='relative flex items-center justify-end mb-6 max-md:justify-center'>
@@ -265,7 +265,7 @@ const App = () => {
           ) : (
             <section>
               <MainSec>
-                <h2 className='text-xl font-semibold text-black w-96 max-lg:w-full'>
+                <h2 className='text-xl font-semibold w-96 max-lg:w-full'>
                   해당 유저는 버스킹 진행중이 아닙니다.
                 </h2>
                 <div className='relative flex flex-row items-center justify-end mr-4 grow'>
@@ -293,7 +293,7 @@ const App = () => {
 
               {!nowPlaylist && (
                 <section className='relative w-3/4 p-10 m-auto mt-8 bg-white rounded-2xl'>
-                  <h2 className='text-3xl font-semibold text-black'>
+                  <h2 className='text-3xl font-semibold '>
                     해당 유저의 플레이 리스트가 존재하지 않습니다.
                   </h2>
                 </section>
@@ -301,7 +301,7 @@ const App = () => {
 
               {nowPlaylist && (
                 <MainSec>
-                  <h2 className='text-3xl font-semibold text-black max-lg:text-center'>
+                  <h2 className='text-3xl font-semibold max-lg:text-center'>
                     {nowPlaylist && nowPlaylist.name}
                   </h2>
                   <div className='flex flex-row justify-end mb-3'>

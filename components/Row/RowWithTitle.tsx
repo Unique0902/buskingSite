@@ -6,7 +6,7 @@ type Props = {
 const RowWithTitle = ({ title, children }: Props) => {
   return (
     <div className='relative flex flex-row items-center py-3 border-b border-gray-300 max-lg:flex-col'>
-      <h2 className='w-48 text-2xl font-normal text-black max-lg:w-full max-lg:text-xl max-lg:text-center'>
+      <h2 className='w-48 text-2xl font-normal max-lg:w-full max-lg:text-xl max-lg:text-center'>
         {title}
       </h2>
       {children}

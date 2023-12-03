@@ -31,7 +31,7 @@ const MakeUser = () => {
       <input
         value={name}
         onChange={handleHandleChangeNameInput}
-        className='px-5 py-4 mt-12 font-sans text-3xl font-normal text-black border border-black rounded-2xl'
+        className='px-5 py-4 mt-12 font-sans text-3xl font-normal border border-black rounded-2xl'
       />
       <PrimaryBtn
         handleClick={handleClickMakeUserBtn}

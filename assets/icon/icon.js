@@ -18,8 +18,12 @@ import UserIcn from './user.svg';
 import CopyIcn from './copy.svg';
 import MenuIcn from './menu.svg';
 import SearchIcn from './search.svg';
+import MoonIcn from './moon.svg';
+import SunIcn from './sun.svg';
 export {
   BookIcn,
+  MoonIcn,
+  SunIcn,
   PauseIcn,
   PlayIcn,
   PlusIcn,

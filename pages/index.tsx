@@ -24,14 +24,14 @@ export default function Home() {
       <section className='p-6 bg-white'>
         <LoginNav scrollToTutorial={scrollToTutorial} />
         <main className='w-3/5 pt-24 pb-24 m-auto max-lg:w-full'>
-          <h1 className='text-6xl font-semibold text-center text-black max-lg:text-4xl'>
+          <h1 className='text-6xl font-semibold text-center max-lg:text-4xl'>
             당신만의{' '}
             <div className='inline font-extrabold text-blue-600'>
               온라인, 오프라인 버스킹
             </div>
             을 여기서 시작하세요.
           </h1>
-          <h2 className='mt-10 text-2xl font-normal text-center text-black max-lg:text-xl'>
+          <h2 className='mt-10 text-2xl font-normal text-center max-lg:text-xl'>
             당신만의 노래 리스트를 생성하여 애창곡을 검색하여 저장하세요.
             버스킹을 시작하여 공유되는 링크를 이용하여 관객들로부터 노래를
             신청받으세요.
@@ -96,7 +96,7 @@ export default function Home() {
       </TutorialBlock>
 
       <section className='flex flex-col items-center justify-center py-48 bg-white rounded-xl'>
-        <h2 className='mb-6 text-5xl font-semibold text-black max-lg:text-center'>
+        <h2 className='mb-6 text-5xl font-semibold max-lg:text-center'>
           자 그럼 시작하러 가볼까요?
         </h2>
         <PrimaryBtn

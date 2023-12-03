@@ -19,7 +19,7 @@ const SlicedHoverText = ({ text }: Props) => {
     >
       {slicedText}
       {isHovering && (
-        <p className='absolute p-2 text-black bg-white border border-gray-500 rounded-lg'>
+        <p className='absolute p-2 bg-white border border-gray-500 rounded-lg'>
           {text}
         </p>
       )}

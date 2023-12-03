@@ -26,9 +26,9 @@ const HomeSideBar = ({ setIsShowSideBar }: Props) => {
     <>
       <aside
         ref={wrapperRef}
-        className={` bg-gray-100 text-black relative max-lg:absolute right-0 top-0 max-lg:h-full max-lg:z-40 w-64`}
+        className={` bg-gray-100 relative max-lg:absolute right-0 top-0 max-lg:h-full max-lg:z-40 w-64`}
       >
-        <div className='flex items-center px-6 py-6 text-black border-b border-gray-600 border-solid'>
+        <div className='flex items-center px-6 py-6 border-b border-gray-600 border-solid'>
           <BookIcn
             width={32}
             height={32}
@@ -46,7 +46,7 @@ const HomeSideBar = ({ setIsShowSideBar }: Props) => {
 
           <li>
             <button
-              className='absolute bottom-0 flex justify-end w-full pr-5 text-right text-black border-t border-gray-600 border-solid hover:opacity-70 py-7'
+              className='absolute bottom-0 flex justify-end w-full pr-5 text-right border-t border-gray-600 border-solid hover:opacity-70 py-7'
               onClick={() => {
                 setIsShowSideBar(false);
               }}
