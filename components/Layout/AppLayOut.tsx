@@ -32,7 +32,7 @@ export default function AppLayOut({ children }: Props) {
             />
             {children}
           </main>
-          <footer className='absolute right-6 bottom-6'>
+          <footer className='fixed right-6 bottom-6'>
             <ThemeBtn />
           </footer>
         </section>

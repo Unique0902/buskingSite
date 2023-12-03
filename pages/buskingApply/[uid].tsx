@@ -333,7 +333,7 @@ const App = () => {
             </section>
           ))}
       </section>
-      <footer className='absolute right-6 bottom-6'>
+      <footer className='fixed right-6 bottom-6'>
         <ThemeBtn />
       </footer>
     </section>

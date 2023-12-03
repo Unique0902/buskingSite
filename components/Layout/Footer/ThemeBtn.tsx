@@ -1,7 +1,7 @@
 import React, { useLayoutEffect, useState } from 'react';
 import { MoonIcn, SunIcn } from '../../../assets/icon/icon';
 import { color } from '../../../styles/theme';
-
+//TODO: useLayoutEffect 개선 고려해보기
 interface Props {}
 const LOCAL_STORAGE_KEY = {
   THEME: 'theme',
@@ -12,7 +12,7 @@ const THEME = {
   DARK: 'dark',
 } as const;
 const ThemeBtn: React.FC<Props> = ({}: Props) => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
   useLayoutEffect(() => {
     const theme = localStorage.getItem(LOCAL_STORAGE_KEY.THEME) || THEME.LIGHT;
     if (theme === THEME.DARK) {
@@ -20,6 +20,9 @@ const ThemeBtn: React.FC<Props> = ({}: Props) => {
       setIsDarkMode(true);
     }
   }, []);
+
+  //useLayoutEffect는 성능에 위해가 될수있으니 나중에 개선해보기
+
   const toggleTheme = () => {
     // html 태그를 가지고 옴
     const htmlEl = document.querySelector('html');
