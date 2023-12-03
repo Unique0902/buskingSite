@@ -269,7 +269,7 @@ const App = () => {
                 <h2 className='text-xl font-semibold w-96 max-lg:w-full'>
                   해당 유저는 버스킹 진행중이 아닙니다.
                 </h2>
-                <div className='relative flex flex-row items-center justify-end mr-4 grow'>
+                {/* <div className='relative flex flex-row items-center justify-end mr-4 grow'>
                   {isShowPlaylistMenu && (
                     <PlaylistMenu
                       setIsShowPlaylistMenu={setIsShowPlaylistMenu}
@@ -289,7 +289,7 @@ const App = () => {
                       className='ml-2'
                     />
                   </button>
-                </div>
+                </div> */}
               </MainSec>
 
               {!nowPlaylist && (
