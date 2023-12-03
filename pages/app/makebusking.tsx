@@ -9,7 +9,7 @@ import { useRouter } from 'next/router';
 import { useBuskingContext } from '../../context/BuskingContext';
 import NoPlaylistCheckWrapper from '../../components/NoPlaylistCheckWrapper';
 import { BuskingInform } from '../../store/type/busking';
-
+// TODO: select나 input 컴포넌트화로 묶기
 export default function AppMakeBusking({}) {
   const { buskingData, makeBusking } = useBuskingContext();
   const { playlists } = usePlaylistContext();
@@ -72,7 +72,7 @@ export default function AppMakeBusking({}) {
               onChange={(e) => {
                 handleChange(e.target.value, 'playlistId');
               }}
-              className='px-3 py-2 text-xl font-normal border-2 border-black rounded-lg'
+              className='px-3 py-2 text-xl font-normal border-2 border-black rounded-lg dark:bg-slate-500'
             >
               {playlistArr.map((playlist) => (
                 <option key={playlist.id} value={playlist.id}>
@@ -88,7 +88,7 @@ export default function AppMakeBusking({}) {
               onChange={(e) => {
                 handleChange(e.target.value, 'maxNum');
               }}
-              className='w-2/12 p-2 text-lg border-2 border-black rounded-xl max-md:w-5/6'
+              className='w-2/12 p-2 text-lg border-2 border-black rounded-xl max-md:w-5/6 dark:bg-slate-500'
             />
           </MainRow>
           <MainRow title={'방 제목 설정'}>
@@ -98,12 +98,12 @@ export default function AppMakeBusking({}) {
               onChange={(e) => {
                 handleChange(e.target.value, 'name');
               }}
-              className='w-1/3 p-2 text-lg border-2 border-black rounded-xl max-md:w-5/6'
+              className='w-1/3 p-2 text-lg border-2 border-black rounded-xl max-md:w-5/6 dark:bg-slate-500'
             />
           </MainRow>
           <button
             onClick={startBusking}
-            className='relative w-full py-5 text-2xl font-normal text-blue-500 border-b border-gray-300 hover:bg-gray-200 text-start max-lg:pl-4'
+            className='relative w-full py-5 text-2xl font-normal text-blue-500 border-b border-gray-300 hover:opacity-70 text-start max-lg:pl-4'
           >
             버스킹 시작하기
           </button>

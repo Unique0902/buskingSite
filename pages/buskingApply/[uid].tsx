@@ -18,6 +18,7 @@ import {
   PlaylistDataObj,
   PlaylistSongData,
 } from '../../store/type/playlist';
+import ThemeBtn from '../../components/Layout/Footer/ThemeBtn';
 
 const App = () => {
   const [isUser, setIsUser] = useState<boolean>(false);
@@ -191,7 +192,7 @@ const App = () => {
   };
 
   return (
-    <section className='flex w-full h-screen px-8 py-4 overflow-auto max-md:px-4 bg-gradient-to-b from-blue-500 to-mainBlue'>
+    <section className='relative flex w-full h-screen px-8 py-4 overflow-auto max-md:px-4 bg-gradient-to-b from-blue-500 to-mainBlue'>
       <section className='w-full'>
         {!isUser && (
           <MainSec>
@@ -220,7 +221,7 @@ const App = () => {
                   신청가능 곡 리스트
                 </h2>
                 <div className='flex flex-row justify-end mb-3 max-lg:justify-center'>
-                  <h3 className='text-xl font-normal text-gray-500'>
+                  <h3 className='text-xl font-normal '>
                     신청가능 곡 수 {results.length}
                   </h3>
                 </div>
@@ -249,7 +250,7 @@ const App = () => {
                   신청된 곡 리스트
                 </h2>
                 <section className='relative flex items-center justify-end mb-6 max-md:justify-center'>
-                  <h3 className='text-xl font-normal text-gray-500'>
+                  <h3 className='text-xl font-normal '>
                     신청된 곡 수 {appliance.length}
                   </h3>
                 </section>
@@ -305,7 +306,7 @@ const App = () => {
                     {nowPlaylist && nowPlaylist.name}
                   </h2>
                   <div className='flex flex-row justify-end mb-3'>
-                    <h3 className='text-xl font-normal text-gray-500'>
+                    <h3 className='text-xl font-normal '>
                       곡 수 {results.length}
                     </h3>
                   </div>
@@ -332,6 +333,9 @@ const App = () => {
             </section>
           ))}
       </section>
+      <footer className='absolute right-6 bottom-6'>
+        <ThemeBtn />
+      </footer>
     </section>
   );
 };

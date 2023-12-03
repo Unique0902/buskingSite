@@ -65,7 +65,7 @@ const PlaylistMenu = ({ setIsShowPlaylistMenu }: Props) => {
             {nowPlaylist && nowPlaylist.name}
           </button>
         ) : (
-          <button className='px-4 py-1 text-xl text-left text-gray-400 hover:bg-gray-200'>
+          <button className='px-4 py-1 text-xl text-left text-gray-400 hover:bg-gray-200 dark:text-gray-300'>
             플레이리스트가 없음
           </button>
         )}
@@ -91,7 +91,9 @@ const PlaylistMenu = ({ setIsShowPlaylistMenu }: Props) => {
         )}
       </section>
       <section className='flex flex-col py-2'>
-        <p className='px-4 py-2 text-base text-gray-500'>모든 플레이리스트</p>
+        <p className='px-4 py-2 text-base text-gray-500 dark:text-gray-300'>
+          모든 플레이리스트
+        </p>
         {playlists &&
           Object.values(playlists).map((playlist: PlaylistData) => {
             return (

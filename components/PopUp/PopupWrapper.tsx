@@ -24,7 +24,7 @@ export default function PopupWrapper({
   return (
     <div
       ref={wrapperRef}
-      className={`w-80 border-gray-600 border bg-white absolute rounded-xl z-50 top-0 ${
+      className={`w-80 border-gray-600 border bg-white dark:bg-slate-800 absolute rounded-xl z-50 top-0 ${
         isLeft ? 'left-0' : 'right-0'
       } `}
     >
