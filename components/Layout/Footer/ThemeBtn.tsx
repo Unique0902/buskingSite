@@ -26,10 +26,10 @@ const ThemeBtn: React.FC<Props> = ({}: Props) => {
   return (
     <button
       onClick={toggleTheme}
-      className='p-2 bg-white border border-black rounded-full'
+      className='p-2 bg-white border border-black rounded-full dark:bg-slate-800 hover:opacity-70'
     >
       {isDarkMode ? (
-        <MoonIcn width={25} height={25} color={color.gray_900} />
+        <MoonIcn width={25} height={25} color={color.gray_200} />
       ) : (
         <SunIcn width={25} height={25} color={color.gray_900} />
       )}
