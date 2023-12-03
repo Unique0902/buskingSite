@@ -69,7 +69,7 @@ const SideBar = ({ setIsShowSideBar }: Props) => {
     <>
       <aside
         ref={wrapperRef}
-        className={` bg-zinc-800 relative max-lg:absolute max-lg:h-full max-lg:z-40 ${
+        className={` bg-zinc-800 dark:border-r dark:border-r-gray-600 relative max-lg:absolute max-lg:h-full max-lg:z-40 ${
           isHide ? 'w-16' : 'w-64'
         }`}
       >
