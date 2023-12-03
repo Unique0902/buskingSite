@@ -54,7 +54,7 @@ export default function RequestSongTable({
         )}
         {(!results || results.length === 0) && (
           <>
-            <h2 className='my-5 font-sans text-2xl font-normal text-center text-white'>
+            <h2 className='my-5 text-2xl font-normal text-center text-white'>
               노래가 존재하지 않습니다.
             </h2>
           </>

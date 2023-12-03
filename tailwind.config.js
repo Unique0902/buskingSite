@@ -23,6 +23,9 @@ module.exports = {
         border_top: '#e5e8eb',
         category_item_color: '#FAFAFB',
       },
+      fontFamily: {
+        pretendard: 'Pretendard',
+      },
     },
   },
   plugins: [],

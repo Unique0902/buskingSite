@@ -31,7 +31,7 @@ export default function AppHeader({ isShowSideBar, setIsShowSideBar }: Props) {
             <PlaylistMenu setIsShowPlaylistMenu={setIsShowPlaylistMenu} />
           )}
           <button
-            className='flex items-center font-sans text-xl text-white hover:scale-110'
+            className='flex items-center text-xl text-white hover:scale-110'
             onClick={() => {
               setIsShowPlaylistMenu(true);
             }}
@@ -47,7 +47,7 @@ export default function AppHeader({ isShowSideBar, setIsShowSideBar }: Props) {
         </div>
         <div className='relative'>
           <button
-            className='font-sans text-xl text-white hover:scale-110'
+            className='text-xl text-white hover:scale-110'
             onClick={() => {
               setIsShowLoginMenu(true);
             }}

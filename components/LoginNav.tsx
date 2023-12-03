@@ -40,9 +40,9 @@ export default function LoginNav({ scrollToTutorial }: Props) {
           height={500}
           className='w-12 h-12 '
         />
-        <h1 className='font-sans text-3xl font-semibold text-black '>노래책</h1>
+        <h1 className='text-3xl font-semibold text-black '>노래책</h1>
       </Link>
-      <ul className='justify-around hidden w-2/5 font-sans text-xl font-semibold text-black lg:flex'>
+      <ul className='justify-around hidden w-2/5 text-xl font-semibold text-black lg:flex'>
         <li>
           <button className='hover:scale-110'>소개</button>
         </li>

@@ -19,7 +19,7 @@ export default function PagingBar({
       <button className={btnStyle} onClick={onPageMinus}>
         <ArrowLeftIcn width={18} height={18} color={'white'} />
       </button>
-      <p className='ml-2 font-sans text-xl font-normal text-white'>
+      <p className='ml-2 text-xl font-normal text-white'>
         {pageNum} / {Math.floor((resultNum - 1) / 6) + 1}
       </p>
       <button className={btnStyle} onClick={onPagePlus}>

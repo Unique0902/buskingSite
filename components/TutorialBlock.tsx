@@ -27,10 +27,10 @@ const TutorialBlock = ({
       />
 
       <div className='flex flex-col w-1/3 gap-8 max-lg:w-full max-lg:p-8'>
-        <h2 className='font-sans text-5xl font-semibold text-center text-black max-lg:text-3xl'>
+        <h2 className='text-5xl font-semibold text-center text-black max-lg:text-3xl'>
           {title}
         </h2>
-        <h3 className='font-sans text-xl font-normal text-center text-black max-lg:text-lg'>
+        <h3 className='text-xl font-normal text-center text-black max-lg:text-lg'>
           {children}
         </h3>
       </div>

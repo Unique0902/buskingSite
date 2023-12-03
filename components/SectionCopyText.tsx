@@ -11,7 +11,7 @@ const SectionCopyText = ({ text }: Props) => {
   };
   return (
     <div className='absolute right-0 flex flex-row items-center w-auto gap-3 p-3 bg-white border border-gray-500 rounded-lg'>
-      <p className='font-sans text-lg text-black  max-lg:text-sm'>{text}</p>
+      <p className='text-lg text-black max-lg:text-sm'>{text}</p>
       <button className='hover:opacity-70' onClick={handleClickCopyBtn}>
         <CopyIcn width={20} height={20} color={'gray'} />
       </button>

@@ -195,7 +195,7 @@ const App = () => {
       <section className='w-full'>
         {!isUser && (
           <MainSec>
-            <h1 className='font-sans text-xl font-semibold text-black'>
+            <h1 className='text-xl font-semibold text-black '>
               해당하는 유저가 존재하지않습니다.
             </h1>
           </MainSec>
@@ -204,11 +204,11 @@ const App = () => {
           (buskingData ? (
             <section className='text-black'>
               <section className='flex flex-row items-center pt-3 pb-8 border-b border-gray-600 max-lg:flex-col max-lg:text-center'>
-                <h1 className='font-sans text-3xl font-semibold text-white w-96 max-lg:w-full max-lg:mb-3'>
+                <h1 className='text-3xl font-semibold text-white w-96 max-lg:w-full max-lg:mb-3'>
                   {buskingData && buskingData.name}
                 </h1>
                 <div className='flex flex-row items-center justify-end mr-4 grow max-lg:flex-col'>
-                  <h2 className='ml-8 font-sans text-2xl font-semibold text-white'>
+                  <h2 className='ml-8 text-2xl font-semibold text-white'>
                     {!!nowPlaylist &&
                       `선택된 플레이리스트: ${nowPlaylist.name}`}
                   </h2>
@@ -216,11 +216,11 @@ const App = () => {
               </section>
 
               <MainSec>
-                <h2 className='font-sans text-3xl font-semibold text-black max-md:text-center'>
+                <h2 className='text-3xl font-semibold text-black max-md:text-center'>
                   신청가능 곡 리스트
                 </h2>
                 <div className='flex flex-row justify-end mb-3 max-lg:justify-center'>
-                  <h3 className='font-sans text-xl font-normal text-gray-500'>
+                  <h3 className='text-xl font-normal text-gray-500'>
                     신청가능 곡 수 {results.length}
                   </h3>
                 </div>
@@ -245,11 +245,11 @@ const App = () => {
               </MainSec>
 
               <MainSec>
-                <h2 className='font-sans text-3xl font-semibold text-black max-lg:text-center'>
+                <h2 className='text-3xl font-semibold text-black max-lg:text-center'>
                   신청된 곡 리스트
                 </h2>
                 <section className='relative flex items-center justify-end mb-6 max-md:justify-center'>
-                  <h3 className='font-sans text-xl font-normal text-gray-500'>
+                  <h3 className='text-xl font-normal text-gray-500'>
                     신청된 곡 수 {appliance.length}
                   </h3>
                 </section>
@@ -265,7 +265,7 @@ const App = () => {
           ) : (
             <section>
               <MainSec>
-                <h2 className='font-sans text-xl font-semibold text-black w-96 max-lg:w-full'>
+                <h2 className='text-xl font-semibold text-black w-96 max-lg:w-full'>
                   해당 유저는 버스킹 진행중이 아닙니다.
                 </h2>
                 <div className='relative flex flex-row items-center justify-end mr-4 grow'>
@@ -275,7 +275,7 @@ const App = () => {
                     />
                   )}
                   <button
-                    className='font-sans text-xl text-white hover:scale-110'
+                    className='text-xl text-white hover:scale-110'
                     onClick={() => {
                       setIsShowPlaylistMenu(true);
                     }}
@@ -293,7 +293,7 @@ const App = () => {
 
               {!nowPlaylist && (
                 <section className='relative w-3/4 p-10 m-auto mt-8 bg-white rounded-2xl'>
-                  <h2 className='font-sans text-3xl font-semibold text-black'>
+                  <h2 className='text-3xl font-semibold text-black'>
                     해당 유저의 플레이 리스트가 존재하지 않습니다.
                   </h2>
                 </section>
@@ -301,11 +301,11 @@ const App = () => {
 
               {nowPlaylist && (
                 <MainSec>
-                  <h2 className='font-sans text-3xl font-semibold text-black max-lg:text-center'>
+                  <h2 className='text-3xl font-semibold text-black max-lg:text-center'>
                     {nowPlaylist && nowPlaylist.name}
                   </h2>
                   <div className='flex flex-row justify-end mb-3'>
-                    <h3 className='font-sans text-xl font-normal text-gray-500'>
+                    <h3 className='text-xl font-normal text-gray-500'>
                       곡 수 {results.length}
                     </h3>
                   </div>

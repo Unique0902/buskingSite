@@ -6,9 +6,7 @@ type Props = {
 const LoginMenuPrimaryBtn = ({ children, handleClick }: Props) => {
   return (
     <button
-      className={
-        'font-sans text-black text-lg text-center py-1 px-4 hover:bg-gray-200'
-      }
+      className={' text-black text-lg text-center py-1 px-4 hover:bg-gray-200'}
       onClick={handleClick}
     >
       {children}

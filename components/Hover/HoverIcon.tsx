@@ -14,7 +14,7 @@ const HoverIcon = ({ children, text }: Props) => {
     >
       {children}
       {isHovering && (
-        <div className='absolute right-0 w-48 p-2 font-sans text-xs text-gray-600 bg-white border border-gray-500 rounded-lg'>
+        <div className='absolute right-0 w-48 p-2 text-xs text-gray-600 bg-white border border-gray-500 rounded-lg'>
           {text}
         </div>
       )}

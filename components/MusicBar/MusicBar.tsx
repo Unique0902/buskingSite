@@ -81,7 +81,7 @@ const MusicBar = ({ songArr, setSongArrToView }: Props) => {
 
   return (
     <section className='w-3/4 px-2 py-5 m-auto mt-6 text-center bg-gray-300 rounded-3xl'>
-      <div className='w-3/4 px-2 py-2 m-auto mb-2 font-sans text-xl font-medium text-white bg-gray-500 rounded-xl'>
+      <div className='w-3/4 px-2 py-2 m-auto mb-2 text-xl font-medium text-white bg-gray-500 rounded-xl'>
         {nowSong ? (
           <>
             <p>{`${nowSong.title} - ${nowSong.artist}`}</p>

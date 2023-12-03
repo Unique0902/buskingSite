@@ -4,12 +4,18 @@
 
 * {
   box-sizing: border-box;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Pretendard';
 }
 
-button {
-  cursor: pointer;
+@font-face {
+  font-family: 'Pretendard';
+  font-weight: 45 920;
+  font-style: normal;
+  font-display: swap;
+  src: url('../assets/fonts/PretendardVariable.woff2')
+    format('woff2-variations');
 }
+
 li {
   list-style: none;
 }

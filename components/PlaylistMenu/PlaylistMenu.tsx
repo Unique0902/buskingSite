@@ -61,11 +61,11 @@ const PlaylistMenu = ({ setIsShowPlaylistMenu }: Props) => {
     >
       <section className='flex flex-col pt-2 pb-2 border-b border-gray-600 border-solid '>
         {nowPlaylist ? (
-          <button className='px-4 py-1 font-sans text-xl text-left text-blue-600 hover:bg-gray-200'>
+          <button className='px-4 py-1 text-xl text-left text-blue-600 hover:bg-gray-200'>
             {nowPlaylist && nowPlaylist.name}
           </button>
         ) : (
-          <button className='px-4 py-1 font-sans text-xl text-left text-gray-400 hover:bg-gray-200'>
+          <button className='px-4 py-1 text-xl text-left text-gray-400 hover:bg-gray-200'>
             플레이리스트가 없음
           </button>
         )}
@@ -91,9 +91,7 @@ const PlaylistMenu = ({ setIsShowPlaylistMenu }: Props) => {
         )}
       </section>
       <section className='flex flex-col py-2'>
-        <p className='px-4 py-2 font-sans text-base text-gray-500'>
-          모든 플레이리스트
-        </p>
+        <p className='px-4 py-2 text-base text-gray-500'>모든 플레이리스트</p>
         {playlists &&
           Object.values(playlists).map((playlist: PlaylistData) => {
             return (

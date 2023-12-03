@@ -15,9 +15,9 @@ export default function SideBarBtn({
   children,
 }: Props) {
   const btnStyle =
-    'text-white flex items-center pl-5 py-4 font-sans w-full text-left cursor-pointer font-medium text-lg hover:bg-zinc-600 ';
+    'text-white flex items-center pl-5 py-4 w-full text-left cursor-pointer font-medium text-lg hover:bg-zinc-600 ';
   const hideBtnStyle =
-    'text-white flex items-center py-4 font-sans w-full cursor-pointer font-medium text-lg hover:bg-zinc-600 justify-center';
+    'text-white flex items-center py-4 w-full cursor-pointer font-medium text-lg hover:bg-zinc-600 justify-center';
 
   return (
     <Link

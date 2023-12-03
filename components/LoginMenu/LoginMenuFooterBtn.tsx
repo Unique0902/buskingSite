@@ -6,7 +6,7 @@ type Props = {
 const LoginMenuFooterBtn = ({ children, handleClick = () => {} }: Props) => {
   return (
     <button
-      className='font-sans text-sm text-gray-500 hover:bg-gray-200'
+      className='text-sm text-gray-500 hover:bg-gray-200'
       onClick={handleClick}
     >
       {children}

@@ -15,7 +15,7 @@ const QRCodeSection = ({ url, title }: Props) => {
 
   return (
     <>
-      <h2 className='font-sans text-xl font-bold text-gray-300'>{title}</h2>
+      <h2 className='text-xl font-bold text-gray-300'>{title}</h2>
       <Image
         className={`${isShowQr && 'hidden'}`}
         alt='QRCode'

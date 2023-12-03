@@ -29,7 +29,7 @@ const LoginMenu = ({ userData, setIsShowLoginMenu }: Props) => {
       isLeft={false}
     >
       <section className='flex flex-col pt-2 pb-2 border-b border-gray-400 border-solid '>
-        <p className='px-4 py-3 font-sans text-xl text-center text-blue-600 '>
+        <p className='px-4 py-3 text-xl text-center text-blue-600 '>
           {userData && userData.name}
         </p>
         <LoginMenuPrimaryBtn handleClick={handleClickUserInformBtn}>

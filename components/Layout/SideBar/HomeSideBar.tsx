@@ -35,7 +35,7 @@ const HomeSideBar = ({ setIsShowSideBar }: Props) => {
             color={'#60a5fa'}
             className={`mr-4`}
           />
-          <h1 className='font-sans text-2xl font-semibold '>노래책</h1>
+          <h1 className='text-2xl font-semibold '>노래책</h1>
         </div>
 
         <ul className='flex flex-col'>

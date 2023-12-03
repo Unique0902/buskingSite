@@ -11,9 +11,7 @@ export default function ArrangeBtn({ type, handleClick, children }: Props) {
   };
   return (
     <button
-      className={
-        'font-sans text-black text-lg text-left py-1 px-4 hover:bg-gray-200'
-      }
+      className={' text-black text-lg text-left py-1 px-4 hover:bg-gray-200'}
       onClick={handleBtnClick}
     >
       {children}

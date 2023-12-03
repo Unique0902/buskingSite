@@ -81,7 +81,7 @@ const SideBar = ({ setIsShowSideBar }: Props) => {
               color={'#60a5fa'}
               className={`mr-4`}
             />
-            <p className='font-sans text-2xl font-semibold '>노래책</p>
+            <p className='text-2xl font-semibold '>노래책</p>
           </div>
         )}
         {isHide && (

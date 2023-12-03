@@ -17,7 +17,7 @@ const InformRow = ({ title, titleColor, handleClick, children }: Props) => {
     >
       <div className='flex flex-row items-center max-lg:flex-col max-lg:items-start'>
         <h2
-          className={`font-sans  text-2xl font-normal ${
+          className={`text-2xl font-normal ${
             titleColor == 'red' ? 'text-red-500' : 'text-gray-500'
           }  w-36`}
         >
