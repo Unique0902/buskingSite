@@ -19,7 +19,6 @@ export default function AppHome() {
         <NoPlaylistCheckWrapper isExistWrapper={!!nowPlaylist}>
           <h2 className='text-3xl font-normal '>
             현재 플레이리스트는 {nowPlaylist && nowPlaylist.name}입니다.
-            fdfdafafs
           </h2>
         </NoPlaylistCheckWrapper>
       </MainSec>
