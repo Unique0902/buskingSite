@@ -17,6 +17,7 @@ const ThemeBtn: React.FC<Props> = ({}: Props) => {
     const theme = localStorage.getItem(LOCAL_STORAGE_KEY.THEME) || THEME.LIGHT;
     if (theme === THEME.DARK) {
       document.querySelector('html')?.classList.add(THEME.DARK);
+      setIsDarkMode(true);
     }
   }, []);
   const toggleTheme = () => {
