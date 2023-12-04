@@ -15,7 +15,6 @@ import MusicBar from '../../components/MusicBar/MusicBar';
 import RequestSongTable from '../../components/Table/RequestSongTable';
 import { MinusIcn } from '../../assets/icon/icon';
 import { ApplianceData, ApplianceObjects } from '../../store/type/busking';
-//TODO: 플레이리스트 노래없으면 노래못만들게하기
 export default function AppBusking({}) {
   const { playlists } = usePlaylistContext();
   const { userData } = useUserDataContext();

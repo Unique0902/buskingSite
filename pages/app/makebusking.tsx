@@ -10,6 +10,7 @@ import { useBuskingContext } from '../../context/BuskingContext';
 import NoPlaylistCheckWrapper from '../../components/NoPlaylistCheckWrapper';
 import { BuskingInform } from '../../store/type/busking';
 // TODO: select나 input 컴포넌트화로 묶기
+// 플레이리스트 노래없으면 노래못만들게하기 < 해결완 물론 프론트에서만 처리해서 나중에 서버에서도 처리하려면 해도됨
 export default function AppMakeBusking({}) {
   const { buskingData, makeBusking } = useBuskingContext();
   const { playlists } = usePlaylistContext();
@@ -43,6 +44,10 @@ export default function AppMakeBusking({}) {
       return;
     } else if (!buskingInform.name) {
       alert('방이름을 등록해주세요!');
+      return;
+    }
+    if (playlists && !playlists[buskingInform.playlistId].songs) {
+      alert('플레이리스트에 노래가 존재하지않습니다. 노래를 추가해주세요!');
       return;
     }
     makeBusking(buskingInform);
