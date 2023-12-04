@@ -19,7 +19,7 @@ type ContextProps = {
   getTopTracks: (pageNum: number) => Promise<FmTopTracksSearchData>;
 };
 
-const LastFmContext = createContext<ContextProps>(undefined);
+const LastFmContext = createContext<ContextProps>({} as ContextProps);
 
 export function LastFmContextProvider({ lastfm, children }: Props) {
   const searchSongByName = async (title: string, pageNum: number) => {

@@ -15,15 +15,9 @@ type ContextProps = {
   logout: () => void;
 };
 
-const initailValue: ContextProps = {
-  user: undefined,
-  userLoading: true,
-  uid: undefined,
-  login: (providerName: string) => {},
-  logout: () => {},
-};
-
-const AuthContext = createContext<ContextProps>(initailValue);
+// 아래에서 provider에서 초기화해주는게 확실히하면 이런식으로 cheating해도 상관없다.
+// 하지만 코드를 이렇게 쓰게만든다는거에서는 context가 typescript를 쓰기에는 좀 불완전하다 싶네요.
+const AuthContext = createContext<ContextProps>({} as ContextProps);
 
 type Props = {
   authService: AuthService;

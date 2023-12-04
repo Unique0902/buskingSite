@@ -22,12 +22,12 @@ type ContextProps = {
     userId: string,
     onUpdate: (value: UserData | null) => void
   ) => Unsubscribe;
-  getUserData: (userId: string) => Promise<UserData>;
+  getUserData: (userId: string) => Promise<UserData | null>;
   removeUserData: (userId: string) => Promise<void>;
   makeUserData: (userId: string, name: string) => Promise<UserData>;
 };
 
-const UserDataContext = createContext<ContextProps>(undefined);
+const UserDataContext = createContext<ContextProps>({} as ContextProps);
 
 export function UserDataContextProvider({ userRepository, children }: Props) {
   const [userData, setUserData] = useState<UserData | null>(null);

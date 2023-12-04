@@ -9,7 +9,7 @@ type Props = {
   children: ReactNode;
 };
 
-const IpContext = createContext<ContextProps>(undefined);
+const IpContext = createContext<ContextProps>({} as ContextProps);
 
 export function IpContextProvider({ ipService, children }: Props) {
   const getIp = async () => {

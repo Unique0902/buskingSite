@@ -34,18 +34,21 @@ type ContextProps = {
     userId: string,
     onUpdate: (value: PlaylistDataObj) => void
   ) => Unsubscribe;
-  getPlaylists: (userId: string) => Promise<PlaylistDataObj>;
-  getPlaylist: (userId: string, playlistId: string) => Promise<PlaylistData>;
+  getPlaylists: (userId: string) => Promise<PlaylistDataObj | null>;
+  getPlaylist: (
+    userId: string,
+    playlistId: string
+  ) => Promise<PlaylistData | null>;
   removeUserPlaylists: (userId: string) => Promise<void>;
 };
 
-const PlaylistContext = createContext<ContextProps>(undefined);
+const PlaylistContext = createContext<ContextProps>({} as ContextProps);
 
 export function PlaylistContextProvider({
   playlistRepository,
   children,
 }: Props) {
-  const [playlists, setPlaylists] = useState<PlaylistDataObj | null>();
+  const [playlists, setPlaylists] = useState<PlaylistDataObj | null>(null);
   const [nowPlaylist, setNowPlaylist] = useState<PlaylistData | null>(null);
   const { uid } = useAuthContext();
   const { userData } = useUserDataContext();
@@ -93,12 +96,16 @@ export function PlaylistContextProvider({
         title: title,
         artist: artist,
       };
+      if (!uid) throw new Error('no uid!!');
       await playlistRepository.saveSong(uid, nowPlaylist, song);
       alert(`${artist}의 ${title}가 추가되었습니다.`);
     }
   };
 
+  //TODO: 이렇게 Error로 처리하는게 맞는지 생각해보기
   const removeNowPlaylist = async () => {
+    if (!uid) throw new Error('no uid!!');
+    if (!nowPlaylist) throw new Error('no nowPlaylist!!');
     await playlistRepository.removePlaylist(uid, nowPlaylist);
     alert('제거되었습니다.');
   };
@@ -108,9 +115,12 @@ export function PlaylistContextProvider({
       return;
     }
     if (window.confirm('정말 제거하시겠습니까?')) {
+      if (!nowPlaylist) throw new Error('no nowPlaylist!!');
+      if (!nowPlaylist.songs) throw new Error('no nowPlaylist.songs!!');
       const songArr: PlaylistSongData[] = Object.values(nowPlaylist.songs);
       const song = songArr.find((song) => song.id === sid);
       if (song) {
+        if (!uid) throw new Error('no uid!!');
         await playlistRepository.removeSong(uid, nowPlaylist, song);
         window.alert('제거되었습니다.');
       } else {
@@ -125,11 +135,14 @@ export function PlaylistContextProvider({
       id: Date.now().toString(),
       name: PLAYLIST_BASIC_NAME,
     };
+    if (!uid) throw new Error('no uid!!');
     await playlistRepository.makePlaylist(uid, playlist);
     alert('플레이 리스트가 생성되었습니다!');
   };
 
   const updateNowPlaylistName = async (name: string) => {
+    if (!uid) throw new Error('no uid!!');
+    if (!nowPlaylist) throw new Error('no nowPlaylist!!');
     return playlistRepository.updatePlaylistName(uid, nowPlaylist, name);
   };
 
@@ -139,10 +152,12 @@ export function PlaylistContextProvider({
       name,
     };
     setNowPlaylist(playlist);
+    if (!uid) throw new Error('no uid!!');
     return playlistRepository.makePlaylist(uid, playlist);
   };
 
   const changeNowPlaylist = (id: string) => {
+    if (!playlists) throw new Error('no playlists!!');
     if (playlists[id]) {
       setNowPlaylist(playlists[id]);
     }
