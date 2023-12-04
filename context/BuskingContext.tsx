@@ -9,7 +9,6 @@ import {
 import BuskingRepository from '../service/buskingRepository';
 import {
   ApplianceData,
-  ApplicantData,
   BuskingData,
   BuskingInform,
 } from '../store/type/busking';
@@ -25,8 +24,7 @@ type ContextProps = {
     userId: string,
     sid: string,
     ip: string,
-    cnt: number,
-    applicants: ApplicantData[]
+    applianceData: ApplianceData
   ) => Promise<void>;
   applyNewBuskingSong: (
     userId: string,
@@ -87,15 +85,13 @@ export function BuskingContextProvider({ buskingRepository, children }: Props) {
     userId: string,
     sid: string,
     ip: string,
-    cnt: number,
-    applicants: ApplicantData[]
+    applianceData: ApplianceData
   ) => {
     return buskingRepository.applyOldBuskingSong(
       userId,
       sid,
       ip,
-      cnt,
-      applicants
+      applianceData
     );
   };
 

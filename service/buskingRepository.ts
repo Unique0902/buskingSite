@@ -1,11 +1,7 @@
 import { ApplianceData } from './../store/type/busking.d';
 import { database } from './firebase';
 import { onValue, ref, remove, set, get } from 'firebase/database';
-import {
-  ApplicantData,
-  BuskingData,
-  BuskingInform,
-} from '../store/type/busking';
+import { BuskingData, BuskingInform } from '../store/type/busking';
 
 class BuskingRepository {
   syncBuskingData = (
@@ -69,23 +65,20 @@ class BuskingRepository {
     const listRef = ref(database, `buskings/${userId}/appliance/${sid}`);
     return set(listRef, songObj);
   };
-  //TODO:통신한번만하게 나중에 수정
+
   applyOldBuskingSong = async (
     userId: string,
     sid: string,
     ip: string,
-    cnt: number,
-    applicants: ApplicantData[]
+    applianceData: ApplianceData
   ) => {
-    const listRef = ref(database, `buskings/${userId}/appliance/${sid}/cnt`);
-    const newCnt = cnt + 1;
-    await set(listRef, newCnt);
-    const listRef2 = ref(
-      database,
-      `buskings/${userId}/appliance/${sid}/applicants`
-    );
-    const newApplicants = [{ ip }, ...applicants];
-    return set(listRef2, newApplicants);
+    const listRef = ref(database, `buskings/${userId}/appliance/${sid}`);
+    const editedApplianceData = {
+      ...applianceData,
+      cnt: applianceData.cnt + 1,
+      applicants: [{ ip }, ...applianceData.applicants],
+    };
+    return await set(listRef, editedApplianceData);
   };
 }
 

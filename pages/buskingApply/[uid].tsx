@@ -14,7 +14,7 @@ import useSearchBar from '../../hooks/UseSearchBar';
 import { ApplianceData, BuskingData } from '../../store/type/busking';
 import { PlaylistData, PlaylistSongData } from '../../store/type/playlist';
 import ThemeBtn from '../../components/Layout/Footer/ThemeBtn';
-
+//TODO: 닉네임 검색기능 추가하기
 const App = () => {
   const [isUser, setIsUser] = useState<boolean>(false);
   const [buskingData, setBuskingData] = useState<BuskingData | null>(null);
@@ -115,13 +115,7 @@ const App = () => {
           window.alert('이미 투표하셨습니다!');
           return;
         }
-        applyOldBuskingSong(
-          userId,
-          sid,
-          ip,
-          appliedSongData.cnt,
-          appliedSongData.applicants
-        ).finally(() => {
+        applyOldBuskingSong(userId, sid, ip, appliedSongData).finally(() => {
           handleBuskingData(userId);
         });
       } else {
