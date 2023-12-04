@@ -5,7 +5,7 @@ type SearchWord = {
   category: '제목' | '가수';
 };
 const useSearchBar = (
-  data: PlaylistSongObj,
+  data: PlaylistSongObj | null,
   setFilteredDataArr: React.Dispatch<React.SetStateAction<PlaylistSongData[]>>
 ) => {
   const [searchWord, setSearchWord] = useState<SearchWord>({

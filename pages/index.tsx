@@ -7,13 +7,14 @@ import { borderRadius, fontSize, xyPadding } from '../styles/theme';
 import TutorialBlock from '../components/TutorialBlock';
 
 export default function Home() {
-  const tutorialRef = useRef<HTMLDivElement>();
+  const tutorialRef = useRef<HTMLDivElement>(null);
   const scrollToTutorial = () =>
     tutorialRef.current && tutorialRef.current.scrollIntoView();
   const { login, user } = useAuthContext();
   const router = useRouter();
   if (user) {
-    router.push('/app/home');
+    router.replace('/app/home');
+    // location.replace('/app/home');
     return <div>move to app...</div>;
   }
   const handleClickLoginBtn = () => {

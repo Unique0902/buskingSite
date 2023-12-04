@@ -8,6 +8,7 @@ import { getAppLayOut } from '../../layouts/appLayout';
 export default function AppHome() {
   const { userData } = useUserDataContext();
   const { nowPlaylist } = usePlaylistContext();
+
   return (
     <>
       <MainSec>

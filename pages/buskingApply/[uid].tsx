@@ -5,10 +5,9 @@ import { usePlaylistContext } from '../../context/PlaylistContext';
 import { useUserDataContext } from '../../context/UserDataContext';
 import MainSec from '../../components/MainSec';
 import SongSearchBar from '../../components/Search/SongSearchBar';
-import PlaylistMenu from '../../components/PlaylistMenu/PlaylistMenu';
 import { useRouter } from 'next/router';
 import ArrangeMenuBtn from '../../components/ArrangeMenu/ArrangeMenuBtn';
-import { ArrowDownIcn, SendIcn, SmileIcn } from '../../assets/icon/icon';
+import { SendIcn, SmileIcn } from '../../assets/icon/icon';
 import RequestSongTable from '../../components/Table/RequestSongTable';
 import PrimarySongTable from '../../components/Table/PrimarySongTable';
 import useSearchBar from '../../hooks/UseSearchBar';
@@ -27,7 +26,6 @@ const App = () => {
   const [appliance, setAppliance] = useState<ApplianceData[]>([]);
   const [playlists, setPlaylists] = useState<PlaylistDataObj | null>(null);
   const [nowPlaylist, setNowPlaylist] = useState<PlaylistData | null>(null);
-  const [isShowPlaylistMenu, setIsShowPlaylistMenu] = useState<boolean>(false);
   const [ip, setIp] = useState<string>('');
   const router = useRouter();
   const userId = router.query.uid ? router.query.uid.toString() : null;
@@ -38,12 +36,12 @@ const App = () => {
   const { getUserData } = useUserDataContext();
 
   const [searchWord, setSearchWord, search] = useSearchBar(
-    nowPlaylist && nowPlaylist.songs,
+    (nowPlaylist && nowPlaylist.songs) || null,
     setResults
   );
 
   useEffect(() => {
-    if (isUser) {
+    if (isUser && userId) {
       getPlaylists(userId).then((data) => {
         if (!data) return;
         setPlaylists(data);
@@ -75,28 +73,32 @@ const App = () => {
     }
   }, [buskingData]);
 
-  const checkIsUser = useCallback(async () => {
-    const data = await getUserData(userId);
+  //userId를 분리해주자!! 함수의 독립성 키워주기!!
+  const checkIsUser = useCallback(async (uid: string) => {
+    const data = await getUserData(uid);
     setIsUser(!!data);
-  }, [userId]);
+  }, []);
   // 왜 checkIsUser를 dependency에 넣어주어야하지?
   useEffect(() => {
     if (userId) {
-      checkIsUser();
+      checkIsUser(userId);
     }
   }, [userId]);
 
-  const handleBuskingData = useCallback(async () => {
-    const data = await getBuskingData(userId);
-    setBuskingData(data);
-  }, [userId]);
+  const handleBuskingData = useCallback(
+    async (uid: string) => {
+      const data = await getBuskingData(uid);
+      setBuskingData(data);
+    },
+    [userId]
+  );
 
   // 왜 handleBuskingData를 dependency에 넣어주어야하지?
 
   // eslint 업그레이드 한다
   useEffect(() => {
     if (userId && !buskingData && isUser) {
-      handleBuskingData();
+      handleBuskingData(userId);
     }
   }, [userId, isUser, buskingData]);
 
@@ -104,8 +106,9 @@ const App = () => {
     search();
   };
 
-  const handleSongClick1 = (sid) => {
-    if (buskingData.appliance) {
+  //여기서 userID를 분리할수있을까?
+  const handleSongClick1 = (sid: string) => {
+    if (buskingData && buskingData.appliance && userId) {
       const applyArr = Object.values(buskingData.appliance);
       const song = applyArr.find((song) => song.sid == sid);
       if (song) {
@@ -117,7 +120,9 @@ const App = () => {
             ip,
             song.cnt,
             song.applicants
-          ).finally(handleBuskingData);
+          ).finally(() => {
+            handleBuskingData(userId);
+          });
         } else {
           window.alert('이미 투표하셨습니다!');
         }
@@ -127,27 +132,43 @@ const App = () => {
           return;
         }
         const song = results.find((s) => s.id == sid);
-        applyNewBuskingSong(userId, song.title, song.artist, sid, ip).finally(
-          handleBuskingData
-        );
+        if (song) {
+          applyNewBuskingSong(userId, song.title, song.artist, sid, ip).finally(
+            () => {
+              handleBuskingData(userId);
+            }
+          );
+        } else {
+          throw new Error('there is no newBuskingSong!!');
+        }
       }
     } else {
-      if (appliance.length == buskingData.maxNum) {
+      if (buskingData && appliance.length == buskingData.maxNum) {
         alert('신청 최대수에 도달했습니다! 한 곡이 끝난후 신청해보세요!');
         return;
       }
       const song = results.find((s) => s.id == sid);
-      applyNewBuskingSong(userId, song.title, song.artist, sid, ip).finally(
-        handleBuskingData
-      );
+      if (song && userId) {
+        applyNewBuskingSong(userId, song.title, song.artist, sid, ip).finally(
+          () => {
+            handleBuskingData(userId);
+          }
+        );
+      } else {
+        throw new Error('there is no newBuskingSong!!');
+      }
     }
   };
 
-  const handleSongClick2 = (sid) => {
-    if (buskingData.appliance) {
+  const handleSongClick2 = (sid: string) => {
+    if (buskingData && userId && buskingData.appliance) {
       const applyArr = Object.values(buskingData.appliance);
       const song = applyArr.find((song) => song.sid == sid);
       if (song) {
+        if (appliance.length == buskingData.maxNum) {
+          alert('신청 최대수에 도달했습니다! 한 곡이 끝난후 신청해보세요!');
+          return;
+        }
         const userIp = song.applicants.find((ap) => ap.ip == ip);
         if (!userIp) {
           applyOldBuskingSong(
@@ -156,40 +177,42 @@ const App = () => {
             ip,
             song.cnt,
             song.applicants
-          ).finally(handleBuskingData);
+          ).finally(() => {
+            handleBuskingData(userId);
+          });
         } else {
           window.alert('이미 투표하셨습니다!');
         }
       } else {
-        if (appliance.length == buskingData.maxNum) {
-          alert('신청 최대수에 도달했습니다! 한 곡이 끝난후 신청해보세요!');
-          return;
-        }
-        applyNewBuskingSong(userId, song.title, song.artist, sid, ip).finally(
-          handleBuskingData
-        );
+        throw new Error('there is no newBuskingSong!!');
       }
     } else {
-      if (appliance.length == buskingData.maxNum) {
+      if (buskingData && appliance.length == buskingData.maxNum) {
         alert('신청 최대수에 도달했습니다! 한 곡이 끝난후 신청해보세요!');
         return;
       }
       const song = results.find((s) => s.id == sid);
-      applyNewBuskingSong(userId, song.title, song.artist, sid, ip).finally(
-        handleBuskingData
-      );
-    }
-  };
-  const changeNowPlaylist = (id) => {
-    if (playlists[id]) {
-      setNowPlaylist(playlists[id]);
-      if (playlists[id].songs) {
-        setResults(Object.values(playlists[id].songs));
+      if (userId && song) {
+        applyNewBuskingSong(userId, song.title, song.artist, sid, ip).finally(
+          () => {
+            handleBuskingData(userId);
+          }
+        );
       } else {
-        setResults([]);
+        throw new Error('there is no newBuskingSong!!');
       }
     }
   };
+  // const changeNowPlaylist = (id: string) => {
+  //   if (playlists && playlists[id]) {
+  //     setNowPlaylist(playlists[id]);
+  //     if (playlists[id].songs) {
+  //       setResults(Object.values(playlists[id].songs || {}));
+  //     } else {
+  //       setResults([]);
+  //     }
+  //   }
+  // };
 
   return (
     <section className='relative flex w-full h-screen px-8 py-4 overflow-auto max-md:px-4 bg-gradient-to-b from-blue-500 to-mainBlue'>
