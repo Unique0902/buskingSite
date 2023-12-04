@@ -75,7 +75,6 @@ const SongSearchBar = ({
           <PrimaryBtn
             handleClick={handleClickBtn}
             btnPadding={xyPadding.base}
-            radius={borderRadius.xm}
             isSubmit={true}
           >
             검색

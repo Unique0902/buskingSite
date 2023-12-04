@@ -59,12 +59,13 @@ export function BuskingContextProvider({ buskingRepository, children }: Props) {
   const [isbuskingDataLoading, setIsbuskingDataLoading] =
     useState<boolean>(true);
   useEffect(() => {
-    if (!uid) throw new Error('no uid!!');
-    setIsbuskingDataLoading(true);
-    return buskingRepository.syncBuskingData(uid, (data) => {
-      setBuskingData(data);
-      setIsbuskingDataLoading(false);
-    });
+    if (uid) {
+      setIsbuskingDataLoading(true);
+      return buskingRepository.syncBuskingData(uid, (data) => {
+        setBuskingData(data);
+        setIsbuskingDataLoading(false);
+      });
+    }
   }, [uid, userData]);
 
   //TODO: uid 어디서 받아와야하는지 고민해보기

@@ -21,7 +21,6 @@ const ArrangeMenuBtn = ({ results, setResults, isBusking }: Props) => {
       <PrimaryBtn
         handleClick={handleClick}
         bgColor={color.gray_400}
-        radius={borderRadius.xm}
         btnPadding={xyPadding.base}
       >
         정렬

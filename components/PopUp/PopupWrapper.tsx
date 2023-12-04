@@ -9,10 +9,13 @@ export default function PopupWrapper({
   isLeft,
   children,
 }: Props) {
-  const wrapperRef = useRef<HTMLDivElement>();
+  const wrapperRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    function handleClickOutside(event) {
-      if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        wrapperRef.current &&
+        !wrapperRef.current.contains(event.target as Node)
+      ) {
         handleClickOther();
       }
     }

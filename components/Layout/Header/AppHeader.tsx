@@ -54,7 +54,7 @@ export default function AppHeader({ isShowSideBar, setIsShowSideBar }: Props) {
           >
             {userData && userData.name}
           </button>
-          {isShowLoginMenu && (
+          {isShowLoginMenu && userData && (
             <LoginMenu
               userData={userData}
               setIsShowLoginMenu={setIsShowLoginMenu}

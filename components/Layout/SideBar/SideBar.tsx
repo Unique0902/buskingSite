@@ -25,7 +25,7 @@ type SideBarBtnType =
 const SideBar = ({ setIsShowSideBar }: Props) => {
   const [isHide, setIsHide] = useState<boolean>(false);
   const [selectedBtn, setSelectedBtn] = useState<SideBarBtnType>('home');
-  const wrapperRef = useRef<HTMLDivElement>();
+  const wrapperRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
   const checkSelectedBtn = useCallback(() => {

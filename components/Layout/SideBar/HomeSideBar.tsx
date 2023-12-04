@@ -5,7 +5,7 @@ type Props = {
   setIsShowSideBar: React.Dispatch<React.SetStateAction<boolean>>;
 };
 const HomeSideBar = ({ setIsShowSideBar }: Props) => {
-  const wrapperRef = useRef<HTMLDivElement>();
+  const wrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {

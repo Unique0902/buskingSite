@@ -50,7 +50,7 @@ const ArrangeMenu = ({
     }
     setResults(copiedResults);
   };
-  const handleClickArrangeBtn = (type) => {
+  const handleClickArrangeBtn = (type: ArrangeSongTypes) => {
     arrangeResults(type);
     setIsShowArrangeMenu(false);
   };
