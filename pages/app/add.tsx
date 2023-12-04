@@ -53,6 +53,7 @@ export default function AppAdd() {
     searchBySearchBtn();
   };
 
+  // TODO:이름 좀더 명확하게 변경 필요
   const handleClickBtn = () => {
     if (searchWord.category) {
       onSearchBySearchBtn();
@@ -93,7 +94,7 @@ export default function AppAdd() {
           </SongSearchBar> */}
 
           {/* compound 디자인패턴 이용한 리팩토링!! 좀더 가독성이 좋아진 기분이랄까 커스텀 변경도 쉬워짐!! */}
-          <div className='relative flex flex-row gap-4'>
+          <div className='relative flex flex-row items-center gap-4 mb-6'>
             {/* TODO:compound 디자인 관련해서는 고민해봐야될듯 atomic 디자인을 적용해볼까..?  */}
             <SearchBar>
               <SearchBar.Select

@@ -12,7 +12,7 @@ interface Props {
 const SearchBar = ({ children }: Props) => {
   return (
     <form
-      className='relative flex flex-row items-center justify-center w-full gap-2 mb-6 max-lg:flex-col'
+      className='relative flex flex-row items-center justify-center flex-1 gap-2 max-lg:flex-col'
       onSubmit={(e) => {
         e.preventDefault();
       }}
