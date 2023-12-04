@@ -17,7 +17,7 @@ export default function AppMakeBusking({}) {
   const [buskingInform, setBuskingInform] = useState<BuskingInform>({
     playlistId: playlists ? Object.values(playlists)[0].id : '',
     maxNum: 10,
-    name: `${userData.name}님의 버스킹`,
+    name: `${userData && userData.name}님의 버스킹`,
   });
   const router = useRouter();
 

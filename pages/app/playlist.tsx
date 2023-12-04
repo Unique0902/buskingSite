@@ -26,7 +26,7 @@ export default function AppPlaylist() {
   }, [nowPlaylist]);
 
   const [searchWord, setSearchWord, search] = useSearchBar(
-    nowPlaylist && nowPlaylist.songs,
+    (nowPlaylist && nowPlaylist.songs) || null,
     setSongArr
   );
 

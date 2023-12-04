@@ -14,17 +14,21 @@ export default function AppInform({}) {
   const { buskingData, removeBusking } = useBuskingContext();
   const { uid, logout } = useAuthContext();
 
-  const dayToMakeUser = new Date(userData.date);
+  const dayToMakeUser = userData ? new Date(userData.date) : null;
   const handleClickRemoveUserBtn = async () => {
     if (window.confirm('정말 탈퇴하시겠습니까?')) {
-      await removeUserData(uid);
-      if (playlists) {
-        await removeUserPlaylists(uid);
+      if (uid) {
+        await removeUserData(uid);
+        if (playlists) {
+          await removeUserPlaylists(uid);
+        }
+        if (buskingData) {
+          await removeBusking();
+        }
+        logout();
+      } else {
+        throw new Error('no uid!!');
       }
-      if (buskingData) {
-        await removeBusking();
-      }
-      logout();
     }
   };
   return (
@@ -32,13 +36,17 @@ export default function AppInform({}) {
       <TitleBar text={'내 정보'} />
       <MainSec>
         <RowWithTitle title={'닉네임'}>
-          <p className='text-lg font-normal '>{userData.name}</p>
+          <p className='text-lg font-normal '>
+            {userData ? userData.name : 'no userData!'}
+          </p>
         </RowWithTitle>
         <RowWithTitle title={'가입일자'}>
           <p className='text-lg font-normal '>
-            {`${dayToMakeUser.getFullYear()}년 ${
-              dayToMakeUser.getMonth() + 1
-            }월 ${dayToMakeUser.getDate()}일`}
+            {dayToMakeUser
+              ? `${dayToMakeUser.getFullYear()}년 ${
+                  dayToMakeUser.getMonth() + 1
+                }월 ${dayToMakeUser.getDate()}일`
+              : 'now date data!'}
           </p>
         </RowWithTitle>
         <button onClick={handleClickRemoveUserBtn} className='text-left'>

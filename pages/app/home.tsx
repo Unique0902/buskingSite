@@ -14,7 +14,7 @@ export default function AppHome() {
       <MainSec>
         <div className=''>
           <h1 className='mb-5 text-3xl font-bold'>
-            어서오세요! {userData.name} 님!
+            어서오세요! {userData ? userData.name : '...'} 님!
           </h1>
         </div>
         <NoPlaylistCheckWrapper isExistWrapper={!!nowPlaylist}>

@@ -10,11 +10,20 @@ import AuthService from '../service/auth_service';
 type ContextProps = {
   user: UserInfo | undefined;
   userLoading: boolean;
-  uid: string | null;
+  uid: string | undefined;
   login: (providerName: string) => void;
   logout: () => void;
 };
-const AuthContext = createContext<ContextProps>(undefined);
+
+const initailValue: ContextProps = {
+  user: undefined,
+  userLoading: true,
+  uid: undefined,
+  login: (providerName: string) => {},
+  logout: () => {},
+};
+
+const AuthContext = createContext<ContextProps>(initailValue);
 
 type Props = {
   authService: AuthService;
@@ -39,7 +48,13 @@ export function AuthContextProvider({ authService, children }: Props) {
   }, []);
   return (
     <AuthContext.Provider
-      value={{ user, userLoading, uid: user ? user.uid : null, login, logout }}
+      value={{
+        user,
+        userLoading,
+        uid: user ? user.uid : undefined,
+        login,
+        logout,
+      }}
     >
       {children}
     </AuthContext.Provider>

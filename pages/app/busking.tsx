@@ -31,9 +31,10 @@ export default function AppBusking({}) {
   const [songArrToView, setSongArrToView] = useState<ApplianceData[]>([]);
   const router = useRouter();
 
+  // 객체의 멤버값이 나올수있는 타입은 기존타입과 undefined임!! null이 아님!! 구분하기
   useEffect(() => {
     if (buskingData) {
-      const appliance: ApplianceObjects | null = buskingData.appliance;
+      const appliance: ApplianceObjects | undefined = buskingData.appliance;
       if (appliance) {
         const applianceArr = Object.values(appliance);
         setSongArr(

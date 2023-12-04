@@ -7,7 +7,7 @@ import { borderRadius, fontSize, xyPadding } from '../../styles/theme';
 import { useRouter } from 'next/router';
 
 const MakeUser = () => {
-  const [name, setName] = useState('');
+  const [name, setName] = useState<string>('');
   const { uid } = useAuthContext();
   const { userData, makeUserData } = useUserDataContext();
   const router = useRouter();
@@ -15,11 +15,13 @@ const MakeUser = () => {
     router.push('app/home');
     return <div>move to app..</div>;
   }
-  const handleHandleChangeNameInput = (e) => {
+  const handleHandleChangeNameInput = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setName(e.target.value);
   };
   const handleClickMakeUserBtn = async () => {
-    if (name.length > 1 && name.length < 9) {
+    if (name.length > 1 && name.length < 9 && uid) {
       await makeUserData(uid, name);
     }
   };
