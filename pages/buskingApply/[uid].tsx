@@ -12,19 +12,16 @@ import RequestSongTable from '../../components/Table/RequestSongTable';
 import PrimarySongTable from '../../components/Table/PrimarySongTable';
 import useSearchBar from '../../hooks/UseSearchBar';
 import { ApplianceData, BuskingData } from '../../store/type/busking';
-import {
-  PlaylistData,
-  PlaylistDataObj,
-  PlaylistSongData,
-} from '../../store/type/playlist';
+import { PlaylistData, PlaylistSongData } from '../../store/type/playlist';
 import ThemeBtn from '../../components/Layout/Footer/ThemeBtn';
 
 const App = () => {
   const [isUser, setIsUser] = useState<boolean>(false);
   const [buskingData, setBuskingData] = useState<BuskingData | null>(null);
-  const [results, setResults] = useState<PlaylistSongData[]>([]);
+  const [nowPlaylistSongArr, setNowPlaylistSongArr] = useState<
+    PlaylistSongData[]
+  >([]);
   const [appliance, setAppliance] = useState<ApplianceData[]>([]);
-  const [playlists, setPlaylists] = useState<PlaylistDataObj | null>(null);
   const [nowPlaylist, setNowPlaylist] = useState<PlaylistData | null>(null);
   const [ip, setIp] = useState<string>('');
   const router = useRouter();
@@ -37,21 +34,21 @@ const App = () => {
 
   const [searchWord, setSearchWord, search] = useSearchBar(
     (nowPlaylist && nowPlaylist.songs) || null,
-    setResults
+    setNowPlaylistSongArr
   );
 
   useEffect(() => {
     if (isUser && userId) {
       getPlaylists(userId).then((data) => {
         if (!data) return;
-        setPlaylists(data);
         const listArr = Object.values(data);
         if (listArr.length > 0) {
           setNowPlaylist(listArr[0]);
-          // nowPlaylist.songs && setResults(Object.values(nowPlaylist.songs));
+          // nowPlaylist.songs && setNowPlaylistSongArr(Object.values(nowPlaylist.songs));
           // setState함수는 비동기적으로 동작하므로 위 코드에 nowPlaylist가 잘들어갔는지 보장할 수 없다!
           //따라서 아래처럼 코드를 바꾸었다.
-          listArr[0].songs && setResults(Object.values(listArr[0].songs));
+          listArr[0].songs &&
+            setNowPlaylistSongArr(Object.values(listArr[0].songs));
         }
       });
     }
@@ -78,7 +75,7 @@ const App = () => {
     const data = await getUserData(uid);
     setIsUser(!!data);
   }, []);
-  // 왜 checkIsUser를 dependency에 넣어주어야하지?
+  // 왜 checkIsUser를 dependency에 넣어주어야하지? <<해결됨
   useEffect(() => {
     if (userId) {
       checkIsUser(userId);
@@ -93,9 +90,9 @@ const App = () => {
     [userId]
   );
 
-  // 왜 handleBuskingData를 dependency에 넣어주어야하지?
+  // 왜 handleBuskingData를 dependency에 넣어주어야하지?<<해결됨
 
-  // eslint 업그레이드 한다
+  // eslint 업그레이드 한다<<해결됨
   useEffect(() => {
     if (userId && !buskingData && isUser) {
       handleBuskingData(userId);
@@ -106,113 +103,51 @@ const App = () => {
     search();
   };
 
-  //여기서 userID를 분리할수있을까?
-  const handleSongClick1 = (sid: string) => {
-    if (buskingData && buskingData.appliance && userId) {
-      const applyArr = Object.values(buskingData.appliance);
-      const song = applyArr.find((song) => song.sid == sid);
-      if (song) {
-        const userIp = song.applicants.find((ap) => ap.ip == ip);
-        if (!userIp) {
-          applyOldBuskingSong(
+  //TODO:여기서 userID를 분리할수있을까?
+  const handleApplySong = (sid: string) => {
+    if (buskingData && userId) {
+      const appliedSongData = appliance.find((song) => song.sid === sid);
+      if (appliedSongData) {
+        const isUserApplied = !!appliedSongData.applicants.find(
+          (ap) => ap.ip === ip
+        );
+        if (isUserApplied) {
+          window.alert('이미 투표하셨습니다!');
+          return;
+        }
+        applyOldBuskingSong(
+          userId,
+          sid,
+          ip,
+          appliedSongData.cnt,
+          appliedSongData.applicants
+        ).finally(() => {
+          handleBuskingData(userId);
+        });
+      } else {
+        if (appliance.length === buskingData.maxNum) {
+          alert('신청 최대수에 도달했습니다! 한 곡이 끝난후 신청해보세요!');
+          return;
+        }
+        const songToApply = nowPlaylistSongArr.find((s) => s.id === sid);
+        if (songToApply) {
+          applyNewBuskingSong(
             userId,
+            songToApply.title,
+            songToApply.artist,
             sid,
-            ip,
-            song.cnt,
-            song.applicants
+            ip
           ).finally(() => {
             handleBuskingData(userId);
           });
         } else {
-          window.alert('이미 투표하셨습니다!');
-        }
-      } else {
-        if (appliance.length == buskingData.maxNum) {
-          alert('신청 최대수에 도달했습니다! 한 곡이 끝난후 신청해보세요!');
-          return;
-        }
-        const song = results.find((s) => s.id == sid);
-        if (song) {
-          applyNewBuskingSong(userId, song.title, song.artist, sid, ip).finally(
-            () => {
-              handleBuskingData(userId);
-            }
+          throw new Error(
+            'there is no song that you apply in nowPlaylistSongArr!!'
           );
-        } else {
-          throw new Error('there is no newBuskingSong!!');
         }
-      }
-    } else {
-      if (buskingData && appliance.length == buskingData.maxNum) {
-        alert('신청 최대수에 도달했습니다! 한 곡이 끝난후 신청해보세요!');
-        return;
-      }
-      const song = results.find((s) => s.id == sid);
-      if (song && userId) {
-        applyNewBuskingSong(userId, song.title, song.artist, sid, ip).finally(
-          () => {
-            handleBuskingData(userId);
-          }
-        );
-      } else {
-        throw new Error('there is no newBuskingSong!!');
       }
     }
   };
-
-  const handleSongClick2 = (sid: string) => {
-    if (buskingData && userId && buskingData.appliance) {
-      const applyArr = Object.values(buskingData.appliance);
-      const song = applyArr.find((song) => song.sid == sid);
-      if (song) {
-        if (appliance.length == buskingData.maxNum) {
-          alert('신청 최대수에 도달했습니다! 한 곡이 끝난후 신청해보세요!');
-          return;
-        }
-        const userIp = song.applicants.find((ap) => ap.ip == ip);
-        if (!userIp) {
-          applyOldBuskingSong(
-            userId,
-            sid,
-            ip,
-            song.cnt,
-            song.applicants
-          ).finally(() => {
-            handleBuskingData(userId);
-          });
-        } else {
-          window.alert('이미 투표하셨습니다!');
-        }
-      } else {
-        throw new Error('there is no newBuskingSong!!');
-      }
-    } else {
-      if (buskingData && appliance.length == buskingData.maxNum) {
-        alert('신청 최대수에 도달했습니다! 한 곡이 끝난후 신청해보세요!');
-        return;
-      }
-      const song = results.find((s) => s.id == sid);
-      if (userId && song) {
-        applyNewBuskingSong(userId, song.title, song.artist, sid, ip).finally(
-          () => {
-            handleBuskingData(userId);
-          }
-        );
-      } else {
-        throw new Error('there is no newBuskingSong!!');
-      }
-    }
-  };
-  // const changeNowPlaylist = (id: string) => {
-  //   if (playlists && playlists[id]) {
-  //     setNowPlaylist(playlists[id]);
-  //     if (playlists[id].songs) {
-  //       setResults(Object.values(playlists[id].songs || {}));
-  //     } else {
-  //       setResults([]);
-  //     }
-  //   }
-  // };
 
   return (
     <section className='relative flex w-full h-screen px-8 py-4 overflow-auto max-md:px-4 bg-gradient-to-b from-blue-500 to-mainBlue'>
@@ -245,7 +180,7 @@ const App = () => {
                 </h2>
                 <div className='flex flex-row justify-end mb-3 max-lg:justify-center'>
                   <h3 className='text-xl font-normal '>
-                    신청가능 곡 수 {results.length}
+                    신청가능 곡 수 {nowPlaylistSongArr.length}
                   </h3>
                 </div>
                 <SongSearchBar
@@ -254,15 +189,15 @@ const App = () => {
                   onSearch={handleSearchBarChange}
                 >
                   <ArrangeMenuBtn
-                    results={results}
-                    setResults={setResults}
+                    results={nowPlaylistSongArr}
+                    setResults={setNowPlaylistSongArr}
                     isBusking={false}
                   />
                 </SongSearchBar>
 
                 <PrimarySongTable
-                  results={results}
-                  handleClickResult={handleSongClick1}
+                  results={nowPlaylistSongArr}
+                  handleClickResult={handleApplySong}
                 >
                   <SendIcn width={24} height={24} color={'white'} />
                 </PrimarySongTable>
@@ -280,7 +215,7 @@ const App = () => {
 
                 <RequestSongTable
                   results={appliance}
-                  handleClickResult={handleSongClick2}
+                  handleClickResult={handleApplySong}
                 >
                   <SendIcn width={24} height={24} color={'white'} />
                 </RequestSongTable>
@@ -292,27 +227,6 @@ const App = () => {
                 <h2 className='text-xl font-semibold w-96 max-lg:w-full'>
                   해당 유저는 버스킹 진행중이 아닙니다.
                 </h2>
-                {/* <div className='relative flex flex-row items-center justify-end mr-4 grow'>
-                  {isShowPlaylistMenu && (
-                    <PlaylistMenu
-                      setIsShowPlaylistMenu={setIsShowPlaylistMenu}
-                    />
-                  )}
-                  <button
-                    className='text-xl text-white hover:scale-110'
-                    onClick={() => {
-                      setIsShowPlaylistMenu(true);
-                    }}
-                  >
-                    {nowPlaylist ? nowPlaylist.name : 'No Playlist..'}
-                    <ArrowDownIcn
-                      width={16}
-                      height={16}
-                      color={'white'}
-                      className='ml-2'
-                    />
-                  </button>
-                </div> */}
               </MainSec>
 
               {!nowPlaylist && (
@@ -330,7 +244,7 @@ const App = () => {
                   </h2>
                   <div className='flex flex-row justify-end mb-3'>
                     <h3 className='text-xl font-normal '>
-                      곡 수 {results.length}
+                      곡 수 {nowPlaylistSongArr.length}
                     </h3>
                   </div>
                   <SongSearchBar
@@ -339,14 +253,14 @@ const App = () => {
                     onSearch={handleSearchBarChange}
                   >
                     <ArrangeMenuBtn
-                      results={results}
-                      setResults={setResults}
+                      results={nowPlaylistSongArr}
+                      setResults={setNowPlaylistSongArr}
                       isBusking={false}
                     />
                   </SongSearchBar>
 
                   <PrimarySongTable
-                    results={results}
+                    results={nowPlaylistSongArr}
                     handleClickResult={(sid: string) => {}}
                   >
                     <SmileIcn width={24} height={24} color={'white'} />

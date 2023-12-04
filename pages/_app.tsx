@@ -4,7 +4,8 @@ import ServiceContextProviders from '../context/ServiceContextProviders';
 import { ReactElement, ReactNode } from 'react';
 import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
-
+//TODO: 가끔 지혼자 새로고침되는거 고치기
+//TODO: TODO 이용하여 custom Modal 만들거나 라이브러리 모달 가져와 쓰기
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
 };
