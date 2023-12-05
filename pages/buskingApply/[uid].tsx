@@ -35,48 +35,9 @@ const App = () => {
     useBuskingContext();
   const { getPlaylists } = usePlaylistContext();
   const { getUserData } = useUserDataContext();
-  const [nowPlaylistPageNum, setNowPlaylistPageNum] = useState<number>(1);
-  const [nowAppliancePageNum, setNowAppliancePageNum] = useState<number>(1);
 
   const [playlistSearchProps] = useSearch(nowPlaylistSongArr);
   const [applianceSearchProps] = useSearch(appliance);
-
-  useEffect(() => {
-    setNowPlaylistPageNum(1);
-  }, [nowPlaylistSongArr]);
-  useEffect(() => {
-    setNowAppliancePageNum(1);
-  }, [appliance]);
-
-  const handlePlaylistPlusPageNum = () => {
-    if (nowPlaylistPageNum < nowPlaylistSongArr.length / 6) {
-      playlistSearchProps.searchByPageChange(nowPlaylistPageNum + 1);
-      setNowPlaylistPageNum(nowPlaylistPageNum + 1);
-    }
-  };
-  const handlePlaylistMinusPageNum = () => {
-    if (nowPlaylistPageNum !== 1) {
-      playlistSearchProps.searchByPageChange(nowPlaylistPageNum - 1);
-      setNowPlaylistPageNum(nowPlaylistPageNum - 1);
-    }
-  };
-  const handlePlaylistSearchBySearchWord = () => {
-    setNowPlaylistPageNum(1);
-    playlistSearchProps.searchBySearchWord();
-  };
-
-  const handleAppliancePlusPageNum = () => {
-    if (nowAppliancePageNum < appliance.length / 6) {
-      applianceSearchProps.searchByPageChange(nowAppliancePageNum + 1);
-      setNowAppliancePageNum(nowAppliancePageNum + 1);
-    }
-  };
-  const handleApplianceMinusPageNum = () => {
-    if (nowAppliancePageNum !== 1) {
-      applianceSearchProps.searchByPageChange(nowAppliancePageNum - 1);
-      setNowAppliancePageNum(nowAppliancePageNum - 1);
-    }
-  };
 
   useEffect(() => {
     if (isUser && userId) {
@@ -180,25 +141,6 @@ const App = () => {
     }
   };
 
-  // TODO:이름 좀더 명확하게 변경 필요2
-  const handleClickBtn = () => {
-    if (playlistSearchProps.searchWord.category) {
-      handlePlaylistSearchBySearchWord();
-    }
-  };
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    playlistSearchProps.setSearchWord({
-      ...playlistSearchProps.searchWord,
-      name: e.target.value,
-    });
-  };
-  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    playlistSearchProps.setSearchWord({
-      ...playlistSearchProps.searchWord,
-      category: e.target.value as '제목' | '가수',
-    });
-  };
-
   return (
     <section className='relative flex w-full h-screen px-8 py-4 overflow-auto max-md:px-4 bg-gradient-to-b from-blue-500 to-mainBlue'>
       <section className='w-full'>
@@ -237,18 +179,20 @@ const App = () => {
                   <SearchBar.MainSec>
                     <SearchBar.MainSec.Select
                       searchWord={playlistSearchProps.searchWord}
-                      handleSelectChange={handleSelectChange}
+                      handleSelectChange={
+                        playlistSearchProps.handleSelectChange
+                      }
                     >
                       <SearchBar.MainSec.Option value='제목' />
                       <SearchBar.MainSec.Option value='가수' />
                     </SearchBar.MainSec.Select>
                     <SearchBar.MainSec.Input
                       inputValue={playlistSearchProps.searchWord.name}
-                      handleClickBtn={handleClickBtn}
-                      handleInputChange={handleInputChange}
+                      handleClickBtn={playlistSearchProps.handleSearchBtnClick}
+                      handleInputChange={playlistSearchProps.handleInputChange}
                     />
                     <SearchBar.MainSec.Button
-                      handleClickBtn={handleClickBtn}
+                      handleClickBtn={playlistSearchProps.handleSearchBtnClick}
                       text='검색'
                     />
                   </SearchBar.MainSec>
@@ -266,10 +210,10 @@ const App = () => {
                 <LoadingCheckWrapper isLoading={playlistSearchProps.isLoading}>
                   <SongTable
                     viewdSongArr={playlistSearchProps.viewedDataArr}
-                    nowPageNum={nowPlaylistPageNum}
+                    nowPageNum={playlistSearchProps.nowPageNum}
                     resultNum={nowPlaylistSongArr.length}
-                    onPagePlus={handlePlaylistPlusPageNum}
-                    onPageMinus={handlePlaylistMinusPageNum}
+                    onPagePlus={playlistSearchProps.handlePlus}
+                    onPageMinus={playlistSearchProps.handleMinus}
                     renderSongResult={(key, index, result) => (
                       <PrimarySongResult
                         key={key}
@@ -297,10 +241,10 @@ const App = () => {
                 <LoadingCheckWrapper isLoading={applianceSearchProps.isLoading}>
                   <SongTable
                     viewdSongArr={applianceSearchProps.viewedDataArr}
-                    nowPageNum={nowAppliancePageNum}
+                    nowPageNum={applianceSearchProps.nowPageNum}
                     resultNum={appliance.length}
-                    onPagePlus={handleAppliancePlusPageNum}
-                    onPageMinus={handleApplianceMinusPageNum}
+                    onPagePlus={applianceSearchProps.handlePlus}
+                    onPageMinus={applianceSearchProps.handleMinus}
                     renderSongResult={(key, index, result) => (
                       <RequestSongResult
                         key={key}
@@ -346,18 +290,26 @@ const App = () => {
                     <SearchBar.MainSec>
                       <SearchBar.MainSec.Select
                         searchWord={playlistSearchProps.searchWord}
-                        handleSelectChange={handleSelectChange}
+                        handleSelectChange={
+                          playlistSearchProps.handleSelectChange
+                        }
                       >
                         <SearchBar.MainSec.Option value='제목' />
                         <SearchBar.MainSec.Option value='가수' />
                       </SearchBar.MainSec.Select>
                       <SearchBar.MainSec.Input
                         inputValue={playlistSearchProps.searchWord.name}
-                        handleClickBtn={handleClickBtn}
-                        handleInputChange={handleInputChange}
+                        handleClickBtn={
+                          playlistSearchProps.handleSearchBtnClick
+                        }
+                        handleInputChange={
+                          playlistSearchProps.handleInputChange
+                        }
                       />
                       <SearchBar.MainSec.Button
-                        handleClickBtn={handleClickBtn}
+                        handleClickBtn={
+                          playlistSearchProps.handleSearchBtnClick
+                        }
                         text='검색'
                       />
                     </SearchBar.MainSec>
@@ -377,10 +329,10 @@ const App = () => {
                   >
                     <SongTable
                       viewdSongArr={playlistSearchProps.viewedDataArr}
-                      nowPageNum={nowPlaylistPageNum}
+                      nowPageNum={playlistSearchProps.nowPageNum}
                       resultNum={nowPlaylistSongArr.length}
-                      onPagePlus={handlePlaylistPlusPageNum}
-                      onPageMinus={handlePlaylistMinusPageNum}
+                      onPagePlus={playlistSearchProps.handlePlus}
+                      onPageMinus={playlistSearchProps.handleMinus}
                       renderSongResult={(key, index, result) => (
                         <PrimarySongResult
                           key={key}

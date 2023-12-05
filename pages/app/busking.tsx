@@ -33,7 +33,6 @@ export default function AppBusking({}) {
   const [songArr, setSongArr] = useState<ApplianceData[]>([]);
   const [songArrToView, setSongArrToView] = useState<ApplianceData[]>([]);
   const router = useRouter();
-  const [nowPageNum, setNowPageNum] = useState<number>(1);
 
   // 객체의 멤버값이 나올수있는 타입은 기존타입과 undefined임!! null이 아님!! 구분하기
   useEffect(() => {
@@ -67,25 +66,8 @@ export default function AppBusking({}) {
   };
 
   //이러면 안쓰는 것들이 애매해지네 useAppliance로 따로 만들어야하나 오 객체로 묶으니까 낫네
-  const [{ isLoading, viewedDataArr, searchByPageChange }] =
+  const [{ isLoading, viewedDataArr, nowPageNum, handlePlus, handleMinus }] =
     useSearch(songArrToView);
-
-  useEffect(() => {
-    setNowPageNum(1);
-  }, [songArrToView]);
-
-  const handlePlus = () => {
-    if (nowPageNum < songArr.length / 6) {
-      searchByPageChange(nowPageNum + 1);
-      setNowPageNum(nowPageNum + 1);
-    }
-  };
-  const handleMinus = () => {
-    if (nowPageNum !== 1) {
-      searchByPageChange(nowPageNum - 1);
-      setNowPageNum(nowPageNum - 1);
-    }
-  };
 
   if (isbuskingDataLoading) {
     return <div>checking buskingData...</div>;

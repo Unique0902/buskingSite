@@ -1,18 +1,21 @@
 import { useEffect, useState } from 'react';
+import { ApplianceData } from '../store/type/busking';
 import { PlaylistSongData } from '../store/type/playlist';
 type SearchWord = {
   name: string;
   category: '제목' | '가수';
 };
-const useSearch = (pureDataArr: PlaylistSongData[]) => {
+const useSearch = (pureDataArr: PlaylistSongData[] | ApplianceData[]) => {
   const [searchWord, setSearchWord] = useState<SearchWord>({
     name: '',
     category: '제목',
   });
-  const [searchedDataArr, setSearchedDataArr] = useState<PlaylistSongData[]>(
-    []
-  );
-  const [viewedDataArr, setViewedDataArr] = useState<PlaylistSongData[]>([]);
+  const [searchedDataArr, setSearchedDataArr] = useState<
+    PlaylistSongData[] | ApplianceData[]
+  >([]);
+  const [viewedDataArr, setViewedDataArr] = useState<
+    PlaylistSongData[] | ApplianceData[]
+  >([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -70,14 +73,55 @@ const useSearch = (pureDataArr: PlaylistSongData[]) => {
     setIsLoading(false);
   };
 
+  const [nowPageNum, setNowPageNum] = useState<number>(1);
+  useEffect(() => {
+    setNowPageNum(1);
+  }, [pureDataArr]);
+
+  const handlePlus = () => {
+    if (nowPageNum < pureDataArr.length / 6) {
+      searchByPageChange(nowPageNum + 1);
+      setNowPageNum(nowPageNum + 1);
+    }
+  };
+  const handleMinus = () => {
+    if (nowPageNum !== 1) {
+      searchByPageChange(nowPageNum - 1);
+      setNowPageNum(nowPageNum - 1);
+    }
+  };
+
+  const handleSearchBySearchWord = () => {
+    setNowPageNum(1);
+    searchBySearchWord();
+  };
+
+  const handleSearchBtnClick = () => {
+    if (searchWord.category) {
+      handleSearchBySearchWord();
+    }
+  };
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchWord({ ...searchWord, name: e.target.value });
+  };
+  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSearchWord({
+      ...searchWord,
+      category: e.target.value as '제목' | '가수',
+    });
+  };
+
   return [
     {
       searchWord,
-      setSearchWord,
-      searchBySearchWord,
       isLoading,
       viewedDataArr,
-      searchByPageChange,
+      nowPageNum,
+      handlePlus,
+      handleMinus,
+      handleSearchBtnClick,
+      handleInputChange,
+      handleSelectChange,
     },
   ] as const;
 };

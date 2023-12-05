@@ -18,7 +18,6 @@ import SongTable from '../../components/Table/SongTable';
 
 export default function AppPlaylist() {
   const [songArr, setSongArr] = useState<PlaylistSongData[]>([]);
-  const [nowPageNum, setNowPageNum] = useState<number>(1);
   const { nowPlaylist, removeSongInPlaylist } = usePlaylistContext();
   useEffect(() => {
     if (nowPlaylist) {
@@ -39,53 +38,19 @@ export default function AppPlaylist() {
   const [
     {
       searchWord,
-      setSearchWord,
-      searchBySearchWord,
       isLoading,
       viewedDataArr,
-      searchByPageChange,
+      nowPageNum,
+      handlePlus,
+      handleMinus,
+      handleSearchBtnClick,
+      handleInputChange,
+      handleSelectChange,
     },
   ] = useSearch(songArr);
 
-  useEffect(() => {
-    setNowPageNum(1);
-  }, [songArr]);
-
   const handleClickResult = (sid: string) => {
     removeSongInPlaylist(sid);
-  };
-
-  const handlePlus = () => {
-    if (nowPageNum < songArr.length / 6) {
-      searchByPageChange(nowPageNum + 1);
-      setNowPageNum(nowPageNum + 1);
-    }
-  };
-  const handleMinus = () => {
-    if (nowPageNum !== 1) {
-      searchByPageChange(nowPageNum - 1);
-      setNowPageNum(nowPageNum - 1);
-    }
-  };
-  const handleSearchBySearchWord = () => {
-    setNowPageNum(1);
-    searchBySearchWord();
-  };
-
-  // TODO:이름 좀더 명확하게 변경 필요2
-  const handleClickBtn = () => {
-    if (searchWord.category) {
-      handleSearchBySearchWord();
-    }
-  };
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchWord({ ...searchWord, name: e.target.value });
-  };
-  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSearchWord({
-      ...searchWord,
-      category: e.target.value as '제목' | '가수',
-    });
   };
 
   return (
@@ -105,11 +70,11 @@ export default function AppPlaylist() {
                 </SearchBar.MainSec.Select>
                 <SearchBar.MainSec.Input
                   inputValue={searchWord.name}
-                  handleClickBtn={handleClickBtn}
+                  handleClickBtn={handleSearchBtnClick}
                   handleInputChange={handleInputChange}
                 />
                 <SearchBar.MainSec.Button
-                  handleClickBtn={handleClickBtn}
+                  handleClickBtn={handleSearchBtnClick}
                   text='검색'
                 />
               </SearchBar.MainSec>

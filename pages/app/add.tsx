@@ -34,6 +34,9 @@ export default function AppAdd() {
   ] = useAddSearch(setSearchResults, setResultNum);
 
   useEffect(() => {
+    setNowPageNum(1);
+  }, [searchResults]);
+  useEffect(() => {
     if (searchResults) {
       if (searchResults.length > 6) {
         setSearchResults(searchResults.slice(-6));
@@ -52,7 +55,7 @@ export default function AppAdd() {
       setNowPageNum(nowPageNum - 1);
     }
   };
-  const onSearchBySearchBtn = () => {
+  const handleSearchBySearchBtn = () => {
     setNowPageNum(1);
     searchBySearchBtn();
   };
@@ -60,7 +63,7 @@ export default function AppAdd() {
   // TODO:이름 좀더 명확하게 변경 필요
   const handleClickBtn = () => {
     if (searchWord.category) {
-      onSearchBySearchBtn();
+      handleSearchBySearchBtn();
     }
   };
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
