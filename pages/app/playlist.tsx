@@ -11,6 +11,7 @@ import NoPlaylistCheckWrapper from '../../components/NoPlaylistCheckWrapper';
 import useSearchBar from '../../hooks/UseSearchBar';
 import { PlaylistSongData } from '../../store/type/playlist';
 import SearchBar from '../../components/Search/SearchBar';
+import PrimarySongResult from '../../components/Table/PrimarySongResult';
 
 export default function AppPlaylist() {
   const [songArr, setSongArr] = useState<PlaylistSongData[]>([]);
@@ -25,6 +26,8 @@ export default function AppPlaylist() {
     }
   }, [nowPlaylist]);
 
+  //TODO: searchword가 searchBar의 여러 컴포넌트에 전해지는게 맘에 안듬, searchWord state도 searchBar에서 관리하게하고싶음
+  //바깥 컴포넌트에서 말고 useAddSearch의 로직이 워낙 복잡하다 보니.. 쉽지않네
   const [searchWord, setSearchWord, search] = useSearchBar(
     (nowPlaylist && nowPlaylist.songs) || null,
     setSongArr
@@ -55,18 +58,6 @@ export default function AppPlaylist() {
       <TitleBar text={'플레이리스트 관리'} />
       <NoPlaylistCheckWrapper isExistWrapper={!!nowPlaylist}>
         <MainSec>
-          {/* <SongSearchBar
-            searchWord={searchWord}
-            setSearchWord={setSearchWord}
-            onSearch={search}
-          >
-            <ArrangeMenuBtn
-              results={songArr}
-              setResults={setSongArr}
-              isBusking={false}
-            />
-          </SongSearchBar> */}
-
           <div className='relative flex flex-row items-center gap-4 mb-6 max-lg:flex-col'>
             <SearchBar>
               <SearchBar.MainSec>
@@ -97,11 +88,6 @@ export default function AppPlaylist() {
                 )}
               ></SearchBar.SubSec>
             </SearchBar>
-            {/* <ArrangeMenuBtn
-              results={songArr}
-              setResults={setSongArr}
-              isBusking={false}
-            /> */}
           </div>
 
           <h2 className='mb-2 text-xl font-semibold '>
@@ -110,10 +96,17 @@ export default function AppPlaylist() {
 
           <PrimarySongTable
             results={songArr}
-            handleClickResult={handleClickResult}
-          >
-            <MinusIcn width={24} height={24} color={'red'} />
-          </PrimarySongTable>
+            renderSongResult={(key, index, result) => (
+              <PrimarySongResult
+                key={key}
+                index={index}
+                result={result}
+                handleSongClick={handleClickResult}
+              >
+                <MinusIcn width={24} height={24} color={'red'} />
+              </PrimarySongResult>
+            )}
+          ></PrimarySongTable>
         </MainSec>
       </NoPlaylistCheckWrapper>
     </>

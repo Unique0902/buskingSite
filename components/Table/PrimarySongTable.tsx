@@ -1,18 +1,17 @@
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { ApplianceData } from '../../store/type/busking';
 import { PlaylistSongData } from '../../store/type/playlist';
 import PagingBar from './PagingBar';
-import PrimarySongResult from './PrimarySongResult';
 type Props = {
-  results: PlaylistSongData[];
-  handleClickResult: (sid: string) => void;
-  children: ReactNode;
+  results: PlaylistSongData[] | ApplianceData[];
+  renderSongResult: (
+    key: number,
+    index: number,
+    result: PlaylistSongData | ApplianceData
+  ) => React.JSX.Element;
 };
-export default function PrimarySongTable({
-  results,
-  handleClickResult,
-  children,
-}: Props) {
-  const [nowPageNum, setNowPageNum] = useState(1);
+export default function PrimarySongTable({ results, renderSongResult }: Props) {
+  const [nowPageNum, setNowPageNum] = useState<number>(1);
   const handelPlusPage = () => {
     if (nowPageNum < results.length / 6) {
       setNowPageNum((num) => num + 1);
@@ -32,18 +31,16 @@ export default function PrimarySongTable({
   return (
     <section className='w-full'>
       <ul className='p-1 bg-gray-800 rounded-xl'>
-        {results && results.length !== 0 && (
+        {resultsToView && resultsToView.length !== 0 && (
           <>
-            {resultsToView.map((result) => (
-              <PrimarySongResult
-                key={resultsToView.indexOf(result)}
-                index={resultsToView.indexOf(result) + 1 + (nowPageNum - 1) * 6}
-                result={result}
-                handleSongClick={handleClickResult}
-              >
-                {children}
-              </PrimarySongResult>
-            ))}
+            {resultsToView.map(
+              (result: PlaylistSongData | ApplianceData, index: number) =>
+                renderSongResult(
+                  index,
+                  index + 1 + (nowPageNum - 1) * 6,
+                  result
+                )
+            )}
             <PagingBar
               resultNum={results.length}
               pageNum={nowPageNum}

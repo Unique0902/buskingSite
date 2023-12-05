@@ -12,9 +12,10 @@ import PrimaryBtn from '../../components/Btn/PrimaryBtn';
 import { color } from '../../styles/theme';
 import SectionCopyText from '../../components/SectionCopyText';
 import MusicBar from '../../components/MusicBar/MusicBar';
-import RequestSongTable from '../../components/Table/RequestSongTable';
 import { MinusIcn } from '../../assets/icon/icon';
 import { ApplianceData, ApplianceObjects } from '../../store/type/busking';
+import RequestSongResult from '../../components/Table/RequestSongResult';
+import PrimarySongTable from '../../components/Table/PrimarySongTable';
 export default function AppBusking({}) {
   const { playlists } = usePlaylistContext();
   const { userData } = useUserDataContext();
@@ -112,12 +113,26 @@ export default function AppBusking({}) {
           />
         </div>
 
-        <RequestSongTable
+        {/* <RequestSongTable
           results={songArrToView}
           handleClickResult={handleRemoveRequestSong}
         >
           <MinusIcn width={24} height={24} color={'red'} />
-        </RequestSongTable>
+        </RequestSongTable> */}
+
+        <PrimarySongTable
+          results={songArrToView}
+          renderSongResult={(key, index, result) => (
+            <RequestSongResult
+              key={key}
+              index={index}
+              result={result as ApplianceData}
+              handleSongClick={handleRemoveRequestSong}
+            >
+              <MinusIcn width={24} height={24} color={'red'} />
+            </RequestSongResult>
+          )}
+        ></PrimarySongTable>
 
         <section className='flex flex-row justify-end pt-4'>
           <PrimaryBtn

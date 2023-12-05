@@ -7,13 +7,14 @@ import MainSec from '../../components/MainSec';
 import { useRouter } from 'next/router';
 import ArrangeMenuBtn from '../../components/ArrangeMenu/ArrangeMenuBtn';
 import { SendIcn, SmileIcn } from '../../assets/icon/icon';
-import RequestSongTable from '../../components/Table/RequestSongTable';
 import PrimarySongTable from '../../components/Table/PrimarySongTable';
 import useSearchBar from '../../hooks/UseSearchBar';
 import { ApplianceData, BuskingData } from '../../store/type/busking';
 import { PlaylistData, PlaylistSongData } from '../../store/type/playlist';
 import ThemeBtn from '../../components/Layout/Footer/ThemeBtn';
 import SearchBar from '../../components/Search/SearchBar';
+import PrimarySongResult from '../../components/Table/PrimarySongResult';
+import RequestSongResult from '../../components/Table/RequestSongResult';
 //TODO: 닉네임 검색기능 추가하기
 const App = () => {
   const [isUser, setIsUser] = useState<boolean>(false);
@@ -221,10 +222,17 @@ const App = () => {
 
                 <PrimarySongTable
                   results={nowPlaylistSongArr}
-                  handleClickResult={handleApplySong}
-                >
-                  <SendIcn width={24} height={24} color={'white'} />
-                </PrimarySongTable>
+                  renderSongResult={(key, index, result) => (
+                    <PrimarySongResult
+                      key={key}
+                      index={index}
+                      result={result}
+                      handleSongClick={handleApplySong}
+                    >
+                      <SendIcn width={24} height={24} color={'white'} />
+                    </PrimarySongResult>
+                  )}
+                ></PrimarySongTable>
               </MainSec>
 
               <MainSec>
@@ -237,12 +245,19 @@ const App = () => {
                   </h3>
                 </section>
 
-                <RequestSongTable
+                <PrimarySongTable
                   results={appliance}
-                  handleClickResult={handleApplySong}
-                >
-                  <SendIcn width={24} height={24} color={'white'} />
-                </RequestSongTable>
+                  renderSongResult={(key, index, result) => (
+                    <RequestSongResult
+                      key={key}
+                      index={index}
+                      result={result as ApplianceData}
+                      handleSongClick={handleApplySong}
+                    >
+                      <SendIcn width={24} height={24} color={'white'} />
+                    </RequestSongResult>
+                  )}
+                ></PrimarySongTable>
               </MainSec>
             </section>
           ) : (
@@ -304,10 +319,17 @@ const App = () => {
 
                   <PrimarySongTable
                     results={nowPlaylistSongArr}
-                    handleClickResult={(sid: string) => {}}
-                  >
-                    <SmileIcn width={24} height={24} color={'white'} />
-                  </PrimarySongTable>
+                    renderSongResult={(key, index, result) => (
+                      <PrimarySongResult
+                        key={key}
+                        index={index}
+                        result={result}
+                        handleSongClick={(sid: string) => {}}
+                      >
+                        <SmileIcn width={24} height={24} color={'white'} />
+                      </PrimarySongResult>
+                    )}
+                  ></PrimarySongTable>
                 </MainSec>
               )}
             </section>
