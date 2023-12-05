@@ -12,8 +12,15 @@ const useSearchBar = (
     name: '',
     category: '제목',
   });
+  const [searchedDataArr, setSearchedDataArr] = useState([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [savedSearchWord, setSavedSearchWord] = useState<SearchWord | null>(
+    null
+  );
+
   const search = () => {
     if (data) {
+      setIsLoading(true);
       const wholeSongArrary = Object.values(data);
       if (searchWord.name) {
         if (searchWord.category === '제목') {
@@ -32,7 +39,26 @@ const useSearchBar = (
       } else {
         setFilteredDataArr(wholeSongArrary);
       }
+      setSavedSearchWord({ ...searchWord });
+      setIsLoading(false);
     }
+  };
+  const getDataByPageNum = (nowPageNum: number): PlaylistSongData[] => {
+    if (!data) {
+      return [];
+    }
+    const wholeDataArrary = Object.values(data);
+    const dataToView = wholeDataArrary.slice(
+      (nowPageNum - 1) * 6,
+      nowPageNum * 6
+    );
+    return dataToView;
+  };
+
+  const searchByPageChange = (pageNum: number) => {
+    setIsLoading(true);
+
+    setIsLoading(false);
   };
   return [searchWord, setSearchWord, search] as const;
 };

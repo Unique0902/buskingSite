@@ -12,9 +12,13 @@ import useSearchBar from '../../hooks/UseSearchBar';
 import { PlaylistSongData } from '../../store/type/playlist';
 import SearchBar from '../../components/Search/SearchBar';
 import PrimarySongResult from '../../components/Table/PrimarySongResult';
+import useSearch from '../../hooks/UseSearch';
+import LoadingCheckWrapper from '../../components/LoadingCheckWrapper';
+import SongTable from '../../components/Table/SongTable';
 
 export default function AppPlaylist() {
   const [songArr, setSongArr] = useState<PlaylistSongData[]>([]);
+  const [nowPageNum, setNowPageNum] = useState<number>(1);
   const { nowPlaylist, removeSongInPlaylist } = usePlaylistContext();
   useEffect(() => {
     if (nowPlaylist) {
@@ -28,19 +32,50 @@ export default function AppPlaylist() {
 
   //TODO: searchword가 searchBar의 여러 컴포넌트에 전해지는게 맘에 안듬, searchWord state도 searchBar에서 관리하게하고싶음
   //바깥 컴포넌트에서 말고 useAddSearch의 로직이 워낙 복잡하다 보니.. 쉽지않네
-  const [searchWord, setSearchWord, search] = useSearchBar(
-    (nowPlaylist && nowPlaylist.songs) || null,
-    setSongArr
-  );
+  // const [searchWord, setSearchWord, search] = useSearchBar(
+  //   (nowPlaylist && nowPlaylist.songs) || null,
+  //   setSongArr
+  // );
+  const [
+    {
+      searchWord,
+      setSearchWord,
+      searchBySearchWord,
+      isLoading,
+      viewedDataArr,
+      searchByPageChange,
+    },
+  ] = useSearch(songArr);
+
+  useEffect(() => {
+    setNowPageNum(1);
+  }, [songArr]);
 
   const handleClickResult = (sid: string) => {
     removeSongInPlaylist(sid);
   };
 
+  const handlePlus = () => {
+    if (nowPageNum < songArr.length / 6) {
+      searchByPageChange(nowPageNum + 1);
+      setNowPageNum(nowPageNum + 1);
+    }
+  };
+  const handleMinus = () => {
+    if (nowPageNum !== 1) {
+      searchByPageChange(nowPageNum - 1);
+      setNowPageNum(nowPageNum - 1);
+    }
+  };
+  const handleSearchBySearchWord = () => {
+    setNowPageNum(1);
+    searchBySearchWord();
+  };
+
   // TODO:이름 좀더 명확하게 변경 필요2
   const handleClickBtn = () => {
     if (searchWord.category) {
-      search();
+      handleSearchBySearchWord();
     }
   };
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -94,19 +129,25 @@ export default function AppPlaylist() {
             총 노래 수 {songArr && songArr.length}
           </h2>
 
-          <PrimarySongTable
-            results={songArr}
-            renderSongResult={(key, index, result) => (
-              <PrimarySongResult
-                key={key}
-                index={index}
-                result={result}
-                handleSongClick={handleClickResult}
-              >
-                <MinusIcn width={24} height={24} color={'red'} />
-              </PrimarySongResult>
-            )}
-          ></PrimarySongTable>
+          <LoadingCheckWrapper isLoading={isLoading}>
+            <SongTable
+              viewdSongArr={viewedDataArr}
+              nowPageNum={nowPageNum}
+              resultNum={songArr.length}
+              onPagePlus={handlePlus}
+              onPageMinus={handleMinus}
+              renderSongResult={(key, index, result) => (
+                <PrimarySongResult
+                  key={key}
+                  index={index}
+                  result={result as PlaylistSongData}
+                  handleSongClick={handleClickResult}
+                >
+                  <MinusIcn width={24} height={24} color={'white'} />
+                </PrimarySongResult>
+              )}
+            ></SongTable>
+          </LoadingCheckWrapper>
         </MainSec>
       </NoPlaylistCheckWrapper>
     </>

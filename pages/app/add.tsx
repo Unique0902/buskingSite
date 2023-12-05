@@ -13,6 +13,8 @@ import useAddSearch from '../../hooks/UseAddSearch';
 import { FmEditedTopTrackData, FmTrackData } from '../../store/type/fm';
 import SearchBar from '../../components/Search/SearchBar';
 import RenderedWhenFullScreen from '../../components/Responsive/RenderedWhenFullScreen';
+import SongTable from '../../components/Table/SongTable';
+import SongAddResult from '../../components/Table/SongAddResult';
 
 export default function AppAdd() {
   const [searchResults, setSearchResults] = useState<
@@ -38,11 +40,13 @@ export default function AppAdd() {
       }
     }
   }, [searchResults]);
-  const handelPlus = () => {
-    searchByPageChange(nowPageNum + 1);
-    setNowPageNum(nowPageNum + 1);
+  const handlePlus = () => {
+    if (nowPageNum < resultNum / 6) {
+      searchByPageChange(nowPageNum + 1);
+      setNowPageNum(nowPageNum + 1);
+    }
   };
-  const handelMinus = () => {
+  const handleMinus = () => {
     if (nowPageNum !== 1) {
       searchByPageChange(nowPageNum - 1);
       setNowPageNum(nowPageNum - 1);
@@ -119,16 +123,23 @@ export default function AppAdd() {
           </div>
 
           <LoadingCheckWrapper isLoading={isLoading}>
-            <SongAddTable
-              results={searchResults}
-              pageNum={nowPageNum}
-              onSongClick={addSongToPlaylist}
+            <SongTable
+              viewdSongArr={searchResults}
+              nowPageNum={nowPageNum}
               resultNum={resultNum}
-              onPagePlus={handelPlus}
-              onPageMinus={handelMinus}
-            >
-              <PlusIcn width={24} height={24} color={'white'} />
-            </SongAddTable>
+              onPagePlus={handlePlus}
+              onPageMinus={handleMinus}
+              renderSongResult={(key, index, result) => (
+                <SongAddResult
+                  key={key}
+                  index={index}
+                  result={result as FmEditedTopTrackData | FmTrackData}
+                  handleSongClick={addSongToPlaylist}
+                >
+                  <PlusIcn width={24} height={24} color={'white'} />
+                </SongAddResult>
+              )}
+            ></SongTable>
           </LoadingCheckWrapper>
         </MainSec>
       </NoPlaylistCheckWrapper>

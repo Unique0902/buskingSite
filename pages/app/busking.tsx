@@ -16,6 +16,9 @@ import { MinusIcn } from '../../assets/icon/icon';
 import { ApplianceData, ApplianceObjects } from '../../store/type/busking';
 import RequestSongResult from '../../components/Table/RequestSongResult';
 import PrimarySongTable from '../../components/Table/PrimarySongTable';
+import useSearch from '../../hooks/UseSearch';
+import LoadingCheckWrapper from '../../components/LoadingCheckWrapper';
+import SongTable from '../../components/Table/SongTable';
 export default function AppBusking({}) {
   const { playlists } = usePlaylistContext();
   const { userData } = useUserDataContext();
@@ -30,6 +33,7 @@ export default function AppBusking({}) {
   const [songArr, setSongArr] = useState<ApplianceData[]>([]);
   const [songArrToView, setSongArrToView] = useState<ApplianceData[]>([]);
   const router = useRouter();
+  const [nowPageNum, setNowPageNum] = useState<number>(1);
 
   // 객체의 멤버값이 나올수있는 타입은 기존타입과 undefined임!! null이 아님!! 구분하기
   useEffect(() => {
@@ -49,13 +53,6 @@ export default function AppBusking({}) {
   그래도 각 신청곡 데이터 id에 time 데이터를 저장했기때문에 위 sort 함수와 같이 buskingData를
   받아올때마다 id 시간을 기준으로 정렬하여 보여줌
 */
-  if (isbuskingDataLoading) {
-    return <div>checking buskingData...</div>;
-  }
-  if (!buskingData) {
-    router.push('/app/makebusking');
-    return <div>move to makeBusking...</div>;
-  }
 
   const handleClickEndBuskingBtn = () => {
     if (window.confirm('버스킹을 종료하시겠습니까?')) {
@@ -68,6 +65,35 @@ export default function AppBusking({}) {
   const handleRemoveRequestSong = (sid: string) => {
     removeBuskingSong(sid);
   };
+
+  //이러면 안쓰는 것들이 애매해지네 useAppliance로 따로 만들어야하나 오 객체로 묶으니까 낫네
+  const [{ isLoading, viewedDataArr, searchByPageChange }] =
+    useSearch(songArrToView);
+
+  useEffect(() => {
+    setNowPageNum(1);
+  }, [songArrToView]);
+
+  const handlePlus = () => {
+    if (nowPageNum < songArr.length / 6) {
+      searchByPageChange(nowPageNum + 1);
+      setNowPageNum(nowPageNum + 1);
+    }
+  };
+  const handleMinus = () => {
+    if (nowPageNum !== 1) {
+      searchByPageChange(nowPageNum - 1);
+      setNowPageNum(nowPageNum - 1);
+    }
+  };
+
+  if (isbuskingDataLoading) {
+    return <div>checking buskingData...</div>;
+  }
+  if (!buskingData) {
+    router.push('/app/makebusking');
+    return <div>move to makeBusking...</div>;
+  }
 
   return (
     <>
@@ -113,26 +139,25 @@ export default function AppBusking({}) {
           />
         </div>
 
-        {/* <RequestSongTable
-          results={songArrToView}
-          handleClickResult={handleRemoveRequestSong}
-        >
-          <MinusIcn width={24} height={24} color={'red'} />
-        </RequestSongTable> */}
-
-        <PrimarySongTable
-          results={songArrToView}
-          renderSongResult={(key, index, result) => (
-            <RequestSongResult
-              key={key}
-              index={index}
-              result={result as ApplianceData}
-              handleSongClick={handleRemoveRequestSong}
-            >
-              <MinusIcn width={24} height={24} color={'red'} />
-            </RequestSongResult>
-          )}
-        ></PrimarySongTable>
+        <LoadingCheckWrapper isLoading={isLoading}>
+          <SongTable
+            viewdSongArr={viewedDataArr}
+            nowPageNum={nowPageNum}
+            resultNum={songArrToView.length}
+            onPagePlus={handlePlus}
+            onPageMinus={handleMinus}
+            renderSongResult={(key, index, result) => (
+              <RequestSongResult
+                key={key}
+                index={index}
+                result={result as ApplianceData}
+                handleSongClick={handleRemoveRequestSong}
+              >
+                <MinusIcn width={24} height={24} color={'white'} />
+              </RequestSongResult>
+            )}
+          ></SongTable>
+        </LoadingCheckWrapper>
 
         <section className='flex flex-row justify-end pt-4'>
           <PrimaryBtn

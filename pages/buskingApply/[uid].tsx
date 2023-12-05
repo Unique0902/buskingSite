@@ -15,6 +15,9 @@ import ThemeBtn from '../../components/Layout/Footer/ThemeBtn';
 import SearchBar from '../../components/Search/SearchBar';
 import PrimarySongResult from '../../components/Table/PrimarySongResult';
 import RequestSongResult from '../../components/Table/RequestSongResult';
+import useSearch from '../../hooks/UseSearch';
+import LoadingCheckWrapper from '../../components/LoadingCheckWrapper';
+import SongTable from '../../components/Table/SongTable';
 //TODO: 닉네임 검색기능 추가하기
 const App = () => {
   const [isUser, setIsUser] = useState<boolean>(false);
@@ -32,11 +35,48 @@ const App = () => {
     useBuskingContext();
   const { getPlaylists } = usePlaylistContext();
   const { getUserData } = useUserDataContext();
+  const [nowPlaylistPageNum, setNowPlaylistPageNum] = useState<number>(1);
+  const [nowAppliancePageNum, setNowAppliancePageNum] = useState<number>(1);
 
-  const [searchWord, setSearchWord, search] = useSearchBar(
-    (nowPlaylist && nowPlaylist.songs) || null,
-    setNowPlaylistSongArr
-  );
+  const [playlistSearchProps] = useSearch(nowPlaylistSongArr);
+  const [applianceSearchProps] = useSearch(appliance);
+
+  useEffect(() => {
+    setNowPlaylistPageNum(1);
+  }, [nowPlaylistSongArr]);
+  useEffect(() => {
+    setNowAppliancePageNum(1);
+  }, [appliance]);
+
+  const handlePlaylistPlusPageNum = () => {
+    if (nowPlaylistPageNum < nowPlaylistSongArr.length / 6) {
+      playlistSearchProps.searchByPageChange(nowPlaylistPageNum + 1);
+      setNowPlaylistPageNum(nowPlaylistPageNum + 1);
+    }
+  };
+  const handlePlaylistMinusPageNum = () => {
+    if (nowPlaylistPageNum !== 1) {
+      playlistSearchProps.searchByPageChange(nowPlaylistPageNum - 1);
+      setNowPlaylistPageNum(nowPlaylistPageNum - 1);
+    }
+  };
+  const handlePlaylistSearchBySearchWord = () => {
+    setNowPlaylistPageNum(1);
+    playlistSearchProps.searchBySearchWord();
+  };
+
+  const handleAppliancePlusPageNum = () => {
+    if (nowAppliancePageNum < appliance.length / 6) {
+      applianceSearchProps.searchByPageChange(nowAppliancePageNum + 1);
+      setNowAppliancePageNum(nowAppliancePageNum + 1);
+    }
+  };
+  const handleApplianceMinusPageNum = () => {
+    if (nowAppliancePageNum !== 1) {
+      applianceSearchProps.searchByPageChange(nowAppliancePageNum - 1);
+      setNowAppliancePageNum(nowAppliancePageNum - 1);
+    }
+  };
 
   useEffect(() => {
     if (isUser && userId) {
@@ -142,16 +182,19 @@ const App = () => {
 
   // TODO:이름 좀더 명확하게 변경 필요2
   const handleClickBtn = () => {
-    if (searchWord.category) {
-      search();
+    if (playlistSearchProps.searchWord.category) {
+      handlePlaylistSearchBySearchWord();
     }
   };
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchWord({ ...searchWord, name: e.target.value });
+    playlistSearchProps.setSearchWord({
+      ...playlistSearchProps.searchWord,
+      name: e.target.value,
+    });
   };
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSearchWord({
-      ...searchWord,
+    playlistSearchProps.setSearchWord({
+      ...playlistSearchProps.searchWord,
       category: e.target.value as '제목' | '가수',
     });
   };
@@ -193,14 +236,14 @@ const App = () => {
                 <SearchBar>
                   <SearchBar.MainSec>
                     <SearchBar.MainSec.Select
-                      searchWord={searchWord}
+                      searchWord={playlistSearchProps.searchWord}
                       handleSelectChange={handleSelectChange}
                     >
                       <SearchBar.MainSec.Option value='제목' />
                       <SearchBar.MainSec.Option value='가수' />
                     </SearchBar.MainSec.Select>
                     <SearchBar.MainSec.Input
-                      inputValue={searchWord.name}
+                      inputValue={playlistSearchProps.searchWord.name}
                       handleClickBtn={handleClickBtn}
                       handleInputChange={handleInputChange}
                     />
@@ -220,19 +263,25 @@ const App = () => {
                   ></SearchBar.SubSec>
                 </SearchBar>
 
-                <PrimarySongTable
-                  results={nowPlaylistSongArr}
-                  renderSongResult={(key, index, result) => (
-                    <PrimarySongResult
-                      key={key}
-                      index={index}
-                      result={result}
-                      handleSongClick={handleApplySong}
-                    >
-                      <SendIcn width={24} height={24} color={'white'} />
-                    </PrimarySongResult>
-                  )}
-                ></PrimarySongTable>
+                <LoadingCheckWrapper isLoading={playlistSearchProps.isLoading}>
+                  <SongTable
+                    viewdSongArr={playlistSearchProps.viewedDataArr}
+                    nowPageNum={nowPlaylistPageNum}
+                    resultNum={nowPlaylistSongArr.length}
+                    onPagePlus={handlePlaylistPlusPageNum}
+                    onPageMinus={handlePlaylistMinusPageNum}
+                    renderSongResult={(key, index, result) => (
+                      <PrimarySongResult
+                        key={key}
+                        index={index}
+                        result={result as PlaylistSongData}
+                        handleSongClick={handleApplySong}
+                      >
+                        <SendIcn width={24} height={24} color={'white'} />
+                      </PrimarySongResult>
+                    )}
+                  ></SongTable>
+                </LoadingCheckWrapper>
               </MainSec>
 
               <MainSec>
@@ -245,19 +294,25 @@ const App = () => {
                   </h3>
                 </section>
 
-                <PrimarySongTable
-                  results={appliance}
-                  renderSongResult={(key, index, result) => (
-                    <RequestSongResult
-                      key={key}
-                      index={index}
-                      result={result as ApplianceData}
-                      handleSongClick={handleApplySong}
-                    >
-                      <SendIcn width={24} height={24} color={'white'} />
-                    </RequestSongResult>
-                  )}
-                ></PrimarySongTable>
+                <LoadingCheckWrapper isLoading={applianceSearchProps.isLoading}>
+                  <SongTable
+                    viewdSongArr={applianceSearchProps.viewedDataArr}
+                    nowPageNum={nowAppliancePageNum}
+                    resultNum={appliance.length}
+                    onPagePlus={handleAppliancePlusPageNum}
+                    onPageMinus={handleApplianceMinusPageNum}
+                    renderSongResult={(key, index, result) => (
+                      <RequestSongResult
+                        key={key}
+                        index={index}
+                        result={result as ApplianceData}
+                        handleSongClick={handleApplySong}
+                      >
+                        <SendIcn width={24} height={24} color={'white'} />
+                      </RequestSongResult>
+                    )}
+                  ></SongTable>
+                </LoadingCheckWrapper>
               </MainSec>
             </section>
           ) : (
@@ -290,14 +345,14 @@ const App = () => {
                   <SearchBar>
                     <SearchBar.MainSec>
                       <SearchBar.MainSec.Select
-                        searchWord={searchWord}
+                        searchWord={playlistSearchProps.searchWord}
                         handleSelectChange={handleSelectChange}
                       >
                         <SearchBar.MainSec.Option value='제목' />
                         <SearchBar.MainSec.Option value='가수' />
                       </SearchBar.MainSec.Select>
                       <SearchBar.MainSec.Input
-                        inputValue={searchWord.name}
+                        inputValue={playlistSearchProps.searchWord.name}
                         handleClickBtn={handleClickBtn}
                         handleInputChange={handleInputChange}
                       />
@@ -317,19 +372,27 @@ const App = () => {
                     ></SearchBar.SubSec>
                   </SearchBar>
 
-                  <PrimarySongTable
-                    results={nowPlaylistSongArr}
-                    renderSongResult={(key, index, result) => (
-                      <PrimarySongResult
-                        key={key}
-                        index={index}
-                        result={result}
-                        handleSongClick={(sid: string) => {}}
-                      >
-                        <SmileIcn width={24} height={24} color={'white'} />
-                      </PrimarySongResult>
-                    )}
-                  ></PrimarySongTable>
+                  <LoadingCheckWrapper
+                    isLoading={playlistSearchProps.isLoading}
+                  >
+                    <SongTable
+                      viewdSongArr={playlistSearchProps.viewedDataArr}
+                      nowPageNum={nowPlaylistPageNum}
+                      resultNum={nowPlaylistSongArr.length}
+                      onPagePlus={handlePlaylistPlusPageNum}
+                      onPageMinus={handlePlaylistMinusPageNum}
+                      renderSongResult={(key, index, result) => (
+                        <PrimarySongResult
+                          key={key}
+                          index={index}
+                          result={result as PlaylistSongData}
+                          handleSongClick={(sid: string) => {}}
+                        >
+                          <SendIcn width={24} height={24} color={'white'} />
+                        </PrimarySongResult>
+                      )}
+                    ></SongTable>
+                  </LoadingCheckWrapper>
                 </MainSec>
               )}
             </section>
