@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import TitleBar from '../../components/TitleBar';
 import MainSec from '../../components/MainSec';
-import SongSearchBar from '../../components/Search/SongSearchBar';
 import { usePlaylistContext } from '../../context/PlaylistContext';
 import SongAddTable from '../../components/Table/SongAddTable';
 import { useEffect } from 'react';
@@ -97,22 +96,46 @@ export default function AppAdd() {
           {/* compound 디자인패턴 이용한 리팩토링!! 좀더 가독성이 좋아진 기분이랄까 커스텀 변경도 쉬워짐!! */}
           <div className='relative flex flex-row items-center gap-4 mb-6'>
             {/* TODO:compound 디자인 관련해서는 고민해봐야될듯 atomic 디자인을 적용해볼까..? 안에 어떻게할지 적어놓음 */}
+            {/* TODO: hidden으로 숨기는거랑 usemediaQuery로 판단하여 조건 렌더링하는거랑 무엇이 옳은지 찾아보기 */}
             <SearchBar>
-              <SearchBar.Select
-                searchWord={searchWord}
-                handleSelectChange={handleSelectChange}
-              >
-                <SearchBar.Option value='제목' />
-                <SearchBar.Option value='가수' />
-              </SearchBar.Select>
-              <SearchBar.Input
-                inputValue={searchWord.name}
-                handleClickBtn={handleClickBtn}
-                handleInputChange={handleInputChange}
-              />
-              <SearchBar.Button handleClickBtn={handleClickBtn} text='검색' />
+              <SearchBar.MainSec>
+                <SearchBar.MainSec.Select
+                  searchWord={searchWord}
+                  handleSelectChange={handleSelectChange}
+                >
+                  <SearchBar.MainSec.Option value='제목' />
+                  <SearchBar.MainSec.Option value='가수' />
+                </SearchBar.MainSec.Select>
+                <SearchBar.MainSec.Input
+                  inputValue={searchWord.name}
+                  handleClickBtn={handleClickBtn}
+                  handleInputChange={handleInputChange}
+                />
+                <SearchBar.MainSec.Button
+                  handleClickBtn={handleClickBtn}
+                  text='검색'
+                />
+              </SearchBar.MainSec>
+              <SearchBar.SubSec
+                render={() => (
+                  <RenderedWhenFullScreen>
+                    <HoverIcon
+                      text={
+                        'Api 특성상 제목, 가수명을 영어로 입력하시면 더 잘나옵니다.'
+                      }
+                    >
+                      <InformIcn
+                        color={'blue'}
+                        width={24}
+                        height={24}
+                        className='ml-3 text-2xl text-blue-500 max-lg:w-5 max-lg:h-5 max-lg:hidden'
+                      />
+                    </HoverIcon>
+                  </RenderedWhenFullScreen>
+                )}
+              ></SearchBar.SubSec>
             </SearchBar>
-            <RenderedWhenFullScreen>
+            {/* <RenderedWhenFullScreen>
               <HoverIcon
                 text={
                   'Api 특성상 제목, 가수명을 영어로 입력하시면 더 잘나옵니다.'
@@ -125,7 +148,7 @@ export default function AppAdd() {
                   className='ml-3 text-2xl text-blue-500 max-lg:w-5 max-lg:h-5 max-lg:hidden'
                 />
               </HoverIcon>
-            </RenderedWhenFullScreen>
+            </RenderedWhenFullScreen> */}
           </div>
 
           <LoadingCheckWrapper isLoading={isLoading}>

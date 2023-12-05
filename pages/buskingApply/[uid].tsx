@@ -4,7 +4,6 @@ import { useBuskingContext } from '../../context/BuskingContext';
 import { usePlaylistContext } from '../../context/PlaylistContext';
 import { useUserDataContext } from '../../context/UserDataContext';
 import MainSec from '../../components/MainSec';
-import SongSearchBar from '../../components/Search/SongSearchBar';
 import { useRouter } from 'next/router';
 import ArrangeMenuBtn from '../../components/ArrangeMenu/ArrangeMenuBtn';
 import { SendIcn, SmileIcn } from '../../assets/icon/icon';
@@ -14,6 +13,7 @@ import useSearchBar from '../../hooks/UseSearchBar';
 import { ApplianceData, BuskingData } from '../../store/type/busking';
 import { PlaylistData, PlaylistSongData } from '../../store/type/playlist';
 import ThemeBtn from '../../components/Layout/Footer/ThemeBtn';
+import SearchBar from '../../components/Search/SearchBar';
 //TODO: 닉네임 검색기능 추가하기
 const App = () => {
   const [isUser, setIsUser] = useState<boolean>(false);
@@ -99,10 +99,6 @@ const App = () => {
     }
   }, [userId, isUser, buskingData]);
 
-  const handleSearchBarChange = () => {
-    search();
-  };
-
   //TODO:여기서 userID를 분리할수있을까?
   const handleApplySong = (sid: string) => {
     if (buskingData && userId) {
@@ -143,6 +139,22 @@ const App = () => {
     }
   };
 
+  // TODO:이름 좀더 명확하게 변경 필요2
+  const handleClickBtn = () => {
+    if (searchWord.category) {
+      search();
+    }
+  };
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchWord({ ...searchWord, name: e.target.value });
+  };
+  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSearchWord({
+      ...searchWord,
+      category: e.target.value as '제목' | '가수',
+    });
+  };
+
   return (
     <section className='relative flex w-full h-screen px-8 py-4 overflow-auto max-md:px-4 bg-gradient-to-b from-blue-500 to-mainBlue'>
       <section className='w-full'>
@@ -177,17 +189,35 @@ const App = () => {
                     신청가능 곡 수 {nowPlaylistSongArr.length}
                   </h3>
                 </div>
-                <SongSearchBar
-                  searchWord={searchWord}
-                  setSearchWord={setSearchWord}
-                  onSearch={handleSearchBarChange}
-                >
-                  <ArrangeMenuBtn
-                    results={nowPlaylistSongArr}
-                    setResults={setNowPlaylistSongArr}
-                    isBusking={false}
-                  />
-                </SongSearchBar>
+                <SearchBar>
+                  <SearchBar.MainSec>
+                    <SearchBar.MainSec.Select
+                      searchWord={searchWord}
+                      handleSelectChange={handleSelectChange}
+                    >
+                      <SearchBar.MainSec.Option value='제목' />
+                      <SearchBar.MainSec.Option value='가수' />
+                    </SearchBar.MainSec.Select>
+                    <SearchBar.MainSec.Input
+                      inputValue={searchWord.name}
+                      handleClickBtn={handleClickBtn}
+                      handleInputChange={handleInputChange}
+                    />
+                    <SearchBar.MainSec.Button
+                      handleClickBtn={handleClickBtn}
+                      text='검색'
+                    />
+                  </SearchBar.MainSec>
+                  <SearchBar.SubSec
+                    render={() => (
+                      <ArrangeMenuBtn
+                        results={nowPlaylistSongArr}
+                        setResults={setNowPlaylistSongArr}
+                        isBusking={false}
+                      />
+                    )}
+                  ></SearchBar.SubSec>
+                </SearchBar>
 
                 <PrimarySongTable
                   results={nowPlaylistSongArr}
@@ -241,17 +271,36 @@ const App = () => {
                       곡 수 {nowPlaylistSongArr.length}
                     </h3>
                   </div>
-                  <SongSearchBar
-                    searchWord={searchWord}
-                    setSearchWord={setSearchWord}
-                    onSearch={handleSearchBarChange}
-                  >
-                    <ArrangeMenuBtn
-                      results={nowPlaylistSongArr}
-                      setResults={setNowPlaylistSongArr}
-                      isBusking={false}
-                    />
-                  </SongSearchBar>
+
+                  <SearchBar>
+                    <SearchBar.MainSec>
+                      <SearchBar.MainSec.Select
+                        searchWord={searchWord}
+                        handleSelectChange={handleSelectChange}
+                      >
+                        <SearchBar.MainSec.Option value='제목' />
+                        <SearchBar.MainSec.Option value='가수' />
+                      </SearchBar.MainSec.Select>
+                      <SearchBar.MainSec.Input
+                        inputValue={searchWord.name}
+                        handleClickBtn={handleClickBtn}
+                        handleInputChange={handleInputChange}
+                      />
+                      <SearchBar.MainSec.Button
+                        handleClickBtn={handleClickBtn}
+                        text='검색'
+                      />
+                    </SearchBar.MainSec>
+                    <SearchBar.SubSec
+                      render={() => (
+                        <ArrangeMenuBtn
+                          results={nowPlaylistSongArr}
+                          setResults={setNowPlaylistSongArr}
+                          isBusking={false}
+                        />
+                      )}
+                    ></SearchBar.SubSec>
+                  </SearchBar>
 
                   <PrimarySongTable
                     results={nowPlaylistSongArr}

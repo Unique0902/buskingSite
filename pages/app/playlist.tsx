@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 import TitleBar from '../../components/TitleBar';
 import MainSec from '../../components/MainSec';
-import SongSearchBar from '../../components/Search/SongSearchBar';
 import ArrangeMenuBtn from '../../components/ArrangeMenu/ArrangeMenuBtn';
 import { usePlaylistContext } from '../../context/PlaylistContext';
 import { getAppLayOut } from '../../layouts/appLayout';
@@ -70,25 +69,39 @@ export default function AppPlaylist() {
 
           <div className='relative flex flex-row items-center gap-4 mb-6 max-lg:flex-col'>
             <SearchBar>
-              <SearchBar.Select
-                searchWord={searchWord}
-                handleSelectChange={handleSelectChange}
-              >
-                <SearchBar.Option value='제목' />
-                <SearchBar.Option value='가수' />
-              </SearchBar.Select>
-              <SearchBar.Input
-                inputValue={searchWord.name}
-                handleClickBtn={handleClickBtn}
-                handleInputChange={handleInputChange}
-              />
-              <SearchBar.Button handleClickBtn={handleClickBtn} text='검색' />
+              <SearchBar.MainSec>
+                <SearchBar.MainSec.Select
+                  searchWord={searchWord}
+                  handleSelectChange={handleSelectChange}
+                >
+                  <SearchBar.MainSec.Option value='제목' />
+                  <SearchBar.MainSec.Option value='가수' />
+                </SearchBar.MainSec.Select>
+                <SearchBar.MainSec.Input
+                  inputValue={searchWord.name}
+                  handleClickBtn={handleClickBtn}
+                  handleInputChange={handleInputChange}
+                />
+                <SearchBar.MainSec.Button
+                  handleClickBtn={handleClickBtn}
+                  text='검색'
+                />
+              </SearchBar.MainSec>
+              <SearchBar.SubSec
+                render={() => (
+                  <ArrangeMenuBtn
+                    results={songArr}
+                    setResults={setSongArr}
+                    isBusking={false}
+                  />
+                )}
+              ></SearchBar.SubSec>
             </SearchBar>
-            <ArrangeMenuBtn
+            {/* <ArrangeMenuBtn
               results={songArr}
               setResults={setSongArr}
               isBusking={false}
-            />
+            /> */}
           </div>
 
           <h2 className='mb-2 text-xl font-semibold '>

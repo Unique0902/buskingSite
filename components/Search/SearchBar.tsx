@@ -17,11 +17,28 @@ const SearchBar = ({ children }: Props) => {
         e.preventDefault();
       }}
     >
-      <div className='relative flex flex-row items-center justify-center flex-1 gap-2 max-lg:w-full max-lg:mx-2'>
-        {children}
-      </div>
+      {children}
     </form>
   );
+};
+
+type MainSecProps = {
+  children: ReactNode;
+};
+
+const MainSec = ({ children }: MainSecProps) => {
+  return (
+    <div className='relative flex flex-row items-center justify-center flex-1 gap-2 max-lg:w-full max-lg:mx-2'>
+      {children}
+    </div>
+  );
+};
+
+type SubSecProps = {
+  render?: () => React.JSX.Element;
+};
+const SubSec = ({ render }: SubSecProps) => {
+  return <>{render && render()}</>;
 };
 
 type SearchWord = {
@@ -101,10 +118,11 @@ const Button = ({ handleClickBtn, text }: ButtonProps) => {
     </RenderedWhenFullScreen>
   );
 };
+SearchBar.MainSec = MainSec;
+SearchBar.SubSec = SubSec;
 
-SearchBar.Select = Select;
-SearchBar.Option = Option;
-SearchBar.Input = Input;
-SearchBar.Button = Button;
-
+MainSec.Select = Select;
+MainSec.Option = Option;
+MainSec.Input = Input;
+MainSec.Button = Button;
 export default SearchBar;
