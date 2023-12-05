@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import TitleBar from '../../components/TitleBar';
 import MainSec from '../../components/MainSec';
 import { usePlaylistContext } from '../../context/PlaylistContext';
-import SongAddTable from '../../components/Table/SongAddTable';
-import { useEffect } from 'react';
 import { getAppLayOut } from '../../layouts/appLayout';
 import { InformIcn, PlusIcn } from '../../assets/icon/icon';
 import HoverIcon from '../../components/Hover/HoverIcon';
@@ -17,64 +15,22 @@ import SongTable from '../../components/Table/SongTable';
 import SongAddResult from '../../components/Table/SongAddResult';
 
 export default function AppAdd() {
-  const [searchResults, setSearchResults] = useState<
-    FmTrackData[] | FmEditedTopTrackData[]
-  >([]);
-  const [resultNum, setResultNum] = useState<number>(0);
-  const [nowPageNum, setNowPageNum] = useState<number>(1);
-
   const { nowPlaylist, addSongToPlaylist } = usePlaylistContext();
 
   const [
-    searchWord,
-    setSearchWord,
-    isLoading,
-    searchBySearchBtn,
-    searchByPageChange,
-  ] = useAddSearch(setSearchResults, setResultNum);
-
-  useEffect(() => {
-    setNowPageNum(1);
-  }, [searchResults]);
-  useEffect(() => {
-    if (searchResults) {
-      if (searchResults.length > 6) {
-        setSearchResults(searchResults.slice(-6));
-      }
-    }
-  }, [searchResults]);
-  const handlePlus = () => {
-    if (nowPageNum < resultNum / 6) {
-      searchByPageChange(nowPageNum + 1);
-      setNowPageNum(nowPageNum + 1);
-    }
-  };
-  const handleMinus = () => {
-    if (nowPageNum !== 1) {
-      searchByPageChange(nowPageNum - 1);
-      setNowPageNum(nowPageNum - 1);
-    }
-  };
-  const handleSearchBySearchBtn = () => {
-    setNowPageNum(1);
-    searchBySearchBtn();
-  };
-
-  // TODO:이름 좀더 명확하게 변경 필요
-  const handleClickBtn = () => {
-    if (searchWord.category) {
-      handleSearchBySearchBtn();
-    }
-  };
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchWord({ ...searchWord, name: e.target.value });
-  };
-  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSearchWord({
-      ...searchWord,
-      category: e.target.value as '제목' | '가수',
-    });
-  };
+    {
+      searchResults,
+      searchWord,
+      isLoading,
+      nowPageNum,
+      resultNum,
+      handlePlus,
+      handleMinus,
+      handleSearchBtnClick,
+      handleInputChange,
+      handleSelectChange,
+    },
+  ] = useAddSearch();
 
   return (
     <>
@@ -96,11 +52,11 @@ export default function AppAdd() {
                 </SearchBar.MainSec.Select>
                 <SearchBar.MainSec.Input
                   inputValue={searchWord.name}
-                  handleClickBtn={handleClickBtn}
+                  handleClickBtn={handleSearchBtnClick}
                   handleInputChange={handleInputChange}
                 />
                 <SearchBar.MainSec.Button
-                  handleClickBtn={handleClickBtn}
+                  handleClickBtn={handleSearchBtnClick}
                   text='검색'
                 />
               </SearchBar.MainSec>

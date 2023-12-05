@@ -15,7 +15,6 @@ import MusicBar from '../../components/MusicBar/MusicBar';
 import { MinusIcn } from '../../assets/icon/icon';
 import { ApplianceData, ApplianceObjects } from '../../store/type/busking';
 import RequestSongResult from '../../components/Table/RequestSongResult';
-import PrimarySongTable from '../../components/Table/PrimarySongTable';
 import useSearch from '../../hooks/UseSearch';
 import LoadingCheckWrapper from '../../components/LoadingCheckWrapper';
 import SongTable from '../../components/Table/SongTable';
