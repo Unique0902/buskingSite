@@ -13,13 +13,13 @@ const SlicedHoverText = ({ text }: Props) => {
     text.length > maxLeng ? text.slice(0, maxLeng) + '..' : text;
   return (
     <div
-      className={`relative text-white font-medium text-lg`}
+      className={`relative font-medium text-lg`}
       onMouseOver={() => setIsHovering(true)}
       onMouseOut={() => setIsHovering(false)}
     >
       {slicedText}
       {isHovering && (
-        <p className='absolute p-2 bg-white border border-gray-500 rounded-lg'>
+        <p className='absolute z-10 p-2 bg-gray-900 border border-gray-500 rounded-lg'>
           {text}
         </p>
       )}
