@@ -17,6 +17,7 @@ import useSearch from '../../hooks/UseSearch';
 import LoadingCheckWrapper from '../../components/LoadingCheckWrapper';
 import SongTable from '../../components/Table/SongTable';
 //TODO: 닉네임 검색기능 추가하기
+//TODO: getIp 기능 오류 자꾸나는거 어떻게좀하기
 const App = () => {
   const [isUser, setIsUser] = useState<boolean>(false);
   const [buskingData, setBuskingData] = useState<BuskingData | null>(null);
