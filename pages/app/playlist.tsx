@@ -31,10 +31,6 @@ export default function AppPlaylist() {
 
   //TODO: searchword가 searchBar의 여러 컴포넌트에 전해지는게 맘에 안듬, searchWord state도 searchBar에서 관리하게하고싶음
   //바깥 컴포넌트에서 말고 useAddSearch의 로직이 워낙 복잡하다 보니.. 쉽지않네
-  // const [searchWord, setSearchWord, search] = useSearchBar(
-  //   (nowPlaylist && nowPlaylist.songs) || null,
-  //   setSongArr
-  // );
   const [
     {
       searchWord,
@@ -98,9 +94,6 @@ export default function AppPlaylist() {
             <SongTable
               viewdSongArr={viewedDataArr}
               nowPageNum={nowPageNum}
-              resultNum={songArr.length}
-              onPagePlus={handlePlus}
-              onPageMinus={handleMinus}
               renderSongResult={(key, index, result) => (
                 <PrimarySongResult
                   key={key}
@@ -111,7 +104,14 @@ export default function AppPlaylist() {
                   <MinusIcn width={24} height={24} color={'white'} />
                 </PrimarySongResult>
               )}
-            ></SongTable>
+            >
+              <SongTable.PagingBar
+                resultNum={songArr.length}
+                pageNum={nowPageNum}
+                onPagePlus={handlePlus}
+                onPageMinus={handleMinus}
+              />
+            </SongTable>
           </LoadingCheckWrapper>
         </MainSec>
       </NoPlaylistCheckWrapper>

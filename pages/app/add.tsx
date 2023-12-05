@@ -129,9 +129,6 @@ export default function AppAdd() {
             <SongTable
               viewdSongArr={searchResults}
               nowPageNum={nowPageNum}
-              resultNum={resultNum}
-              onPagePlus={handlePlus}
-              onPageMinus={handleMinus}
               renderSongResult={(key, index, result) => (
                 <SongAddResult
                   key={key}
@@ -142,7 +139,14 @@ export default function AppAdd() {
                   <PlusIcn width={24} height={24} color={'white'} />
                 </SongAddResult>
               )}
-            ></SongTable>
+            >
+              <SongTable.PagingBar
+                resultNum={resultNum}
+                pageNum={nowPageNum}
+                onPagePlus={handlePlus}
+                onPageMinus={handleMinus}
+              />
+            </SongTable>
           </LoadingCheckWrapper>
         </MainSec>
       </NoPlaylistCheckWrapper>

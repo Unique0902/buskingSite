@@ -211,9 +211,6 @@ const App = () => {
                   <SongTable
                     viewdSongArr={playlistSearchProps.viewedDataArr}
                     nowPageNum={playlistSearchProps.nowPageNum}
-                    resultNum={nowPlaylistSongArr.length}
-                    onPagePlus={playlistSearchProps.handlePlus}
-                    onPageMinus={playlistSearchProps.handleMinus}
                     renderSongResult={(key, index, result) => (
                       <PrimarySongResult
                         key={key}
@@ -224,7 +221,14 @@ const App = () => {
                         <SendIcn width={24} height={24} color={'white'} />
                       </PrimarySongResult>
                     )}
-                  ></SongTable>
+                  >
+                    <SongTable.PagingBar
+                      resultNum={nowPlaylistSongArr.length}
+                      pageNum={playlistSearchProps.nowPageNum}
+                      onPagePlus={playlistSearchProps.handlePlus}
+                      onPageMinus={playlistSearchProps.handleMinus}
+                    />
+                  </SongTable>
                 </LoadingCheckWrapper>
               </MainSec>
 
@@ -242,9 +246,6 @@ const App = () => {
                   <SongTable
                     viewdSongArr={applianceSearchProps.viewedDataArr}
                     nowPageNum={applianceSearchProps.nowPageNum}
-                    resultNum={appliance.length}
-                    onPagePlus={applianceSearchProps.handlePlus}
-                    onPageMinus={applianceSearchProps.handleMinus}
                     renderSongResult={(key, index, result) => (
                       <RequestSongResult
                         key={key}
@@ -255,7 +256,14 @@ const App = () => {
                         <SendIcn width={24} height={24} color={'white'} />
                       </RequestSongResult>
                     )}
-                  ></SongTable>
+                  >
+                    <SongTable.PagingBar
+                      resultNum={appliance.length}
+                      pageNum={applianceSearchProps.nowPageNum}
+                      onPagePlus={applianceSearchProps.handlePlus}
+                      onPageMinus={applianceSearchProps.handleMinus}
+                    />
+                  </SongTable>
                 </LoadingCheckWrapper>
               </MainSec>
             </section>
@@ -330,9 +338,6 @@ const App = () => {
                     <SongTable
                       viewdSongArr={playlistSearchProps.viewedDataArr}
                       nowPageNum={playlistSearchProps.nowPageNum}
-                      resultNum={nowPlaylistSongArr.length}
-                      onPagePlus={playlistSearchProps.handlePlus}
-                      onPageMinus={playlistSearchProps.handleMinus}
                       renderSongResult={(key, index, result) => (
                         <PrimarySongResult
                           key={key}
@@ -343,7 +348,14 @@ const App = () => {
                           <SendIcn width={24} height={24} color={'white'} />
                         </PrimarySongResult>
                       )}
-                    ></SongTable>
+                    >
+                      <SongTable.PagingBar
+                        resultNum={nowPlaylistSongArr.length}
+                        pageNum={playlistSearchProps.nowPageNum}
+                        onPagePlus={playlistSearchProps.handlePlus}
+                        onPageMinus={playlistSearchProps.handleMinus}
+                      />
+                    </SongTable>
                   </LoadingCheckWrapper>
                 </MainSec>
               )}

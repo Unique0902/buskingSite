@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import { ApplianceData } from '../../store/type/busking';
 import { FmEditedTopTrackData, FmTrackData } from '../../store/type/fm';
 import { PlaylistSongData } from '../../store/type/playlist';
@@ -20,26 +20,15 @@ type Props = {
       | FmEditedTopTrackData
   ) => React.JSX.Element;
   nowPageNum: number;
-  resultNum: number;
-  onPagePlus: () => void;
-  onPageMinus: () => void;
+  children: ReactNode;
 };
 
 export default function SongTable({
   viewdSongArr,
   renderSongResult,
   nowPageNum,
-  resultNum,
-  onPagePlus,
-  onPageMinus,
+  children,
 }: Props) {
-  const handlePlusPage = () => {
-    onPagePlus();
-  };
-  const handleMinusPage = () => {
-    onPageMinus();
-  };
-
   return (
     <section className='w-full'>
       <ul className='p-1 bg-gray-800 rounded-xl'>
@@ -48,12 +37,8 @@ export default function SongTable({
             {viewdSongArr.map((result, index) =>
               renderSongResult(index, index + 1 + (nowPageNum - 1) * 6, result)
             )}
-            <PagingBar
-              resultNum={resultNum}
-              pageNum={nowPageNum}
-              onPagePlus={handlePlusPage}
-              onPageMinus={handleMinusPage}
-            />
+
+            {children}
           </>
         )}
         {viewdSongArr.length === 0 && (
@@ -67,3 +52,5 @@ export default function SongTable({
     </section>
   );
 }
+
+SongTable.PagingBar = PagingBar;

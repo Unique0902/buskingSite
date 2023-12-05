@@ -125,9 +125,6 @@ export default function AppBusking({}) {
           <SongTable
             viewdSongArr={viewedDataArr}
             nowPageNum={nowPageNum}
-            resultNum={songArrToView.length}
-            onPagePlus={handlePlus}
-            onPageMinus={handleMinus}
             renderSongResult={(key, index, result) => (
               <RequestSongResult
                 key={key}
@@ -138,7 +135,14 @@ export default function AppBusking({}) {
                 <MinusIcn width={24} height={24} color={'white'} />
               </RequestSongResult>
             )}
-          ></SongTable>
+          >
+            <SongTable.PagingBar
+              resultNum={songArrToView.length}
+              pageNum={nowPageNum}
+              onPagePlus={handlePlus}
+              onPageMinus={handleMinus}
+            />
+          </SongTable>
         </LoadingCheckWrapper>
 
         <section className='flex flex-row justify-end pt-4'>
