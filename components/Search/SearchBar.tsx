@@ -71,9 +71,9 @@ const SubSec = ({ render }: SubSecProps) => {
 };
 
 type SelectProps = {
-  children: ReactNode;
+  optionValueArr: string[];
 };
-const Select = ({ children }: SelectProps) => {
+const Select = ({ optionValueArr }: SelectProps) => {
   const { searchWord, handleSelectChange } = useContext(SearchBarContext);
   return (
     <select
@@ -81,7 +81,9 @@ const Select = ({ children }: SelectProps) => {
       value={searchWord.category}
       onChange={handleSelectChange}
     >
-      {children}
+      {optionValueArr.map((val) => (
+        <option value={val}>{val}</option>
+      ))}
     </select>
   );
 };

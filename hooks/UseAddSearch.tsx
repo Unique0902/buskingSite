@@ -133,10 +133,8 @@ const useAddSearch = () => {
     return (
       <SearchBar searchWord={searchWord} setSearchWord={setSearchWord}>
         <SearchBar.MainSec>
-          <SearchBar.MainSec.Select>
-            <SearchBar.MainSec.Option value='제목' />
-            <SearchBar.MainSec.Option value='가수' />
-          </SearchBar.MainSec.Select>
+          <SearchBar.MainSec.Select optionValueArr={['제목', '가수']} />
+
           <SearchBar.MainSec.InputWithButton
             handleClickBtn={handleSearchBtnClick}
           />
