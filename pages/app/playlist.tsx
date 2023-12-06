@@ -81,14 +81,14 @@ export default function AppPlaylist() {
           </h2>
 
           <LoadingCheckWrapper isLoading={isLoading}>
-            <SongTable
+            <SongTable<PlaylistSongData>
               viewdSongArr={viewedDataArr}
               nowPageNum={nowPageNum}
               renderSongResult={(key, index, result) => (
                 <PrimarySongResult
                   key={key}
                   index={index}
-                  result={result as PlaylistSongData}
+                  result={result}
                   handleSongClick={handleClickResult}
                 >
                   <MinusIcn width={24} height={24} color={'white'} />

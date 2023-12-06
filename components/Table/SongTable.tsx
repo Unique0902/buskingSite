@@ -4,31 +4,24 @@ import { FmEditedTopTrackData, FmTrackData } from '../../store/type/fm';
 import { PlaylistSongData } from '../../store/type/playlist';
 import PagingBar from './PagingBar';
 
-type Props = {
-  viewdSongArr:
-    | PlaylistSongData[]
-    | ApplianceData[]
-    | FmTrackData[]
-    | FmEditedTopTrackData[];
+type Props<T> = {
+  viewdSongArr: T[];
   renderSongResult: (
     key: number,
     index: number,
-    result:
-      | PlaylistSongData
-      | ApplianceData
-      | FmTrackData
-      | FmEditedTopTrackData
+    result: T
   ) => React.JSX.Element;
   nowPageNum: number;
   children: ReactNode;
 };
 
-export default function SongTable({
-  viewdSongArr,
-  renderSongResult,
-  nowPageNum,
-  children,
-}: Props) {
+export default function SongTable<
+  T extends
+    | PlaylistSongData
+    | ApplianceData
+    | FmTrackData
+    | FmEditedTopTrackData
+>({ viewdSongArr, renderSongResult, nowPageNum, children }: Props<T>) {
   return (
     <section className='w-full'>
       <ul className='p-1 bg-gray-800 rounded-xl'>

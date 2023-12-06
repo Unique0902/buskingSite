@@ -203,14 +203,14 @@ const App = () => {
                 </SearchBar>
 
                 <LoadingCheckWrapper isLoading={playlistSearchProps.isLoading}>
-                  <SongTable
+                  <SongTable<PlaylistSongData>
                     viewdSongArr={playlistSearchProps.viewedDataArr}
                     nowPageNum={playlistSearchProps.nowPageNum}
                     renderSongResult={(key, index, result) => (
                       <PrimarySongResult
                         key={key}
                         index={index}
-                        result={result as PlaylistSongData}
+                        result={result}
                         handleSongClick={handleApplySong}
                       >
                         <SendIcn width={24} height={24} color={'white'} />
@@ -238,14 +238,14 @@ const App = () => {
                 </section>
 
                 <LoadingCheckWrapper isLoading={applianceSearchProps.isLoading}>
-                  <SongTable
+                  <SongTable<ApplianceData>
                     viewdSongArr={applianceSearchProps.viewedDataArr}
                     nowPageNum={applianceSearchProps.nowPageNum}
                     renderSongResult={(key, index, result) => (
                       <RequestSongResult
                         key={key}
                         index={index}
-                        result={result as ApplianceData}
+                        result={result}
                         handleSongClick={handleApplySong}
                       >
                         <SendIcn width={24} height={24} color={'white'} />
@@ -324,14 +324,14 @@ const App = () => {
                   <LoadingCheckWrapper
                     isLoading={playlistSearchProps.isLoading}
                   >
-                    <SongTable
+                    <SongTable<PlaylistSongData>
                       viewdSongArr={playlistSearchProps.viewedDataArr}
                       nowPageNum={playlistSearchProps.nowPageNum}
                       renderSongResult={(key, index, result) => (
                         <PrimarySongResult
                           key={key}
                           index={index}
-                          result={result as PlaylistSongData}
+                          result={result}
                           handleSongClick={(sid: string) => {}}
                         >
                           <SendIcn width={24} height={24} color={'white'} />

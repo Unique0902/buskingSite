@@ -79,14 +79,14 @@ export default function AppAdd() {
             ></SearchBar.SubSec>
           </SearchBar>
           <LoadingCheckWrapper isLoading={isLoading}>
-            <SongTable
+            <SongTable<FmEditedTopTrackData | FmTrackData>
               viewdSongArr={searchResults}
               nowPageNum={nowPageNum}
               renderSongResult={(key, index, result) => (
                 <SongAddResult
                   key={key}
                   index={index}
-                  result={result as FmEditedTopTrackData | FmTrackData}
+                  result={result}
                   handleSongClick={addSongToPlaylist}
                 >
                   <PlusIcn width={24} height={24} color={'white'} />

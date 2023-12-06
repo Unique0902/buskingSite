@@ -5,17 +5,15 @@ type SearchWord = {
   name: string;
   category: '제목' | '가수';
 };
-const useSearch = (pureDataArr: PlaylistSongData[] | ApplianceData[]) => {
+const useSearch = <T extends PlaylistSongData | ApplianceData>(
+  pureDataArr: T[]
+) => {
   const [searchWord, setSearchWord] = useState<SearchWord>({
     name: '',
     category: '제목',
   });
-  const [searchedDataArr, setSearchedDataArr] = useState<
-    PlaylistSongData[] | ApplianceData[]
-  >([]);
-  const [viewedDataArr, setViewedDataArr] = useState<
-    PlaylistSongData[] | ApplianceData[]
-  >([]);
+  const [searchedDataArr, setSearchedDataArr] = useState<T[]>([]);
+  const [viewedDataArr, setViewedDataArr] = useState<T[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -57,10 +55,7 @@ const useSearch = (pureDataArr: PlaylistSongData[] | ApplianceData[]) => {
     setIsLoading(false);
   };
 
-  const getDataByPageNum = (
-    pageNum: number,
-    dataArr: PlaylistSongData[]
-  ): PlaylistSongData[] => {
+  const getDataByPageNum = (pageNum: number, dataArr: T[]): T[] => {
     return dataArr.slice((pageNum - 1) * 6, pageNum * 6);
   };
 

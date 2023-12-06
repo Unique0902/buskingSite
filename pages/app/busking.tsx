@@ -121,14 +121,14 @@ export default function AppBusking({}) {
         </div>
 
         <LoadingCheckWrapper isLoading={isLoading}>
-          <SongTable
+          <SongTable<ApplianceData>
             viewdSongArr={viewedDataArr}
             nowPageNum={nowPageNum}
             renderSongResult={(key, index, result) => (
               <RequestSongResult
                 key={key}
                 index={index}
-                result={result as ApplianceData}
+                result={result}
                 handleSongClick={handleRemoveRequestSong}
               >
                 <MinusIcn width={24} height={24} color={'white'} />
