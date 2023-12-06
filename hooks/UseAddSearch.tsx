@@ -150,11 +150,8 @@ const useAddSearch = () => {
                 text={
                   'Api 특성상 제목, 가수명을 영어로 입력하시면 더 잘나옵니다.'
                 }
-              >
-                <div className='ml-3 max-lg:w-5 max-lg:h-5 max-lg:hidden'>
-                  <Icon size={24} color='blue' icon='Inform' />
-                </div>
-              </HoverIcon>
+                icon='Inform'
+              />
             </RenderedWhenFullScreen>
           )}
         ></SearchBar.SubSec>
