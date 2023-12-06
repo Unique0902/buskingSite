@@ -193,15 +193,13 @@ const App = () => {
                       text='검색'
                     />
                   </SearchBar.MainSec>
-                  <SearchBar.SubSec
-                    render={() => (
-                      <ArrangeMenuBtn
-                        results={nowPlaylistSongArr}
-                        setResults={setNowPlaylistSongArr}
-                        isBusking={false}
-                      />
-                    )}
-                  ></SearchBar.SubSec>
+                  <SearchBar.SubSec>
+                    <ArrangeMenuBtn
+                      results={nowPlaylistSongArr}
+                      setResults={setNowPlaylistSongArr}
+                      isBusking={false}
+                    />
+                  </SearchBar.SubSec>
                 </SearchBar>
 
                 <LoadingCheckWrapper isLoading={playlistSearchProps.isLoading}>
@@ -309,15 +307,13 @@ const App = () => {
                         text='검색'
                       />
                     </SearchBar.MainSec>
-                    <SearchBar.SubSec
-                      render={() => (
-                        <ArrangeMenuBtn
-                          results={nowPlaylistSongArr}
-                          setResults={setNowPlaylistSongArr}
-                          isBusking={false}
-                        />
-                      )}
-                    ></SearchBar.SubSec>
+                    <SearchBar.SubSec>
+                      <ArrangeMenuBtn
+                        results={nowPlaylistSongArr}
+                        setResults={setNowPlaylistSongArr}
+                        isBusking={false}
+                      />
+                    </SearchBar.SubSec>
                   </SearchBar>
 
                   <LoadingCheckWrapper

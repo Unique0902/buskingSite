@@ -55,16 +55,14 @@ export default function AppAdd() {
                 text='검색'
               />
             </SearchBar.MainSec>
-            <SearchBar.SubSec
-              render={() => (
-                <RenderedWhenFullScreen>
-                  <HoverIcon
-                    text='Api 특성상 제목, 가수명을 영어로 입력하시면 더 잘나옵니다.'
-                    icon='Inform'
-                  />
-                </RenderedWhenFullScreen>
-              )}
-            ></SearchBar.SubSec>
+            <SearchBar.SubSec>
+              <RenderedWhenFullScreen>
+                <HoverIcon
+                  text='Api 특성상 제목, 가수명을 영어로 입력하시면 더 잘나옵니다.'
+                  icon='Inform'
+                />
+              </RenderedWhenFullScreen>
+            </SearchBar.SubSec>
           </SearchBar>
           <LoadingCheckWrapper isLoading={isLoading}>
             <SongTable<FmEditedTopTrackData | FmTrackData>

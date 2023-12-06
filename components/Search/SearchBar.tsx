@@ -65,10 +65,10 @@ const MainSec = ({ children }: MainSecProps) => {
 };
 
 type SubSecProps = {
-  render?: () => React.JSX.Element;
+  children: ReactNode;
 };
-const SubSec = ({ render }: SubSecProps) => {
-  return <>{render && render()}</>;
+const SubSec = ({ children }: SubSecProps) => {
+  return <>{children}</>;
 };
 
 type SelectProps = {

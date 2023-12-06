@@ -62,15 +62,13 @@ export default function AppPlaylist() {
                 text='검색'
               />
             </SearchBar.MainSec>
-            <SearchBar.SubSec
-              render={() => (
-                <ArrangeMenuBtn
-                  results={songArr}
-                  setResults={setSongArr}
-                  isBusking={false}
-                />
-              )}
-            ></SearchBar.SubSec>
+            <SearchBar.SubSec>
+              <ArrangeMenuBtn
+                results={songArr}
+                setResults={setSongArr}
+                isBusking={false}
+              />
+            </SearchBar.SubSec>
           </SearchBar>
 
           <h2 className='mb-2 text-xl font-semibold '>
