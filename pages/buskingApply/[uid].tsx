@@ -35,8 +35,8 @@ const App = () => {
   const { getPlaylists } = usePlaylistContext();
   const { getUserData } = useUserDataContext();
 
-  const [playlistSearchProps] = useSearch(nowPlaylistSongArr);
-  const [applianceSearchProps] = useSearch(appliance);
+  const [playlistSearchProps] = useSearch<PlaylistSongData>(nowPlaylistSongArr);
+  const [applianceSearchProps] = useSearch<ApplianceData>(appliance);
 
   useEffect(() => {
     if (isUser && userId) {

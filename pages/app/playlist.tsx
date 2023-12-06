@@ -40,7 +40,7 @@ export default function AppPlaylist() {
       handleMinus,
       handleSearchBtnClick,
     },
-  ] = useSearch(songArr);
+  ] = useSearch<PlaylistSongData>(songArr);
 
   const handleClickResult = (sid: string) => {
     removeSongInPlaylist(sid);

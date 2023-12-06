@@ -66,7 +66,7 @@ export default function AppBusking({}) {
 
   //이러면 안쓰는 것들이 애매해지네 useAppliance로 따로 만들어야하나 오 객체로 묶으니까 낫네
   const [{ isLoading, viewedDataArr, nowPageNum, handlePlus, handleMinus }] =
-    useSearch(songArrToView);
+    useSearch<ApplianceData>(songArrToView);
 
   if (isbuskingDataLoading) {
     return <div>checking buskingData...</div>;
