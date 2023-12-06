@@ -21,8 +21,8 @@ class AuthService {
     signOut(this.auth);
   }
 
-  onAuthChange(onUserChanged: (user: UserInfo) => void) {
-    onAuthStateChanged(this.auth, (user: UserInfo) => {
+  onAuthChange(onUserChanged: (user: UserInfo | null) => void) {
+    onAuthStateChanged(this.auth, (user: UserInfo | null) => {
       onUserChanged(user);
     });
   }

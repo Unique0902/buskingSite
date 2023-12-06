@@ -8,7 +8,7 @@ import {
 } from 'react';
 import AuthService from '../service/auth_service';
 type ContextProps = {
-  user: UserInfo | undefined;
+  user: UserInfo | null;
   userLoading: boolean;
   uid: string | undefined;
   login: (providerName: string) => void;
@@ -25,7 +25,7 @@ type Props = {
 };
 
 export function AuthContextProvider({ authService, children }: Props) {
-  const [user, setUser] = useState<UserInfo | undefined>();
+  const [user, setUser] = useState<UserInfo | null>(null);
   const [userLoading, setUserLoading] = useState(true);
   const logout = () => {
     authService.logout();
