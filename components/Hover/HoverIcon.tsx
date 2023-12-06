@@ -1,9 +1,11 @@
-import React, { ReactNode, useState } from 'react';
+import React, { useState } from 'react';
+import { iconName } from '../../assets/icon/constants';
+import Icon from '../../assets/icon/icon';
 type Props = {
-  children: ReactNode;
   text: string;
+  icon: iconName;
 };
-const HoverIcon = ({ children, text }: Props) => {
+const HoverIcon = ({ text, icon }: Props) => {
   const [isHovering, setIsHovering] = useState<boolean>(false);
 
   return (
@@ -12,7 +14,7 @@ const HoverIcon = ({ children, text }: Props) => {
       onMouseOver={() => setIsHovering(true)}
       onMouseOut={() => setIsHovering(false)}
     >
-      {children}
+      <Icon size={24} color='blue' icon={icon} />
       {isHovering && (
         <div className='absolute right-0 w-48 p-2 text-xs text-gray-600 bg-white border border-gray-500 rounded-lg'>
           {text}

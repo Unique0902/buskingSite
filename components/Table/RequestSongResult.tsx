@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { iconName } from '../../assets/icon/constants';
 import Icon from '../../assets/icon/icon';
 import { ApplianceData } from '../../store/type/busking';

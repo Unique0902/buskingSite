@@ -6,7 +6,6 @@ import { useUserDataContext } from '../../context/UserDataContext';
 import MainSec from '../../components/MainSec';
 import { useRouter } from 'next/router';
 import ArrangeMenuBtn from '../../components/ArrangeMenu/ArrangeMenuBtn';
-import Icon from '../../assets/icon/icon';
 import { ApplianceData, BuskingData } from '../../store/type/busking';
 import { PlaylistData, PlaylistSongData } from '../../store/type/playlist';
 import ThemeBtn from '../../components/Layout/Footer/ThemeBtn';

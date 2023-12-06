@@ -5,7 +5,6 @@ import MainSec from '../../components/MainSec';
 import ArrangeMenuBtn from '../../components/ArrangeMenu/ArrangeMenuBtn';
 import { usePlaylistContext } from '../../context/PlaylistContext';
 import { getAppLayOut } from '../../layouts/appLayout';
-import Icon from '../../assets/icon/icon';
 import NoPlaylistCheckWrapper from '../../components/NoPlaylistCheckWrapper';
 import { PlaylistSongData } from '../../store/type/playlist';
 import SearchBar from '../../components/Search/SearchBar';

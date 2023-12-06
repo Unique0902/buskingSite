@@ -12,7 +12,6 @@ import PrimaryBtn from '../../components/Btn/PrimaryBtn';
 import { color } from '../../styles/theme';
 import SectionCopyText from '../../components/SectionCopyText';
 import MusicBar from '../../components/MusicBar/MusicBar';
-import Icon from '../../assets/icon/icon';
 import { ApplianceData, ApplianceObjects } from '../../store/type/busking';
 import RequestSongResult from '../../components/Table/RequestSongResult';
 import useSearch from '../../hooks/UseSearch';
@@ -85,10 +84,6 @@ export default function AppBusking({}) {
           {userData && `${userData.name}님의 버스킹`}
         </h1>
         <div className='flex flex-row items-center justify-end gap-4 border-gray-400 lg:border-l grow'>
-          {/* <QRCodeSection
-            url={`https://noraebook.netlify.app/buskingApply/${uid}`}
-            title={'곡 신청 사이트'}
-          /> */}
           <HoverTextSection
             text={'신청 URL 확인'}
             bgColor={color.white}
