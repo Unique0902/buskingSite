@@ -29,8 +29,6 @@ export default function AppAdd() {
       handlePlus,
       handleMinus,
       handleSearchBtnClick,
-      handleInputChange,
-      handleSelectChange,
     },
   ] = useAddSearch();
 
@@ -80,7 +78,6 @@ export default function AppAdd() {
               )}
             ></SearchBar.SubSec>
           </SearchBar>
-
           <LoadingCheckWrapper isLoading={isLoading}>
             <SongTable
               viewdSongArr={searchResults}
