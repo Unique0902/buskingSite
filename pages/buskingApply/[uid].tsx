@@ -215,9 +215,8 @@ const App = () => {
                         index={index}
                         result={result}
                         handleSongClick={handleApplySong}
-                      >
-                        <Icon size={24} color='white' icon='Send' />
-                      </PrimarySongResult>
+                        icon='Send'
+                      />
                     )}
                   >
                     <SongTable.PagingBar
@@ -250,9 +249,8 @@ const App = () => {
                         index={index}
                         result={result}
                         handleSongClick={handleApplySong}
-                      >
-                        <Icon size={24} color='white' icon='Send' />
-                      </RequestSongResult>
+                        icon='Send'
+                      />
                     )}
                   >
                     <SongTable.PagingBar
@@ -335,11 +333,8 @@ const App = () => {
                           index={index}
                           result={result}
                           handleSongClick={(sid: string) => {}}
-                        >
-                          {Icon && (
-                            <Icon size={24} color='white' icon={'Smile'} />
-                          )}
-                        </PrimarySongResult>
+                          icon='Smile'
+                        />
                       )}
                     >
                       <SongTable.PagingBar

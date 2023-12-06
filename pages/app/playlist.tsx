@@ -88,9 +88,8 @@ export default function AppPlaylist() {
                   index={index}
                   result={result}
                   handleSongClick={handleClickResult}
-                >
-                  <Icon size={24} color='white' icon='Minus' />
-                </PrimarySongResult>
+                  icon='Minus'
+                />
               )}
             >
               <SongTable.PagingBar

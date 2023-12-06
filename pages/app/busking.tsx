@@ -132,9 +132,8 @@ export default function AppBusking({}) {
                 index={index}
                 result={result}
                 handleSongClick={handleRemoveRequestSong}
-              >
-                <Icon size={24} color='white' icon='Minus' />
-              </RequestSongResult>
+                icon='Minus'
+              />
             )}
           >
             <SongTable.PagingBar

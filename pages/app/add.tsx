@@ -82,9 +82,8 @@ export default function AppAdd() {
                   index={index}
                   result={result}
                   handleSongClick={addSongToPlaylist}
-                >
-                  <Icon size={24} color='white' icon='Plus' />
-                </SongAddResult>
+                  icon='Plus'
+                />
               )}
             >
               <SongTable.PagingBar

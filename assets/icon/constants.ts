@@ -31,7 +31,7 @@ type icon = {
   fillRule3?: 'evenodd' | 'nonzero' | 'inherit';
   viewBox: string;
 };
-
+//TODO: plusIcon 크기 조절하기
 // icon의 path와 viewbox
 const IconSet: Record<iconName, icon> = {
   Book: {
