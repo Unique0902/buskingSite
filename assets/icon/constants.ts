@@ -26,9 +26,9 @@ type icon = {
   path1: string;
   path2?: string;
   path3?: string;
-  fillRule1?: string;
-  fillRule2?: string;
-  fillRule3?: string;
+  fillRule1?: 'evenodd' | 'nonzero' | 'inherit';
+  fillRule2?: 'evenodd' | 'nonzero' | 'inherit';
+  fillRule3?: 'evenodd' | 'nonzero' | 'inherit';
   viewBox: string;
 };
 
