@@ -1,7 +1,7 @@
 import { IpData } from '../store/type/ip';
 
 class IpService {
-  async getIp(): Promise<string> {
+  async getIp(): Promise<string | undefined> {
     try {
       const ipData = await fetch('https://geolocation-db.com/json/');
       const locationIp: IpData = await ipData.json();

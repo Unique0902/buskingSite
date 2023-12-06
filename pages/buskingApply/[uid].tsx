@@ -26,7 +26,7 @@ const App = () => {
   >([]);
   const [appliance, setAppliance] = useState<ApplianceData[]>([]);
   const [nowPlaylist, setNowPlaylist] = useState<PlaylistData | null>(null);
-  const [ip, setIp] = useState<string>('');
+  const [ip, setIp] = useState<string | undefined>('');
   const router = useRouter();
   const userId = router.query.uid ? router.query.uid.toString() : null;
   const { getIp } = useIpContext();
@@ -102,7 +102,7 @@ const App = () => {
 
   //TODO:여기서 userID를 분리할수있을까?
   const handleApplySong = (sid: string) => {
-    if (buskingData && userId) {
+    if (buskingData && userId && ip) {
       const appliedSongData = appliance.find((song) => song.sid === sid);
       if (appliedSongData) {
         const isUserApplied = !!appliedSongData.applicants.find(
@@ -139,6 +139,10 @@ const App = () => {
       }
     }
   };
+
+  if (!ip) {
+    return <div>accessing your ip address...</div>;
+  }
 
   return (
     <section className='relative flex w-full h-screen px-8 py-4 overflow-auto max-md:px-4 bg-gradient-to-b from-blue-500 to-mainBlue'>

@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useContext } from 'react';
 import IpService from '../service/ipService';
 type ContextProps = {
-  getIp: () => Promise<string>;
+  getIp: () => Promise<string | undefined>;
   logIp: () => Promise<void>;
 };
 type Props = {
