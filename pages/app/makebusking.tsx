@@ -59,7 +59,7 @@ export default function AppMakeBusking({}) {
   // useEffect를 사용하는 이유에 대해서 잘알자.. useEffect의 사용이유를 알지않고 무작정 성능 저하가 온다고 생각하고 사용하면서
   // 겪은 문제
   if (buskingData) {
-    router.push('/app/busking');
+    router.replace('/app/busking');
     return <div>move to busking page..</div>;
   }
 
