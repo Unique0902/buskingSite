@@ -82,9 +82,9 @@ export default function AppAdd() {
             <SongTable<FmEditedTopTrackData | FmTrackData>
               viewdSongArr={searchResults}
               nowPageNum={nowPageNum}
-              renderSongResult={(key, index, result) => (
+              renderSongResult={(index, result) => (
                 <SongAddResult
-                  key={key}
+                  key={result.artist + result.name}
                   index={index}
                   result={result}
                   handleSongClick={addSongToPlaylist}

@@ -206,9 +206,9 @@ const App = () => {
                   <SongTable<PlaylistSongData>
                     viewdSongArr={playlistSearchProps.viewedDataArr}
                     nowPageNum={playlistSearchProps.nowPageNum}
-                    renderSongResult={(key, index, result) => (
+                    renderSongResult={(index, result) => (
                       <PrimarySongResult
-                        key={key}
+                        key={result.id}
                         index={index}
                         result={result}
                         handleSongClick={handleApplySong}
@@ -241,9 +241,9 @@ const App = () => {
                   <SongTable<ApplianceData>
                     viewdSongArr={applianceSearchProps.viewedDataArr}
                     nowPageNum={applianceSearchProps.nowPageNum}
-                    renderSongResult={(key, index, result) => (
+                    renderSongResult={(index, result) => (
                       <RequestSongResult
-                        key={key}
+                        key={result.id}
                         index={index}
                         result={result}
                         handleSongClick={handleApplySong}
@@ -327,9 +327,9 @@ const App = () => {
                     <SongTable<PlaylistSongData>
                       viewdSongArr={playlistSearchProps.viewedDataArr}
                       nowPageNum={playlistSearchProps.nowPageNum}
-                      renderSongResult={(key, index, result) => (
+                      renderSongResult={(index, result) => (
                         <PrimarySongResult
-                          key={key}
+                          key={result.id}
                           index={index}
                           result={result}
                           handleSongClick={(sid: string) => {}}

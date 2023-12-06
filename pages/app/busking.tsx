@@ -124,9 +124,9 @@ export default function AppBusking({}) {
           <SongTable<ApplianceData>
             viewdSongArr={viewedDataArr}
             nowPageNum={nowPageNum}
-            renderSongResult={(key, index, result) => (
+            renderSongResult={(index, result) => (
               <RequestSongResult
-                key={key}
+                key={result.id}
                 index={index}
                 result={result}
                 handleSongClick={handleRemoveRequestSong}

@@ -6,11 +6,7 @@ import PagingBar from './PagingBar';
 
 type Props<T> = {
   viewdSongArr: T[];
-  renderSongResult: (
-    key: number,
-    index: number,
-    result: T
-  ) => React.JSX.Element;
+  renderSongResult: (index: number, result: T) => React.JSX.Element;
   nowPageNum: number;
   children: ReactNode;
 };
@@ -28,7 +24,7 @@ export default function SongTable<
         {viewdSongArr.length !== 0 && (
           <>
             {viewdSongArr.map((result, index) =>
-              renderSongResult(index, index + 1 + (nowPageNum - 1) * 6, result)
+              renderSongResult(index + 1 + (nowPageNum - 1) * 6, result)
             )}
 
             {children}

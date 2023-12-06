@@ -84,9 +84,9 @@ export default function AppPlaylist() {
             <SongTable<PlaylistSongData>
               viewdSongArr={viewedDataArr}
               nowPageNum={nowPageNum}
-              renderSongResult={(key, index, result) => (
+              renderSongResult={(index, result) => (
                 <PrimarySongResult
-                  key={key}
+                  key={result.id}
                   index={index}
                   result={result}
                   handleSongClick={handleClickResult}
