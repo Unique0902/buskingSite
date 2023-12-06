@@ -101,27 +101,17 @@ const useSearch = (pureDataArr: PlaylistSongData[] | ApplianceData[]) => {
       handleSearchBySearchWord();
     }
   };
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchWord({ ...searchWord, name: e.target.value });
-  };
-  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSearchWord({
-      ...searchWord,
-      category: e.target.value as '제목' | '가수',
-    });
-  };
 
   return [
     {
       searchWord,
+      setSearchWord,
       isLoading,
       viewedDataArr,
       nowPageNum,
       handlePlus,
       handleMinus,
       handleSearchBtnClick,
-      handleInputChange,
-      handleSelectChange,
     },
   ] as const;
 };

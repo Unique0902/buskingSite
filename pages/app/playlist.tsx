@@ -32,14 +32,13 @@ export default function AppPlaylist() {
   const [
     {
       searchWord,
+      setSearchWord,
       isLoading,
       viewedDataArr,
       nowPageNum,
       handlePlus,
       handleMinus,
       handleSearchBtnClick,
-      handleInputChange,
-      handleSelectChange,
     },
   ] = useSearch(songArr);
 
@@ -52,19 +51,14 @@ export default function AppPlaylist() {
       <TitleBar text={'플레이리스트 관리'} />
       <NoPlaylistCheckWrapper isExistWrapper={!!nowPlaylist}>
         <MainSec>
-          <SearchBar>
+          <SearchBar searchWord={searchWord} setSearchWord={setSearchWord}>
             <SearchBar.MainSec>
-              <SearchBar.MainSec.Select
-                searchWord={searchWord}
-                handleSelectChange={handleSelectChange}
-              >
+              <SearchBar.MainSec.Select>
                 <SearchBar.MainSec.Option value='제목' />
                 <SearchBar.MainSec.Option value='가수' />
               </SearchBar.MainSec.Select>
-              <SearchBar.MainSec.Input
-                inputValue={searchWord.name}
+              <SearchBar.MainSec.InputWithButton
                 handleClickBtn={handleSearchBtnClick}
-                handleInputChange={handleInputChange}
               />
               <SearchBar.MainSec.Button
                 handleClickBtn={handleSearchBtnClick}

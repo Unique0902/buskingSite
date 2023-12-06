@@ -174,21 +174,17 @@ const App = () => {
                     신청가능 곡 수 {nowPlaylistSongArr.length}
                   </h3>
                 </div>
-                <SearchBar>
+                <SearchBar
+                  searchWord={playlistSearchProps.searchWord}
+                  setSearchWord={playlistSearchProps.setSearchWord}
+                >
                   <SearchBar.MainSec>
-                    <SearchBar.MainSec.Select
-                      searchWord={playlistSearchProps.searchWord}
-                      handleSelectChange={
-                        playlistSearchProps.handleSelectChange
-                      }
-                    >
+                    <SearchBar.MainSec.Select>
                       <SearchBar.MainSec.Option value='제목' />
                       <SearchBar.MainSec.Option value='가수' />
                     </SearchBar.MainSec.Select>
-                    <SearchBar.MainSec.Input
-                      inputValue={playlistSearchProps.searchWord.name}
+                    <SearchBar.MainSec.InputWithButton
                       handleClickBtn={playlistSearchProps.handleSearchBtnClick}
-                      handleInputChange={playlistSearchProps.handleInputChange}
                     />
                     <SearchBar.MainSec.Button
                       handleClickBtn={playlistSearchProps.handleSearchBtnClick}
@@ -293,24 +289,18 @@ const App = () => {
                     </h3>
                   </div>
 
-                  <SearchBar>
+                  <SearchBar
+                    searchWord={playlistSearchProps.searchWord}
+                    setSearchWord={playlistSearchProps.setSearchWord}
+                  >
                     <SearchBar.MainSec>
-                      <SearchBar.MainSec.Select
-                        searchWord={playlistSearchProps.searchWord}
-                        handleSelectChange={
-                          playlistSearchProps.handleSelectChange
-                        }
-                      >
+                      <SearchBar.MainSec.Select>
                         <SearchBar.MainSec.Option value='제목' />
                         <SearchBar.MainSec.Option value='가수' />
                       </SearchBar.MainSec.Select>
-                      <SearchBar.MainSec.Input
-                        inputValue={playlistSearchProps.searchWord.name}
+                      <SearchBar.MainSec.InputWithButton
                         handleClickBtn={
                           playlistSearchProps.handleSearchBtnClick
-                        }
-                        handleInputChange={
-                          playlistSearchProps.handleInputChange
                         }
                       />
                       <SearchBar.MainSec.Button

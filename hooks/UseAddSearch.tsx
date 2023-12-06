@@ -135,6 +135,7 @@ const useAddSearch = () => {
     {
       searchResults,
       searchWord,
+      setSearchWord,
       isLoading,
       nowPageNum,
       resultNum,
