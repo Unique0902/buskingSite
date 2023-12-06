@@ -14,6 +14,8 @@ const MusicBar = ({ songArr, setSongArrToView }: Props) => {
   const [nowSong, setNowSong] = useState<ApplianceData | null>(null);
   const { applyBuskingSongAgain, removeBuskingSong } = useBuskingContext();
   useEffect(() => {
+    console.log(songArr);
+
     const copiedSongArr = [...songArr];
     if (nowSong) {
       copiedSongArr.shift();

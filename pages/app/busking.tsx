@@ -42,6 +42,8 @@ export default function AppBusking({}) {
         setSongArr(
           applianceArr.sort((a, b) => parseInt(a.id) - parseInt(b.id))
         );
+      } else {
+        setSongArr([]);
       }
     }
   }, [buskingData]);
