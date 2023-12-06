@@ -6,7 +6,7 @@ import { useUserDataContext } from '../../context/UserDataContext';
 import MainSec from '../../components/MainSec';
 import { useRouter } from 'next/router';
 import ArrangeMenuBtn from '../../components/ArrangeMenu/ArrangeMenuBtn';
-import { SendIcn } from '../../assets/icon/icon';
+import { SendIcn, SmileIcn } from '../../assets/icon/icon';
 import { ApplianceData, BuskingData } from '../../store/type/busking';
 import { PlaylistData, PlaylistSongData } from '../../store/type/playlist';
 import ThemeBtn from '../../components/Layout/Footer/ThemeBtn';
@@ -336,7 +336,7 @@ const App = () => {
                           result={result}
                           handleSongClick={(sid: string) => {}}
                         >
-                          <SendIcn width={24} height={24} color={'white'} />
+                          <SmileIcn width={24} height={24} color={'white'} />
                         </PrimarySongResult>
                       )}
                     >
