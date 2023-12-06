@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { InformIcn } from '../assets/icon/icon';
+import Icon from '../assets/icon/icon';
 import HoverIcon from '../components/Hover/HoverIcon';
 import RenderedWhenFullScreen from '../components/Responsive/RenderedWhenFullScreen';
 import SearchBar from '../components/Search/SearchBar';
@@ -151,12 +151,9 @@ const useAddSearch = () => {
                   'Api 특성상 제목, 가수명을 영어로 입력하시면 더 잘나옵니다.'
                 }
               >
-                <InformIcn
-                  color={'blue'}
-                  width={24}
-                  height={24}
-                  className='ml-3 text-2xl text-blue-500 max-lg:w-5 max-lg:h-5 max-lg:hidden'
-                />
+                <div className='ml-3 max-lg:w-5 max-lg:h-5 max-lg:hidden'>
+                  <Icon size={24} color='blue' icon='Inform' />
+                </div>
               </HoverIcon>
             </RenderedWhenFullScreen>
           )}

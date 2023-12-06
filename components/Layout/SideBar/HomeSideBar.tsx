@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { ArrowRightIcn, BookIcn } from '../../../assets/icon/icon';
+import Icon from '../../../assets/icon/icon';
 import HomeSideBarBtn from './HomeSideBarBtn';
 type Props = {
   setIsShowSideBar: React.Dispatch<React.SetStateAction<boolean>>;
@@ -29,12 +29,10 @@ const HomeSideBar = ({ setIsShowSideBar }: Props) => {
         className={` bg-gray-100 relative max-lg:absolute right-0 top-0 max-lg:h-full max-lg:z-40 w-64`}
       >
         <div className='flex items-center px-6 py-6 border-b border-gray-600 border-solid'>
-          <BookIcn
-            width={32}
-            height={32}
-            color={'#60a5fa'}
-            className={`mr-4`}
-          />
+          <div className='mr-4'>
+            <Icon size={32} color='#60a5fa' icon='Book' />
+          </div>
+
           <h1 className='text-2xl font-semibold '>노래책</h1>
         </div>
 
@@ -51,7 +49,7 @@ const HomeSideBar = ({ setIsShowSideBar }: Props) => {
                 setIsShowSideBar(false);
               }}
             >
-              <ArrowRightIcn width={20} height={20} color={'black'} />
+              <Icon size={20} color='black' icon='ArrowRight' />
             </button>
           </li>
         </ul>

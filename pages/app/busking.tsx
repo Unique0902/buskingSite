@@ -12,7 +12,7 @@ import PrimaryBtn from '../../components/Btn/PrimaryBtn';
 import { color } from '../../styles/theme';
 import SectionCopyText from '../../components/SectionCopyText';
 import MusicBar from '../../components/MusicBar/MusicBar';
-import { MinusIcn } from '../../assets/icon/icon';
+import Icon from '../../assets/icon/icon';
 import { ApplianceData, ApplianceObjects } from '../../store/type/busking';
 import RequestSongResult from '../../components/Table/RequestSongResult';
 import useSearch from '../../hooks/UseSearch';
@@ -131,7 +131,7 @@ export default function AppBusking({}) {
                 result={result}
                 handleSongClick={handleRemoveRequestSong}
               >
-                <MinusIcn width={24} height={24} color={'white'} />
+                <Icon size={24} color='white' icon='Minus' />
               </RequestSongResult>
             )}
           >

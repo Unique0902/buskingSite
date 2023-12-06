@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  NextSongIcn,
-  PauseIcn,
-  PlayIcn,
-  PreviousSongIcn,
-} from '../../assets/icon/icon';
+import Icon from '../../assets/icon/icon';
 import { useBuskingContext } from '../../context/BuskingContext';
 import { ApplianceData } from '../../store/type/busking';
 
@@ -92,19 +87,19 @@ const MusicBar = ({ songArr, setSongArrToView }: Props) => {
       </div>
       <div className='text-center'>
         <button className={playBtnStyle} onClick={handleClickPreviousBtn}>
-          <PreviousSongIcn width={36} height={36} color={'black'} />
+          <Icon size={36} color='black' icon='PreviousSong' />
         </button>
         {nowSong ? (
           <button className={playBtnStyle} onClick={handleClickPauseBtn}>
-            <PauseIcn width={36} height={36} color={'black'} />
+            <Icon size={36} color='black' icon='Pause' />
           </button>
         ) : (
           <button className={playBtnStyle} onClick={handleClickPlayBtn}>
-            <PlayIcn width={36} height={36} color={'black'} />
+            <Icon size={36} color='black' icon='Play' />
           </button>
         )}
         <button className={playBtnStyle} onClick={handleClickNextBtn}>
-          <NextSongIcn width={36} height={36} color={'black'} />
+          <Icon size={36} color='black' icon='NextSong' />
         </button>
       </div>
     </section>

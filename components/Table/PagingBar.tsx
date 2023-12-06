@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowLeftIcn, ArrowRightIcn } from '../../assets/icon/icon';
+import Icon from '../../assets/icon/icon';
 type Props = {
   resultNum: number;
   pageNum: number;
@@ -17,13 +17,13 @@ export default function PagingBar({
   return (
     <div className='flex flex-row items-center justify-center mt-3'>
       <button className={btnStyle} onClick={onPageMinus}>
-        <ArrowLeftIcn width={18} height={18} color={'white'} />
+        <Icon size={18} color='white' icon='ArrowLeft' />
       </button>
       <p className='ml-2 text-xl font-normal text-white'>
         {pageNum} / {Math.floor((resultNum - 1) / 6) + 1}
       </p>
       <button className={btnStyle} onClick={onPagePlus}>
-        <ArrowRightIcn width={18} height={18} color={'white'} />
+        <Icon size={18} color='white' icon={'ArrowRight'} />
       </button>
     </div>
   );

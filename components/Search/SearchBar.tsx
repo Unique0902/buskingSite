@@ -1,5 +1,5 @@
 import React, { createContext, ReactNode, useContext } from 'react';
-import { SearchIcn } from '../../assets/icon/icon';
+import Icon from '../../assets/icon/icon';
 import { color, xyPadding } from '../../styles/theme';
 import PrimaryBtn from '../Btn/PrimaryBtn';
 import RenderedWhenFullScreen from '../Responsive/RenderedWhenFullScreen';
@@ -118,7 +118,7 @@ const InputWithButton = ({ handleClickBtn }: InputWithButtonProps) => {
         onClick={handleClickBtn}
         type='submit'
       >
-        <SearchIcn width={18} height={18} color={color.gray_600} />
+        <Icon size={18} color={color.gray_600} icon='Search' />
       </button>
     </div>
   );

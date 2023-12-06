@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import PrimaryBtn from './Btn/PrimaryBtn';
 import { borderRadius, color, fontSize } from '../styles/theme';
-import { MenuIcn } from '../assets/icon/icon';
+import Icon from '../assets/icon/icon';
 import { useMediaQuery } from 'react-responsive';
 import HomeSideBar from './Layout/SideBar/HomeSideBar';
 import RenderedWhenMobile from './Responsive/RenderedWhenMobile';
@@ -72,12 +72,9 @@ export default function LoginNav({ scrollToTutorial }: Props) {
             setIsShowSideBar(!isShowSideBar);
           }}
         >
-          <MenuIcn
-            width={25}
-            height={25}
-            color={color.gray_600}
-            className='lg:hidden'
-          />
+          <div className='lg:hidden'>
+            <Icon size={25} color={color.gray_600} icon='Menu' />
+          </div>
         </button>
       </div>
       {mounted && isShowSideBar && (

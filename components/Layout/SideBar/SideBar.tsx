@@ -2,16 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { useMediaQuery } from 'react-responsive';
 import SideBarBtn from './SideBarBtn';
-import {
-  ArrowLeftIcn,
-  ArrowRightIcn,
-  BookIcn,
-  GuitarIcn,
-  HomeIcn,
-  PlusIcn,
-  SongIcn,
-  UserIcn,
-} from '../../../assets/icon/icon';
+import Icon from '../../../assets/icon/icon';
 type Props = {
   setIsShowSideBar: React.Dispatch<React.SetStateAction<boolean>>;
 };
@@ -64,7 +55,6 @@ const SideBar = ({ setIsShowSideBar }: Props) => {
       };
     }
   }, [wrapperRef, isLgMediaQuery, setIsShowSideBar]);
-  const iconStyle = 'mr-4';
   return (
     <>
       <aside
@@ -74,19 +64,14 @@ const SideBar = ({ setIsShowSideBar }: Props) => {
         }`}
       >
         {!isHide && (
-          <div className='flex items-center px-5 py-3 text-white border-b border-gray-600 border-solid'>
-            <BookIcn
-              width={32}
-              height={32}
-              color={'#60a5fa'}
-              className={`mr-4`}
-            />
+          <div className='flex items-center gap-3 px-5 py-3 text-white border-b border-gray-600 border-solid'>
+            <Icon size={32} color='#60a5fa' icon='Book' />
             <p className='text-2xl font-semibold '>노래책</p>
           </div>
         )}
         {isHide && (
           <div className='flex items-center justify-center w-full py-4 text-2xl text-center text-blue-600 border-b border-gray-600 border-solid'>
-            <BookIcn width={32} height={32} color={'#60a5fa'} />
+            <Icon size={32} color='#60a5fa' icon='Book' />
           </div>
         )}
 
@@ -96,13 +81,8 @@ const SideBar = ({ setIsShowSideBar }: Props) => {
             selectedBtn={selectedBtn}
             isHide={isHide}
             text={'Home'}
-          >
-            <HomeIcn
-              width={20}
-              height={20}
-              className={`${!isHide && iconStyle}`}
-            />
-          </SideBarBtn>
+            icon='Home'
+          />
           {!isHide && (
             <li>
               <p className='pt-3 pb-3 pl-5 text-sm text-gray-400 border-t border-gray-600 border-solid'>
@@ -115,49 +95,31 @@ const SideBar = ({ setIsShowSideBar }: Props) => {
             selectedBtn={selectedBtn}
             isHide={isHide}
             text={'노래 추가'}
-          >
-            <PlusIcn
-              width={20}
-              height={20}
-              className={`${!isHide && iconStyle}`}
-            />
-          </SideBarBtn>
+            icon='Plus'
+          />
           <SideBarBtn
             name={'playlist'}
             selectedBtn={selectedBtn}
             isHide={isHide}
             text={'Playlist 관리'}
-          >
-            <SongIcn
-              width={20}
-              height={20}
-              className={`${!isHide && iconStyle}`}
-            />
-          </SideBarBtn>
+            icon='Song'
+          />
+
           <SideBarBtn
             name={'inform'}
             selectedBtn={selectedBtn}
             isHide={isHide}
             text={'내 정보'}
-          >
-            <UserIcn
-              width={20}
-              height={20}
-              className={`${!isHide && iconStyle}`}
-            />
-          </SideBarBtn>
+            icon='User'
+          />
+
           <SideBarBtn
             name={'makebusking'}
             selectedBtn={selectedBtn}
             isHide={isHide}
             text={'버스킹하기'}
-          >
-            <GuitarIcn
-              width={20}
-              height={20}
-              className={`${!isHide && iconStyle}`}
-            />
-          </SideBarBtn>
+            icon='Guitar'
+          />
 
           <li>
             {isHide ? (
@@ -167,7 +129,7 @@ const SideBar = ({ setIsShowSideBar }: Props) => {
                   setIsHide(false);
                 }}
               >
-                <ArrowRightIcn width={20} height={20} color={'white'} />
+                <Icon size={20} color='white' icon='ArrowRight' />
               </button>
             ) : (
               <button
@@ -180,7 +142,7 @@ const SideBar = ({ setIsShowSideBar }: Props) => {
                   }
                 }}
               >
-                <ArrowLeftIcn width={20} height={20} color={'white'} />
+                <Icon size={20} color='white' icon='ArrowLeft' />
               </button>
             )}
           </li>

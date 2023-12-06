@@ -1,18 +1,20 @@
 import Link from 'next/link';
 import React, { ReactNode } from 'react';
+import { iconName } from '../../../assets/icon/constants';
+import Icon from '../../../assets/icon/icon';
 type Props = {
   name: string;
   selectedBtn: string;
   isHide: boolean;
   text: string;
-  children: ReactNode;
+  icon: iconName;
 };
 export default function SideBarBtn({
   name,
   selectedBtn,
   isHide,
   text,
-  children,
+  icon,
 }: Props) {
   const btnStyle =
     'text-white flex items-center pl-5 py-4 w-full text-left cursor-pointer font-medium text-lg hover:bg-zinc-600 ';
@@ -26,9 +28,14 @@ export default function SideBarBtn({
         selectedBtn === name ? 'text-blue-400' : 'text-white'
       } `}
     >
-      {React.cloneElement(children as React.ReactElement<any>, {
-        color: `${selectedBtn === name ? '#60a5fa' : 'white'}`,
-      })}
+      <div className={`${!isHide && 'mr-4'}`}>
+        <Icon
+          size={24}
+          color={`${selectedBtn === name ? '#60a5fa' : '#FFFFFF'}`}
+          icon={icon}
+        />
+      </div>
+
       {!isHide && text}
     </Link>
   );

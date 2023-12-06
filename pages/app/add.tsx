@@ -3,7 +3,7 @@ import TitleBar from '../../components/TitleBar';
 import MainSec from '../../components/MainSec';
 import { usePlaylistContext } from '../../context/PlaylistContext';
 import { getAppLayOut } from '../../layouts/appLayout';
-import { InformIcn, PlusIcn } from '../../assets/icon/icon';
+import Icon from '../../assets/icon/icon';
 import HoverIcon from '../../components/Hover/HoverIcon';
 import LoadingCheckWrapper from '../../components/LoadingCheckWrapper';
 import NoPlaylistCheckWrapper from '../../components/NoPlaylistCheckWrapper';
@@ -64,12 +64,9 @@ export default function AppAdd() {
                       'Api 특성상 제목, 가수명을 영어로 입력하시면 더 잘나옵니다.'
                     }
                   >
-                    <InformIcn
-                      color={'blue'}
-                      width={24}
-                      height={24}
-                      className='ml-3 text-2xl text-blue-500 max-lg:w-5 max-lg:h-5 max-lg:hidden'
-                    />
+                    <div className='ml-3 max-lg:w-5 max-lg:h-5 max-lg:hidden'>
+                      <Icon size={24} color='blue' icon='Inform' />
+                    </div>
                   </HoverIcon>
                 </RenderedWhenFullScreen>
               )}
@@ -86,7 +83,7 @@ export default function AppAdd() {
                   result={result}
                   handleSongClick={addSongToPlaylist}
                 >
-                  <PlusIcn width={24} height={24} color={'white'} />
+                  <Icon size={24} color='white' icon='Plus' />
                 </SongAddResult>
               )}
             >

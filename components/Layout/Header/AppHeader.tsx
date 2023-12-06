@@ -4,7 +4,7 @@ import PlaylistMenu from '../../PlaylistMenu/PlaylistMenu';
 import LoginMenu from '../../LoginMenu/LoginMenu';
 import { useUserDataContext } from '../../../context/UserDataContext';
 import { usePlaylistContext } from '../../../context/PlaylistContext';
-import { ArrowDownIcn, MenuIcn } from '../../../assets/icon/icon';
+import Icon from '../../../assets/icon/icon';
 type Props = {
   isShowSideBar: boolean;
   setIsShowSideBar: React.Dispatch<React.SetStateAction<boolean>>;
@@ -25,7 +25,9 @@ export default function AppHeader({ isShowSideBar, setIsShowSideBar }: Props) {
             }}
             className='hidden max-lg:flex'
           >
-            <MenuIcn width={24} height={24} color={'white'} className='mr-6' />
+            <div className='mr-6'>
+              <Icon size={24} color='white' icon='Menu' />
+            </div>
           </button>
           {isShowPlaylistMenu && (
             <PlaylistMenu setIsShowPlaylistMenu={setIsShowPlaylistMenu} />
@@ -37,12 +39,9 @@ export default function AppHeader({ isShowSideBar, setIsShowSideBar }: Props) {
             }}
           >
             {nowPlaylist ? nowPlaylist.name : 'No Playlist..'}
-            <ArrowDownIcn
-              width={20}
-              height={20}
-              color={'white'}
-              className='ml-2'
-            />
+            <div className='ml-2'>
+              <Icon size={20} color='white' icon='ArrowDown' />
+            </div>
           </button>
         </div>
         <div className='relative'>

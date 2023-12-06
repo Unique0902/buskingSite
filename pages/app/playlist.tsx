@@ -5,7 +5,7 @@ import MainSec from '../../components/MainSec';
 import ArrangeMenuBtn from '../../components/ArrangeMenu/ArrangeMenuBtn';
 import { usePlaylistContext } from '../../context/PlaylistContext';
 import { getAppLayOut } from '../../layouts/appLayout';
-import { MinusIcn } from '../../assets/icon/icon';
+import Icon from '../../assets/icon/icon';
 import NoPlaylistCheckWrapper from '../../components/NoPlaylistCheckWrapper';
 import { PlaylistSongData } from '../../store/type/playlist';
 import SearchBar from '../../components/Search/SearchBar';
@@ -89,7 +89,7 @@ export default function AppPlaylist() {
                   result={result}
                   handleSongClick={handleClickResult}
                 >
-                  <MinusIcn width={24} height={24} color={'white'} />
+                  <Icon size={24} color='white' icon='Minus' />
                 </PrimarySongResult>
               )}
             >

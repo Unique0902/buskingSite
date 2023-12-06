@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 
-import { ArrowRightIcn } from '../../assets/icon/icon';
+import Icon from '../../assets/icon/icon';
 type Props = {
   title: string;
   titleColor: string;
@@ -25,13 +25,13 @@ const InformRow = ({ title, titleColor, handleClick, children }: Props) => {
         </h2>
         {children}
       </div>
-
-      <ArrowRightIcn
-        width={20}
-        height={20}
-        className={`absolute right-5 text-xl`}
-        color={`${titleColor == 'red' ? 'red' : 'gray'}`}
-      />
+      <div className='absolute text-xl right-5'>
+        <Icon
+          size={20}
+          color={`${titleColor == 'red' ? 'red' : 'gray'}`}
+          icon='ArrowRight'
+        />
+      </div>
     </button>
   );
 };

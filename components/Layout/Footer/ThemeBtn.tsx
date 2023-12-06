@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useState } from 'react';
-import { MoonIcn, SunIcn } from '../../../assets/icon/icon';
+import Icon from '../../../assets/icon/icon';
 import { color } from '../../../styles/theme';
 //TODO: useLayoutEffect 개선 고려해보기
 interface Props {}
@@ -48,9 +48,9 @@ const ThemeBtn: React.FC<Props> = ({}: Props) => {
       className='p-2 bg-white border border-black rounded-full dark:bg-slate-800 hover:opacity-70 dark:border-white'
     >
       {isDarkMode ? (
-        <MoonIcn width={25} height={25} color={color.gray_200} />
+        <Icon size={25} color={color.gray_200} icon='Moon' />
       ) : (
-        <SunIcn width={25} height={25} color={color.gray_900} />
+        <Icon size={25} color={color.gray_900} icon='Sun' />
       )}
     </button>
   );
