@@ -4,6 +4,9 @@ class IpService {
   async getIp(): Promise<string | undefined> {
     try {
       const ipData = await fetch('https://geolocation-db.com/json/');
+      if (!ipData.ok) {
+        console.error('ip request error!');
+      }
       const locationIp: IpData = await ipData.json();
       return locationIp.IPv4;
     } catch (error) {
