@@ -1,8 +1,9 @@
 import React, { ReactNode } from 'react';
+
+import PagingBar from './PagingBar';
 import { ApplianceData } from '../../store/type/busking';
 import { FmEditedTopTrackData, FmTrackData } from '../../store/type/fm';
 import { PlaylistSongData } from '../../store/type/playlist';
-import PagingBar from './PagingBar';
 
 type Props<T> = {
   viewdSongArr: T[];

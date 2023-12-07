@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+
 import { useRouter } from 'next/router';
 import { useMediaQuery } from 'react-responsive';
+
 import SideBarBtn from './SideBarBtn';
 import Icon from '../../../assets/icon/icon';
 type Props = {

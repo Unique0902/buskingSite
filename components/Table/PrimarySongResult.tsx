@@ -1,8 +1,9 @@
 import React from 'react';
+
+import SongResult from './SongResult';
 import { iconName } from '../../assets/icon/constants';
 import Icon from '../../assets/icon/icon';
 import { PlaylistSongData } from '../../store/type/playlist';
-import SongResult from './SongResult';
 type Props = {
   index: number;
   result: PlaylistSongData;

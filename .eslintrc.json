@@ -1,13 +1,12 @@
 {
-  "root": true,
   "parser": "@typescript-eslint/parser",
   "plugins": ["import", "@typescript-eslint"],
   "extends": [
-    "next/core-web-vitals",
     "eslint:recommended",
     "plugin:import/recommended",
     "plugin:import/typescript",
-    "plugin:@typescript-eslint/recommended"
+    "plugin:@typescript-eslint/recommended",
+    "next/core-web-vitals"
   ],
   "settings": {
     "import/parsers": {
@@ -18,6 +17,7 @@
     }
   },
   "rules": {
+    "jsx-a11y/anchor-is-valid": "off",
     "import/no-unresolved": "error",
     "import/order": [
       "error",

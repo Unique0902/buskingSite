@@ -1,8 +1,9 @@
 import React from 'react';
+
 import ArrangeBtn from './ArrangeBtn';
-import PopupWrapper from '../PopUp/PopupWrapper';
-import { PlaylistSongData } from '../../store/type/playlist';
 import { ApplianceData } from '../../store/type/busking';
+import { PlaylistSongData } from '../../store/type/playlist';
+import PopupWrapper from '../PopUp/PopupWrapper';
 //TODO: 나중에 정렬한 결과가 서버에 반영될수있게 그리고 정렬한 결과가 musicbar에서 잘되는지 근데 그건 서버에서 처리해야될듯
 //TODO: 드래그해서 노래 순서 바꿀수있게 하기 아니면 위아래 버튼클릭
 type Props = {

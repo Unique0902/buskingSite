@@ -1,10 +1,12 @@
 import React, { ReactNode, useEffect, useState } from 'react';
+
+import { useMediaQuery } from 'react-responsive';
+
+import ThemeBtn from './Footer/ThemeBtn';
 import AppHeader from './Header/AppHeader';
+import SideBar from './SideBar/SideBar';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import UserDataProtectedRoute from '../ProtectedRoute/UserDataProtectedRoute';
-import { useMediaQuery } from 'react-responsive';
-import SideBar from './SideBar/SideBar';
-import ThemeBtn from './Footer/ThemeBtn';
 type Props = {
   children: ReactNode;
 };

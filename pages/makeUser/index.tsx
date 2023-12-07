@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+
+import { useRouter } from 'next/router';
+
 import PrimaryBtn from '../../components/Btn/PrimaryBtn';
 import TitleBar from '../../components/TitleBar';
 import { useAuthContext } from '../../context/AuthContext';
 import { useUserDataContext } from '../../context/UserDataContext';
 import { borderRadius, fontSize, xyPadding } from '../../styles/theme';
-import { useRouter } from 'next/router';
 
 const MakeUser = () => {
   const [name, setName] = useState<string>('');

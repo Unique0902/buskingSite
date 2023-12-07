@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
+
 import Icon from '../../assets/icon/icon';
-import { borderRadius, color, xyPadding } from '../../styles/theme';
+import { color, xyPadding } from '../../styles/theme';
 import PrimaryBtn from '../Btn/PrimaryBtn';
 import RenderedWhenFullScreen from '../Responsive/RenderedWhenFullScreen';
 type SearchWord = {

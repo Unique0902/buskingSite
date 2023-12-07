@@ -1,12 +1,11 @@
-import React from 'react';
-import { useState } from 'react';
-import { useEffect } from 'react';
-import { usePlaylistContext } from '../../context/PlaylistContext';
-import { PlaylistData } from '../../store/type/playlist';
-import PopupWrapper from '../PopUp/PopupWrapper';
+import React, { useState, useEffect } from 'react';
+
 import PlaylistBtn from './PlaylistBtn';
 import PlaylistMenuBtn from './PlaylistMenuBtn';
 import PlaylistMenuInputBtn from './PlaylistMenuInputBtn';
+import { usePlaylistContext } from '../../context/PlaylistContext';
+import { PlaylistData } from '../../store/type/playlist';
+import PopupWrapper from '../PopUp/PopupWrapper';
 type Props = {
   setIsShowPlaylistMenu: React.Dispatch<React.SetStateAction<boolean>>;
 };

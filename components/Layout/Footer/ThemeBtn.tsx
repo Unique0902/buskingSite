@@ -1,8 +1,8 @@
 import React, { useLayoutEffect, useState } from 'react';
+
 import Icon from '../../../assets/icon/icon';
 import { color } from '../../../styles/theme';
 //TODO: useLayoutEffect 개선 고려해보기
-interface Props {}
 const LOCAL_STORAGE_KEY = {
   THEME: 'theme',
 } as const;
@@ -11,7 +11,7 @@ const THEME = {
   LIGHT: 'light',
   DARK: 'dark',
 } as const;
-const ThemeBtn: React.FC<Props> = ({}: Props) => {
+const ThemeBtn = () => {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
   useLayoutEffect(() => {
     const theme = localStorage.getItem(LOCAL_STORAGE_KEY.THEME) || THEME.LIGHT;

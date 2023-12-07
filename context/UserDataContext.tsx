@@ -1,4 +1,3 @@
-import { Unsubscribe } from 'firebase/auth';
 import {
   createContext,
   ReactNode,
@@ -6,9 +5,12 @@ import {
   useEffect,
   useState,
 } from 'react';
+
+import { Unsubscribe } from 'firebase/auth';
+
+import { useAuthContext } from './AuthContext';
 import UserRepository from '../service/userRepository';
 import { UserData } from '../store/type/userData';
-import { useAuthContext } from './AuthContext';
 
 type Props = {
   userRepository: UserRepository;

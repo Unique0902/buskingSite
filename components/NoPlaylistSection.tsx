@@ -1,7 +1,8 @@
 import React from 'react';
-import { usePlaylistContext } from '../context/PlaylistContext';
+
 import PrimaryBtn from './Btn/PrimaryBtn';
 import MainSec from './MainSec';
+import { usePlaylistContext } from '../context/PlaylistContext';
 
 const NoPlaylistSection = () => {
   const { addBasicPlaylist } = usePlaylistContext();

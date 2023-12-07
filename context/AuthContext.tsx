@@ -1,4 +1,3 @@
-import { UserInfo } from 'firebase/auth';
 import {
   createContext,
   ReactNode,
@@ -6,6 +5,9 @@ import {
   useEffect,
   useState,
 } from 'react';
+
+import { UserInfo } from 'firebase/auth';
+
 import AuthService from '../service/auth_service';
 type ContextProps = {
   user: UserInfo | null;

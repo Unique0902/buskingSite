@@ -1,7 +1,8 @@
 import React, { ReactNode } from 'react';
+
+import RowWithTitle from './RowWithTitle';
 import Icon from '../../assets/icon/icon';
 import { color } from '../../styles/theme';
-import RowWithTitle from './RowWithTitle';
 
 type Props = {
   title: string;

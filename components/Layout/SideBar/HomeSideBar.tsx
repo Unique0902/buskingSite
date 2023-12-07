@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
-import Icon from '../../../assets/icon/icon';
+
 import HomeSideBarBtn from './HomeSideBarBtn';
+import Icon from '../../../assets/icon/icon';
 type Props = {
   setIsShowSideBar: React.Dispatch<React.SetStateAction<boolean>>;
 };

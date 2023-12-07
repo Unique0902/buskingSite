@@ -1,4 +1,5 @@
 import React, { ReactNode } from 'react';
+
 import SlicedHoverText from '../Hover/SlicedHoverText';
 type Props = {
   index: number;

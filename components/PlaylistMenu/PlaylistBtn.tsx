@@ -1,6 +1,7 @@
 import React from 'react';
-import { PlaylistData } from '../../store/type/playlist';
+
 import PlaylistMenuBtn from './PlaylistMenuBtn';
+import { PlaylistData } from '../../store/type/playlist';
 type Props = {
   playlist: PlaylistData;
   changeNowPlaylist: (id: string) => void;

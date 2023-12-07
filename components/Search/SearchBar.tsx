@@ -1,9 +1,11 @@
 import React, { createContext, ReactNode, useContext } from 'react';
+
+import { v4 as uuidv4 } from 'uuid';
+
 import Icon from '../../assets/icon/icon';
 import { color, xyPadding } from '../../styles/theme';
 import PrimaryBtn from '../Btn/PrimaryBtn';
 import RenderedWhenFullScreen from '../Responsive/RenderedWhenFullScreen';
-import { v4 as uuidv4 } from 'uuid';
 
 //TODO: SearchWord 타입 전역선언하기 할때 카테고리는 선택받을수있게 의존성 외부에서 주입받게 만들기
 type SearchWord = {

@@ -1,5 +1,7 @@
+import React from 'react';
+
 import Link from 'next/link';
-import React, { ReactNode } from 'react';
+
 import { iconName } from '../../../assets/icon/constants';
 import Icon from '../../../assets/icon/icon';
 type Props = {

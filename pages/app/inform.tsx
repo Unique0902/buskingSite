@@ -1,14 +1,15 @@
 import React from 'react';
-import TitleBar from '../../components/TitleBar';
+
 import MainSec from '../../components/MainSec';
-import { useAuthContext } from '../../context/AuthContext';
-import { useUserDataContext } from '../../context/UserDataContext';
-import { getAppLayOut } from '../../layouts/appLayout';
 import RowWithTitle from '../../components/Row/RowWithTitle';
 import RowWithTitleAndArrow from '../../components/Row/RowWithTitleAndArrow';
-import { usePlaylistContext } from '../../context/PlaylistContext';
+import TitleBar from '../../components/TitleBar';
+import { useAuthContext } from '../../context/AuthContext';
 import { useBuskingContext } from '../../context/BuskingContext';
-export default function AppInform({}) {
+import { usePlaylistContext } from '../../context/PlaylistContext';
+import { useUserDataContext } from '../../context/UserDataContext';
+import { getAppLayOut } from '../../layouts/appLayout';
+export default function AppInform() {
   const { userData, removeUserData } = useUserDataContext();
   const { removeUserPlaylists, playlists } = usePlaylistContext();
   const { buskingData, removeBusking } = useBuskingContext();

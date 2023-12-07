@@ -1,8 +1,9 @@
 import React from 'react';
+
+import SongResult from './SongResult';
 import { iconName } from '../../assets/icon/constants';
 import Icon from '../../assets/icon/icon';
 import { ApplianceData } from '../../store/type/busking';
-import SongResult from './SongResult';
 type Props = {
   index: number;
   result: ApplianceData;

@@ -1,12 +1,14 @@
 import '../styles/globals.css';
-import Head from 'next/head';
-import ServiceContextProviders from '../context/ServiceContextProviders';
 import { ReactElement, ReactNode } from 'react';
+
 import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
+import Head from 'next/head';
+
+import ServiceContextProviders from '../context/ServiceContextProviders';
 //TODO: 가끔 지혼자 새로고침되는거 고치기
 //TODO: portal 이용하여 custom Modal 만들거나 라이브러리 모달 가져와 쓰기
-export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+export type NextPageWithLayout<P = object, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
 };
 

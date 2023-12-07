@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react';
-import TitleBar from '../../components/TitleBar';
-import MainSec from '../../components/MainSec';
+import React, { useState, useEffect } from 'react';
+
 import ArrangeMenuBtn from '../../components/ArrangeMenu/ArrangeMenuBtn';
-import { usePlaylistContext } from '../../context/PlaylistContext';
-import { getAppLayOut } from '../../layouts/appLayout';
+import LoadingCheckWrapper from '../../components/LoadingCheckWrapper';
+import MainSec from '../../components/MainSec';
 import NoPlaylistCheckWrapper from '../../components/NoPlaylistCheckWrapper';
-import { PlaylistSongData } from '../../store/type/playlist';
 import SearchBar from '../../components/Search/SearchBar';
 import PrimarySongResult from '../../components/Table/PrimarySongResult';
-import useSearch from '../../hooks/UseSearch';
-import LoadingCheckWrapper from '../../components/LoadingCheckWrapper';
 import SongTable from '../../components/Table/SongTable';
+import TitleBar from '../../components/TitleBar';
+import { usePlaylistContext } from '../../context/PlaylistContext';
+import useSearch from '../../hooks/UseSearch';
+import { getAppLayOut } from '../../layouts/appLayout';
+import { PlaylistSongData } from '../../store/type/playlist';
 
 export default function AppPlaylist() {
   const [songArr, setSongArr] = useState<PlaylistSongData[]>([]);

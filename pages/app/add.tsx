@@ -1,17 +1,18 @@
-import TitleBar from '../../components/TitleBar';
 import React from 'react';
-import MainSec from '../../components/MainSec';
-import { usePlaylistContext } from '../../context/PlaylistContext';
-import { getAppLayOut } from '../../layouts/appLayout';
+
 import HoverIcon from '../../components/Hover/HoverIcon';
 import LoadingCheckWrapper from '../../components/LoadingCheckWrapper';
+import MainSec from '../../components/MainSec';
 import NoPlaylistCheckWrapper from '../../components/NoPlaylistCheckWrapper';
-import useAddSearch from '../../hooks/UseAddSearch';
-import { FmEditedTopTrackData, FmTrackData } from '../../store/type/fm';
-import SearchBar from '../../components/Search/SearchBar';
 import RenderedWhenFullScreen from '../../components/Responsive/RenderedWhenFullScreen';
-import SongTable from '../../components/Table/SongTable';
+import SearchBar from '../../components/Search/SearchBar';
 import SongAddResult from '../../components/Table/SongAddResult';
+import SongTable from '../../components/Table/SongTable';
+import TitleBar from '../../components/TitleBar';
+import { usePlaylistContext } from '../../context/PlaylistContext';
+import useAddSearch from '../../hooks/UseAddSearch';
+import { getAppLayOut } from '../../layouts/appLayout';
+import { FmEditedTopTrackData, FmTrackData } from '../../store/type/fm';
 // TODO: searchBar, songTable 기능 테스트 적은후 하기
 // 자꾸 구조 바꿀때마다 오류나는게 걱정나니 ㅜ..
 export default function AppAdd() {

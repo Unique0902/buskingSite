@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { borderRadius, color, xyPadding } from '../../styles/theme';
+
 import ArrangeMenu from './ArrangeMenu';
-import PrimaryBtn from '../Btn/PrimaryBtn';
-import { PlaylistSongData } from '../../store/type/playlist';
 import { ApplianceData } from '../../store/type/busking';
+import { PlaylistSongData } from '../../store/type/playlist';
+import { color, xyPadding } from '../../styles/theme';
+import PrimaryBtn from '../Btn/PrimaryBtn';
 type Props = {
   results: PlaylistSongData[] | ApplianceData[];
   setResults: React.Dispatch<

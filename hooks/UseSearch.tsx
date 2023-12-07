@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { ApplianceData } from '../store/type/busking';
-import { PlaylistSongData } from '../store/type/playlist';
+
 import usePagingBar from './UsePagingBar';
 import useSearchBar from './UseSearchBar';
+import { ApplianceData } from '../store/type/busking';
+import { PlaylistSongData } from '../store/type/playlist';
 
 const useSearch = <T extends PlaylistSongData | ApplianceData>(
   pureDataArr: T[]

@@ -1,4 +1,5 @@
 import { createContext, ReactNode, useContext } from 'react';
+
 import IpService from '../service/ipService';
 type ContextProps = {
   getIp: () => Promise<string | undefined>;

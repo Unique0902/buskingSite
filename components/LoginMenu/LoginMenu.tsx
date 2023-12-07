@@ -1,10 +1,12 @@
-import { useRouter } from 'next/router';
 import React from 'react';
+
+import { useRouter } from 'next/router';
+
+import LoginMenuFooterBtn from './LoginMenuFooterBtn';
+import LoginMenuPrimaryBtn from './LoginMenuPrimaryBtn';
 import { useAuthContext } from '../../context/AuthContext';
 import { UserData } from '../../store/type/userData';
 import PopupWrapper from '../PopUp/PopupWrapper';
-import LoginMenuFooterBtn from './LoginMenuFooterBtn';
-import LoginMenuPrimaryBtn from './LoginMenuPrimaryBtn';
 
 type Props = {
   userData: UserData;

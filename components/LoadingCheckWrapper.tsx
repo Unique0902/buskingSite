@@ -1,4 +1,5 @@
 import React, { ReactNode } from 'react';
+
 import LoadingSpinner from './LoadingSpinner';
 type Props = {
   isLoading: boolean;

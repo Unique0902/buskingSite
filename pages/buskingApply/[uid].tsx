@@ -1,20 +1,22 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useIpContext } from '../../context/IpContext';
-import { useBuskingContext } from '../../context/BuskingContext';
-import { usePlaylistContext } from '../../context/PlaylistContext';
-import { useUserDataContext } from '../../context/UserDataContext';
-import MainSec from '../../components/MainSec';
+
 import { useRouter } from 'next/router';
+
 import ArrangeMenuBtn from '../../components/ArrangeMenu/ArrangeMenuBtn';
-import { ApplianceData, BuskingData } from '../../store/type/busking';
-import { PlaylistData, PlaylistSongData } from '../../store/type/playlist';
 import ThemeBtn from '../../components/Layout/Footer/ThemeBtn';
+import LoadingCheckWrapper from '../../components/LoadingCheckWrapper';
+import MainSec from '../../components/MainSec';
 import SearchBar from '../../components/Search/SearchBar';
 import PrimarySongResult from '../../components/Table/PrimarySongResult';
 import RequestSongResult from '../../components/Table/RequestSongResult';
-import useSearch from '../../hooks/UseSearch';
-import LoadingCheckWrapper from '../../components/LoadingCheckWrapper';
 import SongTable from '../../components/Table/SongTable';
+import { useBuskingContext } from '../../context/BuskingContext';
+import { useIpContext } from '../../context/IpContext';
+import { usePlaylistContext } from '../../context/PlaylistContext';
+import { useUserDataContext } from '../../context/UserDataContext';
+import useSearch from '../../hooks/UseSearch';
+import { ApplianceData, BuskingData } from '../../store/type/busking';
+import { PlaylistData, PlaylistSongData } from '../../store/type/playlist';
 //TODO: 닉네임 검색기능 추가하기
 //TODO: getIp 기능 오류 자꾸나는거 어떻게좀하기
 const App = () => {
@@ -327,7 +329,7 @@ const App = () => {
                           key={result.id}
                           index={index}
                           result={result}
-                          handleSongClick={(sid: string) => {}}
+                          handleSongClick={() => {}}
                           icon='Smile'
                         />
                       )}

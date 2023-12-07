@@ -1,6 +1,8 @@
 import React, { ReactNode } from 'react';
-import { useUserDataContext } from '../../context/UserDataContext';
+
 import { useRouter } from 'next/router';
+
+import { useUserDataContext } from '../../context/UserDataContext';
 type Props = {
   children: ReactNode;
 };

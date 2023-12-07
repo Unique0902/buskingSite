@@ -1,5 +1,6 @@
-import Link from 'next/link';
 import React, { ReactNode } from 'react';
+
+import Link from 'next/link';
 type Props = {
   url: string;
   children: ReactNode;

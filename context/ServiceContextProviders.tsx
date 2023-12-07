@@ -1,17 +1,19 @@
 import React, { ReactNode } from 'react';
+
 import axios from 'axios';
-import Lastfm from '../service/lastfm';
+
+import { AuthContextProvider } from './AuthContext';
+import { BuskingContextProvider } from './BuskingContext';
+import { IpContextProvider } from './IpContext';
+import { LastFmContextProvider } from './LastFmContext';
+import { PlaylistContextProvider } from './PlaylistContext';
+import { UserDataContextProvider } from './UserDataContext';
 import AuthService from '../service/auth_service';
-import UserRepository from '../service/userRepository';
-import PlaylistRepository from '../service/playlist_repository';
 import BuskingRepository from '../service/buskingRepository';
 import IpService from '../service/ipService';
-import { AuthContextProvider } from './AuthContext';
-import { UserDataContextProvider } from './UserDataContext';
-import { PlaylistContextProvider } from './PlaylistContext';
-import { BuskingContextProvider } from './BuskingContext';
-import { LastFmContextProvider } from './LastFmContext';
-import { IpContextProvider } from './IpContext';
+import Lastfm from '../service/lastfm';
+import PlaylistRepository from '../service/playlist_repository';
+import UserRepository from '../service/userRepository';
 
 type Props = {
   children: ReactNode;

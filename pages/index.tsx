@@ -1,10 +1,12 @@
 import { useRef } from 'react';
-import LoginNav from '../components/LoginNav';
-import { useAuthContext } from '../context/AuthContext';
+
 import { useRouter } from 'next/router';
+
 import PrimaryBtn from '../components/Btn/PrimaryBtn';
-import { borderRadius, fontSize, xyPadding } from '../styles/theme';
+import LoginNav from '../components/LoginNav';
 import TutorialBlock from '../components/TutorialBlock';
+import { useAuthContext } from '../context/AuthContext';
+import { borderRadius, fontSize, xyPadding } from '../styles/theme';
 
 export default function Home() {
   const tutorialRef = useRef<HTMLDivElement>(null);

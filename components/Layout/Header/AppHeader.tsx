@@ -1,10 +1,10 @@
-import React, { useRef } from 'react';
-import { useState } from 'react';
-import PlaylistMenu from '../../PlaylistMenu/PlaylistMenu';
-import LoginMenu from '../../LoginMenu/LoginMenu';
-import { useUserDataContext } from '../../../context/UserDataContext';
-import { usePlaylistContext } from '../../../context/PlaylistContext';
+import React, { useState } from 'react';
+
 import Icon from '../../../assets/icon/icon';
+import { usePlaylistContext } from '../../../context/PlaylistContext';
+import { useUserDataContext } from '../../../context/UserDataContext';
+import LoginMenu from '../../LoginMenu/LoginMenu';
+import PlaylistMenu from '../../PlaylistMenu/PlaylistMenu';
 type Props = {
   isShowSideBar: boolean;
   setIsShowSideBar: React.Dispatch<React.SetStateAction<boolean>>;
