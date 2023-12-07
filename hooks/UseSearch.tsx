@@ -27,18 +27,16 @@ const useSearch = <T extends PlaylistSongData | ApplianceData>(
     }
   };
 
-  return [
-    {
-      searchWord,
-      setSearchWord,
-      isLoading,
-      viewedDataArr,
-      nowPageNum,
-      handlePlus,
-      handleMinus,
-      handleSearchBtnClick,
-    },
-  ] as const;
+  return {
+    searchWord,
+    setSearchWord,
+    isLoading,
+    viewedDataArr,
+    nowPageNum,
+    handlePlus,
+    handleMinus,
+    handleSearchBtnClick,
+  };
 };
 
 export default useSearch;

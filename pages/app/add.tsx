@@ -1,5 +1,5 @@
-import React from 'react';
 import TitleBar from '../../components/TitleBar';
+import React from 'react';
 import MainSec from '../../components/MainSec';
 import { usePlaylistContext } from '../../context/PlaylistContext';
 import { getAppLayOut } from '../../layouts/appLayout';
@@ -17,19 +17,17 @@ import SongAddResult from '../../components/Table/SongAddResult';
 export default function AppAdd() {
   const { nowPlaylist, addSongToPlaylist } = usePlaylistContext();
   //TODO: 커스텀 훅들도 좀 분리좀하자 ㅜ..
-  const [
-    {
-      searchResults,
-      searchWord,
-      setSearchWord,
-      isLoading,
-      nowPageNum,
-      resultNum,
-      handlePlus,
-      handleMinus,
-      handleSearchBtnClick,
-    },
-  ] = useAddSearch();
+  const {
+    searchResults,
+    searchWord,
+    setSearchWord,
+    isLoading,
+    nowPageNum,
+    resultNum,
+    handlePlus,
+    handleMinus,
+    handleSearchBtnClick,
+  } = useAddSearch();
 
   return (
     <>

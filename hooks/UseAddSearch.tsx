@@ -59,19 +59,17 @@ const useAddSearch = () => {
   //   );
   // };
 
-  return [
-    {
-      searchResults,
-      searchWord,
-      setSearchWord,
-      isLoading,
-      nowPageNum,
-      resultNum,
-      handlePlus,
-      handleMinus,
-      handleSearchBtnClick,
-    },
-  ] as const;
+  return {
+    searchResults,
+    searchWord,
+    setSearchWord,
+    isLoading,
+    nowPageNum,
+    resultNum,
+    handlePlus,
+    handleMinus,
+    handleSearchBtnClick,
+  };
 };
 
 export default useAddSearch;

@@ -29,18 +29,16 @@ export default function AppPlaylist() {
   //searchword가 searchBar의 여러 컴포넌트에 전해지는게 맘에 안듬, searchWord state도 searchBar에서 관리하게하고싶음 <<이건 불가능
   //그래도 전자는 해결
   //바깥 컴포넌트에서 말고 useAddSearch의 로직이 워낙 복잡하다 보니.. 쉽지않네
-  const [
-    {
-      searchWord,
-      setSearchWord,
-      isLoading,
-      viewedDataArr,
-      nowPageNum,
-      handlePlus,
-      handleMinus,
-      handleSearchBtnClick,
-    },
-  ] = useSearch<PlaylistSongData>(songArr);
+  const {
+    searchWord,
+    setSearchWord,
+    isLoading,
+    viewedDataArr,
+    nowPageNum,
+    handlePlus,
+    handleMinus,
+    handleSearchBtnClick,
+  } = useSearch<PlaylistSongData>(songArr);
 
   const handleClickResult = (sid: string) => {
     removeSongInPlaylist(sid);
