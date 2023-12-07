@@ -85,6 +85,7 @@ const Select = ({ optionValueArr }: SelectProps) => {
       onChange={handleSelectChange}
     >
       {optionValueArr.map((val) => (
+        // TODO:키 줄만한 다른거 찾아보기
         <option key={uuidv4()} value={val}>
           {val}
         </option>
