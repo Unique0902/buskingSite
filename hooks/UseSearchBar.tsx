@@ -1,66 +1,81 @@
-import { useState } from 'react';
-import { PlaylistSongData, PlaylistSongObj } from '../store/type/playlist';
+import React, { useEffect, useState } from 'react';
+import { ApplianceData } from '../store/type/busking';
+import { PlaylistSongData } from '../store/type/playlist';
 type SearchWord = {
   name: string;
   category: '제목' | '가수';
 };
-const useSearchBar = (
-  data: PlaylistSongObj | null,
-  setFilteredDataArr: React.Dispatch<React.SetStateAction<PlaylistSongData[]>>
+const useSearchBar = <T extends PlaylistSongData | ApplianceData>(
+  pureDataArr: T[],
+  isLoading: boolean,
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   const [searchWord, setSearchWord] = useState<SearchWord>({
     name: '',
     category: '제목',
   });
-  const [searchedDataArr, setSearchedDataArr] = useState([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [savedSearchWord, setSavedSearchWord] = useState<SearchWord | null>(
-    null
-  );
+  const [searchedDataArr, setSearchedDataArr] = useState<T[]>([]);
+  const [viewedDataArr, setViewedDataArr] = useState<T[]>([]);
 
-  const search = () => {
-    if (data) {
-      setIsLoading(true);
-      const wholeSongArrary = Object.values(data);
-      if (searchWord.name) {
-        if (searchWord.category === '제목') {
-          setFilteredDataArr(
-            wholeSongArrary.filter((song) =>
-              song.title.toLowerCase().includes(searchWord.name)
-            )
-          );
-        } else if (searchWord.category === '가수') {
-          setFilteredDataArr(
-            wholeSongArrary.filter((song) =>
-              song.artist.toLowerCase().includes(searchWord.name)
-            )
-          );
-        }
-      } else {
-        setFilteredDataArr(wholeSongArrary);
+  useEffect(() => {
+    if (!searchWord.name) {
+      if (isLoading) {
+        return;
       }
-      setSavedSearchWord({ ...searchWord });
+      setIsLoading(true);
+      setSearchedDataArr(pureDataArr);
+      setViewedDataArr(getDataByPageNum(1, pureDataArr));
       setIsLoading(false);
     }
-  };
-  const getDataByPageNum = (nowPageNum: number): PlaylistSongData[] => {
-    if (!data) {
-      return [];
+  }, [pureDataArr]);
+
+  const searchBySearchWord = () => {
+    if (isLoading) {
+      return;
     }
-    const wholeDataArrary = Object.values(data);
-    const dataToView = wholeDataArrary.slice(
-      (nowPageNum - 1) * 6,
-      nowPageNum * 6
-    );
-    return dataToView;
+    setIsLoading(true);
+    if (searchWord.name) {
+      if (searchWord.category === '제목') {
+        const filterdDataArr = pureDataArr.filter((song) =>
+          song.title.toLowerCase().includes(searchWord.name)
+        );
+        setSearchedDataArr(filterdDataArr);
+        setViewedDataArr(getDataByPageNum(1, filterdDataArr));
+        //페이지num 1로 초기화하기
+      } else if (searchWord.category === '가수') {
+        const filterdDataArr = pureDataArr.filter((song) =>
+          song.artist.toLowerCase().includes(searchWord.name)
+        );
+        setSearchedDataArr(filterdDataArr);
+        setViewedDataArr(getDataByPageNum(1, filterdDataArr));
+      }
+    } else {
+      setSearchedDataArr(pureDataArr);
+      setViewedDataArr(getDataByPageNum(1, pureDataArr));
+    }
+    setIsLoading(false);
+  };
+
+  const getDataByPageNum = (pageNum: number, dataArr: T[]): T[] => {
+    return dataArr.slice((pageNum - 1) * 6, pageNum * 6);
   };
 
   const searchByPageChange = (pageNum: number) => {
+    if (isLoading) {
+      return;
+    }
     setIsLoading(true);
-
+    setViewedDataArr(getDataByPageNum(pageNum, searchedDataArr));
     setIsLoading(false);
   };
-  return [searchWord, setSearchWord, search] as const;
+
+  return {
+    searchWord,
+    setSearchWord,
+    viewedDataArr,
+    searchBySearchWord,
+    searchByPageChange,
+  };
 };
 
 export default useSearchBar;
