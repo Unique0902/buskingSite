@@ -60,6 +60,17 @@ export default function AppMakeBusking() {
   // useEffect로 인해 성능이 향상됨
   // useEffect를 사용하는 이유에 대해서 잘알자.. useEffect의 사용이유를 알지않고 무작정 성능 저하가 온다고 생각하고 사용하면서
   // 겪은 문제
+
+  //TODO: react-query, redux middleware, tanstack-query, swr, rtk query 비교해보고 사용법알아보고 하나 고르기
+  //내상황에 대해 생각먼저해보고
+  //shallow 도 생각해보기 (북마크해놓음)
+
+  //유저의 페이지 이동이 잦은 사이트라면, 페이지 이동 시 전에 불러온 데이터를 그대로 사용하고
+  //추가로 요청하지 않는 React Query가 적합할 것 같다.
+  // SWR은 페이지 렌더링에 집중한다.
+  //진짜 그런지 공식문서가서 공부하고 확인해보기 표지부터 읽어봐야징
+
+  //TODO: 마운팅 렌더링 개념좀 확실하게 알기 마운팅이 정확히 언제인지 모르겠음.. (아마 리액트 생명주기, 작동원리를 배워야할듯)
   if (buskingData) {
     router.replace('/app/busking');
     return <div>move to busking page..</div>;

@@ -14,7 +14,7 @@ import IpService from '../service/ipService';
 import Lastfm from '../service/lastfm';
 import PlaylistRepository from '../service/playlist_repository';
 import UserRepository from '../service/userRepository';
-
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 type Props = {
   children: ReactNode;
 };
@@ -30,20 +30,24 @@ const ServiceContextProviders = ({ children }: Props) => {
   const playlistRepository = new PlaylistRepository();
   const buskingRepository = new BuskingRepository();
   const ipService = new IpService();
+  const queryClient = new QueryClient();
+
   return (
-    <AuthContextProvider authService={authService}>
-      <UserDataContextProvider userRepository={userRepository}>
-        <PlaylistContextProvider playlistRepository={playlistRepository}>
-          <BuskingContextProvider buskingRepository={buskingRepository}>
-            <LastFmContextProvider lastfm={lastfm}>
-              <IpContextProvider ipService={ipService}>
-                {children}
-              </IpContextProvider>
-            </LastFmContextProvider>
-          </BuskingContextProvider>
-        </PlaylistContextProvider>
-      </UserDataContextProvider>
-    </AuthContextProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthContextProvider authService={authService}>
+        <UserDataContextProvider userRepository={userRepository}>
+          <PlaylistContextProvider playlistRepository={playlistRepository}>
+            <BuskingContextProvider buskingRepository={buskingRepository}>
+              <LastFmContextProvider lastfm={lastfm}>
+                <IpContextProvider ipService={ipService}>
+                  {children}
+                </IpContextProvider>
+              </LastFmContextProvider>
+            </BuskingContextProvider>
+          </PlaylistContextProvider>
+        </UserDataContextProvider>
+      </AuthContextProvider>
+    </QueryClientProvider>
   );
 };
 
