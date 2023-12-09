@@ -10,6 +10,7 @@ import SongAddResult from '../../components/Table/SongAddResult';
 import SongTable from '../../components/Table/SongTable';
 import TitleBar from '../../components/TitleBar';
 import { usePlaylistContext } from '../../context/PlaylistContext';
+// import useFmData from '../../hooks/songData/UseFmData';
 import useAddSearch from '../../hooks/UseAddSearch';
 import { getAppLayOut } from '../../layouts/appLayout';
 import { FmEditedTopTrackData, FmTrackData } from '../../store/type/fm';
@@ -30,6 +31,8 @@ export default function AppAdd() {
     handleSearchBtnClick,
   } = useAddSearch();
 
+  // const { data } = useFmData({ title: 'dynamite', pageNum: 1 });
+  // console.log(data);
   return (
     <>
       <TitleBar text={'노래추가'} />

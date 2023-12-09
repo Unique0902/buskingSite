@@ -1,11 +1,8 @@
-import { useState } from 'react';
-
 import useAddPagingBar from './UseAddPagingBar';
 import useAddSearchBar from './UseAddSearchBar';
 
 const useAddSearch = () => {
   //searchResults까지 그냥 넣어버림 ㅎㅎ
-  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const {
     searchWord,
@@ -14,7 +11,8 @@ const useAddSearch = () => {
     resultNum,
     searchBySearchBtn,
     searchByPageChange,
-  } = useAddSearchBar(isLoading, setIsLoading);
+    isLoading,
+  } = useAddSearchBar();
 
   const { nowPageNum, setNowPageNum, handlePlus, handleMinus } =
     useAddPagingBar(resultNum, searchByPageChange);

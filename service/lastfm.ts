@@ -1,5 +1,6 @@
+import axios, { AxiosInstance } from 'axios';
+
 import { FmTopTracksSearchData, FmTrackSearchData } from './../store/type/fm.d';
-import { AxiosInstance } from 'axios';
 
 class Lastfm {
   lastfm: AxiosInstance;
@@ -72,3 +73,12 @@ class Lastfm {
 }
 
 export default Lastfm;
+
+const httpClient = axios.create({
+  baseURL: 'https://ws.audioscrobbler.com/2.0',
+  params: { api_key: process.env.NEXT_PUBLIC_LASTFM_API_KEY },
+});
+
+const lastFmClient = new Lastfm(httpClient);
+
+export { lastFmClient };

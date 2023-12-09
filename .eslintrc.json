@@ -17,6 +17,7 @@
     }
   },
   "rules": {
+    "react-hooks/rules-of-hooks": "off",
     "jsx-a11y/anchor-is-valid": "off",
     "import/no-unresolved": "error",
     "import/order": [
