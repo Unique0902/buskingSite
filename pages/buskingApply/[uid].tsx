@@ -11,9 +11,9 @@ import PrimarySongResult from '../../components/Table/PrimarySongResult';
 import RequestSongResult from '../../components/Table/RequestSongResult';
 import SongTable from '../../components/Table/SongTable';
 import { useBuskingContext } from '../../context/BuskingContext';
-import { useIpContext } from '../../context/IpContext';
 import { usePlaylistContext } from '../../context/PlaylistContext';
 import { useUserDataContext } from '../../context/UserDataContext';
+import useIpData from '../../hooks/UseIpData';
 import useSearch from '../../hooks/UseSearch';
 import { ApplianceData, BuskingData } from '../../store/type/busking';
 import { PlaylistData, PlaylistSongData } from '../../store/type/playlist';
@@ -27,10 +27,13 @@ const App = () => {
   >([]);
   const [appliance, setAppliance] = useState<ApplianceData[]>([]);
   const [nowPlaylist, setNowPlaylist] = useState<PlaylistData | null>(null);
-  const [ip, setIp] = useState<string | undefined>('');
   const router = useRouter();
   const userId = router.query.uid ? router.query.uid.toString() : null;
-  const { getIp } = useIpContext();
+  const {
+    data: ipData,
+    isError: isIpdataError,
+    error: ipDataError,
+  } = useIpData(userId);
   const { applyOldBuskingSong, applyNewBuskingSong, getBuskingData } =
     useBuskingContext();
   const { getPlaylists } = usePlaylistContext();
@@ -55,10 +58,6 @@ const App = () => {
       });
     }
   }, [isUser, userId, getPlaylists]);
-
-  useEffect(() => {
-    getIp().then((ip1) => setIp(ip1));
-  }, [getIp]);
 
   useEffect(() => {
     if (buskingData && buskingData.appliance) {
@@ -103,19 +102,21 @@ const App = () => {
 
   //TODO:여기서 userID를 분리할수있을까?
   const handleApplySong = (sid: string) => {
-    if (buskingData && userId && ip) {
+    if (buskingData && userId && ipData) {
       const appliedSongData = appliance.find((song) => song.sid === sid);
       if (appliedSongData) {
         const isUserApplied = !!appliedSongData.applicants.find(
-          (ap) => ap.ip === ip
+          (ap) => ap.ip === ipData
         );
         if (isUserApplied) {
           window.alert('이미 투표하셨습니다!');
           return;
         }
-        applyOldBuskingSong(userId, sid, ip, appliedSongData).finally(() => {
-          handleBuskingData(userId);
-        });
+        applyOldBuskingSong(userId, sid, ipData, appliedSongData).finally(
+          () => {
+            handleBuskingData(userId);
+          }
+        );
       } else {
         if (appliance.length === buskingData.maxNum) {
           alert('신청 최대수에 도달했습니다! 한 곡이 끝난후 신청해보세요!');
@@ -128,7 +129,7 @@ const App = () => {
             songToApply.title,
             songToApply.artist,
             sid,
-            ip
+            ipData
           ).finally(() => {
             handleBuskingData(userId);
           });
@@ -141,7 +142,12 @@ const App = () => {
     }
   };
 
-  if (!ip) {
+  if (isIpdataError) {
+    console.error(ipDataError);
+    return <div>ip를 불러올수 없습니다. 새로고침해주세요.</div>;
+  }
+
+  if (!ipData) {
     return <div>accessing your ip address...</div>;
   }
 

@@ -30,6 +30,9 @@ const useAddSearchBar = () => {
   //state로 콜백함수를 저장할때 코드의 가독성이 떨어져서 그냥 따로 새로운 객체만들어서 전달하는게 더 나을것같다고 생각함!
   //그래서 이런식으로 코드 작성한것
 
+  // react query 사용하면서 얻은것중 하나는 캐싱기능(strict mode에서도 fetch 한번만됨 개꿀 ^^) + 페이지 focus시 리패치
+  // 부가기능중에 추가할것들은 추가할예정
+
   const [queryKey, setQueryKey] = useState<string[]>(['getTopTracks', '1']);
 
   const { data, isLoading } = useQuery({
