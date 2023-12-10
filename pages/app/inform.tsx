@@ -19,7 +19,7 @@ export default function AppInform() {
   const handleClickRemoveUserBtn = async () => {
     if (window.confirm('정말 탈퇴하시겠습니까?')) {
       if (uid) {
-        await removeUserData(uid);
+        removeUserData(uid);
         if (playlists) {
           await removeUserPlaylists(uid);
         }

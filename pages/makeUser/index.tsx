@@ -24,7 +24,7 @@ const MakeUser = () => {
   };
   const handleClickMakeUserBtn = async () => {
     if (name.length > 1 && name.length < 9 && uid) {
-      await makeUserData(uid, name);
+      makeUserData(uid, name);
     }
   };
   const isCanApply = name.length > 1 && name.length < 9;

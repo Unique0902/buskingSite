@@ -37,7 +37,8 @@ const App = () => {
   const { applyOldBuskingSong, applyNewBuskingSong, getBuskingData } =
     useBuskingContext();
   const { getPlaylists } = usePlaylistContext();
-  const { getUserData } = useUserDataContext();
+  const { buskingApplyUserData, getBuskingApplyUserData } =
+    useUserDataContext();
 
   const playlistSearchProps = useSearch<PlaylistSongData>(nowPlaylistSongArr);
   const applianceSearchProps = useSearch<ApplianceData>(appliance);
@@ -71,17 +72,14 @@ const App = () => {
     }
   }, [buskingData]);
 
-  //userId를 분리해주자!! 함수의 독립성 키워주기!!
-  const checkIsUser = useCallback(async (uid: string) => {
-    const data = await getUserData(uid);
-    setIsUser(!!data);
-  }, []);
-  // 왜 checkIsUser를 dependency에 넣어주어야하지? <<해결됨
   useEffect(() => {
     if (userId) {
-      checkIsUser(userId);
+      if (!buskingApplyUserData) {
+        getBuskingApplyUserData(userId);
+      }
+      setIsUser(!!buskingApplyUserData);
     }
-  }, [userId]);
+  }, [userId, buskingApplyUserData, getBuskingApplyUserData]);
 
   const handleBuskingData = useCallback(
     async (uid: string) => {

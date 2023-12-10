@@ -1,11 +1,6 @@
-import {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import { createContext, ReactNode, useContext, useState } from 'react';
 
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Unsubscribe } from 'firebase/auth';
 
 import { useAuthContext } from './AuthContext';
@@ -18,34 +13,52 @@ type Props = {
 };
 
 type ContextProps = {
-  userData: UserData | null;
-  userDataLoading: boolean;
+  userData: UserData | undefined | null;
+  buskingApplyUserData: UserData | null | undefined;
+  isLoading: boolean;
   syncUserData: (
     userId: string,
     onUpdate: (value: UserData | null) => void
   ) => Unsubscribe;
-  getUserData: (userId: string) => Promise<UserData | null>;
-  removeUserData: (userId: string) => Promise<void>;
-  makeUserData: (userId: string, name: string) => Promise<UserData>;
+  getBuskingApplyUserData: (userId: string) => void;
+  removeUserData: (userId: string) => void;
+  makeUserData: (userId: string, name: string) => void;
 };
 
 const UserDataContext = createContext<ContextProps>({} as ContextProps);
 
 export function UserDataContextProvider({ userRepository, children }: Props) {
-  const [userData, setUserData] = useState<UserData | null>(null);
-  const [userDataLoading, setUserDataLoading] = useState<boolean>(true);
+  const queryClient = useQueryClient();
+  const [buskingApplyUserId, setBuskingApplyUserId] = useState<string | null>(
+    null
+  );
   const { uid } = useAuthContext();
-  useEffect(() => {
-    setUserDataLoading(true);
-    if (!uid) {
-      setUserData(null);
-      return;
-    }
-    userRepository.getUserData(uid).then((data) => {
-      data && setUserData(data);
-      setUserDataLoading(false);
-    });
-  }, [uid]);
+  const { data, isLoading } = useQuery({
+    queryKey: ['userData'],
+    queryFn: () => userRepository.getUserData(uid as string),
+    enabled: !!uid,
+  });
+  const buskingApplyUserDataQuery = useQuery({
+    queryKey: ['buskingApplyUserData'],
+    queryFn: () => userRepository.getUserData(buskingApplyUserId as string),
+    enabled: !!buskingApplyUserId,
+  });
+  const makeMutation = useMutation({
+    mutationFn: ({ userId, name }: { userId: string; name: string }) => {
+      return userRepository.makeUser(userId, name);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['userData'] });
+    },
+  });
+  const removeMutation = useMutation({
+    mutationFn: (userId: string) => {
+      return userRepository.removeUser(userId);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['userData'] });
+    },
+  });
 
   const syncUserData = (
     userId: string,
@@ -53,25 +66,25 @@ export function UserDataContextProvider({ userRepository, children }: Props) {
   ) => {
     return userRepository.syncUserData(userId, onUpdate);
   };
-  const getUserData = async (userId: string) => {
-    return userRepository.getUserData(userId);
+
+  const getBuskingApplyUserData = (userId: string) => {
+    setBuskingApplyUserId(userId);
   };
-  const removeUserData = async (userId: string) => {
-    return userRepository.removeUser(userId);
+  const removeUserData = (userId: string) => {
+    removeMutation.mutate(userId);
   };
-  const makeUserData = async (userId: string, name: string) => {
-    const data = await userRepository.makeUser(userId, name);
-    setUserData(data);
-    return data;
+  const makeUserData = (userId: string, name: string) => {
+    makeMutation.mutate({ userId, name });
   };
   // 유저 데이터가 서버에 만들어졌을때 응답 받을수있게, setUserData할수있게
   return (
     <UserDataContext.Provider
       value={{
-        userData,
-        userDataLoading,
+        userData: data,
+        buskingApplyUserData: buskingApplyUserDataQuery.data,
+        isLoading,
         syncUserData,
-        getUserData,
+        getBuskingApplyUserData,
         removeUserData,
         makeUserData,
       }}

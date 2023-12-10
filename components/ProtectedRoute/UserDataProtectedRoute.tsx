@@ -7,10 +7,10 @@ type Props = {
   children: ReactNode;
 };
 export default function UserDataProtectedRoute({ children }: Props) {
-  const { userData, userDataLoading } = useUserDataContext();
+  const { userData, isLoading } = useUserDataContext();
   const router = useRouter();
 
-  if (userDataLoading) {
+  if (isLoading) {
     return (
       <>
         <div>check userData...</div>
