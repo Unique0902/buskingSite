@@ -12,7 +12,6 @@ import PrimarySongResult from '../../components/Table/PrimarySongResult';
 import RequestSongResult from '../../components/Table/RequestSongResult';
 import SongTable from '../../components/Table/SongTable';
 import { useBuskingContext } from '../../context/BuskingContext';
-import { useUserDataContext } from '../../context/UserDataContext';
 import useIpData from '../../hooks/UseIpData';
 import useSearch from '../../hooks/UseSearch';
 import PlaylistRepository from '../../service/playlist_repository';
@@ -43,14 +42,14 @@ const App = () => {
 
   const userRepository = new UserRepository();
   const { data: buskerData } = useQuery({
-    queryKey: ['buskerData'],
+    queryKey: [userId, 'buskerData'],
     queryFn: () => userRepository.getUserData(userId as string),
     enabled: !!userId,
   });
 
   const playlistRepository = new PlaylistRepository();
   const { data: playlistData } = useQuery({
-    queryKey: ['playlistData'],
+    queryKey: [userId, 'playlistData'],
     queryFn: () => playlistRepository.getPlaylists(userId as string),
     enabled: !!userId && !!buskerData,
   });
