@@ -1,5 +1,6 @@
-import { database } from './firebase';
 import { get, onValue, ref, remove, set } from 'firebase/database';
+
+import { database } from './firebase';
 import { UserData } from '../store/type/userData';
 
 class UserRepository {
