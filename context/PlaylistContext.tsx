@@ -6,10 +6,9 @@ import {
   useState,
 } from 'react';
 
-import { Unsubscribe } from 'firebase/auth';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { useAuthContext } from './AuthContext';
-import { useUserDataContext } from './UserDataContext';
 import PlaylistRepository from '../service/playlist_repository';
 import {
   PlaylistData,
@@ -23,25 +22,17 @@ type Props = {
 };
 
 type ContextProps = {
-  playlists: PlaylistDataObj | null;
+  playlists: PlaylistDataObj | null | undefined;
   nowPlaylist: PlaylistData | null;
-  addSongToPlaylist: (title: string, artist: string) => Promise<void>;
-  removeNowPlaylist: () => Promise<void>;
-  removeSongInPlaylist: (sid: string) => Promise<void>;
-  addBasicPlaylist: () => Promise<void>;
-  updateNowPlaylistName: (name: string) => Promise<void>;
-  addPlaylist: (name: string) => Promise<void>;
+  addSongToPlaylist: (title: string, artist: string) => void;
+  removeNowPlaylist: () => void;
+  removeSongInPlaylist: (sid: string) => void;
+  addBasicPlaylist: () => void;
+  updateNowPlaylistName: (name: string) => void;
+  addPlaylist: (name: string) => void;
   changeNowPlaylist: (id: string) => void;
-  syncPlaylist: (
-    userId: string,
-    onUpdate: (value: PlaylistDataObj) => void
-  ) => Unsubscribe;
-  getPlaylists: (userId: string) => Promise<PlaylistDataObj | null>;
-  getPlaylist: (
-    userId: string,
-    playlistId: string
-  ) => Promise<PlaylistData | null>;
-  removeUserPlaylists: (userId: string) => Promise<void>;
+
+  removeUserPlaylists: (userId: string) => void;
 };
 
 const PlaylistContext = createContext<ContextProps>({} as ContextProps);
@@ -50,36 +41,40 @@ export function PlaylistContextProvider({
   playlistRepository,
   children,
 }: Props) {
-  const [playlists, setPlaylists] = useState<PlaylistDataObj | null>(null);
-  const [nowPlaylist, setNowPlaylist] = useState<PlaylistData | null>(null);
+  const queryClient = useQueryClient();
   const { uid } = useAuthContext();
-  const { userData } = useUserDataContext();
+  const { data: playlistData } = useQuery({
+    queryKey: ['playlistData'],
+    queryFn: () => playlistRepository.getPlaylists(uid as string),
+    enabled: !!uid,
+  });
+
+  const playlistDataMutation = useMutation({
+    mutationFn: ({
+      mutationFunction,
+    }: {
+      mutationFunction: () => Promise<void>;
+    }) => mutationFunction(),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [uid, 'playlistData'] });
+    },
+  });
+
+  const [nowPlaylist, setNowPlaylist] = useState<PlaylistData | null>(null);
 
   useEffect(() => {
-    if (!uid || !userData) {
-      return;
-    }
-    return playlistRepository.syncPlaylist(
-      uid,
-      (playlists: PlaylistDataObj | null) => {
-        setPlaylists(playlists ? playlists : null);
-      }
-    );
-  }, [uid, userData]);
-
-  useEffect(() => {
-    if (playlists) {
-      if (nowPlaylist && playlists[nowPlaylist.id]) {
-        setNowPlaylist(playlists[nowPlaylist.id]);
+    if (playlistData) {
+      if (nowPlaylist && playlistData[nowPlaylist.id]) {
+        setNowPlaylist(playlistData[nowPlaylist.id]);
       } else {
-        setNowPlaylist(Object.values(playlists)[0]);
+        setNowPlaylist(Object.values(playlistData)[0]);
       }
     } else {
       setNowPlaylist(null);
     }
-  }, [playlists]);
+  }, [playlistData]);
 
-  const addSongToPlaylist = async (title: string, artist: string) => {
+  const addSongToPlaylist = (title: string, artist: string) => {
     if (!nowPlaylist) {
       alert('플레이리스트가 존재하지않습니다! 추가해주세요!');
       return;
@@ -99,20 +94,26 @@ export function PlaylistContextProvider({
         artist: artist,
       };
       if (!uid) throw new Error('no uid!!');
-      await playlistRepository.saveSong(uid, nowPlaylist, song);
+      playlistDataMutation.mutate({
+        mutationFunction: () =>
+          playlistRepository.saveSong(uid, nowPlaylist, song),
+      });
       alert(`${artist}의 ${title}가 추가되었습니다.`);
     }
   };
 
   //TODO: 이렇게 Error로 처리하는게 맞는지 생각해보기
-  const removeNowPlaylist = async () => {
+  const removeNowPlaylist = () => {
     if (!uid) throw new Error('no uid!!');
     if (!nowPlaylist) throw new Error('no nowPlaylist!!');
-    await playlistRepository.removePlaylist(uid, nowPlaylist);
+    playlistDataMutation.mutate({
+      mutationFunction: () =>
+        playlistRepository.removePlaylist(uid, nowPlaylist),
+    });
     alert('제거되었습니다.');
   };
 
-  const removeSongInPlaylist = async (sid: string) => {
+  const removeSongInPlaylist = (sid: string) => {
     if (!nowPlaylist) {
       return;
     }
@@ -123,7 +124,10 @@ export function PlaylistContextProvider({
       const song = songArr.find((song) => song.id === sid);
       if (song) {
         if (!uid) throw new Error('no uid!!');
-        await playlistRepository.removeSong(uid, nowPlaylist, song);
+        playlistDataMutation.mutate({
+          mutationFunction: () =>
+            playlistRepository.removeSong(uid, nowPlaylist, song),
+        });
         window.alert('제거되었습니다.');
       } else {
         throw new Error('cant remove because no song exists');
@@ -131,62 +135,57 @@ export function PlaylistContextProvider({
     }
   };
 
-  const addBasicPlaylist = async () => {
+  const addBasicPlaylist = () => {
     const PLAYLIST_BASIC_NAME = 'playlist';
     const playlist = {
       id: Date.now().toString(),
       name: PLAYLIST_BASIC_NAME,
     };
     if (!uid) throw new Error('no uid!!');
-    await playlistRepository.makePlaylist(uid, playlist);
+    playlistDataMutation.mutate({
+      mutationFunction: () => playlistRepository.makePlaylist(uid, playlist),
+    });
     alert('플레이 리스트가 생성되었습니다!');
   };
 
-  const updateNowPlaylistName = async (name: string) => {
+  const updateNowPlaylistName = (name: string) => {
     if (!uid) throw new Error('no uid!!');
     if (!nowPlaylist) throw new Error('no nowPlaylist!!');
-    return playlistRepository.updatePlaylistName(uid, nowPlaylist, name);
+    playlistDataMutation.mutate({
+      mutationFunction: () =>
+        playlistRepository.updatePlaylistName(uid, nowPlaylist, name),
+    });
   };
 
-  const addPlaylist = async (name: string) => {
+  const addPlaylist = (name: string) => {
     const playlist = {
       id: Date.now().toString(),
       name,
     };
     setNowPlaylist(playlist);
     if (!uid) throw new Error('no uid!!');
-    return playlistRepository.makePlaylist(uid, playlist);
+    playlistDataMutation.mutate({
+      mutationFunction: () => playlistRepository.makePlaylist(uid, playlist),
+    });
   };
 
   const changeNowPlaylist = (id: string) => {
-    if (!playlists) throw new Error('no playlists!!');
-    if (playlists[id]) {
-      setNowPlaylist(playlists[id]);
+    if (!playlistData) throw new Error('no playlists!!');
+    if (playlistData[id]) {
+      setNowPlaylist(playlistData[id]);
     }
   };
 
-  const syncPlaylist = (
-    userId: string,
-    onUpdate: (value: PlaylistDataObj) => void
-  ) => {
-    return playlistRepository.syncPlaylist(userId, onUpdate);
-  };
-
-  const getPlaylists = async (userId: string) => {
-    return playlistRepository.getPlaylists(userId);
-  };
-  const getPlaylist = async (userId: string, playlistId: string) => {
-    return playlistRepository.getPlaylist(userId, playlistId);
-  };
-
-  const removeUserPlaylists = async (userId: string) => {
-    return playlistRepository.removeUserPlaylists(userId);
+  const removeUserPlaylists = (userId: string) => {
+    playlistDataMutation.mutate({
+      mutationFunction: () => playlistRepository.removeUserPlaylists(userId),
+    });
   };
 
   return (
     <PlaylistContext.Provider
       value={{
-        playlists,
+        playlists: playlistData,
         nowPlaylist,
         addSongToPlaylist,
         removeNowPlaylist,
@@ -195,9 +194,6 @@ export function PlaylistContextProvider({
         updateNowPlaylistName,
         addPlaylist,
         changeNowPlaylist,
-        syncPlaylist,
-        getPlaylists,
-        getPlaylist,
         removeUserPlaylists,
       }}
     >

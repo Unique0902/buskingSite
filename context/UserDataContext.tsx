@@ -60,6 +60,7 @@ export function UserDataContextProvider({ userRepository, children }: Props) {
     },
   });
 
+  //TODO: react query 변경
   const syncUserData = (
     userId: string,
     onUpdate: (value: UserData | null) => void

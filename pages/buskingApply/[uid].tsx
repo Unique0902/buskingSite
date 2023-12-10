@@ -86,7 +86,7 @@ const App = () => {
       const data = await getBuskingData(uid);
       setBuskingData(data);
     },
-    [userId]
+    [getBuskingData]
   );
 
   // 왜 handleBuskingData를 dependency에 넣어주어야하지?<<해결됨
@@ -96,7 +96,7 @@ const App = () => {
     if (userId && !buskingData && isUser) {
       handleBuskingData(userId);
     }
-  }, [userId, isUser, buskingData]);
+  }, [userId, isUser, buskingData, handleBuskingData]);
 
   //TODO:여기서 userID를 분리할수있을까?
   const handleApplySong = (sid: string) => {
