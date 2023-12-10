@@ -32,10 +32,9 @@ export function UserDataContextProvider({ userRepository, children }: Props) {
   const { data, isLoading } = useQuery({
     queryKey: ['userData'],
     queryFn: () => {
-      console.log('패칭패칭');
-
       return userRepository.getUserData(uid as string);
     },
+    staleTime: 60 * 1000 * 2,
     enabled: !!uid,
   });
 

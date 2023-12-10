@@ -47,6 +47,7 @@ export function PlaylistContextProvider({
     // TODO: key에다가 uid를 넣어주어야할까?
     queryKey: ['playlistData'],
     queryFn: () => playlistRepository.getPlaylists(uid as string),
+    staleTime: 1000 * 60 * 2,
     enabled: !!uid,
   });
 
@@ -59,7 +60,7 @@ export function PlaylistContextProvider({
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ['playlistData'],
-        refetchType: 'all',
+        // refetchType: 'all', 언마운트 되었을때도 revalidate 진행되는 option
       });
     },
   });
