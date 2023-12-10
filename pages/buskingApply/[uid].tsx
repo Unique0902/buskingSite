@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
+import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 
 import ArrangeMenuBtn from '../../components/ArrangeMenu/ArrangeMenuBtn';
@@ -11,16 +12,16 @@ import PrimarySongResult from '../../components/Table/PrimarySongResult';
 import RequestSongResult from '../../components/Table/RequestSongResult';
 import SongTable from '../../components/Table/SongTable';
 import { useBuskingContext } from '../../context/BuskingContext';
-import { usePlaylistContext } from '../../context/PlaylistContext';
 import { useUserDataContext } from '../../context/UserDataContext';
 import useIpData from '../../hooks/UseIpData';
 import useSearch from '../../hooks/UseSearch';
+import PlaylistRepository from '../../service/playlist_repository';
+import UserRepository from '../../service/userRepository';
 import { ApplianceData, BuskingData } from '../../store/type/busking';
 import { PlaylistData, PlaylistSongData } from '../../store/type/playlist';
 //TODO: 닉네임 검색기능 추가하기
 //TODO: getIp 기능 오류 자꾸나는거 어떻게좀하기
 const App = () => {
-  const [isUser, setIsUser] = useState<boolean>(false);
   const [buskingData, setBuskingData] = useState<BuskingData | null>(null);
   const [nowPlaylistSongArr, setNowPlaylistSongArr] = useState<
     PlaylistSongData[]
@@ -36,29 +37,38 @@ const App = () => {
   } = useIpData(userId);
   const { applyOldBuskingSong, applyNewBuskingSong, getBuskingData } =
     useBuskingContext();
-  const { getPlaylists } = usePlaylistContext();
-  const { buskingApplyUserData, getBuskingApplyUserData } =
-    useUserDataContext();
 
   const playlistSearchProps = useSearch<PlaylistSongData>(nowPlaylistSongArr);
   const applianceSearchProps = useSearch<ApplianceData>(appliance);
 
+  const userRepository = new UserRepository();
+  const { data: buskerData } = useQuery({
+    queryKey: ['buskerData'],
+    queryFn: () => userRepository.getUserData(userId as string),
+    enabled: !!userId,
+  });
+
+  const playlistRepository = new PlaylistRepository();
+  const { data: playlistData } = useQuery({
+    queryKey: ['playlistData'],
+    queryFn: () => playlistRepository.getPlaylists(userId as string),
+    enabled: !!userId && !!buskerData,
+  });
+
   useEffect(() => {
-    if (isUser && userId) {
-      getPlaylists(userId).then((data) => {
-        if (!data) return;
-        const listArr = Object.values(data);
-        if (listArr.length > 0) {
-          setNowPlaylist(listArr[0]);
-          // nowPlaylist.songs && setNowPlaylistSongArr(Object.values(nowPlaylist.songs));
-          // setState함수는 비동기적으로 동작하므로 위 코드에 nowPlaylist가 잘들어갔는지 보장할 수 없다!
-          //따라서 아래처럼 코드를 바꾸었다.
-          listArr[0].songs &&
-            setNowPlaylistSongArr(Object.values(listArr[0].songs));
-        }
-      });
+    if (buskerData && playlistData) {
+      if (!playlistData) return;
+      const listArr = Object.values(playlistData);
+      if (listArr.length > 0) {
+        setNowPlaylist(listArr[0]);
+        // nowPlaylist.songs && setNowPlaylistSongArr(Object.values(nowPlaylist.songs));
+        // setState함수는 비동기적으로 동작하므로 위 코드에 nowPlaylist가 잘들어갔는지 보장할 수 없다!
+        //따라서 아래처럼 코드를 바꾸었다.
+        listArr[0].songs &&
+          setNowPlaylistSongArr(Object.values(listArr[0].songs));
+      }
     }
-  }, [isUser, userId, getPlaylists]);
+  }, [buskerData, playlistData]);
 
   useEffect(() => {
     if (buskingData && buskingData.appliance) {
@@ -72,15 +82,6 @@ const App = () => {
     }
   }, [buskingData]);
 
-  useEffect(() => {
-    if (userId) {
-      if (!buskingApplyUserData) {
-        getBuskingApplyUserData(userId);
-      }
-      setIsUser(!!buskingApplyUserData);
-    }
-  }, [userId, buskingApplyUserData, getBuskingApplyUserData]);
-
   const handleBuskingData = useCallback(
     async (uid: string) => {
       const data = await getBuskingData(uid);
@@ -93,10 +94,10 @@ const App = () => {
 
   // eslint 업그레이드 한다<<해결됨
   useEffect(() => {
-    if (userId && !buskingData && isUser) {
+    if (userId && !buskingData && buskerData) {
       handleBuskingData(userId);
     }
-  }, [userId, isUser, buskingData, handleBuskingData]);
+  }, [userId, buskerData, buskingData, handleBuskingData]);
 
   //TODO:여기서 userID를 분리할수있을까?
   const handleApplySong = (sid: string) => {
@@ -152,14 +153,14 @@ const App = () => {
   return (
     <section className='relative flex w-full h-screen px-8 py-4 overflow-auto max-md:px-4 bg-gradient-to-b from-blue-500 to-mainBlue'>
       <section className='w-full'>
-        {!isUser && (
+        {!buskerData && (
           <MainSec>
             <h1 className='text-xl font-semibold'>
               해당하는 유저가 존재하지않습니다.
             </h1>
           </MainSec>
         )}
-        {isUser &&
+        {buskerData &&
           (buskingData ? (
             <section className=''>
               <section className='flex flex-row items-center pt-3 pb-8 border-b border-gray-600 max-lg:flex-col max-lg:text-center'>

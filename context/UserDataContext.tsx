@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext, useState } from 'react';
+import { createContext, ReactNode, useContext } from 'react';
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Unsubscribe } from 'firebase/auth';
@@ -14,13 +14,11 @@ type Props = {
 
 type ContextProps = {
   userData: UserData | undefined | null;
-  buskingApplyUserData: UserData | null | undefined;
   isLoading: boolean;
   syncUserData: (
     userId: string,
     onUpdate: (value: UserData | null) => void
   ) => Unsubscribe;
-  getBuskingApplyUserData: (userId: string) => void;
   removeUserData: (userId: string) => void;
   makeUserData: (userId: string, name: string) => void;
 };
@@ -29,20 +27,14 @@ const UserDataContext = createContext<ContextProps>({} as ContextProps);
 
 export function UserDataContextProvider({ userRepository, children }: Props) {
   const queryClient = useQueryClient();
-  const [buskingApplyUserId, setBuskingApplyUserId] = useState<string | null>(
-    null
-  );
+
   const { uid } = useAuthContext();
   const { data, isLoading } = useQuery({
     queryKey: ['userData'],
     queryFn: () => userRepository.getUserData(uid as string),
     enabled: !!uid,
   });
-  const buskingApplyUserDataQuery = useQuery({
-    queryKey: ['buskingApplyUserData'],
-    queryFn: () => userRepository.getUserData(buskingApplyUserId as string),
-    enabled: !!buskingApplyUserId,
-  });
+
   const makeMutation = useMutation({
     mutationFn: ({ userId, name }: { userId: string; name: string }) => {
       return userRepository.makeUser(userId, name);
@@ -68,9 +60,6 @@ export function UserDataContextProvider({ userRepository, children }: Props) {
     return userRepository.syncUserData(userId, onUpdate);
   };
 
-  const getBuskingApplyUserData = (userId: string) => {
-    setBuskingApplyUserId(userId);
-  };
   const removeUserData = (userId: string) => {
     removeMutation.mutate(userId);
   };
@@ -82,10 +71,8 @@ export function UserDataContextProvider({ userRepository, children }: Props) {
     <UserDataContext.Provider
       value={{
         userData: data,
-        buskingApplyUserData: buskingApplyUserDataQuery.data,
         isLoading,
         syncUserData,
-        getBuskingApplyUserData,
         removeUserData,
         makeUserData,
       }}

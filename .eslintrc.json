@@ -20,6 +20,7 @@
     "react-hooks/rules-of-hooks": "off",
     "jsx-a11y/anchor-is-valid": "off",
     "import/no-unresolved": "error",
+    "@typescript-eslint/no-unused-vars": "warning",
     "import/order": [
       "error",
       {
