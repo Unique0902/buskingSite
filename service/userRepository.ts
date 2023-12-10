@@ -19,13 +19,12 @@ class UserRepository {
     });
   };
 
-  makeUser = async (userId: string, name: string): Promise<UserData> => {
+  makeUser = async (userId: string, name: string): Promise<void> => {
     const userData = await this.getUserData(userId);
     if (!userData) {
       const listRef = ref(database, `users/${userId}/`);
-      const userData = { name, date: Date.now().toString() };
-      await set(listRef, userData);
-      return userData;
+      const userData = { name, date: new Date().toString() };
+      return set(listRef, userData);
     } else {
       throw new Error('already userData exists!');
     }

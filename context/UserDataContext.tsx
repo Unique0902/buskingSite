@@ -31,7 +31,11 @@ export function UserDataContextProvider({ userRepository, children }: Props) {
   const { uid } = useAuthContext();
   const { data, isLoading } = useQuery({
     queryKey: ['userData'],
-    queryFn: () => userRepository.getUserData(uid as string),
+    queryFn: () => {
+      console.log('패칭패칭');
+
+      return userRepository.getUserData(uid as string);
+    },
     enabled: !!uid,
   });
 

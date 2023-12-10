@@ -44,6 +44,7 @@ export function PlaylistContextProvider({
   const queryClient = useQueryClient();
   const { uid } = useAuthContext();
   const { data: playlistData } = useQuery({
+    // TODO: key에다가 uid를 넣어주어야할까?
     queryKey: ['playlistData'],
     queryFn: () => playlistRepository.getPlaylists(uid as string),
     enabled: !!uid,
@@ -56,7 +57,10 @@ export function PlaylistContextProvider({
       mutationFunction: () => Promise<void>;
     }) => mutationFunction(),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [uid, 'playlistData'] });
+      queryClient.invalidateQueries({
+        queryKey: ['playlistData'],
+        refetchType: 'all',
+      });
     },
   });
 

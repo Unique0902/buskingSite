@@ -7,7 +7,7 @@ import { FmEditedTopTrackData, FmTrackData } from '../../store/type/fm';
 type Props = {
   index: number;
   result: FmTrackData | FmEditedTopTrackData;
-  handleSongClick: (title: string, artist: string) => Promise<void>;
+  handleSongClick: (title: string, artist: string) => void;
   icon: iconName;
 };
 const SongAddResult = ({ index, result, handleSongClick, icon }: Props) => {
