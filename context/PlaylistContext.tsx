@@ -49,8 +49,7 @@ export function PlaylistContextProvider({
   const { uid } = useAuthContext();
   const playlistQueryResult = useQuery({
     // key에다가 uid를 넣어주어야할까? <<당연..
-    // eslint-disable-next-line @tanstack/query/exhaustive-deps
-    queryKey: ['playlistData'],
+    queryKey: [uid, 'playlistData'],
     queryFn: () => playlistRepository.getPlaylists(uid as string),
     staleTime: 1000 * 60 * 2,
     enabled: !!uid,
@@ -66,7 +65,7 @@ export function PlaylistContextProvider({
     }) => mutationFunction(),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['playlistData'],
+        queryKey: [uid, 'playlistData'],
         // refetchType: 'all', 언마운트 되었을때도 revalidate 진행되는 option
       });
     },

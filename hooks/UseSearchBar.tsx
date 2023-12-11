@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
+import { songSearchWordCategories } from '../store/data/CategoryTypes';
 import { ApplianceData } from '../store/type/busking';
 import { PlaylistSongData } from '../store/type/playlist';
-type SearchWord = {
-  name: string;
-  category: '제목' | '가수';
-};
+import { SearchWord } from '../store/type/searchword';
+
 const useSearchBar = <T extends PlaylistSongData | ApplianceData>(
   pureDataArr: T[],
   isLoading: boolean,
@@ -13,7 +12,7 @@ const useSearchBar = <T extends PlaylistSongData | ApplianceData>(
 ) => {
   const [searchWord, setSearchWord] = useState<SearchWord>({
     name: '',
-    category: '제목',
+    category: songSearchWordCategories[0],
   });
   const [searchedDataArr, setSearchedDataArr] = useState<T[]>([]);
   const [viewedDataArr, setViewedDataArr] = useState<T[]>([]);
@@ -49,6 +48,8 @@ const useSearchBar = <T extends PlaylistSongData | ApplianceData>(
         );
         setSearchedDataArr(filterdDataArr);
         setViewedDataArr(getDataByPageNum(1, filterdDataArr));
+      } else {
+        throw new Error('not exist song searchWord category!');
       }
     } else {
       setSearchedDataArr(pureDataArr);

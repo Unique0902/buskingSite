@@ -1,13 +1,14 @@
 import React, { ReactNode } from 'react';
 
 import Icon from '../../assets/icon/icon';
+import { songSearchWordCategories } from '../../store/data/CategoryTypes';
+import {
+  SearchWord,
+  SearchWordCategoryType,
+} from '../../store/type/searchword';
 import { color, xyPadding } from '../../styles/theme';
 import PrimaryBtn from '../Btn/PrimaryBtn';
 import RenderedWhenFullScreen from '../Responsive/RenderedWhenFullScreen';
-type SearchWord = {
-  name: string;
-  category: '제목' | '가수';
-};
 
 type Props = {
   searchWord: SearchWord;
@@ -46,12 +47,15 @@ const SongSearchBar = ({
           onChange={(e) => {
             setSearchWord({
               ...searchWord,
-              category: e.target.value as '제목' | '가수',
+              category: e.target.value as SearchWordCategoryType,
             });
           }}
         >
-          <option value='제목'>제목</option>
-          <option value='가수'>가수</option>
+          {songSearchWordCategories.map((category) => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          ))}
         </select>
         <div className='relative flex flex-row items-center flex-1'>
           <input

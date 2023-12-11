@@ -16,6 +16,7 @@ import useIpData from '../../hooks/UseIpData';
 import useSearch from '../../hooks/UseSearch';
 import PlaylistRepository from '../../service/playlist_repository';
 import UserRepository from '../../service/userRepository';
+import { songSearchWordCategories } from '../../store/data/CategoryTypes';
 import { ApplianceData } from '../../store/type/busking';
 import { PlaylistData, PlaylistSongData } from '../../store/type/playlist';
 
@@ -174,7 +175,7 @@ const App = () => {
                 >
                   <SearchBar.MainSec>
                     <SearchBar.MainSec.Select
-                      optionValueArr={['제목', '가수']}
+                      optionValueArr={songSearchWordCategories}
                     />
                     <SearchBar.MainSec.InputWithButton
                       handleClickBtn={playlistSearchProps.handleSearchBtnClick}
@@ -284,7 +285,7 @@ const App = () => {
                   >
                     <SearchBar.MainSec>
                       <SearchBar.MainSec.Select
-                        optionValueArr={['제목', '가수']}
+                        optionValueArr={songSearchWordCategories}
                       />
                       <SearchBar.MainSec.InputWithButton
                         handleClickBtn={

@@ -11,6 +11,7 @@ import TitleBar from '../../components/TitleBar';
 import { usePlaylistContext } from '../../context/PlaylistContext';
 import useSearch from '../../hooks/UseSearch';
 import { getAppLayOut } from '../../layouts/appLayout';
+import { songSearchWordCategories } from '../../store/data/CategoryTypes';
 import { PlaylistSongData } from '../../store/type/playlist';
 //TODO: 플레이리스트 노래 제목이나 가수 수정기능 추가
 export default function AppPlaylist() {
@@ -51,7 +52,9 @@ export default function AppPlaylist() {
         <MainSec>
           <SearchBar searchWord={searchWord} setSearchWord={setSearchWord}>
             <SearchBar.MainSec>
-              <SearchBar.MainSec.Select optionValueArr={['제목', '가수']} />
+              <SearchBar.MainSec.Select
+                optionValueArr={songSearchWordCategories}
+              />
 
               <SearchBar.MainSec.InputWithButton
                 handleClickBtn={handleSearchBtnClick}

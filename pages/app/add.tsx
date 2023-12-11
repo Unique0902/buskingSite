@@ -13,6 +13,7 @@ import { usePlaylistContext } from '../../context/PlaylistContext';
 // import useFmData from '../../hooks/songData/UseFmData';
 import useAddSearch from '../../hooks/UseAddSearch';
 import { getAppLayOut } from '../../layouts/appLayout';
+import { songSearchWordCategories } from '../../store/data/CategoryTypes';
 import { FmEditedTopTrackData, FmTrackData } from '../../store/type/fm';
 // TODO: searchBar, songTable 기능 테스트 적은후 하기
 // 자꾸 구조 바꿀때마다 오류나는게 걱정나니 ㅜ..
@@ -47,7 +48,9 @@ export default function AppAdd() {
           */}
           <SearchBar searchWord={searchWord} setSearchWord={setSearchWord}>
             <SearchBar.MainSec>
-              <SearchBar.MainSec.Select optionValueArr={['제목', '가수']} />
+              <SearchBar.MainSec.Select
+                optionValueArr={songSearchWordCategories}
+              />
               <SearchBar.MainSec.InputWithButton
                 handleClickBtn={handleSearchBtnClick}
               />

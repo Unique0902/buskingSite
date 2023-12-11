@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 import { lastFmClient } from '../service/lastfm';
+import { songSearchWordCategories } from '../store/data/CategoryTypes';
 import {
   FmEditedTopTrackData,
   FmTopTrackData,
@@ -10,10 +11,7 @@ import {
   FmTrackData,
   FmTrackSearchData,
 } from '../store/type/fm';
-type SearchWord = {
-  name: string;
-  category: '제목' | '가수';
-};
+import { SearchWord } from '../store/type/searchword';
 
 type QueryFunctionType = {
   func: () => Promise<FmTopTracksSearchData | FmTrackSearchData>;
@@ -60,7 +58,7 @@ const useAddSearchBar = () => {
     : 0;
   const [searchWord, setSearchWord] = useState<SearchWord>({
     name: '',
-    category: '제목',
+    category: songSearchWordCategories[0],
   });
   const [isTopTrackTime, setIsTopTrackTime] = useState<boolean>(true);
   const [savedSearchWord, setSavedSearchWord] = useState<SearchWord | null>(
@@ -70,16 +68,21 @@ const useAddSearchBar = () => {
   const searchBySearchBtn = async () => {
     setIsTopTrackTime(false);
     if (searchWord.name) {
-      if (searchWord.category === '제목') {
-        setQueryFunctionObj({
-          func: () => fmService.searchSongByName(searchWord.name, 1),
-        });
-        setQueryKey(['searchSongByName', searchWord.name, '1']);
-      } else if (searchWord.category === '가수') {
-        setQueryFunctionObj({
-          func: () => fmService.searchSongByArtist(searchWord.name, 1),
-        });
-        setQueryKey(['searchSongByArtist', searchWord.name, '1']);
+      switch (searchWord.category) {
+        case '제목':
+          setQueryFunctionObj({
+            func: () => fmService.searchSongByName(searchWord.name, 1),
+          });
+          setQueryKey(['searchSongByName', searchWord.name, '1']);
+          break;
+        case '가수':
+          setQueryFunctionObj({
+            func: () => fmService.searchSongByArtist(searchWord.name, 1),
+          });
+          setQueryKey(['searchSongByArtist', searchWord.name, '1']);
+          break;
+        default:
+          throw new Error('not exist song searchWord category!');
       }
       setSavedSearchWord({ ...searchWord });
     }
@@ -110,6 +113,8 @@ const useAddSearchBar = () => {
           savedSearchWord.name,
           pageNum.toString(),
         ]);
+      } else {
+        throw new Error('not exist song searchWord category!');
       }
     }
   };

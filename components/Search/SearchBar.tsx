@@ -3,15 +3,14 @@ import React, { createContext, ReactNode, useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import Icon from '../../assets/icon/icon';
+import {
+  SearchWord,
+  SearchWordCategoryType,
+} from '../../store/type/searchword';
 import { color, xyPadding } from '../../styles/theme';
 import PrimaryBtn from '../Btn/PrimaryBtn';
 import RenderedWhenFullScreen from '../Responsive/RenderedWhenFullScreen';
 
-//TODO: SearchWord 타입 전역선언하기 할때 카테고리는 선택받을수있게 의존성 외부에서 주입받게 만들기
-type SearchWord = {
-  name: string;
-  category: '제목' | '가수';
-};
 interface SearchBarProps {
   children: ReactNode;
   searchWord: SearchWord;
@@ -34,7 +33,7 @@ const SearchBar = ({ children, searchWord, setSearchWord }: SearchBarProps) => {
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSearchWord({
       ...searchWord,
-      category: e.target.value as '제목' | '가수',
+      category: e.target.value as SearchWordCategoryType,
     });
   };
 
@@ -74,7 +73,7 @@ const SubSec = ({ children }: SubSecProps) => {
 };
 
 type SelectProps = {
-  optionValueArr: string[];
+  optionValueArr: readonly string[];
 };
 const Select = ({ optionValueArr }: SelectProps) => {
   const { searchWord, handleSelectChange } = useContext(SearchBarContext);
