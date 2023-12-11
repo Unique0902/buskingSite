@@ -21,6 +21,8 @@ const SearchModalContent: React.FC = () => {
     queryKey: ['userDatas'],
     queryFn: () => userDataRepository.getAllUserDatas(),
     staleTime: Infinity,
+    gcTime: Infinity,
+    //TODO:gcTime 캐싱 일단 무한으로 해서 네트워크 낭비 괜찮은지 확인하기
   });
   const userDataEntries: UserDataEntries<UserDataObj> = data
     ? Object.entries(data)

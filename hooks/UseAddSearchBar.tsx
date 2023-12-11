@@ -36,7 +36,7 @@ const useAddSearchBar = () => {
   const { data, isLoading } = useQuery({
     queryKey: queryKey,
     queryFn: () => queryFunctionObj.func(),
-    staleTime: 1000 * 20,
+    staleTime: 1000 * 60 * 2,
   });
 
   let searchResults: FmTrackData[] | FmEditedTopTrackData[] = data
