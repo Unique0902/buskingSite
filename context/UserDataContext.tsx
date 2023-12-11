@@ -1,7 +1,6 @@
 import { createContext, ReactNode, useContext } from 'react';
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Unsubscribe } from 'firebase/auth';
 
 import { useAuthContext } from './AuthContext';
 import UserRepository from '../service/userRepository';
@@ -15,10 +14,7 @@ type Props = {
 type ContextProps = {
   userData: UserData | undefined | null;
   isLoading: boolean;
-  syncUserData: (
-    userId: string,
-    onUpdate: (value: UserData | null) => void
-  ) => Unsubscribe;
+
   removeUserData: (userId: string) => void;
   makeUserData: (userId: string, name: string) => void;
 };
@@ -51,13 +47,7 @@ export function UserDataContextProvider({ userRepository, children }: Props) {
     },
   });
 
-  //TODO: react query 변경
-  const syncUserData = (
-    userId: string,
-    onUpdate: (value: UserData | null) => void
-  ) => {
-    return userRepository.syncUserData(userId, onUpdate);
-  };
+  //syncUserData는 이후에 useSyncData를 이용하는걸로
 
   const removeUserData = (userId: string) => {
     userDataMutation.mutate({
@@ -75,7 +65,6 @@ export function UserDataContextProvider({ userRepository, children }: Props) {
       value={{
         userData: data,
         isLoading,
-        syncUserData,
         removeUserData,
         makeUserData,
       }}
