@@ -11,7 +11,7 @@ const NameResults: React.FC<Props> = ({ userDataEntries }: Props) => {
   return (
     <>
       {userDataEntries.map(([key, value]) => (
-        <NameResult key={key} result={value} />
+        <NameResult key={key} userId={key} result={value} />
       ))}
     </>
   );
