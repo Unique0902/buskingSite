@@ -18,7 +18,9 @@ export default function AppMakeBusking() {
     buskingQueryResult: { data: buskingData, isLoading: isbuskingDataLoading },
     makeBusking,
   } = useBuskingContext();
-  const { playlists } = usePlaylistContext();
+  const {
+    playlistQueryResult: { data: playlists },
+  } = usePlaylistContext();
   const { userData } = useUserDataContext();
   const [buskingInform, setBuskingInform] = useState<BuskingInform>({
     playlistId: playlists ? Object.values(playlists)[0].id : '',

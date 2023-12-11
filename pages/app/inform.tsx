@@ -11,8 +11,14 @@ import { useUserDataContext } from '../../context/UserDataContext';
 import { getAppLayOut } from '../../layouts/appLayout';
 export default function AppInform() {
   const { userData, removeUserData } = useUserDataContext();
-  const { removeUserPlaylists, playlists } = usePlaylistContext();
-  const { buskingData, removeBusking } = useBuskingContext();
+  const {
+    removeUserPlaylists,
+    playlistQueryResult: { data: playlists },
+  } = usePlaylistContext();
+  const {
+    buskingQueryResult: { data: buskingData },
+    removeBusking,
+  } = useBuskingContext();
   const { uid, logout } = useAuthContext();
 
   const dayToMakeUser = userData ? new Date(userData.date) : null;
@@ -21,7 +27,7 @@ export default function AppInform() {
       if (uid) {
         removeUserData(uid);
         if (playlists) {
-          await removeUserPlaylists(uid);
+          removeUserPlaylists(uid);
         }
         if (buskingData) {
           await removeBusking();

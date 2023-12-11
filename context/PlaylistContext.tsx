@@ -6,7 +6,12 @@ import {
   useState,
 } from 'react';
 
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  useMutation,
+  useQuery,
+  useQueryClient,
+  UseQueryResult,
+} from '@tanstack/react-query';
 
 import { useAuthContext } from './AuthContext';
 import PlaylistRepository from '../service/playlist_repository';
@@ -22,7 +27,7 @@ type Props = {
 };
 
 type ContextProps = {
-  playlists: PlaylistDataObj | null | undefined;
+  playlistQueryResult: UseQueryResult<PlaylistDataObj | null, Error>;
   nowPlaylist: PlaylistData | null;
   addSongToPlaylist: (title: string, artist: string) => void;
   removeNowPlaylist: () => void;
@@ -31,7 +36,6 @@ type ContextProps = {
   updateNowPlaylistName: (name: string) => void;
   addPlaylist: (name: string) => void;
   changeNowPlaylist: (id: string) => void;
-
   removeUserPlaylists: (userId: string) => void;
 };
 
@@ -43,7 +47,7 @@ export function PlaylistContextProvider({
 }: Props) {
   const queryClient = useQueryClient();
   const { uid } = useAuthContext();
-  const { data: playlistData } = useQuery({
+  const playlistQueryResult = useQuery({
     // key에다가 uid를 넣어주어야할까? <<당연..
     // eslint-disable-next-line @tanstack/query/exhaustive-deps
     queryKey: ['playlistData'],
@@ -52,8 +56,8 @@ export function PlaylistContextProvider({
     enabled: !!uid,
   });
 
-  //TODO: buskingApply에서 여기 context때문에 다른창 로그인 되있는거땜에 그 로그인 uid로도 패칭이 자꾸 됨, buskingApply
-  //에서는 여기 context query 안일어나게 어떻게든 하기 분리 하든 context를 빼든..
+  const { data: playlistData } = playlistQueryResult;
+
   const playlistDataMutation = useMutation({
     mutationFn: ({
       mutationFunction,
@@ -193,7 +197,7 @@ export function PlaylistContextProvider({
   return (
     <PlaylistContext.Provider
       value={{
-        playlists: playlistData,
+        playlistQueryResult,
         nowPlaylist,
         addSongToPlaylist,
         removeNowPlaylist,

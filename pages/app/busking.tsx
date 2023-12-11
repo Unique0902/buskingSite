@@ -21,7 +21,9 @@ import { ApplianceData, ApplianceObjects } from '../../store/type/busking';
 import { color } from '../../styles/theme';
 
 export default function AppBusking() {
-  const { playlists } = usePlaylistContext();
+  const {
+    playlistQueryResult: { data: playlists },
+  } = usePlaylistContext();
   const { userData } = useUserDataContext();
 
   const {
