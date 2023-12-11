@@ -11,7 +11,7 @@ type Props = {
 };
 const PlaylistMenu = ({ setIsShowPlaylistMenu }: Props) => {
   const {
-    playlists,
+    playlistQueryResult: { data: playlists },
     nowPlaylist,
     removeNowPlaylist,
     addPlaylist,
