@@ -20,6 +20,7 @@ import { ApplianceData, BuskingData } from '../../store/type/busking';
 import { PlaylistData, PlaylistSongData } from '../../store/type/playlist';
 //TODO: 닉네임 검색기능 추가하기
 //TODO: getIp 기능 오류 자꾸나는거 어떻게좀하기
+//TODO: 버스킹 사이트로 돌아가게하는 기능 추가
 const App = () => {
   const [buskingData, setBuskingData] = useState<BuskingData | null>(null);
   const [nowPlaylistSongArr, setNowPlaylistSongArr] = useState<

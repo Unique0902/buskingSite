@@ -44,13 +44,20 @@ export function PlaylistContextProvider({
   const queryClient = useQueryClient();
   const { uid } = useAuthContext();
   const { data: playlistData } = useQuery({
-    // TODO: key에다가 uid를 넣어주어야할까?
+    // key에다가 uid를 넣어주어야할까? <<당연..
+    // eslint-disable-next-line @tanstack/query/exhaustive-deps
     queryKey: ['playlistData'],
     queryFn: () => playlistRepository.getPlaylists(uid as string),
     staleTime: 1000 * 60 * 2,
     enabled: !!uid,
   });
 
+  useEffect(() => {
+    console.log('근데 이거는 한번이잖아');
+  }, []);
+
+  //TODO: buskingApply에서 여기 context때문에 다른창 로그인 되있는거땜에 그 로그인 uid로도 패칭이 자꾸 됨, buskingApply
+  //에서는 여기 context query 안일어나게 어떻게든 하기 분리 하든 context를 빼든..
   const playlistDataMutation = useMutation({
     mutationFn: ({
       mutationFunction,

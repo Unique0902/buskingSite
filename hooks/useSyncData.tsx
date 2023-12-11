@@ -1,11 +1,15 @@
 import { useEffect } from 'react';
 
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  useQuery,
+  useQueryClient,
+  UseQueryOptions,
+} from '@tanstack/react-query';
 import { Unsubscribe } from 'firebase/database';
 
 function useSyncQuery<Data>(
   userId: string,
-  queryKey: string[],
+  useQueryOptions: UseQueryOptions<Data>,
   syncData: (
     userId: string,
     onUpdate: (value: Data | null) => void
@@ -14,13 +18,15 @@ function useSyncQuery<Data>(
   const queryClient = useQueryClient();
 
   useEffect(() => {
-    return syncData(userId, (val) => {
-      queryClient.setQueryData(queryKey, val);
-    });
-  }, [queryClient, syncData, queryKey, userId]);
+    if (userId) {
+      return syncData(userId, (val) => {
+        queryClient.setQueryData(useQueryOptions.queryKey, val);
+      });
+    }
+  }, [userId]);
 
   return useQuery<Data, Error>({
-    queryKey,
+    ...useQueryOptions,
     queryFn: () => new Promise<Data>(() => {}),
   });
 }

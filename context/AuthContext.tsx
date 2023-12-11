@@ -41,7 +41,7 @@ export function AuthContextProvider({ authService, children }: Props) {
       setUser(user);
       setUserLoading(false);
     });
-  }, []);
+  }, [authService]);
   return (
     <AuthContext.Provider
       value={{

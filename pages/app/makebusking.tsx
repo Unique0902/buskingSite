@@ -6,24 +6,33 @@ import MainSec from '../../components/MainSec';
 import NoPlaylistCheckWrapper from '../../components/NoPlaylistCheckWrapper';
 import MainRow from '../../components/Row/RowWithTitle';
 import TitleBar from '../../components/TitleBar';
+import { useAuthContext } from '../../context/AuthContext';
 import { useBuskingContext } from '../../context/BuskingContext';
 import { usePlaylistContext } from '../../context/PlaylistContext';
 import { useUserDataContext } from '../../context/UserDataContext';
+import useSyncQuery from '../../hooks/useSyncData';
 import { getAppLayOut } from '../../layouts/appLayout';
-import { BuskingInform } from '../../store/type/busking';
+import BuskingRepository from '../../service/buskingRepository';
+import { BuskingData, BuskingInform } from '../../store/type/busking';
 // TODO: select나 input 컴포넌트화로 묶기
 // 플레이리스트 노래없으면 노래못만들게하기 < 해결완 물론 프론트에서만 처리해서 나중에 서버에서도 처리하려면 해도됨
+const buskingRepositoy = new BuskingRepository();
 export default function AppMakeBusking() {
-  const { buskingData, makeBusking } = useBuskingContext();
+  const { makeBusking } = useBuskingContext();
   const { playlists } = usePlaylistContext();
   const { userData } = useUserDataContext();
+  const { uid } = useAuthContext();
   const [buskingInform, setBuskingInform] = useState<BuskingInform>({
     playlistId: playlists ? Object.values(playlists)[0].id : '',
     maxNum: 10,
     name: `${userData && userData.name}님의 버스킹`,
   });
   const router = useRouter();
-
+  const { data: buskingData } = useSyncQuery<BuskingData>(
+    uid as string,
+    { queryKey: ['buskingData'], enabled: !!uid },
+    buskingRepositoy.syncBuskingData
+  );
   const handleChange = (value: string, label: string) => {
     setBuskingInform({ ...buskingInform, [label]: value });
   };

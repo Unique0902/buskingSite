@@ -1,4 +1,3 @@
-// import { firebaseApp } from './firebase';
 import {
   getAuth,
   signInWithPopup,
@@ -9,6 +8,8 @@ import {
   UserInfo,
 } from 'firebase/auth';
 
+import { firebaseApp } from './firebase';
+
 class AuthService {
   login(providerName: string) {
     const authProvider = this.getProvider(providerName);
@@ -16,6 +17,7 @@ class AuthService {
   }
   auth = getAuth();
   user = this.auth.currentUser;
+  firebase = firebaseApp;
 
   logout() {
     signOut(this.auth);

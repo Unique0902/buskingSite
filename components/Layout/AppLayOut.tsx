@@ -5,11 +5,20 @@ import { useMediaQuery } from 'react-responsive';
 import ThemeBtn from './Footer/ThemeBtn';
 import AppHeader from './Header/AppHeader';
 import SideBar from './SideBar/SideBar';
+import { BuskingContextProvider } from '../../context/BuskingContext';
+import { PlaylistContextProvider } from '../../context/PlaylistContext';
+import { UserDataContextProvider } from '../../context/UserDataContext';
+import BuskingRepository from '../../service/buskingRepository';
+import PlaylistRepository from '../../service/playlist_repository';
+import UserRepository from '../../service/userRepository';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import UserDataProtectedRoute from '../ProtectedRoute/UserDataProtectedRoute';
 type Props = {
   children: ReactNode;
 };
+const userRepository = new UserRepository();
+const playlistRepository = new PlaylistRepository();
+const buskingRepository = new BuskingRepository();
 export default function AppLayOut({ children }: Props) {
   const [isShowSideBar, setIsShowSideBar] = useState<boolean>(true);
   const isLgMediaQuery = useMediaQuery({
@@ -24,21 +33,29 @@ export default function AppLayOut({ children }: Props) {
   }, [isLgMediaQuery]);
   return (
     <ProtectedRoute>
-      <UserDataProtectedRoute>
-        <section className='flex h-screen bg-gradient-to-b from-blue-500 to-white dark:from-slate-900 dark:to-slate-700 '>
-          {isShowSideBar && <SideBar setIsShowSideBar={setIsShowSideBar} />}
-          <main className='relative px-8 py-6 overflow-y-auto grow max-lg:px-4'>
-            <AppHeader
-              isShowSideBar={isShowSideBar}
-              setIsShowSideBar={setIsShowSideBar}
-            />
-            {children}
-          </main>
-          <footer className='fixed right-6 bottom-6'>
-            <ThemeBtn />
-          </footer>
-        </section>
-      </UserDataProtectedRoute>
+      <UserDataContextProvider userRepository={userRepository}>
+        <UserDataProtectedRoute>
+          <PlaylistContextProvider playlistRepository={playlistRepository}>
+            <BuskingContextProvider buskingRepository={buskingRepository}>
+              <section className='flex h-screen bg-gradient-to-b from-blue-500 to-white dark:from-slate-900 dark:to-slate-700 '>
+                {isShowSideBar && (
+                  <SideBar setIsShowSideBar={setIsShowSideBar} />
+                )}
+                <main className='relative px-8 py-6 overflow-y-auto grow max-lg:px-4'>
+                  <AppHeader
+                    isShowSideBar={isShowSideBar}
+                    setIsShowSideBar={setIsShowSideBar}
+                  />
+                  {children}
+                </main>
+                <footer className='fixed right-6 bottom-6'>
+                  <ThemeBtn />
+                </footer>
+              </section>
+            </BuskingContextProvider>
+          </PlaylistContextProvider>
+        </UserDataProtectedRoute>
+      </UserDataContextProvider>
     </ProtectedRoute>
   );
 }

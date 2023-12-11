@@ -20,14 +20,13 @@ type Props = {
 //TODO:왜 자꾸 리렌더링이 발생하는거지?? Next Js의 _app의 동작원리가 뭐지? 페이지 바꿀때마다 리렌더링이 되네?
 
 const queryClient = new QueryClient();
+const authService = new AuthService();
+const userRepository = new UserRepository();
+const playlistRepository = new PlaylistRepository();
+const buskingRepository = new BuskingRepository();
 
 const ServiceContextProviders = ({ children }: Props) => {
   //TODO: 네트워크탭에서 api키 그대로 보여지는거 좀 킹받는데 해결방법 없는지 이게 정말 나쁜건지 생각해보기..
-
-  const authService = new AuthService();
-  const userRepository = new UserRepository();
-  const playlistRepository = new PlaylistRepository();
-  const buskingRepository = new BuskingRepository();
 
   return (
     <QueryClientProvider client={queryClient}>
