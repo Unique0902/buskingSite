@@ -36,7 +36,7 @@ const SearchModalContent: React.FC = () => {
               }}
               className='hover:opacity-70'
             >
-              <Icon size={25} color={color.warning} icon='Home' />
+              <Icon size={24} color={color.warning} icon='Cancel' />
             </button>
           </SearchBar.SubSec>
         </SearchBar>
