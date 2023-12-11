@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useQuery } from '@tanstack/react-query';
 
@@ -25,7 +25,23 @@ const SearchModalContent: React.FC = () => {
   const userDataEntries: UserDataEntries<UserDataObj> = data
     ? Object.entries(data)
     : [];
-  const showedEntries = userDataEntries.slice(0, 5);
+
+  const [searchedEntries, setSearchedEntries] =
+    useState<UserDataEntries<UserDataObj>>(userDataEntries);
+
+  useEffect(() => {
+    setSearchedEntries(userDataEntries);
+  }, [data]);
+
+  const showedEntries = searchedEntries.slice(0, 5);
+
+  const handleSearchName = () => {
+    setSearchedEntries(
+      userDataEntries.filter((val) =>
+        val[1].name.toLowerCase().includes(searchWord.name)
+      )
+    );
+  };
 
   const { setIsOpenModal } = useModalContext();
   return (
@@ -40,7 +56,9 @@ const SearchModalContent: React.FC = () => {
             <SearchBar.MainSec.Select
               optionValueArr={nameSearchWordCategories}
             />
-            <SearchBar.MainSec.InputWithButton handleClickBtn={() => {}} />
+            <SearchBar.MainSec.InputWithButton
+              handleClickBtn={() => handleSearchName()}
+            />
           </SearchBar.MainSec>
           <SearchBar.SubSec>
             <button
