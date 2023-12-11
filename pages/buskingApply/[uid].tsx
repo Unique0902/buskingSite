@@ -43,6 +43,7 @@ const App = () => {
   const playlistSearchProps = useSearch<PlaylistSongData>(nowPlaylistSongArr);
   const applianceSearchProps = useSearch<ApplianceData>(appliance);
 
+  //TODO: custom hook으로 리팩토링하기
   const { data: buskerData } = useQuery({
     queryKey: [userId, 'buskerData'],
     queryFn: () => userRepository.getUserData(userId as string),
@@ -61,7 +62,6 @@ const App = () => {
     enabled: !!userId && !!buskerData,
   });
 
-  //TODO: stale 타임 전역 선언하기
   const queryClient = useQueryClient();
   const buskingDataMutation = useMutation({
     mutationFn: ({

@@ -19,7 +19,13 @@ export type NextPageWithLayout<P = object, IP = P> = NextPage<P, IP> & {
 type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 2,
+    },
+  },
+});
 const authService = new AuthService();
 
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
