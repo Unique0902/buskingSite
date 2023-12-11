@@ -1,11 +1,13 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 
+import { createPortal } from 'react-dom';
 import { useMediaQuery } from 'react-responsive';
 
 import ThemeBtn from './Footer/ThemeBtn';
 import AppHeader from './Header/AppHeader';
 import SideBar from './SideBar/SideBar';
 import { BuskingContextProvider } from '../../context/BuskingContext';
+import { DarkModeContextProvider } from '../../context/DarkModeContext';
 import { PlaylistContextProvider } from '../../context/PlaylistContext';
 import { UserDataContextProvider } from '../../context/UserDataContext';
 import BuskingRepository from '../../service/buskingRepository';
@@ -48,8 +50,10 @@ export default function AppLayOut({ children }: Props) {
                   />
                   {children}
                 </main>
-                <footer className='fixed right-6 bottom-6'>
-                  <ThemeBtn />
+                <footer className='fixed flex flex-col gap-4 right-6 bottom-6'>
+                  <DarkModeContextProvider>
+                    <ThemeBtn />
+                  </DarkModeContextProvider>
                 </footer>
               </section>
             </BuskingContextProvider>

@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useLayoutEffect } from 'react';
 
 import Icon from '../../../assets/icon/icon';
 import { useDarkModeContext } from '../../../context/DarkModeContext';

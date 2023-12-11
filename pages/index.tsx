@@ -23,7 +23,7 @@ export default function Home() {
     login('Google');
   };
   return (
-    <section className='w-screen h-screen bg-black'>
+    <section className='w-screen h-screen text-black bg-black'>
       <section className='p-6 bg-white'>
         <LoginNav scrollToTutorial={scrollToTutorial} />
         <main className='w-3/5 pt-24 pb-24 m-auto max-lg:w-full'>
