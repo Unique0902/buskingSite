@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 
 import ArrangeMenuBtn from '../../components/ArrangeMenu/ArrangeMenuBtn';
@@ -11,18 +11,22 @@ import SearchBar from '../../components/Search/SearchBar';
 import PrimarySongResult from '../../components/Table/PrimarySongResult';
 import RequestSongResult from '../../components/Table/RequestSongResult';
 import SongTable from '../../components/Table/SongTable';
-import { useBuskingContext } from '../../context/BuskingContext';
 import useIpData from '../../hooks/UseIpData';
 import useSearch from '../../hooks/UseSearch';
+import BuskingRepository from '../../service/buskingRepository';
 import PlaylistRepository from '../../service/playlist_repository';
 import UserRepository from '../../service/userRepository';
-import { ApplianceData, BuskingData } from '../../store/type/busking';
+import { ApplianceData } from '../../store/type/busking';
 import { PlaylistData, PlaylistSongData } from '../../store/type/playlist';
+
 //TODO: 닉네임 검색기능 추가하기
 //TODO: getIp 기능 오류 자꾸나는거 어떻게좀하기
 //TODO: 버스킹 사이트로 돌아가게하는 기능 추가
+const userRepository = new UserRepository();
+const playlistRepository = new PlaylistRepository();
+const buskingRepository = new BuskingRepository();
+
 const App = () => {
-  const [buskingData, setBuskingData] = useState<BuskingData | null>(null);
   const [nowPlaylistSongArr, setNowPlaylistSongArr] = useState<
     PlaylistSongData[]
   >([]);
@@ -35,25 +39,67 @@ const App = () => {
     isError: isIpdataError,
     error: ipDataError,
   } = useIpData(userId);
-  const { applyOldBuskingSong, applyNewBuskingSong, getBuskingData } =
-    useBuskingContext();
 
   const playlistSearchProps = useSearch<PlaylistSongData>(nowPlaylistSongArr);
   const applianceSearchProps = useSearch<ApplianceData>(appliance);
 
-  const userRepository = new UserRepository();
   const { data: buskerData } = useQuery({
     queryKey: [userId, 'buskerData'],
     queryFn: () => userRepository.getUserData(userId as string),
     enabled: !!userId,
   });
 
-  const playlistRepository = new PlaylistRepository();
   const { data: playlistData } = useQuery({
     queryKey: [userId, 'playlistData'],
     queryFn: () => playlistRepository.getPlaylists(userId as string),
     enabled: !!userId && !!buskerData,
   });
+
+  const { data: buskingData } = useQuery({
+    queryKey: [userId, 'buskingData'],
+    queryFn: () => buskingRepository.getBuskingData(userId as string),
+    enabled: !!userId && !!buskerData,
+  });
+
+  //TODO: stale 타임 전역 선언하기
+  const queryClient = useQueryClient();
+  const buskingDataMutation = useMutation({
+    mutationFn: ({
+      mutationFunction,
+    }: {
+      mutationFunction: () => Promise<void>;
+    }) => mutationFunction(),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [userId, 'buskingData'],
+      });
+    },
+  });
+
+  const applyOldBuskingSong = (
+    userId: string,
+    sid: string,
+    ip: string,
+    applianceData: ApplianceData
+  ) => {
+    buskingDataMutation.mutate({
+      mutationFunction: () =>
+        buskingRepository.applyOldBuskingSong(userId, sid, ip, applianceData),
+    });
+  };
+
+  const applyNewBuskingSong = (
+    userId: string,
+    title: string,
+    artist: string,
+    sid: string,
+    ip: string
+  ) => {
+    buskingDataMutation.mutate({
+      mutationFunction: () =>
+        buskingRepository.applyNewBuskingSong(userId, title, artist, sid, ip),
+    });
+  };
 
   useEffect(() => {
     if (buskerData && playlistData) {
@@ -82,23 +128,6 @@ const App = () => {
     }
   }, [buskingData]);
 
-  const handleBuskingData = useCallback(
-    async (uid: string) => {
-      const data = await getBuskingData(uid);
-      setBuskingData(data);
-    },
-    [getBuskingData]
-  );
-
-  // 왜 handleBuskingData를 dependency에 넣어주어야하지?<<해결됨
-
-  // eslint 업그레이드 한다<<해결됨
-  useEffect(() => {
-    if (userId && !buskingData && buskerData) {
-      handleBuskingData(userId);
-    }
-  }, [userId, buskerData, buskingData, handleBuskingData]);
-
   //TODO:여기서 userID를 분리할수있을까?
   const handleApplySong = (sid: string) => {
     if (buskingData && userId && ipData) {
@@ -111,11 +140,7 @@ const App = () => {
           window.alert('이미 투표하셨습니다!');
           return;
         }
-        applyOldBuskingSong(userId, sid, ipData, appliedSongData).finally(
-          () => {
-            handleBuskingData(userId);
-          }
-        );
+        applyOldBuskingSong(userId, sid, ipData, appliedSongData);
       } else {
         if (appliance.length === buskingData.maxNum) {
           alert('신청 최대수에 도달했습니다! 한 곡이 끝난후 신청해보세요!');
@@ -129,9 +154,7 @@ const App = () => {
             songToApply.artist,
             sid,
             ipData
-          ).finally(() => {
-            handleBuskingData(userId);
-          });
+          );
         } else {
           throw new Error(
             'there is no song that you apply in nowPlaylistSongArr!!'
