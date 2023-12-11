@@ -30,7 +30,7 @@ export function UserDataContextProvider({ userRepository, children }: Props) {
 
   const { uid } = useAuthContext();
   const { data, isLoading } = useQuery({
-    queryKey: ['userData'],
+    queryKey: [uid, 'userData'],
     queryFn: () => {
       return userRepository.getUserData(uid as string);
     },
@@ -38,20 +38,16 @@ export function UserDataContextProvider({ userRepository, children }: Props) {
     enabled: !!uid,
   });
 
-  const makeMutation = useMutation({
-    mutationFn: ({ userId, name }: { userId: string; name: string }) => {
-      return userRepository.makeUser(userId, name);
-    },
+  const userDataMutation = useMutation({
+    mutationFn: ({
+      mutationFunction,
+    }: {
+      mutationFunction: () => Promise<void>;
+    }) => mutationFunction(),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['userData'] });
-    },
-  });
-  const removeMutation = useMutation({
-    mutationFn: (userId: string) => {
-      return userRepository.removeUser(userId);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['userData'] });
+      queryClient.invalidateQueries({
+        queryKey: [uid, 'userData'],
+      });
     },
   });
 
@@ -64,10 +60,14 @@ export function UserDataContextProvider({ userRepository, children }: Props) {
   };
 
   const removeUserData = (userId: string) => {
-    removeMutation.mutate(userId);
+    userDataMutation.mutate({
+      mutationFunction: () => userRepository.removeUser(userId),
+    });
   };
   const makeUserData = (userId: string, name: string) => {
-    makeMutation.mutate({ userId, name });
+    userDataMutation.mutate({
+      mutationFunction: () => userRepository.makeUser(userId, name),
+    });
   };
   // 유저 데이터가 서버에 만들어졌을때 응답 받을수있게, setUserData할수있게
   return (

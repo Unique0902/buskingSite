@@ -9,6 +9,8 @@ import PopupWrapper from '../PopUp/PopupWrapper';
 type Props = {
   setIsShowPlaylistMenu: React.Dispatch<React.SetStateAction<boolean>>;
 };
+
+//컨텍스트말고 custom hook이나 prop으로 주입받기 독립성 높이기 위해 컨텍스트로 싸주는 menu라고 생각하면 독립성있는건가..
 const PlaylistMenu = ({ setIsShowPlaylistMenu }: Props) => {
   const {
     playlistQueryResult: { data: playlists },
