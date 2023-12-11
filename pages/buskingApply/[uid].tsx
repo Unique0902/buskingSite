@@ -11,6 +11,7 @@ import LoadingCheckWrapper from '../../components/LoadingCheckWrapper';
 import MainSec from '../../components/MainSec';
 import ModalIconBtn from '../../components/Modal/ModalIconBtn';
 import SearchBar from '../../components/Search/SearchBar';
+import SearchModalContent from '../../components/SearchModalContent';
 import PrimarySongResult from '../../components/Table/PrimarySongResult';
 import RequestSongResult from '../../components/Table/RequestSongResult';
 import SongTable from '../../components/Table/SongTable';
@@ -346,7 +347,9 @@ const App = () => {
       {createPortal(
         <footer className='fixed flex flex-col gap-4 right-8 bottom-6'>
           <DarkModeContextProvider>
-            <ModalIconBtn icon='Search' />
+            <ModalIconBtn icon='Search'>
+              <SearchModalContent />
+            </ModalIconBtn>
             <HomeBtn />
             <ThemeBtn />
           </DarkModeContextProvider>

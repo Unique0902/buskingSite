@@ -4,6 +4,8 @@ import { v4 as uuidv4 } from 'uuid';
 
 import Icon from '../../assets/icon/icon';
 import {
+  NameSearchWord,
+  NameSearchWordCategoryType,
   SearchWord,
   SearchWordCategoryType,
 } from '../../store/type/searchword';
@@ -13,11 +15,14 @@ import RenderedWhenFullScreen from '../Responsive/RenderedWhenFullScreen';
 
 interface SearchBarProps {
   children: ReactNode;
-  searchWord: SearchWord;
-  setSearchWord: React.Dispatch<React.SetStateAction<SearchWord>>;
+  searchWord: SearchWord | NameSearchWord;
+  setSearchWord: React.Dispatch<
+    React.SetStateAction<SearchWord | NameSearchWord>
+  >;
+  isLgRow?: boolean;
 }
 type SearchBarContextProps = {
-  searchWord: SearchWord;
+  searchWord: SearchWord | NameSearchWord;
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleSelectChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 };
@@ -26,14 +31,21 @@ const SearchBarContext = createContext<SearchBarContextProps>(
   {} as SearchBarContextProps
 );
 
-const SearchBar = ({ children, searchWord, setSearchWord }: SearchBarProps) => {
+const SearchBar = ({
+  children,
+  searchWord,
+  setSearchWord,
+  isLgRow = false,
+}: SearchBarProps) => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchWord({ ...searchWord, name: e.target.value });
   };
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSearchWord({
       ...searchWord,
-      category: e.target.value as SearchWordCategoryType,
+      category: e.target.value as
+        | SearchWordCategoryType
+        | NameSearchWordCategoryType,
     });
   };
 
@@ -42,7 +54,9 @@ const SearchBar = ({ children, searchWord, setSearchWord }: SearchBarProps) => {
       value={{ searchWord, handleInputChange, handleSelectChange }}
     >
       <form
-        className='relative flex flex-row items-center justify-center flex-1 gap-2 mb-6 max-lg:flex-col max-lg:w-full'
+        className={`relative flex flex-row items-center justify-center flex-1 gap-2 mb-6 ${
+          !isLgRow && 'max-lg:flex-col'
+        } max-lg:w-full`}
         onSubmit={(e) => {
           e.preventDefault();
         }}
