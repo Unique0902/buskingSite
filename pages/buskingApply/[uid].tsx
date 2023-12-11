@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
+import { createPortal } from 'react-dom';
 
 import ArrangeMenuBtn from '../../components/ArrangeMenu/ArrangeMenuBtn';
+import HomeBtn from '../../components/Layout/Footer/HomeBtn';
 import ThemeBtn from '../../components/Layout/Footer/ThemeBtn';
 import LoadingCheckWrapper from '../../components/LoadingCheckWrapper';
 import MainSec from '../../components/MainSec';
@@ -11,6 +13,7 @@ import SearchBar from '../../components/Search/SearchBar';
 import PrimarySongResult from '../../components/Table/PrimarySongResult';
 import RequestSongResult from '../../components/Table/RequestSongResult';
 import SongTable from '../../components/Table/SongTable';
+import { DarkModeContextProvider } from '../../context/DarkModeContext';
 import useBuskingData from '../../hooks/UseBuskingData';
 import useIpData from '../../hooks/UseIpData';
 import useSearch from '../../hooks/UseSearch';
@@ -337,9 +340,15 @@ const App = () => {
             </section>
           ))}
       </section>
-      <footer className='fixed right-6 bottom-6'>
-        <ThemeBtn />
-      </footer>
+      {createPortal(
+        <footer className='fixed flex flex-col gap-4 right-8 bottom-6'>
+          <DarkModeContextProvider>
+            <HomeBtn />
+            <ThemeBtn />
+          </DarkModeContextProvider>
+        </footer>,
+        document.body
+      )}
     </section>
   );
 };
