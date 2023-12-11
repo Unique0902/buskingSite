@@ -1,15 +1,11 @@
-import {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import { createContext, ReactNode, useContext } from 'react';
 
+import { UseQueryResult } from '@tanstack/react-query';
 import { Unsubscribe } from 'firebase/auth';
 
 import { useAuthContext } from './AuthContext';
 import { useUserDataContext } from './UserDataContext';
+import useSyncQuery from '../hooks/useSyncData';
 import BuskingRepository from '../service/buskingRepository';
 import {
   ApplianceData,
@@ -18,7 +14,7 @@ import {
 } from '../store/type/busking';
 
 type ContextProps = {
-  buskingData: BuskingData | null;
+  buskingQueryResult: UseQueryResult<BuskingData, Error>;
   makeBusking: (buskingInform: BuskingInform) => Promise<void>;
   removeBuskingSong: (sid: string) => Promise<void>;
   removeBusking: () => Promise<void>;
@@ -40,7 +36,6 @@ type ContextProps = {
     onUpdate: (value: BuskingData | null) => void
   ) => Unsubscribe;
   getBuskingData: (userId: string) => Promise<BuskingData | null>;
-  isbuskingDataLoading: boolean;
   applyBuskingSongAgain: (nowSong: ApplianceData) => Promise<void>;
 };
 
@@ -53,20 +48,14 @@ type Props = {
 
 export function BuskingContextProvider({ buskingRepository, children }: Props) {
   // useState 초기값 안넣으면 undefined 되는거 생각하기
-  const [buskingData, setBuskingData] = useState<BuskingData | null>(null);
   const { uid } = useAuthContext();
   const { userData } = useUserDataContext();
-  const [isbuskingDataLoading, setIsbuskingDataLoading] =
-    useState<boolean>(true);
-  useEffect(() => {
-    if (uid) {
-      setIsbuskingDataLoading(true);
-      return buskingRepository.syncBuskingData(uid, (data) => {
-        setBuskingData(data);
-        setIsbuskingDataLoading(false);
-      });
-    }
-  }, [uid, userData]);
+
+  const buskingQueryResult = useSyncQuery<BuskingData>(
+    uid as string,
+    { queryKey: ['buskingData'], enabled: !!uid && !!userData },
+    buskingRepository.syncBuskingData
+  );
 
   //TODO: uid 어디서 받아와야하는지 고민해보기
   const makeBusking = async (buskingInform: BuskingInform) => {
@@ -132,7 +121,7 @@ export function BuskingContextProvider({ buskingRepository, children }: Props) {
   return (
     <BuskingContext.Provider
       value={{
-        buskingData,
+        buskingQueryResult,
         makeBusking,
         removeBuskingSong,
         removeBusking,
@@ -140,7 +129,6 @@ export function BuskingContextProvider({ buskingRepository, children }: Props) {
         applyNewBuskingSong,
         syncBuskingData,
         getBuskingData,
-        isbuskingDataLoading,
         applyBuskingSongAgain,
       }}
     >

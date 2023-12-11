@@ -52,10 +52,6 @@ export function PlaylistContextProvider({
     enabled: !!uid,
   });
 
-  useEffect(() => {
-    console.log('근데 이거는 한번이잖아');
-  }, []);
-
   //TODO: buskingApply에서 여기 context때문에 다른창 로그인 되있는거땜에 그 로그인 uid로도 패칭이 자꾸 됨, buskingApply
   //에서는 여기 context query 안일어나게 어떻게든 하기 분리 하든 context를 빼든..
   const playlistDataMutation = useMutation({

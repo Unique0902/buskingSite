@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 
 import ArrangeMenuBtn from '../../components/ArrangeMenu/ArrangeMenuBtn';
@@ -11,9 +11,9 @@ import SearchBar from '../../components/Search/SearchBar';
 import PrimarySongResult from '../../components/Table/PrimarySongResult';
 import RequestSongResult from '../../components/Table/RequestSongResult';
 import SongTable from '../../components/Table/SongTable';
+import useBuskingData from '../../hooks/UseBuskingData';
 import useIpData from '../../hooks/UseIpData';
 import useSearch from '../../hooks/UseSearch';
-import BuskingRepository from '../../service/buskingRepository';
 import PlaylistRepository from '../../service/playlist_repository';
 import UserRepository from '../../service/userRepository';
 import { ApplianceData } from '../../store/type/busking';
@@ -24,7 +24,6 @@ import { PlaylistData, PlaylistSongData } from '../../store/type/playlist';
 //TODO: 버스킹 사이트로 돌아가게하는 기능 추가
 const userRepository = new UserRepository();
 const playlistRepository = new PlaylistRepository();
-const buskingRepository = new BuskingRepository();
 
 const App = () => {
   const [nowPlaylistSongArr, setNowPlaylistSongArr] = useState<
@@ -38,6 +37,7 @@ const App = () => {
     data: ipData,
     isError: isIpdataError,
     error: ipDataError,
+    isLoading: isIpDataLoading,
   } = useIpData(userId);
 
   const playlistSearchProps = useSearch<PlaylistSongData>(nowPlaylistSongArr);
@@ -56,50 +56,11 @@ const App = () => {
     enabled: !!userId && !!buskerData,
   });
 
-  const { data: buskingData } = useQuery({
-    queryKey: [userId, 'buskingData'],
-    queryFn: () => buskingRepository.getBuskingData(userId as string),
-    enabled: !!userId && !!buskerData,
-  });
-
-  const queryClient = useQueryClient();
-  const buskingDataMutation = useMutation({
-    mutationFn: ({
-      mutationFunction,
-    }: {
-      mutationFunction: () => Promise<void>;
-    }) => mutationFunction(),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: [userId, 'buskingData'],
-      });
-    },
-  });
-
-  const applyOldBuskingSong = (
-    userId: string,
-    sid: string,
-    ip: string,
-    applianceData: ApplianceData
-  ) => {
-    buskingDataMutation.mutate({
-      mutationFunction: () =>
-        buskingRepository.applyOldBuskingSong(userId, sid, ip, applianceData),
-    });
-  };
-
-  const applyNewBuskingSong = (
-    userId: string,
-    title: string,
-    artist: string,
-    sid: string,
-    ip: string
-  ) => {
-    buskingDataMutation.mutate({
-      mutationFunction: () =>
-        buskingRepository.applyNewBuskingSong(userId, title, artist, sid, ip),
-    });
-  };
+  const {
+    buskingQueryResult: { data: buskingData },
+    applyOldBuskingSong,
+    applyNewBuskingSong,
+  } = useBuskingData(userId, buskerData);
 
   useEffect(() => {
     if (buskerData && playlistData) {
@@ -169,7 +130,7 @@ const App = () => {
     return <div>ip를 불러올수 없습니다. 새로고침해주세요.</div>;
   }
 
-  if (!ipData) {
+  if (isIpDataLoading || !ipData) {
     return <div>accessing your ip address...</div>;
   }
 

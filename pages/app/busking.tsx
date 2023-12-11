@@ -16,29 +16,21 @@ import { useBuskingContext } from '../../context/BuskingContext';
 import { usePlaylistContext } from '../../context/PlaylistContext';
 import { useUserDataContext } from '../../context/UserDataContext';
 import useSearch from '../../hooks/UseSearch';
-import useSyncQuery from '../../hooks/useSyncData';
 import { getAppLayOut } from '../../layouts/appLayout';
-import BuskingRepository from '../../service/buskingRepository';
-import {
-  ApplianceData,
-  ApplianceObjects,
-  BuskingData,
-} from '../../store/type/busking';
+import { ApplianceData, ApplianceObjects } from '../../store/type/busking';
 import { color } from '../../styles/theme';
 
-const buskingRepositoy = new BuskingRepository();
 export default function AppBusking() {
   const { playlists } = usePlaylistContext();
   const { userData } = useUserDataContext();
 
-  const { removeBuskingSong, removeBusking, isbuskingDataLoading } =
-    useBuskingContext();
+  const {
+    buskingQueryResult: { data: buskingData, isLoading: isbuskingDataLoading },
+    removeBuskingSong,
+    removeBusking,
+  } = useBuskingContext();
   const { uid } = useAuthContext();
-  const { data: buskingData } = useSyncQuery<BuskingData>(
-    uid as string,
-    { queryKey: ['buskingData'], enabled: !!uid },
-    buskingRepositoy.syncBuskingData
-  );
+
   const [songArr, setSongArr] = useState<ApplianceData[]>([]);
   const [songArrToView, setSongArrToView] = useState<ApplianceData[]>([]);
   const router = useRouter();
