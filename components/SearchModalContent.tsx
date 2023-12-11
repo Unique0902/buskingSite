@@ -1,19 +1,32 @@
 import React, { useState } from 'react';
 
+import { useQuery } from '@tanstack/react-query';
+
 import { useModalContext } from './Modal/ModalIconBtn';
-import NameResult from './NameResult';
 import NameResults from './NameResults';
 import SearchBar from './Search/SearchBar';
 import Icon from '../assets/icon/icon';
+import UserDataRepository from '../service/userDataRepository';
 import { nameSearchWordCategories } from '../store/data/CategoryTypes';
 import { NameSearchWord } from '../store/type/searchword';
+import { UserDataEntries, UserDataObj } from '../store/type/userData';
 import { color } from '../styles/theme';
-
+const userDataRepository = new UserDataRepository();
 const SearchModalContent: React.FC = () => {
   const [searchWord, setSearchWord] = useState<NameSearchWord>({
     name: '',
     category: '이름',
   });
+  const { data } = useQuery({
+    queryKey: ['userDatas'],
+    queryFn: () => userDataRepository.getAllUserDatas(),
+    staleTime: Infinity,
+  });
+  const userDataEntries: UserDataEntries<UserDataObj> = data
+    ? Object.entries(data)
+    : [];
+  const showedEntries = userDataEntries.slice(0, 5);
+
   const { setIsOpenModal } = useModalContext();
   return (
     <div>
@@ -41,12 +54,7 @@ const SearchModalContent: React.FC = () => {
           </SearchBar.SubSec>
         </SearchBar>
       </div>
-      <NameResults
-        results={[
-          { name: '홍길동', date: 'ss' },
-          { name: '홍길동2', date: 'ss2' },
-        ]}
-      />
+      <NameResults userDataEntries={showedEntries} />
     </div>
   );
 };

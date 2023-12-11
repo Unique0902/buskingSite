@@ -1,17 +1,17 @@
 import React from 'react';
 
 import NameResult from './NameResult';
-import { UserData } from '../store/type/userData';
+import { UserDataEntries, UserDataObj } from '../store/type/userData';
 
 type Props = {
-  results: UserData[];
+  userDataEntries: UserDataEntries<UserDataObj>;
 };
 
-const NameResults: React.FC<Props> = ({ results }: Props) => {
+const NameResults: React.FC<Props> = ({ userDataEntries }: Props) => {
   return (
     <>
-      {results.map((val) => (
-        <NameResult key={'NameResult' + val.date} result={val} />
+      {userDataEntries.map(([key, value]) => (
+        <NameResult key={key} result={value} />
       ))}
     </>
   );
