@@ -18,7 +18,7 @@ export default function ProtectedRoute({ children }: Props) {
     );
   } else {
     if (!user) {
-      router.push('/');
+      router.replace('/');
       return <div>move to homepage...</div>;
     }
   }
