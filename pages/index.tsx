@@ -16,7 +16,6 @@ export default function Home() {
   const router = useRouter();
   if (user) {
     router.replace('/app/home');
-    // location.replace('/app/home');
     return <div>move to app...</div>;
   }
   const handleClickLoginBtn = () => {

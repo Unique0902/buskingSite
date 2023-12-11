@@ -9,6 +9,7 @@ import HomeBtn from '../../components/Layout/Footer/HomeBtn';
 import ThemeBtn from '../../components/Layout/Footer/ThemeBtn';
 import LoadingCheckWrapper from '../../components/LoadingCheckWrapper';
 import MainSec from '../../components/MainSec';
+import ModalIconBtn from '../../components/Modal/ModalIconBtn';
 import SearchBar from '../../components/Search/SearchBar';
 import PrimarySongResult from '../../components/Table/PrimarySongResult';
 import RequestSongResult from '../../components/Table/RequestSongResult';
@@ -22,7 +23,6 @@ import UserRepository from '../../service/userRepository';
 import { songSearchWordCategories } from '../../store/data/CategoryTypes';
 import { ApplianceData } from '../../store/type/busking';
 import { PlaylistData, PlaylistSongData } from '../../store/type/playlist';
-
 //TODO: 닉네임 검색기능 추가하기
 //TODO: getIp 기능 오류 자꾸나는거 어떻게좀하기
 const userRepository = new UserRepository();
@@ -46,7 +46,7 @@ const App = () => {
   const playlistSearchProps = useSearch<PlaylistSongData>(nowPlaylistSongArr);
   const applianceSearchProps = useSearch<ApplianceData>(appliance);
 
-  //TODO: custom hook으로 리팩토링하기
+  //얘도 mutation해야할거 있으면 나중에 custom hook으로 리팩토링하기
   const { data: buskerData } = useQuery({
     queryKey: [userId, 'buskerData'],
     queryFn: () => userRepository.getUserData(userId as string),
@@ -92,7 +92,7 @@ const App = () => {
     }
   }, [buskingData]);
 
-  //TODO:여기서 userID를 분리할수있을까?
+  //여기서 userID를 분리할수있을까? 분리해야되나?
   const handleApplySong = (sid: string) => {
     if (buskingData && userId && ipData) {
       const appliedSongData = appliance.find((song) => song.sid === sid);
@@ -138,7 +138,10 @@ const App = () => {
   }
 
   return (
-    <section className='relative flex w-full h-screen px-8 py-4 overflow-auto max-md:px-4 bg-gradient-to-b from-blue-500 to-mainBlue'>
+    <section
+      id='root'
+      className='relative flex w-full h-screen px-8 py-4 overflow-auto max-md:px-4 bg-gradient-to-b from-blue-500 to-mainBlue'
+    >
       <section className='w-full'>
         {!buskerData && (
           <MainSec>
@@ -339,9 +342,11 @@ const App = () => {
             </section>
           ))}
       </section>
+
       {createPortal(
         <footer className='fixed flex flex-col gap-4 right-8 bottom-6'>
           <DarkModeContextProvider>
+            <ModalIconBtn icon='Search' />
             <HomeBtn />
             <ThemeBtn />
           </DarkModeContextProvider>

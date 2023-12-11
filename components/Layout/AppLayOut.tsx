@@ -1,6 +1,5 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 
-import { createPortal } from 'react-dom';
 import { useMediaQuery } from 'react-responsive';
 
 import ThemeBtn from './Footer/ThemeBtn';
