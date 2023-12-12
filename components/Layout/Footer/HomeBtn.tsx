@@ -1,5 +1,6 @@
 import React from 'react';
 
+import * as Sentry from '@sentry/nextjs';
 import { useRouter } from 'next/router';
 
 import Icon from '../../../assets/icon/icon';
@@ -12,6 +13,11 @@ const HomeBtn: React.FC = () => {
   return (
     <button
       onClick={() => {
+        try {
+          throw new Error('no way to homesfsf!');
+        } finally {
+          console.log('sf');
+        }
         router.push('/app/home');
       }}
       className='p-2 bg-white border border-black rounded-full dark:bg-slate-800 hover:opacity-70 dark:border-white'
