@@ -38,23 +38,25 @@ export default function AppLayOut({ children }: Props) {
         <UserDataProtectedRoute>
           <PlaylistContextProvider playlistRepository={playlistRepository}>
             <BuskingContextProvider buskingRepository={buskingRepository}>
-              <section className='flex h-screen bg-gradient-to-b from-blue-500 to-white dark:from-slate-900 dark:to-slate-700 '>
-                {isShowSideBar && (
-                  <SideBar setIsShowSideBar={setIsShowSideBar} />
-                )}
-                <main className='relative px-8 py-6 overflow-y-auto grow max-lg:px-4'>
-                  <AppHeader
-                    isShowSideBar={isShowSideBar}
-                    setIsShowSideBar={setIsShowSideBar}
-                  />
-                  {children}
-                </main>
-                <footer className='fixed flex flex-col gap-4 right-6 bottom-6'>
-                  <DarkModeContextProvider>
-                    <ThemeBtn />
-                  </DarkModeContextProvider>
-                </footer>
-              </section>
+              {
+                <section className='flex h-screen bg-gradient-to-b from-blue-500 to-white dark:from-slate-900 dark:to-slate-700 '>
+                  {isShowSideBar && (
+                    <SideBar setIsShowSideBar={setIsShowSideBar} />
+                  )}
+                  <main className='relative px-8 py-6 overflow-y-auto grow max-lg:px-4'>
+                    <AppHeader
+                      isShowSideBar={isShowSideBar}
+                      setIsShowSideBar={setIsShowSideBar}
+                    />
+                    {children}
+                  </main>
+                  <footer className='fixed flex flex-col gap-4 right-6 bottom-6'>
+                    <DarkModeContextProvider>
+                      <ThemeBtn />
+                    </DarkModeContextProvider>
+                  </footer>
+                </section>
+              }
             </BuskingContextProvider>
           </PlaylistContextProvider>
         </UserDataProtectedRoute>

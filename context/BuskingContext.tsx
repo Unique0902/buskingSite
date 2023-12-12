@@ -51,11 +51,13 @@ export function BuskingContextProvider({ buskingRepository, children }: Props) {
   const { uid } = useAuthContext();
   const { userData } = useUserDataContext();
 
+  //TODO: 자꾸 fetching이 뜨는데 해결하기 busking에서만 sync하게 변경하기 makeBusking에서는 revalidate로 makebusking하면될듯
   const buskingQueryResult = useSyncQuery<BuskingData>(
     uid as string,
     { queryKey: ['buskingData'], enabled: !!uid && !!userData },
     buskingRepository.syncBuskingData
   );
+  console.log(buskingQueryResult.isFetching);
 
   //TODO: uid 어디서 받아와야하는지 고민해보기
   const makeBusking = async (buskingInform: BuskingInform) => {
