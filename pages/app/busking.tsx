@@ -19,7 +19,7 @@ import useSearch from '../../hooks/UseSearch';
 import { getAppLayOut } from '../../layouts/appLayout';
 import { ApplianceData, ApplianceObjects } from '../../store/type/busking';
 import { color } from '../../styles/theme';
-
+//TODO: 본인이 노래 추가하는 기능 넣기
 export default function AppBusking() {
   const {
     playlistQueryResult: { data: playlists },
@@ -31,6 +31,7 @@ export default function AppBusking() {
     removeBuskingSong,
     removeBusking,
   } = useBuskingContext();
+
   const { uid } = useAuthContext();
 
   const [songArr, setSongArr] = useState<ApplianceData[]>([]);
@@ -64,14 +65,14 @@ export default function AppBusking() {
 
   const handleClickEndBuskingBtn = () => {
     if (window.confirm('버스킹을 종료하시겠습니까?')) {
-      removeBusking().finally(() => {
+      removeBusking(uid).finally(() => {
         router.push('/app/home');
       });
     }
   };
 
   const handleRemoveRequestSong = (sid: string) => {
-    removeBuskingSong(sid);
+    removeBuskingSong(sid, uid);
   };
 
   //이러면 안쓰는 것들이 애매해지네 useAppliance로 따로 만들어야하나 오 객체로 묶으니까 낫네

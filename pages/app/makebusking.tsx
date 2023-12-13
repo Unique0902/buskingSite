@@ -6,6 +6,7 @@ import MainSec from '../../components/MainSec';
 import NoPlaylistCheckWrapper from '../../components/NoPlaylistCheckWrapper';
 import MainRow from '../../components/Row/RowWithTitle';
 import TitleBar from '../../components/TitleBar';
+import { useAuthContext } from '../../context/AuthContext';
 import { useBuskingContext } from '../../context/BuskingContext';
 import { usePlaylistContext } from '../../context/PlaylistContext';
 import { useUserDataContext } from '../../context/UserDataContext';
@@ -21,6 +22,7 @@ export default function AppMakeBusking() {
   const {
     playlistQueryResult: { data: playlists },
   } = usePlaylistContext();
+  const { uid } = useAuthContext();
   const { userData } = useUserDataContext();
   const [buskingInform, setBuskingInform] = useState<BuskingInform>({
     playlistId: playlists ? Object.values(playlists)[0].id : '',
@@ -60,7 +62,7 @@ export default function AppMakeBusking() {
       alert('플레이리스트에 노래가 존재하지않습니다. 노래를 추가해주세요!');
       return;
     }
-    makeBusking(buskingInform);
+    makeBusking(buskingInform, uid);
   };
   // 무작정 useEffect를 지운다고 성능이 좋아지는게 아니구나
   // 이런식으로 다 useEffect를 지운다면 이 컴포넌트가 받는 props, 부모가 리렌더링될때마다

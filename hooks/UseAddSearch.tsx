@@ -25,7 +25,6 @@ const useAddSearch = () => {
     }
   };
 
-  //TODO: react 작동원리 이해하여 이거와 내부에서 컴포넌트 선언하는거의 차이 알기
   // 컴포넌트를 생성한거를 불러오는거와 그냥 return 함수 가져오는것의 차이?
 
   // const renderSearchBar = () => {

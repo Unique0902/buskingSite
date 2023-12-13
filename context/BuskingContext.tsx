@@ -15,9 +15,12 @@ import {
 
 type ContextProps = {
   buskingQueryResult: UseQueryResult<BuskingData, Error>;
-  makeBusking: (buskingInform: BuskingInform) => Promise<void>;
-  removeBuskingSong: (sid: string) => Promise<void>;
-  removeBusking: () => Promise<void>;
+  makeBusking: (
+    buskingInform: BuskingInform,
+    uid: string | undefined
+  ) => Promise<void>;
+  removeBuskingSong: (sid: string, uid: string | undefined) => Promise<void>;
+  removeBusking: (uid: string | undefined) => Promise<void>;
   applyOldBuskingSong: (
     userId: string,
     sid: string,
@@ -58,18 +61,20 @@ export function BuskingContextProvider({ buskingRepository, children }: Props) {
     buskingRepository.syncBuskingData
   );
 
-  //TODO: uid 어디서 받아와야하는지 고민해보기
-  const makeBusking = async (buskingInform: BuskingInform) => {
+  const makeBusking = async (
+    buskingInform: BuskingInform,
+    uid: string | undefined
+  ) => {
     if (!uid) throw new Error('no uid!!');
     return buskingRepository.makeBusking(uid, buskingInform);
   };
 
-  const removeBuskingSong = async (sid: string) => {
+  const removeBuskingSong = async (sid: string, uid: string | undefined) => {
     if (!uid) throw new Error('no uid!!');
     return buskingRepository.removeBuskingSong(uid, sid);
   };
 
-  const removeBusking = async () => {
+  const removeBusking = async (uid: string | undefined) => {
     if (!uid) throw new Error('no uid!!');
     return buskingRepository.removeBusking(uid);
   };

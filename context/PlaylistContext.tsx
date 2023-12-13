@@ -113,7 +113,6 @@ export function PlaylistContextProvider({
     }
   };
 
-  //TODO: 이렇게 Error로 처리하는게 맞는지 생각해보기
   const removeNowPlaylist = () => {
     if (!uid) throw new Error('no uid!!');
     if (!nowPlaylist) throw new Error('no nowPlaylist!!');

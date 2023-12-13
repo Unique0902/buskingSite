@@ -24,7 +24,6 @@ function useSyncQuery<Data>(
       });
     }
   }, [userId]);
-
   return useQuery<Data, Error>({
     ...useQueryOptions,
     queryFn: () => new Promise<Data>(() => {}),

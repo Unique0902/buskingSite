@@ -24,7 +24,6 @@ import UserRepository from '../../service/userRepository';
 import { songSearchWordCategories } from '../../store/data/CategoryTypes';
 import { ApplianceData } from '../../store/type/busking';
 import { PlaylistData, PlaylistSongData } from '../../store/type/playlist';
-//TODO: 닉네임 검색기능 추가하기
 //TODO: getIp 기능 오류 자꾸나는거 어떻게좀하기
 const userRepository = new UserRepository();
 const playlistRepository = new PlaylistRepository();
