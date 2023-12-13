@@ -52,6 +52,10 @@ export default function AppBusking() {
     }
   }, [buskingData]);
 
+  useEffect(() => {
+    if (!buskingData) router.push('/app/makebusking');
+  }, [buskingData, router]);
+
   /*
   버스킹 데이터에서 노래 저장시 서버에서 sid 순서대로 저장되다보니 시간순서대로 저장되지않음
   그래도 각 신청곡 데이터 id에 time 데이터를 저장했기때문에 위 sort 함수와 같이 buskingData를
@@ -78,7 +82,6 @@ export default function AppBusking() {
     return <div>checking buskingData...</div>;
   }
   if (!buskingData) {
-    router.push('/app/makebusking');
     return <div>move to makeBusking...</div>;
   }
 

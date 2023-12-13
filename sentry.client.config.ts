@@ -27,6 +27,6 @@ Sentry.init({
       maskAllText: true,
       blockAllMedia: true,
     }),
-    new BrowserTracing(),
+    // new BrowserTracing(),
   ],
 });
