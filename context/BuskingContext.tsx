@@ -57,7 +57,6 @@ export function BuskingContextProvider({ buskingRepository, children }: Props) {
     { queryKey: ['buskingData'], enabled: !!uid && !!userData },
     buskingRepository.syncBuskingData
   );
-  console.log(buskingQueryResult.isFetching);
 
   //TODO: uid 어디서 받아와야하는지 고민해보기
   const makeBusking = async (buskingInform: BuskingInform) => {
