@@ -14,6 +14,7 @@ import SearchBar from '../../components/Search/SearchBar';
 import SearchModalContent from '../../components/SearchModalContent';
 import PrimarySongResult from '../../components/Table/PrimarySongResult';
 import RequestSongResult from '../../components/Table/RequestSongResult';
+import SongResultRow from '../../components/Table/SongResultRow';
 import SongTable from '../../components/Table/SongTable';
 import { DarkModeContextProvider } from '../../context/DarkModeContext';
 import useBuskingData from '../../hooks/UseBuskingData';
@@ -24,6 +25,7 @@ import UserRepository from '../../service/userRepository';
 import { songSearchWordCategories } from '../../store/data/CategoryTypes';
 import { ApplianceData } from '../../store/type/busking';
 import { PlaylistData, PlaylistSongData } from '../../store/type/playlist';
+import { color } from '../../styles/theme';
 //TODO: getIp 기능 오류 자꾸나는거 어떻게좀하기
 const userRepository = new UserRepository();
 const playlistRepository = new PlaylistRepository();
@@ -204,13 +206,26 @@ const App = () => {
                     viewdSongArr={playlistSearchProps.viewedDataArr}
                     nowPageNum={playlistSearchProps.nowPageNum}
                     renderSongResult={(index, result) => (
-                      <PrimarySongResult
-                        key={result.id}
-                        index={index}
-                        result={result}
-                        handleSongClick={handleApplySong}
-                        icon='Send'
-                      />
+                      // <PrimarySongResult
+                      //   key={result.id}
+                      //   index={index}
+                      //   result={result}
+                      //   handleSongClick={handleApplySong}
+                      //   icon='Send'
+                      // />
+                      <SongResultRow key={result.artist + result.title}>
+                        <SongResultRow.Text text={index.toString()} />
+                        <SongResultRow.Inform
+                          title={result.title}
+                          artist={result.artist}
+                        />
+                        <SongResultRow.IconButton
+                          icon='Send'
+                          size={20}
+                          color={color.white}
+                          onClick={() => handleApplySong(result.id)}
+                        />
+                      </SongResultRow>
                     )}
                   >
                     <SongTable.PagingBar
@@ -238,13 +253,29 @@ const App = () => {
                     viewdSongArr={applianceSearchProps.viewedDataArr}
                     nowPageNum={applianceSearchProps.nowPageNum}
                     renderSongResult={(index, result) => (
-                      <RequestSongResult
-                        key={result.id}
-                        index={index}
-                        result={result}
-                        handleSongClick={handleApplySong}
-                        icon='Send'
-                      />
+                      // <RequestSongResult
+                      //   key={result.id}
+                      //   index={index}
+                      //   result={result}
+                      //   handleSongClick={handleApplySong}
+                      //   icon='Send'
+                      // />
+                      <SongResultRow key={result.artist + result.title}>
+                        <SongResultRow.Text text={index.toString()} />
+                        <SongResultRow.Inform
+                          title={result.title}
+                          artist={result.artist}
+                        />
+                        <SongResultRow.Text
+                          text={result.cnt.toString() + '명'}
+                        />
+                        <SongResultRow.IconButton
+                          icon='Send'
+                          size={20}
+                          color={color.white}
+                          onClick={() => handleApplySong(result.id)}
+                        />
+                      </SongResultRow>
                     )}
                   >
                     <SongTable.PagingBar
@@ -320,13 +351,26 @@ const App = () => {
                       viewdSongArr={playlistSearchProps.viewedDataArr}
                       nowPageNum={playlistSearchProps.nowPageNum}
                       renderSongResult={(index, result) => (
-                        <PrimarySongResult
-                          key={result.id}
-                          index={index}
-                          result={result}
-                          handleSongClick={() => {}}
-                          icon='Smile'
-                        />
+                        // <PrimarySongResult
+                        //   key={result.id}
+                        //   index={index}
+                        //   result={result}
+                        //   handleSongClick={() => {}}
+                        //   icon='Smile'
+                        // />
+                        <SongResultRow key={result.artist + result.title}>
+                          <SongResultRow.Text text={index.toString()} />
+                          <SongResultRow.Inform
+                            title={result.title}
+                            artist={result.artist}
+                          />
+                          <SongResultRow.IconButton
+                            icon='Smile'
+                            size={20}
+                            color={color.white}
+                            onClick={() => {}}
+                          />
+                        </SongResultRow>
                       )}
                     >
                       <SongTable.PagingBar

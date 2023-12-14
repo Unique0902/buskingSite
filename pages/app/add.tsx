@@ -7,6 +7,7 @@ import NoPlaylistCheckWrapper from '../../components/NoPlaylistCheckWrapper';
 import RenderedWhenFullScreen from '../../components/Responsive/RenderedWhenFullScreen';
 import SearchBar from '../../components/Search/SearchBar';
 import SongAddResult from '../../components/Table/SongAddResult';
+import SongResultRow from '../../components/Table/SongResultRow';
 import SongTable from '../../components/Table/SongTable';
 import TitleBar from '../../components/TitleBar';
 import { usePlaylistContext } from '../../context/PlaylistContext';
@@ -15,6 +16,7 @@ import useAddSearch from '../../hooks/UseAddSearch';
 import { getAppLayOut } from '../../layouts/appLayout';
 import { songSearchWordCategories } from '../../store/data/CategoryTypes';
 import { FmEditedTopTrackData, FmTrackData } from '../../store/type/fm';
+import { color } from '../../styles/theme';
 // TODO: searchBar, songTable 기능 테스트 적은후 하기
 // 자꾸 구조 바꿀때마다 오류나는게 걱정나니 ㅜ..
 export default function AppAdd() {
@@ -40,8 +42,11 @@ export default function AppAdd() {
       <NoPlaylistCheckWrapper isExistWrapper={!!nowPlaylist}>
         <MainSec>
           {/* compound 디자인패턴 이용한 리팩토링!! 좀더 가독성이 좋아진 기분이랄까 커스텀 변경도 쉬워짐!! */}
-          {/* TODO:compound 디자인 관련해서는 고민해봐야될듯 atomic 디자인을 적용해볼까..? 안에 어떻게할지 적어놓음 */}
+          {/* compound 디자인 관련해서는 고민해봐야될듯 atomic 디자인을 적용해볼까..? 안에 어떻게할지 적어놓음 */}
+          {/* 아토믹 디자인은 디자인 시안이 나와있을때, 스토리북을 함께 사용하면서 하나하나 개발하는게 효율적인듯 */}
           {/* TODO: hidden으로 숨기는거랑 usemediaQuery로 판단하여 조건 렌더링하는거랑 무엇이 옳은지 찾아보기 */}
+          {/* 리페인팅 개념과 리렌더링 개념이며 하위 렌더링도 생각해봐야할 요소이고 자세한건 useMediaQuery 구현사항
+          을 봐야 알듯 */}
           {/*  아래를 좀더 간단하고 직관적이게 할수있는 방법이 없을까? <<요정도면 충분할듯 */}
           {/* context로 searchWord랑 setSearchWord를 전달하면 4줄정도는 줄일수있겠네.. 
           컴포넌트들의 의존성을 줄일방법을 찾고싶네 ㅜ..
@@ -73,13 +78,28 @@ export default function AppAdd() {
               viewdSongArr={searchResults}
               nowPageNum={nowPageNum}
               renderSongResult={(index, result) => (
-                <SongAddResult
-                  key={result.artist + result.name}
-                  index={index}
-                  result={result}
-                  handleSongClick={addSongToPlaylist}
-                  icon='Plus'
-                />
+                // <SongAddResult
+                //   key={result.artist + result.name}
+                //   index={index}
+                //   result={result}
+                //   handleSongClick={addSongToPlaylist}
+                //   icon='Plus'
+                // />
+                <SongResultRow key={result.artist + result.name}>
+                  <SongResultRow.Text text={index.toString()} />
+                  <SongResultRow.Inform
+                    title={result.name}
+                    artist={result.artist}
+                  />
+                  <SongResultRow.IconButton
+                    icon='Plus'
+                    size={24}
+                    color={color.white}
+                    onClick={() =>
+                      addSongToPlaylist(result.name, result.artist)
+                    }
+                  />
+                </SongResultRow>
               )}
             >
               <SongTable.PagingBar

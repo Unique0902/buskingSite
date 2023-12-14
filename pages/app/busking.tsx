@@ -10,6 +10,7 @@ import MainSec from '../../components/MainSec';
 import MusicBar from '../../components/MusicBar/MusicBar';
 import SectionCopyText from '../../components/SectionCopyText';
 import RequestSongResult from '../../components/Table/RequestSongResult';
+import SongResultRow from '../../components/Table/SongResultRow';
 import SongTable from '../../components/Table/SongTable';
 import { useAuthContext } from '../../context/AuthContext';
 import { useBuskingContext } from '../../context/BuskingContext';
@@ -19,7 +20,7 @@ import useSearch from '../../hooks/UseSearch';
 import { getAppLayOut } from '../../layouts/appLayout';
 import { ApplianceData, ApplianceObjects } from '../../store/type/busking';
 import { color } from '../../styles/theme';
-//TODO: 본인이 노래 추가하는 기능 넣기
+//TODO: 본인이 노래 추가하는 기능 넣기 버스킹중일때 인식해서 플레이리스트에서 추가할수있게 버튼만들자!
 export default function AppBusking() {
   const {
     playlistQueryResult: { data: playlists },
@@ -131,13 +132,27 @@ export default function AppBusking() {
             viewdSongArr={viewedDataArr}
             nowPageNum={nowPageNum}
             renderSongResult={(index, result) => (
-              <RequestSongResult
-                key={result.id}
-                index={index}
-                result={result}
-                handleSongClick={handleRemoveRequestSong}
-                icon='Minus'
-              />
+              // <RequestSongResult
+              //   key={result.id}
+              //   index={index}
+              //   result={result}
+              //   handleSongClick={handleRemoveRequestSong}
+              //   icon='Minus'
+              // />
+              <SongResultRow key={result.artist + result.title}>
+                <SongResultRow.Text text={index.toString()} />
+                <SongResultRow.Inform
+                  title={result.title}
+                  artist={result.artist}
+                />
+                <SongResultRow.Text text={result.cnt.toString() + '명'} />
+                <SongResultRow.IconButton
+                  icon='Minus'
+                  size={20}
+                  color={color.white}
+                  onClick={() => handleRemoveRequestSong(result.id)}
+                />
+              </SongResultRow>
             )}
           >
             <SongTable.PagingBar

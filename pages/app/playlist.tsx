@@ -6,6 +6,7 @@ import MainSec from '../../components/MainSec';
 import NoPlaylistCheckWrapper from '../../components/NoPlaylistCheckWrapper';
 import SearchBar from '../../components/Search/SearchBar';
 import PrimarySongResult from '../../components/Table/PrimarySongResult';
+import SongResultRow from '../../components/Table/SongResultRow';
 import SongTable from '../../components/Table/SongTable';
 import TitleBar from '../../components/TitleBar';
 import { usePlaylistContext } from '../../context/PlaylistContext';
@@ -13,7 +14,9 @@ import useSearch from '../../hooks/UseSearch';
 import { getAppLayOut } from '../../layouts/appLayout';
 import { songSearchWordCategories } from '../../store/data/CategoryTypes';
 import { PlaylistSongData } from '../../store/type/playlist';
-//TODO: 플레이리스트 노래 제목이나 가수 수정기능 추가
+import { color } from '../../styles/theme';
+//TODO: 플레이리스트 노래 제목이나 가수 수정기능 추가 이것도 송 아이템에 부가 버튼 만들어서 추가하자
+// 자리 부족한 반응형 화면에서는 ... 이모티콘 넣어서 눌렀을때 버튼 리스트 나오게
 export default function AppPlaylist() {
   const [songArr, setSongArr] = useState<PlaylistSongData[]>([]);
   const { nowPlaylist, removeSongInPlaylist } = usePlaylistContext();
@@ -82,13 +85,26 @@ export default function AppPlaylist() {
               viewdSongArr={viewedDataArr}
               nowPageNum={nowPageNum}
               renderSongResult={(index, result) => (
-                <PrimarySongResult
-                  key={result.id}
-                  index={index}
-                  result={result}
-                  handleSongClick={handleClickResult}
-                  icon='Minus'
-                />
+                // <PrimarySongResult
+                //   key={result.id}
+                //   index={index}
+                //   result={result}
+                //   handleSongClick={handleClickResult}
+                //   icon='Minus'
+                // />
+                <SongResultRow key={result.artist + result.title}>
+                  <SongResultRow.Text text={index.toString()} />
+                  <SongResultRow.Inform
+                    title={result.title}
+                    artist={result.artist}
+                  />
+                  <SongResultRow.IconButton
+                    icon='Minus'
+                    size={20}
+                    color={color.white}
+                    onClick={() => handleClickResult(result.id)}
+                  />
+                </SongResultRow>
               )}
             >
               <SongTable.PagingBar

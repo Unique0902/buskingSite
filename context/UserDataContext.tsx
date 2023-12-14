@@ -20,7 +20,6 @@ type ContextProps = {
 };
 
 const UserDataContext = createContext<ContextProps>({} as ContextProps);
-// TODO: context 블로그 글보고 react memo 사용하는것같은거나 다른거 실천하기
 export function UserDataContextProvider({ userRepository, children }: Props) {
   const queryClient = useQueryClient();
 

@@ -30,7 +30,7 @@ export default function AppInform() {
           removeUserPlaylists(uid);
         }
         if (buskingData) {
-          await removeBusking();
+          await removeBusking(uid);
         }
         logout();
       } else {
