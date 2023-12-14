@@ -8,6 +8,7 @@ import SearchBar from '../../components/Search/SearchBar';
 import SongResultRow from '../../components/Table/SongResultRow';
 import SongTable from '../../components/Table/SongTable';
 import TitleBar from '../../components/TitleBar';
+import { useAuthContext } from '../../context/AuthContext';
 import { useBuskingContext } from '../../context/BuskingContext';
 import { usePlaylistContext } from '../../context/PlaylistContext';
 import useSearch from '../../hooks/UseSearch';
@@ -18,11 +19,14 @@ import { color } from '../../styles/theme';
 //TODO: 플레이리스트 노래 제목이나 가수 수정기능 추가 이것도 송 아이템에 부가 버튼 만들어서 추가하자
 // 자리 부족한 반응형 화면에서는 ... 이모티콘 넣어서 눌렀을때 버튼 리스트 나오게
 export default function AppPlaylist() {
+  const { uid } = useAuthContext();
   const [songArr, setSongArr] = useState<PlaylistSongData[]>([]);
   const { nowPlaylist, removeSongInPlaylist, editSongInPlaylist } =
     usePlaylistContext();
   const {
     buskingQueryResult: { data: buskingData },
+    applyOldBuskingSong,
+    applyNewBuskingSong,
   } = useBuskingContext();
   useEffect(() => {
     if (nowPlaylist) {
@@ -50,6 +54,45 @@ export default function AppPlaylist() {
 
   const handleClickResult = (sid: string) => {
     removeSongInPlaylist(sid);
+  };
+
+  const handleApplySong = (sid: string) => {
+    if (buskingData && uid && buskingData.playlistId === nowPlaylist?.id) {
+      const ipData = 'user';
+      const appliance = buskingData.appliance
+        ? Object.values(buskingData.appliance)
+        : [];
+      const appliedSongData = appliance.find((song) => song.sid === sid);
+      if (appliedSongData) {
+        const isUserApplied = !!appliedSongData.applicants.find(
+          (ap) => ap.ip === ipData
+        );
+        if (isUserApplied) {
+          window.alert('이미 신청하셨습니다!');
+          return;
+        }
+        applyOldBuskingSong(uid, sid, ipData, appliedSongData);
+      } else {
+        if (appliance.length === buskingData.maxNum) {
+          alert('신청 최대수에 도달했습니다!');
+          return;
+        }
+        const songToApply = songArr.find((s) => s.id === sid);
+        if (songToApply) {
+          applyNewBuskingSong(
+            uid,
+            songToApply.title,
+            songToApply.artist,
+            sid,
+            ipData
+          );
+        } else {
+          throw new Error(
+            'there is no song that you apply in playlist SongArr!!'
+          );
+        }
+      }
+    }
   };
 
   return (
@@ -107,7 +150,9 @@ export default function AppPlaylist() {
                     />
                     {buskingData && (
                       <SongResultRow.EtcButton.RowButton
-                        onClick={() => {}}
+                        onClick={() => {
+                          handleApplySong(result.id);
+                        }}
                         text={'버스킹 리스트에 추가하기'}
                       />
                     )}
