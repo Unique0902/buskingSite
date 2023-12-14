@@ -12,8 +12,6 @@ import MainSec from '../../components/MainSec';
 import ModalIconBtn from '../../components/Modal/ModalIconBtn';
 import SearchBar from '../../components/Search/SearchBar';
 import SearchModalContent from '../../components/SearchModalContent';
-import PrimarySongResult from '../../components/Table/PrimarySongResult';
-import RequestSongResult from '../../components/Table/RequestSongResult';
 import SongResultRow from '../../components/Table/SongResultRow';
 import SongTable from '../../components/Table/SongTable';
 import { DarkModeContextProvider } from '../../context/DarkModeContext';
@@ -253,13 +251,6 @@ const App = () => {
                     viewdSongArr={applianceSearchProps.viewedDataArr}
                     nowPageNum={applianceSearchProps.nowPageNum}
                     renderSongResult={(index, result) => (
-                      // <RequestSongResult
-                      //   key={result.id}
-                      //   index={index}
-                      //   result={result}
-                      //   handleSongClick={handleApplySong}
-                      //   icon='Send'
-                      // />
                       <SongResultRow key={result.artist + result.title}>
                         <SongResultRow.Text text={index.toString()} />
                         <SongResultRow.Inform

@@ -5,7 +5,6 @@ import LoadingCheckWrapper from '../../components/LoadingCheckWrapper';
 import MainSec from '../../components/MainSec';
 import NoPlaylistCheckWrapper from '../../components/NoPlaylistCheckWrapper';
 import SearchBar from '../../components/Search/SearchBar';
-import PrimarySongResult from '../../components/Table/PrimarySongResult';
 import SongResultRow from '../../components/Table/SongResultRow';
 import SongTable from '../../components/Table/SongTable';
 import TitleBar from '../../components/TitleBar';
@@ -85,13 +84,6 @@ export default function AppPlaylist() {
               viewdSongArr={viewedDataArr}
               nowPageNum={nowPageNum}
               renderSongResult={(index, result) => (
-                // <PrimarySongResult
-                //   key={result.id}
-                //   index={index}
-                //   result={result}
-                //   handleSongClick={handleClickResult}
-                //   icon='Minus'
-                // />
                 <SongResultRow key={result.artist + result.title}>
                   <SongResultRow.Text text={index.toString()} />
                   <SongResultRow.Inform

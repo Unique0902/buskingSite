@@ -6,7 +6,6 @@ import MainSec from '../../components/MainSec';
 import NoPlaylistCheckWrapper from '../../components/NoPlaylistCheckWrapper';
 import RenderedWhenFullScreen from '../../components/Responsive/RenderedWhenFullScreen';
 import SearchBar from '../../components/Search/SearchBar';
-import SongAddResult from '../../components/Table/SongAddResult';
 import SongResultRow from '../../components/Table/SongResultRow';
 import SongTable from '../../components/Table/SongTable';
 import TitleBar from '../../components/TitleBar';
@@ -78,13 +77,6 @@ export default function AppAdd() {
               viewdSongArr={searchResults}
               nowPageNum={nowPageNum}
               renderSongResult={(index, result) => (
-                // <SongAddResult
-                //   key={result.artist + result.name}
-                //   index={index}
-                //   result={result}
-                //   handleSongClick={addSongToPlaylist}
-                //   icon='Plus'
-                // />
                 <SongResultRow key={result.artist + result.name}>
                   <SongResultRow.Text text={index.toString()} />
                   <SongResultRow.Inform

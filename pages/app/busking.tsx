@@ -9,7 +9,6 @@ import LoadingCheckWrapper from '../../components/LoadingCheckWrapper';
 import MainSec from '../../components/MainSec';
 import MusicBar from '../../components/MusicBar/MusicBar';
 import SectionCopyText from '../../components/SectionCopyText';
-import RequestSongResult from '../../components/Table/RequestSongResult';
 import SongResultRow from '../../components/Table/SongResultRow';
 import SongTable from '../../components/Table/SongTable';
 import { useAuthContext } from '../../context/AuthContext';
@@ -132,13 +131,6 @@ export default function AppBusking() {
             viewdSongArr={viewedDataArr}
             nowPageNum={nowPageNum}
             renderSongResult={(index, result) => (
-              // <RequestSongResult
-              //   key={result.id}
-              //   index={index}
-              //   result={result}
-              //   handleSongClick={handleRemoveRequestSong}
-              //   icon='Minus'
-              // />
               <SongResultRow key={result.artist + result.title}>
                 <SongResultRow.Text text={index.toString()} />
                 <SongResultRow.Inform
