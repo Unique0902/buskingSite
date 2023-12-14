@@ -105,6 +105,7 @@ const App = () => {
           return;
         }
         applyOldBuskingSong(userId, sid, ipData, appliedSongData);
+        alert(appliedSongData.title + ' 이 신청되었습니다!');
       } else {
         if (appliance.length === buskingData.maxNum) {
           alert('신청 최대수에 도달했습니다! 한 곡이 끝난후 신청해보세요!');
@@ -119,6 +120,7 @@ const App = () => {
             sid,
             ipData
           );
+          alert(songToApply.title + ' 이 신청되었습니다!');
         } else {
           throw new Error(
             'there is no song that you apply in nowPlaylistSongArr!!'
@@ -264,7 +266,7 @@ const App = () => {
                           icon='Send'
                           size={20}
                           color={color.white}
-                          onClick={() => handleApplySong(result.id)}
+                          onClick={() => handleApplySong(result.sid)}
                         />
                       </SongResultRow>
                     )}

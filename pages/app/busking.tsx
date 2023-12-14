@@ -142,7 +142,7 @@ export default function AppBusking() {
                   icon='Minus'
                   size={20}
                   color={color.white}
-                  onClick={() => handleRemoveRequestSong(result.id)}
+                  onClick={() => handleRemoveRequestSong(result.sid)}
                 />
               </SongResultRow>
             )}

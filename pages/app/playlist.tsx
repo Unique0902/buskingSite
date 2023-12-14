@@ -68,10 +68,11 @@ export default function AppPlaylist() {
           (ap) => ap.ip === ipData
         );
         if (isUserApplied) {
-          window.alert('이미 신청하셨습니다!');
+          window.alert('이미 신청했습니다!');
           return;
         }
         applyOldBuskingSong(uid, sid, ipData, appliedSongData);
+        alert(appliedSongData.title + ' 이 신청되었습니다!');
       } else {
         if (appliance.length === buskingData.maxNum) {
           alert('신청 최대수에 도달했습니다!');
@@ -86,6 +87,7 @@ export default function AppPlaylist() {
             sid,
             ipData
           );
+          alert(songToApply.title + ' 이 신청되었습니다!');
         } else {
           throw new Error(
             'there is no song that you apply in playlist SongArr!!'
