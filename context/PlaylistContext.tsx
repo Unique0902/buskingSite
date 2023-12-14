@@ -30,6 +30,10 @@ type ContextProps = {
   playlistQueryResult: UseQueryResult<PlaylistDataObj | null, Error>;
   nowPlaylist: PlaylistData | null;
   addSongToPlaylist: (title: string, artist: string) => void;
+  editSongInPlaylist: (
+    sid: string,
+    editData: { title: string; artist: string }
+  ) => void;
   removeNowPlaylist: () => void;
   removeSongInPlaylist: (sid: string) => void;
   addBasicPlaylist: () => void;
@@ -145,6 +149,30 @@ export function PlaylistContextProvider({
     }
   };
 
+  const editSongInPlaylist = (
+    sid: string,
+    editData: { title: string; artist: string }
+  ) => {
+    if (!uid) throw new Error('no uid!!');
+    if (!nowPlaylist) throw new Error('no nowPlaylist!!');
+    if (!nowPlaylist.songs) throw new Error('no nowPlaylist.songs!!');
+    if (!editData.title || !editData.artist) {
+      throw new Error('no editData!!');
+    }
+    const songArr: PlaylistSongData[] = Object.values(nowPlaylist.songs);
+    const song = songArr.find((song) => song.id === sid);
+    const editedSong = { ...editData, id: sid };
+    if (song) {
+      playlistDataMutation.mutate({
+        mutationFunction: () =>
+          playlistRepository.editSong(uid, nowPlaylist, editedSong),
+      });
+      window.alert('수정되었습니다.');
+    } else {
+      throw new Error('cant edit song because no song exists');
+    }
+  };
+
   const addBasicPlaylist = () => {
     const PLAYLIST_BASIC_NAME = 'playlist';
     const playlist = {
@@ -199,6 +227,7 @@ export function PlaylistContextProvider({
         nowPlaylist,
         addSongToPlaylist,
         removeNowPlaylist,
+        editSongInPlaylist,
         removeSongInPlaylist,
         addBasicPlaylist,
         updateNowPlaylistName,

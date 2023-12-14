@@ -8,6 +8,7 @@ import SearchBar from '../../components/Search/SearchBar';
 import SongResultRow from '../../components/Table/SongResultRow';
 import SongTable from '../../components/Table/SongTable';
 import TitleBar from '../../components/TitleBar';
+import { useBuskingContext } from '../../context/BuskingContext';
 import { usePlaylistContext } from '../../context/PlaylistContext';
 import useSearch from '../../hooks/UseSearch';
 import { getAppLayOut } from '../../layouts/appLayout';
@@ -18,7 +19,11 @@ import { color } from '../../styles/theme';
 // 자리 부족한 반응형 화면에서는 ... 이모티콘 넣어서 눌렀을때 버튼 리스트 나오게
 export default function AppPlaylist() {
   const [songArr, setSongArr] = useState<PlaylistSongData[]>([]);
-  const { nowPlaylist, removeSongInPlaylist } = usePlaylistContext();
+  const { nowPlaylist, removeSongInPlaylist, editSongInPlaylist } =
+    usePlaylistContext();
+  const {
+    buskingQueryResult: { data: buskingData },
+  } = useBuskingContext();
   useEffect(() => {
     if (nowPlaylist) {
       nowPlaylist.songs
@@ -96,6 +101,26 @@ export default function AppPlaylist() {
                     color={color.white}
                     onClick={() => handleClickResult(result.id)}
                   />
+                  <SongResultRow.EtcButton>
+                    <SongResultRow.EtcButton.HiddenShowRowButton
+                      text={'노래정보 수정하기'}
+                    />
+                    {buskingData && (
+                      <SongResultRow.EtcButton.RowButton
+                        onClick={() => {}}
+                        text={'버스킹 리스트에 추가하기'}
+                      />
+                    )}
+                  </SongResultRow.EtcButton>
+                  <SongResultRow.HiddenSection>
+                    <SongResultRow.EditForm
+                      title={result.title}
+                      artist={result.artist}
+                      onEdit={(data) => {
+                        editSongInPlaylist(result.id, data);
+                      }}
+                    />
+                  </SongResultRow.HiddenSection>
                 </SongResultRow>
               )}
             >

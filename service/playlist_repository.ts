@@ -77,6 +77,17 @@ class PlaylistRepository {
     );
     return remove(listRef);
   };
+  editSong = async (
+    userId: string,
+    playlist: PlaylistData,
+    song: PlaylistSongData
+  ) => {
+    const listRef = ref(
+      database,
+      `playlists/${userId}/${playlist.id}/songs/${song.id}`
+    );
+    return set(listRef, song);
+  };
 }
 
 export default PlaylistRepository;
