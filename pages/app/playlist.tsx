@@ -98,7 +98,7 @@ export default function AppPlaylist() {
                   <SongResultRow.IconButton
                     icon='Minus'
                     size={20}
-                    color={color.white}
+                    color={color.warning}
                     onClick={() => handleClickResult(result.id)}
                   />
                   <SongResultRow.EtcButton>
