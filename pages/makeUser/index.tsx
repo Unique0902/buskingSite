@@ -5,13 +5,16 @@ import { useRouter } from 'next/router';
 import PrimaryBtn from '../../components/Btn/PrimaryBtn';
 import TitleBar from '../../components/TitleBar';
 import { useAuthContext } from '../../context/AuthContext';
-import { useUserDataContext } from '../../context/UserDataContext';
+import { useUserData } from '../../hooks/UseUserData';
 import { borderRadius, fontSize, xyPadding } from '../../styles/theme';
 
 const MakeUser = () => {
   const [name, setName] = useState<string>('');
   const { uid } = useAuthContext();
-  const { userData, makeUserData } = useUserDataContext();
+  const {
+    userDataQuery: { data: userData },
+    makeUserData,
+  } = useUserData(uid);
   const router = useRouter();
   if (userData) {
     router.push('app/home');

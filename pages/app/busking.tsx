@@ -14,25 +14,25 @@ import SongTable from '../../components/Table/SongTable';
 import { useAuthContext } from '../../context/AuthContext';
 import { useBuskingContext } from '../../context/BuskingContext';
 import { usePlaylistContext } from '../../context/PlaylistContext';
-import { useUserDataContext } from '../../context/UserDataContext';
 import useSearch from '../../hooks/UseSearch';
+import { useUserData } from '../../hooks/UseUserData';
 import { getAppLayOut } from '../../layouts/appLayout';
 import { ApplianceData, ApplianceObjects } from '../../store/type/busking';
 import { color } from '../../styles/theme';
 //TODO: 본인이 노래 추가하는 기능 넣기 버스킹중일때 인식해서 플레이리스트에서 추가할수있게 버튼만들자!
 export default function AppBusking() {
+  const { uid } = useAuthContext();
+  const {
+    userDataQuery: { data: userData },
+  } = useUserData(uid);
   const {
     playlistQueryResult: { data: playlists },
   } = usePlaylistContext();
-  const { userData } = useUserDataContext();
-
   const {
     buskingQueryResult: { data: buskingData, isLoading: isbuskingDataLoading },
     removeBuskingSong,
     removeBusking,
   } = useBuskingContext();
-
-  const { uid } = useAuthContext();
 
   const [songArr, setSongArr] = useState<ApplianceData[]>([]);
   const [songArrToView, setSongArrToView] = useState<ApplianceData[]>([]);

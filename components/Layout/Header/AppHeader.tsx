@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 
 import Icon from '../../../assets/icon/icon';
+import { useAuthContext } from '../../../context/AuthContext';
 import { usePlaylistContext } from '../../../context/PlaylistContext';
-import { useUserDataContext } from '../../../context/UserDataContext';
+import { useUserData } from '../../../hooks/UseUserData';
 import LoginMenu from '../../LoginMenu/LoginMenu';
 import PlaylistMenu from '../../PlaylistMenu/PlaylistMenu';
 type Props = {
@@ -10,7 +11,10 @@ type Props = {
   setIsShowSideBar: React.Dispatch<React.SetStateAction<boolean>>;
 };
 export default function AppHeader({ isShowSideBar, setIsShowSideBar }: Props) {
-  const { userData } = useUserDataContext();
+  const { uid } = useAuthContext();
+  const {
+    userDataQuery: { data: userData },
+  } = useUserData(uid);
   const { nowPlaylist } = usePlaylistContext();
   const [isShowPlaylistMenu, setIsShowPlaylistMenu] = useState<boolean>(false);
   const [isShowLoginMenu, setIsShowLoginMenu] = useState<boolean>(false);

@@ -9,7 +9,7 @@ import TitleBar from '../../components/TitleBar';
 import { useAuthContext } from '../../context/AuthContext';
 import { useBuskingContext } from '../../context/BuskingContext';
 import { usePlaylistContext } from '../../context/PlaylistContext';
-import { useUserDataContext } from '../../context/UserDataContext';
+import { useUserData } from '../../hooks/UseUserData';
 import { getAppLayOut } from '../../layouts/appLayout';
 import { BuskingInform } from '../../store/type/busking';
 // TODO: select나 input 컴포넌트화로 묶기
@@ -23,7 +23,9 @@ export default function AppMakeBusking() {
     playlistQueryResult: { data: playlists },
   } = usePlaylistContext();
   const { uid } = useAuthContext();
-  const { userData } = useUserDataContext();
+  const {
+    userDataQuery: { data: userData },
+  } = useUserData(uid);
   const [buskingInform, setBuskingInform] = useState<BuskingInform>({
     playlistId: playlists ? Object.values(playlists)[0].id : '',
     maxNum: 10,

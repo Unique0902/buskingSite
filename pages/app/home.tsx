@@ -2,12 +2,16 @@ import React from 'react';
 
 import MainSec from '../../components/MainSec';
 import NoPlaylistCheckWrapper from '../../components/NoPlaylistCheckWrapper';
+import { useAuthContext } from '../../context/AuthContext';
 import { usePlaylistContext } from '../../context/PlaylistContext';
-import { useUserDataContext } from '../../context/UserDataContext';
+import { useUserData } from '../../hooks/UseUserData';
 import { getAppLayOut } from '../../layouts/appLayout';
 
 export default function AppHome() {
-  const { userData } = useUserDataContext();
+  const { uid } = useAuthContext();
+  const {
+    userDataQuery: { data: userData },
+  } = useUserData(uid);
   const { nowPlaylist } = usePlaylistContext();
 
   return (

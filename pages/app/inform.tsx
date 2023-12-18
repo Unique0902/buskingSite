@@ -7,10 +7,9 @@ import TitleBar from '../../components/TitleBar';
 import { useAuthContext } from '../../context/AuthContext';
 import { useBuskingContext } from '../../context/BuskingContext';
 import { usePlaylistContext } from '../../context/PlaylistContext';
-import { useUserDataContext } from '../../context/UserDataContext';
+import { useUserData } from '../../hooks/UseUserData';
 import { getAppLayOut } from '../../layouts/appLayout';
 export default function AppInform() {
-  const { userData, removeUserData } = useUserDataContext();
   const {
     removeUserPlaylists,
     playlistQueryResult: { data: playlists },
@@ -20,7 +19,10 @@ export default function AppInform() {
     removeBusking,
   } = useBuskingContext();
   const { uid, logout } = useAuthContext();
-
+  const {
+    userDataQuery: { data: userData },
+    removeUserData,
+  } = useUserData(uid);
   const dayToMakeUser = userData ? new Date(userData.date) : null;
   const handleClickRemoveUserBtn = async () => {
     if (window.confirm('정말 탈퇴하시겠습니까?')) {

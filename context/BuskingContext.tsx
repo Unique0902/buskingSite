@@ -4,8 +4,8 @@ import { UseQueryResult } from '@tanstack/react-query';
 import { Unsubscribe } from 'firebase/auth';
 
 import { useAuthContext } from './AuthContext';
-import { useUserDataContext } from './UserDataContext';
 import useSyncQuery from '../hooks/useSyncData';
+import { useUserData } from '../hooks/UseUserData';
 import BuskingRepository from '../service/buskingRepository';
 import {
   ApplianceData,
@@ -52,7 +52,9 @@ type Props = {
 export function BuskingContextProvider({ buskingRepository, children }: Props) {
   // useState 초기값 안넣으면 undefined 되는거 생각하기
   const { uid } = useAuthContext();
-  const { userData } = useUserDataContext();
+  const {
+    userDataQuery: { data: userData },
+  } = useUserData(uid);
 
   //TODO: 자꾸 fetching이 뜨는데 해결하기 busking에서만 sync하게 변경하기 makeBusking에서는 revalidate로 makebusking하면될듯
   const buskingQueryResult = useSyncQuery<BuskingData>(
