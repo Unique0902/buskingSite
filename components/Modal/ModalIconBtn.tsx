@@ -10,7 +10,7 @@ import React, {
 import Modal from './Modal';
 import { iconName } from '../../assets/icon/constants';
 import Icon from '../../assets/icon/icon';
-import { useDarkModeContext } from '../../context/DarkModeContext';
+import { useDarkMode } from '../../hooks/UseDarkMode';
 import { color } from '../../styles/theme';
 
 type Props = {
@@ -26,7 +26,7 @@ const ModalContext = createContext<ContextProps>({} as ContextProps);
 
 const ModalIconBtn = ({ icon, children }: Props) => {
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
-  const { isDarkMode } = useDarkModeContext();
+  const { isDarkMode } = useDarkMode();
   const modalRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {

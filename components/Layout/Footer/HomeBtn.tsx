@@ -1,14 +1,13 @@
 import React from 'react';
 
-import * as Sentry from '@sentry/nextjs';
 import { useRouter } from 'next/router';
 
 import Icon from '../../../assets/icon/icon';
-import { useDarkModeContext } from '../../../context/DarkModeContext';
+import { useDarkMode } from '../../../hooks/UseDarkMode';
 import { color } from '../../../styles/theme';
 
 const HomeBtn: React.FC = () => {
-  const { isDarkMode } = useDarkModeContext();
+  const { isDarkMode } = useDarkMode();
   const router = useRouter();
   return (
     <button

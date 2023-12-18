@@ -1,7 +1,7 @@
 import React, { useLayoutEffect } from 'react';
 
 import Icon from '../../../assets/icon/icon';
-import { useDarkModeContext } from '../../../context/DarkModeContext';
+import { useDarkMode } from '../../../hooks/UseDarkMode';
 import { color } from '../../../styles/theme';
 //useLayoutEffect 공부해보고 성능 얼마나 떨어지는지 알아보고 개선가능할지 생각해보기
 const LOCAL_STORAGE_KEY = {
@@ -13,7 +13,7 @@ const THEME = {
   DARK: 'dark',
 } as const;
 const ThemeBtn = () => {
-  const { isDarkMode, setIsDarkMode } = useDarkModeContext();
+  const { isDarkMode, setIsDarkMode } = useDarkMode();
   useLayoutEffect(() => {
     const theme = localStorage.getItem(LOCAL_STORAGE_KEY.THEME) || THEME.LIGHT;
     if (theme === THEME.DARK) {

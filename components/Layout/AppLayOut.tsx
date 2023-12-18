@@ -5,7 +5,6 @@ import { useMediaQuery } from 'react-responsive';
 import ThemeBtn from './Footer/ThemeBtn';
 import AppHeader from './Header/AppHeader';
 import SideBar from './SideBar/SideBar';
-import { DarkModeContextProvider } from '../../context/DarkModeContext';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import UserDataProtectedRoute from '../ProtectedRoute/UserDataProtectedRoute';
 type Props = {
@@ -37,9 +36,7 @@ export default function AppLayOut({ children }: Props) {
               {children}
             </main>
             <footer className='fixed flex flex-col gap-4 right-6 bottom-6'>
-              <DarkModeContextProvider>
-                <ThemeBtn />
-              </DarkModeContextProvider>
+              <ThemeBtn />
             </footer>
           </section>
         }

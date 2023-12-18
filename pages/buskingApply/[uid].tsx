@@ -14,7 +14,6 @@ import SearchBar from '../../components/Search/SearchBar';
 import SearchModalContent from '../../components/SearchModalContent';
 import SongResultRow from '../../components/Table/SongResultRow';
 import SongTable from '../../components/Table/SongTable';
-import { DarkModeContextProvider } from '../../context/DarkModeContext';
 import useBuskingData from '../../hooks/UseBuskingData';
 import useIpData from '../../hooks/UseIpData';
 import useSearch from '../../hooks/UseSearch';
@@ -382,13 +381,11 @@ const App = () => {
 
       {createPortal(
         <footer className='fixed flex flex-col gap-4 right-8 bottom-6'>
-          <DarkModeContextProvider>
-            <ModalIconBtn icon='Search'>
-              <SearchModalContent />
-            </ModalIconBtn>
-            <HomeBtn />
-            <ThemeBtn />
-          </DarkModeContextProvider>
+          <ModalIconBtn icon='Search'>
+            <SearchModalContent />
+          </ModalIconBtn>
+          <HomeBtn />
+          <ThemeBtn />
         </footer>,
         document.body
       )}
