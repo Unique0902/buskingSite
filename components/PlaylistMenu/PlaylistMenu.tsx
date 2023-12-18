@@ -3,7 +3,8 @@ import React, { useState, useEffect } from 'react';
 import PlaylistBtn from './PlaylistBtn';
 import PlaylistMenuBtn from './PlaylistMenuBtn';
 import PlaylistMenuInputBtn from './PlaylistMenuInputBtn';
-import { usePlaylistContext } from '../../context/PlaylistContext';
+import { useAuthContext } from '../../context/AuthContext';
+import { usePlaylist } from '../../hooks/UsePlaylist';
 import { PlaylistData } from '../../store/type/playlist';
 import PopupWrapper from '../PopUp/PopupWrapper';
 type Props = {
@@ -12,14 +13,15 @@ type Props = {
 
 //컨텍스트말고 custom hook이나 prop으로 주입받기 독립성 높이기 위해 컨텍스트로 싸주는 menu라고 생각하면 독립성있는건가..
 const PlaylistMenu = ({ setIsShowPlaylistMenu }: Props) => {
+  const { uid } = useAuthContext();
   const {
-    playlistQueryResult: { data: playlists },
+    playlistQuery: { data: playlists },
     nowPlaylist,
     removeNowPlaylist,
     addPlaylist,
     updateNowPlaylistName,
     changeNowPlaylist,
-  } = usePlaylistContext();
+  } = usePlaylist(uid);
   const [playlistName, setPlaylistName] = useState<string>('');
   const [playlistEditedName, setPlaylistEditedName] = useState<string>('');
   useEffect(() => {

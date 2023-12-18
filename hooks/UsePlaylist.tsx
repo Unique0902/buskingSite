@@ -1,65 +1,24 @@
-import {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-import {
-  useMutation,
-  useQuery,
-  useQueryClient,
-  UseQueryResult,
-} from '@tanstack/react-query';
-
-import { useAuthContext } from './AuthContext';
 import PlaylistRepository from '../service/playlist_repository';
-import {
-  PlaylistData,
-  PlaylistDataObj,
-  PlaylistSongData,
-} from '../store/type/playlist';
+import useStore from '../store/state/useStore';
+import { PlaylistSongData } from '../store/type/playlist';
 
-type Props = {
-  playlistRepository: PlaylistRepository;
-  children: ReactNode;
-};
+const playlistRepository = new PlaylistRepository();
 
-type ContextProps = {
-  playlistQueryResult: UseQueryResult<PlaylistDataObj | null, Error>;
-  nowPlaylist: PlaylistData | null;
-  addSongToPlaylist: (title: string, artist: string) => void;
-  editSongInPlaylist: (
-    sid: string,
-    editData: { title: string; artist: string }
-  ) => void;
-  removeNowPlaylist: () => void;
-  removeSongInPlaylist: (sid: string) => void;
-  addBasicPlaylist: () => void;
-  updateNowPlaylistName: (name: string) => void;
-  addPlaylist: (name: string) => void;
-  changeNowPlaylist: (id: string) => void;
-  removeUserPlaylists: (userId: string) => void;
-};
-
-const PlaylistContext = createContext<ContextProps>({} as ContextProps);
-
-export function PlaylistContextProvider({
-  playlistRepository,
-  children,
-}: Props) {
+export function usePlaylist(uid: string | undefined) {
   const queryClient = useQueryClient();
-  const { uid } = useAuthContext();
-  const playlistQueryResult = useQuery({
-    // key에다가 uid를 넣어주어야할까? <<당연..
+  const nowPlaylistId = useStore((state) => state.nowPlaylistId);
+  const setNowPlaylistId = useStore((state) => state.setNowPlaylistId);
+  const clearNowPlaylistId = useStore((state) => state.clearNowPlaylistId);
+  const playlistQuery = useQuery({
     queryKey: [uid, 'playlistData'],
     queryFn: () => playlistRepository.getPlaylists(uid as string),
     staleTime: 1000 * 60 * 2,
     enabled: !!uid,
   });
 
-  const { data: playlistData } = playlistQueryResult;
+  const { data: playlistData } = playlistQuery;
 
   const playlistDataMutation = useMutation({
     mutationFn: ({
@@ -75,19 +34,15 @@ export function PlaylistContextProvider({
     },
   });
 
-  const [nowPlaylist, setNowPlaylist] = useState<PlaylistData | null>(null);
+  if (playlistData && nowPlaylistId && !playlistData[nowPlaylistId]) {
+    clearNowPlaylistId();
+  }
 
-  useEffect(() => {
-    if (playlistData) {
-      if (nowPlaylist && playlistData[nowPlaylist.id]) {
-        setNowPlaylist(playlistData[nowPlaylist.id]);
-      } else {
-        setNowPlaylist(Object.values(playlistData)[0]);
-      }
-    } else {
-      setNowPlaylist(null);
-    }
-  }, [playlistData]);
+  const nowPlaylist = playlistData
+    ? nowPlaylistId
+      ? playlistData[nowPlaylistId]
+      : Object.values(playlistData)[0]
+    : null;
 
   const addSongToPlaylist = (title: string, artist: string) => {
     if (!nowPlaylist) {
@@ -200,7 +155,7 @@ export function PlaylistContextProvider({
       id: Date.now().toString(),
       name,
     };
-    setNowPlaylist(playlist);
+    setNowPlaylistId(playlist.id);
     if (!uid) throw new Error('no uid!!');
     playlistDataMutation.mutate({
       mutationFunction: () => playlistRepository.makePlaylist(uid, playlist),
@@ -210,7 +165,7 @@ export function PlaylistContextProvider({
   const changeNowPlaylist = (id: string) => {
     if (!playlistData) throw new Error('no playlists!!');
     if (playlistData[id]) {
-      setNowPlaylist(playlistData[id]);
+      setNowPlaylistId(id);
     }
   };
 
@@ -220,27 +175,17 @@ export function PlaylistContextProvider({
     });
   };
 
-  return (
-    <PlaylistContext.Provider
-      value={{
-        playlistQueryResult,
-        nowPlaylist,
-        addSongToPlaylist,
-        removeNowPlaylist,
-        editSongInPlaylist,
-        removeSongInPlaylist,
-        addBasicPlaylist,
-        updateNowPlaylistName,
-        addPlaylist,
-        changeNowPlaylist,
-        removeUserPlaylists,
-      }}
-    >
-      {children}
-    </PlaylistContext.Provider>
-  );
-}
-
-export function usePlaylistContext() {
-  return useContext(PlaylistContext);
+  return {
+    playlistQuery,
+    addSongToPlaylist,
+    nowPlaylist,
+    removeNowPlaylist,
+    removeSongInPlaylist,
+    editSongInPlaylist,
+    addBasicPlaylist,
+    updateNowPlaylistName,
+    addPlaylist,
+    changeNowPlaylist,
+    removeUserPlaylists,
+  };
 }

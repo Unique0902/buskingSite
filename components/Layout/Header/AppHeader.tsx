@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import Icon from '../../../assets/icon/icon';
 import { useAuthContext } from '../../../context/AuthContext';
-import { usePlaylistContext } from '../../../context/PlaylistContext';
+import { usePlaylist } from '../../../hooks/UsePlaylist';
 import { useUserData } from '../../../hooks/UseUserData';
 import LoginMenu from '../../LoginMenu/LoginMenu';
 import PlaylistMenu from '../../PlaylistMenu/PlaylistMenu';
@@ -15,7 +15,7 @@ export default function AppHeader({ isShowSideBar, setIsShowSideBar }: Props) {
   const {
     userDataQuery: { data: userData },
   } = useUserData(uid);
-  const { nowPlaylist } = usePlaylistContext();
+  const { nowPlaylist } = usePlaylist(uid);
   const [isShowPlaylistMenu, setIsShowPlaylistMenu] = useState<boolean>(false);
   const [isShowLoginMenu, setIsShowLoginMenu] = useState<boolean>(false);
 

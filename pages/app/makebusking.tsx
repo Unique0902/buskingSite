@@ -7,22 +7,22 @@ import NoPlaylistCheckWrapper from '../../components/NoPlaylistCheckWrapper';
 import MainRow from '../../components/Row/RowWithTitle';
 import TitleBar from '../../components/TitleBar';
 import { useAuthContext } from '../../context/AuthContext';
-import { useBuskingContext } from '../../context/BuskingContext';
-import { usePlaylistContext } from '../../context/PlaylistContext';
+import { useBusking } from '../../hooks/UseBusking';
+import { usePlaylist } from '../../hooks/UsePlaylist';
 import { useUserData } from '../../hooks/UseUserData';
 import { getAppLayOut } from '../../layouts/appLayout';
 import { BuskingInform } from '../../store/type/busking';
 // TODO: select나 input 컴포넌트화로 묶기
 // 플레이리스트 노래없으면 노래못만들게하기 < 해결완 물론 프론트에서만 처리해서 나중에 서버에서도 처리하려면 해도됨
 export default function AppMakeBusking() {
-  const {
-    buskingQueryResult: { data: buskingData, isLoading: isbuskingDataLoading },
-    makeBusking,
-  } = useBuskingContext();
-  const {
-    playlistQueryResult: { data: playlists },
-  } = usePlaylistContext();
   const { uid } = useAuthContext();
+  const {
+    buskingQuery: { data: buskingData, isLoading: isbuskingDataLoading },
+    makeBusking,
+  } = useBusking(uid);
+  const {
+    playlistQuery: { data: playlists },
+  } = usePlaylist(uid);
   const {
     userDataQuery: { data: userData },
   } = useUserData(uid);

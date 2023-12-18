@@ -5,20 +5,20 @@ import RowWithTitle from '../../components/Row/RowWithTitle';
 import RowWithTitleAndArrow from '../../components/Row/RowWithTitleAndArrow';
 import TitleBar from '../../components/TitleBar';
 import { useAuthContext } from '../../context/AuthContext';
-import { useBuskingContext } from '../../context/BuskingContext';
-import { usePlaylistContext } from '../../context/PlaylistContext';
+import { useBusking } from '../../hooks/UseBusking';
+import { usePlaylist } from '../../hooks/UsePlaylist';
 import { useUserData } from '../../hooks/UseUserData';
 import { getAppLayOut } from '../../layouts/appLayout';
 export default function AppInform() {
+  const { uid, logout } = useAuthContext();
+  const {
+    buskingQuery: { data: buskingData },
+    removeBusking,
+  } = useBusking(uid);
   const {
     removeUserPlaylists,
-    playlistQueryResult: { data: playlists },
-  } = usePlaylistContext();
-  const {
-    buskingQueryResult: { data: buskingData },
-    removeBusking,
-  } = useBuskingContext();
-  const { uid, logout } = useAuthContext();
+    playlistQuery: { data: playlists },
+  } = usePlaylist(uid);
   const {
     userDataQuery: { data: userData },
     removeUserData,

@@ -12,8 +12,8 @@ import SectionCopyText from '../../components/SectionCopyText';
 import SongResultRow from '../../components/Table/SongResultRow';
 import SongTable from '../../components/Table/SongTable';
 import { useAuthContext } from '../../context/AuthContext';
-import { useBuskingContext } from '../../context/BuskingContext';
-import { usePlaylistContext } from '../../context/PlaylistContext';
+import { useBusking } from '../../hooks/UseBusking';
+import { usePlaylist } from '../../hooks/UsePlaylist';
 import useSearch from '../../hooks/UseSearch';
 import { useUserData } from '../../hooks/UseUserData';
 import { getAppLayOut } from '../../layouts/appLayout';
@@ -26,13 +26,13 @@ export default function AppBusking() {
     userDataQuery: { data: userData },
   } = useUserData(uid);
   const {
-    playlistQueryResult: { data: playlists },
-  } = usePlaylistContext();
+    playlistQuery: { data: playlists },
+  } = usePlaylist(uid);
   const {
-    buskingQueryResult: { data: buskingData, isLoading: isbuskingDataLoading },
+    buskingQuery: { data: buskingData, isLoading: isbuskingDataLoading },
     removeBuskingSong,
     removeBusking,
-  } = useBuskingContext();
+  } = useBusking(uid);
 
   const [songArr, setSongArr] = useState<ApplianceData[]>([]);
   const [songArrToView, setSongArrToView] = useState<ApplianceData[]>([]);

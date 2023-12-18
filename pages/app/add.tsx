@@ -9,9 +9,10 @@ import SearchBar from '../../components/Search/SearchBar';
 import SongResultRow from '../../components/Table/SongResultRow';
 import SongTable from '../../components/Table/SongTable';
 import TitleBar from '../../components/TitleBar';
-import { usePlaylistContext } from '../../context/PlaylistContext';
+import { useAuthContext } from '../../context/AuthContext';
 // import useFmData from '../../hooks/songData/UseFmData';
 import useAddSearch from '../../hooks/UseAddSearch';
+import { usePlaylist } from '../../hooks/UsePlaylist';
 import { getAppLayOut } from '../../layouts/appLayout';
 import { songSearchWordCategories } from '../../store/data/CategoryTypes';
 import { FmEditedTopTrackData, FmTrackData } from '../../store/type/fm';
@@ -19,7 +20,8 @@ import { color } from '../../styles/theme';
 // TODO: searchBar, songTable 기능 테스트 적은후 하기
 // 자꾸 구조 바꿀때마다 오류나는게 걱정나니 ㅜ..
 export default function AppAdd() {
-  const { nowPlaylist, addSongToPlaylist } = usePlaylistContext();
+  const { uid } = useAuthContext();
+  const { nowPlaylist, addSongToPlaylist } = usePlaylist(uid);
   //TODO: 커스텀 훅들도 좀 분리좀하자 ㅜ..
   const {
     searchResults,

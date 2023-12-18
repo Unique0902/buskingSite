@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
 import Icon from '../../assets/icon/icon';
-import { useBuskingContext } from '../../context/BuskingContext';
+import { useAuthContext } from '../../context/AuthContext';
+import { useBusking } from '../../hooks/UseBusking';
 import { ApplianceData } from '../../store/type/busking';
 
 type Props = {
@@ -13,7 +14,8 @@ const MusicBar = ({ songArr, setSongArrToView }: Props) => {
   const playBtnStyle = 'mx-3 text-4xl hover:scale-110';
   const [beforeSongArr, setBeforeSongArr] = useState<ApplianceData[]>([]);
   const [nowSong, setNowSong] = useState<ApplianceData | null>(null);
-  const { applyBuskingSongAgain, removeBuskingSong } = useBuskingContext();
+  const { uid } = useAuthContext();
+  const { applyBuskingSongAgain, removeBuskingSong } = useBusking(uid);
   useEffect(() => {
     const copiedSongArr = [...songArr];
     if (nowSong) {
@@ -71,7 +73,7 @@ const MusicBar = ({ songArr, setSongArrToView }: Props) => {
     if (nowSong && songArr.length >= 2) {
       setBeforeSongArr((arr) => [nowSong, ...arr]);
       setNowSong({ ...songArr[1] });
-      removeBuskingSong(songArr[0].sid);
+      removeBuskingSong(songArr[0].sid, uid);
     }
   };
 

@@ -9,8 +9,8 @@ import SongResultRow from '../../components/Table/SongResultRow';
 import SongTable from '../../components/Table/SongTable';
 import TitleBar from '../../components/TitleBar';
 import { useAuthContext } from '../../context/AuthContext';
-import { useBuskingContext } from '../../context/BuskingContext';
-import { usePlaylistContext } from '../../context/PlaylistContext';
+import { useBusking } from '../../hooks/UseBusking';
+import { usePlaylist } from '../../hooks/UsePlaylist';
 import useSearch from '../../hooks/UseSearch';
 import { getAppLayOut } from '../../layouts/appLayout';
 import { songSearchWordCategories } from '../../store/data/CategoryTypes';
@@ -22,12 +22,12 @@ export default function AppPlaylist() {
   const { uid } = useAuthContext();
   const [songArr, setSongArr] = useState<PlaylistSongData[]>([]);
   const { nowPlaylist, removeSongInPlaylist, editSongInPlaylist } =
-    usePlaylistContext();
+    usePlaylist(uid);
   const {
-    buskingQueryResult: { data: buskingData },
+    buskingQuery: { data: buskingData },
     applyOldBuskingSong,
     applyNewBuskingSong,
-  } = useBuskingContext();
+  } = useBusking(uid);
   useEffect(() => {
     if (nowPlaylist) {
       nowPlaylist.songs
