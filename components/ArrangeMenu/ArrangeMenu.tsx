@@ -4,8 +4,10 @@ import ArrangeBtn from './ArrangeBtn';
 import { ApplianceData } from '../../store/type/busking';
 import { PlaylistSongData } from '../../store/type/playlist';
 import PopupWrapper from '../PopUp/PopupWrapper';
+
 //TODO: 나중에 정렬한 결과가 서버에 반영될수있게 그리고 정렬한 결과가 musicbar에서 잘되는지 근데 그건 서버에서 처리해야될듯
 //TODO: 드래그해서 노래 순서 바꿀수있게 하기 아니면 위아래 버튼클릭
+
 type Props = {
   setIsShowArrangeMenu: React.Dispatch<React.SetStateAction<boolean>>;
   results: PlaylistSongData[] | ApplianceData[];
@@ -14,67 +16,82 @@ type Props = {
   >;
   isBusking: boolean;
 };
-type ArrangeSongTypes = 'title' | 'artist' | 'time' | 'cnt';
+
 const ArrangeMenu = ({
   setIsShowArrangeMenu,
   results,
   setResults,
   isBusking,
 }: Props) => {
-  const arrangeResults = (type: ArrangeSongTypes) => {
+  const arrangeResults = (
+    compareFunc: (
+      a: PlaylistSongData | ApplianceData,
+      b: PlaylistSongData | ApplianceData
+    ) => number
+  ) => {
     const copiedResults = [...results];
-    switch (type) {
-      case 'title':
-        copiedResults.sort((a, b) => {
-          if (a.title.toLowerCase() > b.title.toLowerCase()) return 1;
-          else if (a.title.toLowerCase() < b.title.toLowerCase()) return -1;
-          else return 0;
-        });
-        break;
-      case 'artist':
-        copiedResults.sort((a, b) => {
-          if (a.artist.toLowerCase() > b.artist.toLowerCase()) return 1;
-          else if (a.artist.toLowerCase() < b.artist.toLowerCase()) return -1;
-          else return 0;
-        });
-        break;
-      case 'time':
-        copiedResults.sort((a, b) => {
-          return parseInt(a.id) - parseInt(b.id);
-        });
-        break;
-      case 'cnt':
-        (copiedResults as ApplianceData[]).sort((a, b) => {
-          return b.cnt - a.cnt;
-        });
-        break;
-    }
+    copiedResults.sort(compareFunc);
     setResults(copiedResults);
   };
-  const handleClickArrangeBtn = (type: ArrangeSongTypes) => {
-    arrangeResults(type);
-    setIsShowArrangeMenu(false);
+  const compareByTextWhenSort = (
+    a: string,
+    b: string,
+    isAscending: boolean
+  ) => {
+    if (a.toLowerCase() > b.toLowerCase()) return isAscending ? 1 : -1;
+    else if (a.toLowerCase() < b.toLowerCase()) return isAscending ? -1 : 1;
+    else return 0;
   };
-  const handleClickOtherInPopupWrapper = () => {
-    setIsShowArrangeMenu(false);
-  };
+  const compareByNumberWhenSort = (
+    a: number,
+    b: number,
+    isAscending: boolean
+  ) => (isAscending ? a - b : b - a);
   return (
     <PopupWrapper
-      handleClickOther={handleClickOtherInPopupWrapper}
+      handleClickOther={() => setIsShowArrangeMenu(false)}
       isLeft={false}
     >
       <section className='flex flex-col pt-2 pb-2 border-b border-gray-600 border-solid '>
-        <ArrangeBtn handleClick={handleClickArrangeBtn} type={'title'}>
+        <ArrangeBtn
+          handleClick={() => {
+            arrangeResults((a, b) =>
+              compareByTextWhenSort(a.title, b.title, true)
+            );
+            setIsShowArrangeMenu(false);
+          }}
+        >
           제목 문자순 정렬
         </ArrangeBtn>
-        <ArrangeBtn handleClick={handleClickArrangeBtn} type={'artist'}>
+        <ArrangeBtn
+          handleClick={() => {
+            arrangeResults((a, b) =>
+              compareByTextWhenSort(a.artist, b.artist, true)
+            );
+            setIsShowArrangeMenu(false);
+          }}
+        >
           가수 문자순 정렬
         </ArrangeBtn>
-        <ArrangeBtn handleClick={handleClickArrangeBtn} type={'time'}>
+        <ArrangeBtn
+          handleClick={() => {
+            arrangeResults((a, b) =>
+              compareByNumberWhenSort(parseInt(a.id), parseInt(b.id), true)
+            );
+            setIsShowArrangeMenu(false);
+          }}
+        >
           시간순 정렬
         </ArrangeBtn>
         {isBusking && (
-          <ArrangeBtn handleClick={handleClickArrangeBtn} type={'cnt'}>
+          <ArrangeBtn
+            handleClick={() => {
+              arrangeResults((a: ApplianceData, b: ApplianceData) =>
+                compareByNumberWhenSort(a.cnt, b.cnt, false)
+              );
+              setIsShowArrangeMenu(false);
+            }}
+          >
             신청자순 정렬
           </ArrangeBtn>
         )}

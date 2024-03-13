@@ -1,13 +1,11 @@
 import React, { ReactNode } from 'react';
-type ArrangeSongType = 'title' | 'artist' | 'time' | 'cnt';
 type Props = {
-  type: ArrangeSongType;
-  handleClick: (tp: ArrangeSongType) => void;
+  handleClick: () => void;
   children: ReactNode;
 };
-export default function ArrangeBtn({ type, handleClick, children }: Props) {
+export default function ArrangeBtn({ handleClick, children }: Props) {
   const handleBtnClick = () => {
-    handleClick(type);
+    handleClick();
   };
   return (
     <button

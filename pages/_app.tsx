@@ -8,7 +8,6 @@ import type { AppProps } from 'next/app';
 import Head from 'next/head';
 
 import { AuthContextProvider } from '../context/AuthContext';
-import AuthService from '../service/auth_service';
 
 //TODO: 가끔 지혼자 새로고침되는거 고치기
 export type NextPageWithLayout<P = object, IP = P> = NextPage<P, IP> & {
@@ -25,14 +24,13 @@ const queryClient = new QueryClient({
     },
   },
 });
-const authService = new AuthService();
 
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout =
     Component.getLayout || ((page: ReactElement) => <>{page}</>);
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthContextProvider authService={authService}>
+      <AuthContextProvider>
         <Head>
           <title>노래책</title>
           <meta

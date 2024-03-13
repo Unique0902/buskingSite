@@ -22,11 +22,12 @@ type ContextProps = {
 const AuthContext = createContext<ContextProps>({} as ContextProps);
 
 type Props = {
-  authService: AuthService;
   children: ReactNode;
 };
 
-export function AuthContextProvider({ authService, children }: Props) {
+const authService = new AuthService();
+
+export function AuthContextProvider({ children }: Props) {
   const [user, setUser] = useState<UserInfo | null>(null);
   const [userLoading, setUserLoading] = useState(true);
   const logout = () => {
@@ -41,7 +42,7 @@ export function AuthContextProvider({ authService, children }: Props) {
       setUser(user);
       setUserLoading(false);
     });
-  }, [authService]);
+  }, []);
   return (
     <AuthContext.Provider
       value={{

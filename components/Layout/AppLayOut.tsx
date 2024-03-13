@@ -22,6 +22,7 @@ export default function AppLayOut({ children }: Props) {
       setIsShowSideBar(true);
     }
   }, [isLgMediaQuery]);
+
   return (
     <ProtectedRoute>
       <UserDataProtectedRoute>

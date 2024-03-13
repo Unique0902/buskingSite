@@ -34,7 +34,7 @@ export default function LoginNav({ scrollToTutorial }: Props) {
     setMounted(true);
   }, []);
   return (
-    <nav className='flex items-center justify-around max-lg:justify-between'>
+    <nav className='flex items-center justify-between'>
       <Link href={'/'} className='flex items-center gap-3 max-lg:gap-2'>
         <Image
           src={'/img/bookLogo.png'}
@@ -45,7 +45,7 @@ export default function LoginNav({ scrollToTutorial }: Props) {
         />
         <h1 className='text-3xl font-semibold '>노래책</h1>
       </Link>
-      <ul className='justify-around hidden w-2/5 text-xl font-semibold lg:flex'>
+      {/* <ul className='justify-around hidden w-2/5 text-xl font-semibold lg:flex'>
         <li>
           <button className='hover:scale-110'>소개</button>
         </li>
@@ -58,7 +58,7 @@ export default function LoginNav({ scrollToTutorial }: Props) {
         <li>
           <button className='hover:scale-110'>다운로드</button>
         </li>
-      </ul>
+      </ul> */}
 
       <div className='flex flex-row items-center gap-6 '>
         <PrimaryBtn
@@ -68,7 +68,7 @@ export default function LoginNav({ scrollToTutorial }: Props) {
         >
           튜토리얼
         </PrimaryBtn>
-        <button
+        {/* <button
           type='button'
           aria-label='menu'
           onClick={() => {
@@ -78,13 +78,13 @@ export default function LoginNav({ scrollToTutorial }: Props) {
           <div className='lg:hidden'>
             <Icon size={25} color={color.gray_600} icon='Menu' />
           </div>
-        </button>
+        </button> */}
       </div>
-      {mounted && isShowSideBar && (
+      {/* {mounted && isShowSideBar && (
         <RenderedWhenMobile>
           <HomeSideBar setIsShowSideBar={setIsShowSideBar} />
         </RenderedWhenMobile>
-      )}
+      )} */}
     </nav>
   );
 }

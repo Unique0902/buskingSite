@@ -12,7 +12,6 @@ import { usePlaylist } from '../../hooks/UsePlaylist';
 import { useUserData } from '../../hooks/UseUserData';
 import { getAppLayOut } from '../../layouts/appLayout';
 import { BuskingInform } from '../../store/type/busking';
-// TODO: select나 input 컴포넌트화로 묶기
 // 플레이리스트 노래없으면 노래못만들게하기 < 해결완 물론 프론트에서만 처리해서 나중에 서버에서도 처리하려면 해도됨
 export default function AppMakeBusking() {
   const { uid } = useAuthContext();

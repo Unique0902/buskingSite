@@ -13,6 +13,7 @@ class UserRepository {
   }
   getUserData = async (userId: string): Promise<UserData | null> => {
     const listRef = ref(database, `users/${userId}/`);
+
     return get(listRef).then((snapshot) => {
       const items = snapshot.val() || null;
       return items;
