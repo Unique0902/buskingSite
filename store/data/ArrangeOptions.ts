@@ -1,3 +1,7 @@
+import {
+  compareByNumberWhenSort,
+  compareByTextWhenSort,
+} from '../../utils/arrange';
 import { ApplianceData } from '../type/busking';
 import { PlaylistSongData } from '../type/playlist';
 
@@ -42,11 +46,3 @@ export const ApplianceDataArrangeOption: ArrangeOption<ApplianceData>[] = [
     arrangeFunc: (a, b) => compareByNumberWhenSort(a.cnt, b.cnt, false),
   },
 ];
-
-const compareByTextWhenSort = (a: string, b: string, isAscending: boolean) => {
-  if (a.toLowerCase() > b.toLowerCase()) return isAscending ? 1 : -1;
-  else if (a.toLowerCase() < b.toLowerCase()) return isAscending ? -1 : 1;
-  else return 0;
-};
-const compareByNumberWhenSort = (a: number, b: number, isAscending: boolean) =>
-  isAscending ? a - b : b - a;
