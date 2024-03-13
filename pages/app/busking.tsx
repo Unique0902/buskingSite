@@ -19,6 +19,7 @@ import { useUserData } from '../../hooks/UseUserData';
 import { getAppLayOut } from '../../layouts/appLayout';
 import { ApplianceData, ApplianceObjects } from '../../store/type/busking';
 import { color } from '../../styles/theme';
+import { ApplianceDataArrangeOption } from '../../store/data/ArrangeOptions';
 //TODO: 본인이 노래 추가하는 기능 넣기 버스킹중일때 인식해서 플레이리스트에서 추가할수있게 버튼만들자!
 export default function AppBusking() {
   const { uid } = useAuthContext();
@@ -119,10 +120,10 @@ export default function AppBusking() {
           </h2>
         </section>
         <div className='flex flex-row justify-end'>
-          <ArrangeMenuBtn
+          <ArrangeMenuBtn<ApplianceData>
             results={songArrToView}
             setResults={setSongArrToView}
-            isBusking={true}
+            arrangeOptionArr={ApplianceDataArrangeOption}
           />
         </div>
 

@@ -23,6 +23,7 @@ import { songSearchWordCategories } from '../../store/data/CategoryTypes';
 import { ApplianceData } from '../../store/type/busking';
 import { PlaylistData, PlaylistSongData } from '../../store/type/playlist';
 import { color } from '../../styles/theme';
+import { PlaylistSongDataArrangeOption } from '../../store/data/ArrangeOptions';
 //TODO: getIp 기능 오류 자꾸나는거 어떻게좀하기
 const userRepository = new UserRepository();
 const playlistRepository = new PlaylistRepository();
@@ -192,10 +193,10 @@ const App = () => {
                     />
                   </SearchBar.MainSec>
                   <SearchBar.SubSec>
-                    <ArrangeMenuBtn
+                    <ArrangeMenuBtn<PlaylistSongData>
                       results={nowPlaylistSongArr}
                       setResults={setNowPlaylistSongArr}
-                      isBusking={false}
+                      arrangeOptionArr={PlaylistSongDataArrangeOption}
                     />
                   </SearchBar.SubSec>
                 </SearchBar>
@@ -328,10 +329,10 @@ const App = () => {
                       />
                     </SearchBar.MainSec>
                     <SearchBar.SubSec>
-                      <ArrangeMenuBtn
+                      <ArrangeMenuBtn<PlaylistSongData>
                         results={nowPlaylistSongArr}
                         setResults={setNowPlaylistSongArr}
-                        isBusking={false}
+                        arrangeOptionArr={PlaylistSongDataArrangeOption}
                       />
                     </SearchBar.SubSec>
                   </SearchBar>

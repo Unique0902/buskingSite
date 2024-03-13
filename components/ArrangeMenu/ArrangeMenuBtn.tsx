@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
 
 import ArrangeMenu from './ArrangeMenu';
-import { ApplianceData } from '../../store/type/busking';
-import { PlaylistSongData } from '../../store/type/playlist';
 import { color, xyPadding } from '../../styles/theme';
 import PrimaryBtn from '../Btn/PrimaryBtn';
-type Props = {
-  results: PlaylistSongData[] | ApplianceData[];
-  setResults: React.Dispatch<
-    React.SetStateAction<PlaylistSongData[] | ApplianceData[]>
-  >;
-  isBusking: boolean;
+import { ArrangeOption } from '../../store/data/ArrangeOptions';
+
+type Props<T> = {
+  results: T[];
+  setResults: React.Dispatch<React.SetStateAction<T[]>>;
+  arrangeOptionArr: ArrangeOption<T>[];
 };
-const ArrangeMenuBtn = ({ results, setResults, isBusking }: Props) => {
+
+const ArrangeMenuBtn = <T,>({
+  results,
+  setResults,
+  arrangeOptionArr,
+}: Props<T>) => {
   const [isShowArrangeMenu, setIsShowArrangeMenu] = useState<boolean>(false);
   const handleClick = () => {
     setIsShowArrangeMenu(true);
@@ -27,11 +30,11 @@ const ArrangeMenuBtn = ({ results, setResults, isBusking }: Props) => {
         정렬
       </PrimaryBtn>
       {isShowArrangeMenu && (
-        <ArrangeMenu
+        <ArrangeMenu<T>
           setIsShowArrangeMenu={setIsShowArrangeMenu}
           results={results}
           setResults={setResults}
-          isBusking={isBusking}
+          arrangeOptionArr={arrangeOptionArr}
         />
       )}
     </div>

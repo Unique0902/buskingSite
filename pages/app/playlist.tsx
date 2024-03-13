@@ -13,6 +13,7 @@ import { useBusking } from '../../hooks/UseBusking';
 import { usePlaylist } from '../../hooks/UsePlaylist';
 import useSearch from '../../hooks/UseSearch';
 import { getAppLayOut } from '../../layouts/appLayout';
+import { PlaylistSongDataArrangeOption } from '../../store/data/ArrangeOptions';
 import { songSearchWordCategories } from '../../store/data/CategoryTypes';
 import { PlaylistSongData } from '../../store/type/playlist';
 import { color } from '../../styles/theme';
@@ -117,10 +118,10 @@ export default function AppPlaylist() {
               />
             </SearchBar.MainSec>
             <SearchBar.SubSec>
-              <ArrangeMenuBtn
+              <ArrangeMenuBtn<PlaylistSongData>
                 results={songArr}
                 setResults={setSongArr}
-                isBusking={false}
+                arrangeOptionArr={PlaylistSongDataArrangeOption}
               />
             </SearchBar.SubSec>
           </SearchBar>
