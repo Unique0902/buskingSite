@@ -121,7 +121,6 @@ export default function AppBusking() {
         </section>
         <div className='flex flex-row justify-end'>
           <ArrangeMenuBtn<ApplianceData>
-            results={songArrToView}
             setResults={setSongArrToView}
             arrangeOptionArr={ApplianceDataArrangeOption}
           />

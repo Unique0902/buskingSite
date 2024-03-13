@@ -119,7 +119,6 @@ export default function AppPlaylist() {
             </SearchBar.MainSec>
             <SearchBar.SubSec>
               <ArrangeMenuBtn<PlaylistSongData>
-                results={songArr}
                 setResults={setSongArr}
                 arrangeOptionArr={PlaylistSongDataArrangeOption}
               />

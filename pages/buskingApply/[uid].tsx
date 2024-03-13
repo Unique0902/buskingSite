@@ -194,7 +194,6 @@ const App = () => {
                   </SearchBar.MainSec>
                   <SearchBar.SubSec>
                     <ArrangeMenuBtn<PlaylistSongData>
-                      results={nowPlaylistSongArr}
                       setResults={setNowPlaylistSongArr}
                       arrangeOptionArr={PlaylistSongDataArrangeOption}
                     />
@@ -330,7 +329,6 @@ const App = () => {
                     </SearchBar.MainSec>
                     <SearchBar.SubSec>
                       <ArrangeMenuBtn<PlaylistSongData>
-                        results={nowPlaylistSongArr}
                         setResults={setNowPlaylistSongArr}
                         arrangeOptionArr={PlaylistSongDataArrangeOption}
                       />

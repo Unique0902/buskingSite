@@ -9,21 +9,17 @@ import { ArrangeOption } from '../../store/data/ArrangeOptions';
 
 type Props<T> = {
   setIsShowArrangeMenu: React.Dispatch<React.SetStateAction<boolean>>;
-  results: T[];
   setResults: React.Dispatch<React.SetStateAction<T[]>>;
   arrangeOptionArr: ArrangeOption<T>[];
 };
 
 const ArrangeMenu = <T,>({
   setIsShowArrangeMenu,
-  results,
   setResults,
   arrangeOptionArr,
 }: Props<T>) => {
   const arrangeResults = (compareFunc: (a: T, b: T) => number) => {
-    const copiedResults = [...results];
-    copiedResults.sort(compareFunc);
-    setResults(copiedResults);
+    setResults((prevData) => [...prevData].sort(compareFunc));
   };
 
   return (

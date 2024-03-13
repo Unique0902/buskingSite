@@ -6,16 +6,11 @@ import PrimaryBtn from '../Btn/PrimaryBtn';
 import { ArrangeOption } from '../../store/data/ArrangeOptions';
 
 type Props<T> = {
-  results: T[];
   setResults: React.Dispatch<React.SetStateAction<T[]>>;
   arrangeOptionArr: ArrangeOption<T>[];
 };
 
-const ArrangeMenuBtn = <T,>({
-  results,
-  setResults,
-  arrangeOptionArr,
-}: Props<T>) => {
+const ArrangeMenuBtn = <T,>({ setResults, arrangeOptionArr }: Props<T>) => {
   const [isShowArrangeMenu, setIsShowArrangeMenu] = useState<boolean>(false);
   const handleClick = () => {
     setIsShowArrangeMenu(true);
@@ -32,7 +27,6 @@ const ArrangeMenuBtn = <T,>({
       {isShowArrangeMenu && (
         <ArrangeMenu<T>
           setIsShowArrangeMenu={setIsShowArrangeMenu}
-          results={results}
           setResults={setResults}
           arrangeOptionArr={arrangeOptionArr}
         />
