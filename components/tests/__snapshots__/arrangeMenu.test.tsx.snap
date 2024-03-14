@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`arrangeMenu component test renders correctly 1`] = `
+<div
+  className="w-80 border-gray-600 border bg-white dark:bg-slate-800 absolute rounded-xl z-50 top-0 right-0 "
+>
+  <section
+    className="flex flex-col pt-2 pb-2 border-b border-gray-600 border-solid "
+  >
+    <button
+      className=" text-lg text-left py-1 px-4 hover:bg-gray-200"
+      onClick={[Function]}
+    >
+      제목 문자순 정렬
+    </button>
+  </section>
+</div>
+`;
