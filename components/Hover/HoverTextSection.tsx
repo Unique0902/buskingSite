@@ -1,6 +1,7 @@
-import React, { ReactNode, useState } from 'react';
+import React, { ReactNode } from 'react';
 
 import { borderRadius, color, xyPadding } from '../../styles/theme';
+import HoverBox from './HoverBox';
 type Props = {
   children: ReactNode;
   bgColor?: string;
@@ -19,23 +20,23 @@ const HoverTextSection = ({
   radius = borderRadius.lg,
   text,
 }: Props) => {
-  const [isHovering, setIsHovering] = useState<boolean>(false);
-
   return (
-    <div
-      style={{
-        backgroundColor: bgColor,
-        fontSize: fontSize,
-        color: textColor,
-        padding: secPadding,
-      }}
-      className={`relative ${radius}`}
-      onMouseOver={() => setIsHovering(true)}
-      onMouseOut={() => setIsHovering(false)}
-    >
-      {text}
-      {isHovering && children}
-    </div>
+    <HoverBox>
+      <HoverBox.OutElement>
+        <div
+          style={{
+            backgroundColor: bgColor,
+            fontSize: fontSize,
+            color: textColor,
+            padding: secPadding,
+          }}
+          className={`relative ${radius}`}
+        >
+          {text}
+        </div>
+      </HoverBox.OutElement>
+      <HoverBox.InnerElement>{children}</HoverBox.InnerElement>
+    </HoverBox>
   );
 };
 
