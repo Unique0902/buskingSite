@@ -32,7 +32,7 @@ const HoverBox = ({ children, hoverWaitSecond = 0.2 }: Props) => {
   return (
     <HoverBoxContext.Provider value={{ isShowElement }}>
       <div
-        className='relative'
+        className='relative '
         onMouseOver={() => setIsHovering(true)}
         onMouseOut={() => setIsHovering(false)}
       >
