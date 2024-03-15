@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`arrangeMenu component test renders correctly 1`] = `
+<div
+  className="w-80 border-gray-600 border bg-white dark:bg-slate-800 absolute rounded-xl z-50 top-0 left-0 "
+>
+  <div>
+    inner
+  </div>
+</div>
+`;
