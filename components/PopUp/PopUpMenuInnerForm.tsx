@@ -19,18 +19,23 @@ const PopUpMenuInnerForm: React.FC<Props> = ({
         handleSubmit(text);
       }}
     >
-      <input
-        type='text'
-        placeholder='Playlist Name'
-        autoFocus
-        className='px-4 py-3 text-lg font-normal text-black border-gray-800 border-solid border-1 rounded-xl'
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-      />
+      <div className='px-4 py-3 '>
+        <input
+          type='text'
+          placeholder='Playlist Name'
+          autoFocus
+          className='px-4 py-3 text-lg font-normal text-black border-gray-800 border-solid border-1 rounded-xl'
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+        />
+      </div>
+
       <div className='flex flex-row'>
         <button
           className={`w-1/2 py-2 ${
-            text && text.length <= 20 ? 'text-black' : 'text-gray-300'
+            text && text.length <= 20
+              ? 'text-black dark:text-white'
+              : 'text-gray-300 dark:text-gray-800'
           } hover:bg-gray-200 text-lg font-medium`}
         >
           추가
