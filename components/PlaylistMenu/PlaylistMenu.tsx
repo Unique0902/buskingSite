@@ -1,96 +1,69 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
-import PlaylistBtn from './PlaylistBtn';
-import PlaylistMenuBtn from './PlaylistMenuBtn';
-import PlaylistMenuInputBtn from './PlaylistMenuInputBtn';
-import { useAuthContext } from '../../context/AuthContext';
-import { usePlaylist } from '../../hooks/UsePlaylist';
-import { PlaylistData } from '../../store/type/playlist';
-import PopupWrapper from '../PopUp/PopupWrapper';
+import { PlaylistData, PlaylistDataObj } from '../../store/type/playlist';
+import PopUpMenuInnerBtn from '../PopUp/PopUpMenuInnerBtn';
+import PopUpMenuInnerFormBtn from '../PopUp/PopUpMenuInnerFormBtn';
+
 type Props = {
-  setIsShowPlaylistMenu: React.Dispatch<React.SetStateAction<boolean>>;
+  playlists: PlaylistDataObj | null | undefined;
+  nowPlaylist: PlaylistData | null;
+  playlistHandler: {
+    removeNowPlaylist: () => void;
+    addPlaylist: (name: string) => void;
+    updateNowPlaylistName: (name: string) => void;
+    changeNowPlaylist: (id: string) => void;
+  };
 };
 
-//컨텍스트말고 custom hook이나 prop으로 주입받기 독립성 높이기 위해 컨텍스트로 싸주는 menu라고 생각하면 독립성있는건가..
-const PlaylistMenu = ({ setIsShowPlaylistMenu }: Props) => {
-  const { uid } = useAuthContext();
+const PlaylistMenu = ({ playlists, nowPlaylist, playlistHandler }: Props) => {
   const {
-    playlistQuery: { data: playlists },
-    nowPlaylist,
     removeNowPlaylist,
     addPlaylist,
     updateNowPlaylistName,
     changeNowPlaylist,
-  } = usePlaylist(uid);
-  const [playlistName, setPlaylistName] = useState<string>('');
-  const [playlistEditedName, setPlaylistEditedName] = useState<string>('');
-  useEffect(() => {
-    if (nowPlaylist) {
-      setPlaylistEditedName(nowPlaylist.name);
-    }
-  }, [nowPlaylist]);
+  } = playlistHandler;
 
-  const handleChangeNewPlaylistInput = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setPlaylistName(e.target.value);
-  };
-  const handleClickNewPlaylistInputAddBtn = () => {
-    addPlaylist(playlistName);
-    setIsShowPlaylistMenu(false);
+  const handleClickNewPlaylistInputAddBtn = (inputValue: string) => {
+    addPlaylist(inputValue);
   };
 
-  const handleChangeEditPlaylistInput = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setPlaylistEditedName(e.target.value);
-  };
-  const handleClickEditPlaylistInputAddBtn = () => {
-    updateNowPlaylistName(playlistEditedName);
-    setIsShowPlaylistMenu(false);
+  const handleClickEditPlaylistInputAddBtn = (inputValue: string) => {
+    updateNowPlaylistName(inputValue);
   };
 
   const handleClickRemoveNowPlaylistBtn = () => {
     removeNowPlaylist();
-    setIsShowPlaylistMenu(false);
   };
 
   return (
-    <PopupWrapper
-      handleClickOther={() => {
-        setIsShowPlaylistMenu(false);
-      }}
-      isLeft={true}
-    >
+    <>
       <section className='flex flex-col pt-2 pb-2 border-b border-gray-600 border-solid '>
         {nowPlaylist ? (
-          <button className='px-4 py-1 text-xl text-left text-blue-600 hover:bg-gray-200'>
+          <div className='px-4 py-1 text-xl text-left text-blue-600 '>
             {nowPlaylist && nowPlaylist.name}
-          </button>
+          </div>
         ) : (
-          <button className='px-4 py-1 text-xl text-left text-gray-400 hover:bg-gray-200 dark:text-gray-300'>
+          <div className='px-4 py-1 text-xl text-left text-gray-400 dark:text-gray-300'>
             플레이리스트가 없음
-          </button>
+          </div>
         )}
-        <PlaylistMenuInputBtn
-          playlistName={playlistName}
-          handleInputChange={handleChangeNewPlaylistInput}
-          handleClickOkBtn={handleClickNewPlaylistInputAddBtn}
+        <PopUpMenuInnerFormBtn
+          inputValue={''}
+          handleSubmit={handleClickNewPlaylistInputAddBtn}
         >
           플레이리스트 추가
-        </PlaylistMenuInputBtn>
-        <PlaylistMenuInputBtn
-          playlistName={playlistEditedName}
-          handleInputChange={handleChangeEditPlaylistInput}
-          handleClickOkBtn={handleClickEditPlaylistInputAddBtn}
+        </PopUpMenuInnerFormBtn>
+        <PopUpMenuInnerFormBtn
+          inputValue={nowPlaylist?.name ?? ''}
+          handleSubmit={handleClickEditPlaylistInputAddBtn}
         >
           현재 플레이리스트 이름 수정
-        </PlaylistMenuInputBtn>
+        </PopUpMenuInnerFormBtn>
 
-        {playlists && (
-          <PlaylistMenuBtn handleClick={handleClickRemoveNowPlaylistBtn}>
+        {nowPlaylist && (
+          <PopUpMenuInnerBtn handleClick={handleClickRemoveNowPlaylistBtn}>
             현재 플레이리스트 제거
-          </PlaylistMenuBtn>
+          </PopUpMenuInnerBtn>
         )}
       </section>
       <section className='flex flex-col py-2'>
@@ -100,16 +73,18 @@ const PlaylistMenu = ({ setIsShowPlaylistMenu }: Props) => {
         {playlists &&
           Object.values(playlists).map((playlist: PlaylistData) => {
             return (
-              <PlaylistBtn
+              <PopUpMenuInnerBtn
                 key={playlist.id}
-                playlist={playlist}
-                changeNowPlaylist={changeNowPlaylist}
-                setIsShowPlaylistMenu={setIsShowPlaylistMenu}
-              />
+                handleClick={() => {
+                  changeNowPlaylist(playlist.id);
+                }}
+              >
+                {playlist.name}
+              </PopUpMenuInnerBtn>
             );
           })}
       </section>
-    </PopupWrapper>
+    </>
   );
 };
 
