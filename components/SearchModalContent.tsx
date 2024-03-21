@@ -68,6 +68,7 @@ const SearchModalContent: React.FC = () => {
                 setIsOpenModal(false);
               }}
               className='hover:opacity-70'
+              type='button'
             >
               <Icon size={24} color={color.warning} icon='Cancel' />
             </button>
