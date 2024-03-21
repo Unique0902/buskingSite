@@ -205,13 +205,6 @@ const App = () => {
                     viewdSongArr={playlistSearchProps.viewedDataArr}
                     nowPageNum={playlistSearchProps.nowPageNum}
                     renderSongResult={(index, result) => (
-                      // <PrimarySongResult
-                      //   key={result.id}
-                      //   index={index}
-                      //   result={result}
-                      //   handleSongClick={handleApplySong}
-                      //   icon='Send'
-                      // />
                       <SongResultRow key={result.artist + result.title}>
                         <SongResultRow.Text text={index.toString()} />
                         <SongResultRow.Inform
@@ -342,13 +335,6 @@ const App = () => {
                       viewdSongArr={playlistSearchProps.viewedDataArr}
                       nowPageNum={playlistSearchProps.nowPageNum}
                       renderSongResult={(index, result) => (
-                        // <PrimarySongResult
-                        //   key={result.id}
-                        //   index={index}
-                        //   result={result}
-                        //   handleSongClick={() => {}}
-                        //   icon='Smile'
-                        // />
                         <SongResultRow key={result.artist + result.title}>
                           <SongResultRow.Text text={index.toString()} />
                           <SongResultRow.Inform
@@ -381,7 +367,9 @@ const App = () => {
       {createPortal(
         <footer className='fixed flex flex-col gap-4 right-8 bottom-6'>
           <ModalIconBtn icon='Search'>
-            <SearchModalContent />
+            <ModalIconBtn.Inner>
+              <SearchModalContent />
+            </ModalIconBtn.Inner>
           </ModalIconBtn>
           <HomeBtn />
           <ThemeBtn />

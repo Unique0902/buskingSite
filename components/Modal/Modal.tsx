@@ -1,13 +1,28 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useEffect, useRef } from 'react';
 
 import { createPortal } from 'react-dom';
 
 type Props = {
-  modalRef: React.RefObject<HTMLDivElement>;
   children: ReactNode;
+  setIsOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const Modal = ({ modalRef, children }: Props) => {
+const Modal = ({ children, setIsOpenModal }: Props) => {
+  const modalRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(event.target as Node)
+      ) {
+        setIsOpenModal(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [modalRef, setIsOpenModal]);
   return (
     <>
       {createPortal(

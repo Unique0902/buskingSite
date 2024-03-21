@@ -34,9 +34,10 @@ const PopUpMenuInnerForm: React.FC<Props> = ({
         <button
           className={`w-1/2 py-2 ${
             text && text.length <= 20
-              ? 'text-black dark:text-white'
-              : 'text-gray-300 dark:text-gray-800'
-          } hover:bg-gray-200 text-lg font-medium`}
+              ? 'text-black dark:text-white hover:bg-gray-200'
+              : 'text-gray-300 dark:text-gray-600'
+          }  text-lg font-medium`}
+          disabled={text.length > 20}
         >
           추가
         </button>

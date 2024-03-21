@@ -1,11 +1,4 @@
-import React, {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, { createContext, ReactNode, useContext, useState } from 'react';
 
 import Modal from './Modal';
 import { iconName } from '../../assets/icon/constants';
@@ -19,6 +12,7 @@ type Props = {
 };
 
 type ContextProps = {
+  isOpenModal: boolean;
   setIsOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
@@ -27,24 +21,9 @@ const ModalContext = createContext<ContextProps>({} as ContextProps);
 const ModalIconBtn = ({ icon, children }: Props) => {
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
   const { isDarkMode } = useDarkMode();
-  const modalRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        modalRef.current &&
-        !modalRef.current.contains(event.target as Node)
-      ) {
-        setIsOpenModal(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [modalRef, setIsOpenModal]);
 
   return (
-    <ModalContext.Provider value={{ setIsOpenModal }}>
+    <ModalContext.Provider value={{ isOpenModal, setIsOpenModal }}>
       <button
         onClick={() => {
           setIsOpenModal(true);
@@ -57,10 +36,19 @@ const ModalIconBtn = ({ icon, children }: Props) => {
           color={isDarkMode ? color.gray_200 : color.gray_900}
         />
       </button>
-      {isOpenModal && <Modal modalRef={modalRef}>{children}</Modal>}
+      {children}
     </ModalContext.Provider>
   );
 };
+
+const Inner = ({ children }: { children: ReactNode }) => {
+  const { isOpenModal, setIsOpenModal } = useContext(ModalContext);
+  if (isOpenModal)
+    return <Modal setIsOpenModal={setIsOpenModal}>{children}</Modal>;
+  return <></>;
+};
+
+ModalIconBtn.Inner = Inner;
 
 export default ModalIconBtn;
 
