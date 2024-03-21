@@ -1,9 +1,15 @@
 export type UserData = {
   date: string;
   name: string;
+  id: string;
+};
+
+export type UserDataObjItem = {
+  date: string;
+  name: string;
 };
 export type UserDataObj = {
-  [userId: string]: UserData;
+  [userId: string]: UserDataObjItem;
 };
 
 export type UserDataEntries<T> = {

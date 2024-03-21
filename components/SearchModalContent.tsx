@@ -9,7 +9,7 @@ import Icon from '../assets/icon/icon';
 import UserDataRepository from '../service/userDataRepository';
 import { nameSearchWordCategories } from '../store/data/CategoryTypes';
 import { NameSearchWord } from '../store/type/searchword';
-import { UserDataEntries, UserDataObj } from '../store/type/userData';
+import { UserData } from '../store/type/userData';
 import { color } from '../styles/theme';
 const userDataRepository = new UserDataRepository();
 const SearchModalContent: React.FC = () => {
@@ -24,23 +24,24 @@ const SearchModalContent: React.FC = () => {
     gcTime: Infinity,
     //TODO: 일단 캐싱 무한으로 해놓고 나중에 백엔드 교체하면 수정하기
   });
-  const userDataEntries: UserDataEntries<UserDataObj> = data
-    ? Object.entries(data)
+  const userDataArr: UserData[] = data
+    ? Object.entries(data).map(([key, value]) => {
+        return { id: key, ...value };
+      })
     : [];
 
-  const [searchedEntries, setSearchedEntries] =
-    useState<UserDataEntries<UserDataObj>>(userDataEntries);
+  const [searchedDataArr, setSearchedDataArr] = useState(userDataArr);
 
   useEffect(() => {
-    setSearchedEntries(userDataEntries);
+    setSearchedDataArr(userDataArr);
   }, [data]);
 
-  const showedEntries = searchedEntries.slice(0, 5);
+  const showedUserDataArr = searchedDataArr.slice(0, 5);
 
   const handleSearchName = () => {
-    setSearchedEntries(
-      userDataEntries.filter((val) =>
-        val[1].name.toLowerCase().includes(searchWord.name)
+    setSearchedDataArr(
+      userDataArr.filter((val) =>
+        val.name.toLowerCase().includes(searchWord.name)
       )
     );
   };
@@ -75,7 +76,7 @@ const SearchModalContent: React.FC = () => {
           </SearchBar.SubSec>
         </SearchBar>
       </div>
-      <NameResults userDataEntries={showedEntries} />
+      <NameResults userDataArr={showedUserDataArr} />
     </div>
   );
 };
