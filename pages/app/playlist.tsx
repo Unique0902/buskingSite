@@ -57,8 +57,8 @@ export default function AppPlaylist() {
     removeSongInPlaylist(sid);
   };
 
-  const handleApplySong = (sid: string) => {
-    if (buskingData && uid && buskingData.playlistId === nowPlaylist?.id) {
+  const handleApplySong = (sid: string, uid: string) => {
+    if (buskingData && buskingData.playlistId === nowPlaylist?.id) {
       const ipData = 'user';
       const appliance = buskingData.appliance
         ? Object.values(buskingData.appliance)
@@ -150,14 +150,15 @@ export default function AppPlaylist() {
                     <SongResultRow.EtcButton.HiddenShowRowButton
                       text={'노래정보 수정하기'}
                     />
-                    {buskingData && (
-                      <SongResultRow.EtcButton.RowButton
-                        onClick={() => {
-                          handleApplySong(result.id);
-                        }}
-                        text={'버스킹 리스트에 추가하기'}
-                      />
-                    )}
+                    {buskingData &&
+                      buskingData.playlistId === nowPlaylist?.id && (
+                        <SongResultRow.EtcButton.RowButton
+                          onClick={() => {
+                            uid && handleApplySong(result.id, uid);
+                          }}
+                          text={'버스킹 리스트에 추가하기'}
+                        />
+                      )}
                   </SongResultRow.EtcButton>
                   <SongResultRow.HiddenSection>
                     <SongResultRow.EditForm

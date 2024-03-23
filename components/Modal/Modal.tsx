@@ -1,40 +1,18 @@
-import React, { ReactNode, useEffect, useRef } from 'react';
+import React, { ReactNode } from 'react';
 
 import { createPortal } from 'react-dom';
+import ModalInner from './ModalInner';
 
 type Props = {
   children: ReactNode;
-  setIsOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
+  handleClickOther: () => void;
 };
 
-const Modal = ({ children, setIsOpenModal }: Props) => {
-  const modalRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        modalRef.current &&
-        !modalRef.current.contains(event.target as Node)
-      ) {
-        setIsOpenModal(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [modalRef, setIsOpenModal]);
+const Modal = ({ children, handleClickOther }: Props) => {
   return (
     <>
       {createPortal(
-        <section className='fixed top-0 left-0 flex flex-row items-center justify-center w-screen h-screen gap-4'>
-          <div
-            ref={modalRef}
-            className='z-20 w-1/2 text-black bg-white opacity-100 rounded-2xl max-lg:rounded-none dark:bg-slate-500 h-5/6 max-lg:w-full max-lg:h-full'
-          >
-            {children}
-          </div>
-          <div className='absolute z-10 w-screen h-screen bg-black opacity-50'></div>
-        </section>,
+        <ModalInner handleClickOther={handleClickOther}>{children}</ModalInner>,
         document.body
       )}
     </>

@@ -44,7 +44,9 @@ const ModalIconBtn = ({ icon, children }: Props) => {
 const Inner = ({ children }: { children: ReactNode }) => {
   const { isOpenModal, setIsOpenModal } = useContext(ModalContext);
   if (isOpenModal)
-    return <Modal setIsOpenModal={setIsOpenModal}>{children}</Modal>;
+    return (
+      <Modal handleClickOther={() => setIsOpenModal(false)}>{children}</Modal>
+    );
   return <></>;
 };
 

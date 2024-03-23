@@ -48,7 +48,7 @@ const SearchModalContent: React.FC = () => {
 
   const { setIsOpenModal } = useModalContext();
   return (
-    <div>
+    <>
       <div className='px-4 pt-4'>
         <SearchBar
           searchWord={searchWord}
@@ -77,7 +77,7 @@ const SearchModalContent: React.FC = () => {
         </SearchBar>
       </div>
       <NameResults userDataArr={showedUserDataArr} />
-    </div>
+    </>
   );
 };
 

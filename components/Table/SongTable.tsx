@@ -12,13 +12,12 @@ type Props<T> = {
   children: ReactNode;
 };
 
-export default function SongTable<
-  T extends
-    | PlaylistSongData
-    | ApplianceData
-    | FmTrackData
-    | FmEditedTopTrackData
->({ viewdSongArr, renderSongResult, nowPageNum, children }: Props<T>) {
+export default function SongTable<T>({
+  viewdSongArr,
+  renderSongResult,
+  nowPageNum,
+  children,
+}: Props<T>) {
   return (
     <section className='w-full'>
       <ul className='p-1 bg-gray-800 rounded-xl'>
@@ -27,7 +26,6 @@ export default function SongTable<
             {viewdSongArr.map((result, index) =>
               renderSongResult(index + 1 + (nowPageNum - 1) * 6, result)
             )}
-
             {children}
           </>
         )}
