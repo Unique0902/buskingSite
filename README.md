@@ -11,5 +11,5 @@
 - Firebase 인증을 활용하여 구글 아이디를 이용한 인증을 구현하였습니다.<br/>
 - 처음에는 React를 활용하여 CSR 웹사이트를 구현하였지만 이후에 NextJs를 활용하여 CSR, SSG를 함께 이용하였습니다.<br/>
 <br/>
-site Url: https://stunning-semifreddo-f035d0.netlify.app/<br/>
+site Url: https://noraebook.netlify.app/<br/>
 v1 project: https://github.com/Unique0902/busking
