@@ -31,46 +31,44 @@ const SideBar = ({
   useClickOutside(wrapperRef, () => setIsShowSideBar(false), isSmScreen);
 
   return (
-    <>
-      <aside
-        ref={wrapperRef}
-        className={` bg-zinc-800 dark:border-r dark:border-r-gray-600 relative max-lg:absolute max-lg:h-full max-lg:z-40 ${
-          isHide ? 'w-16' : 'w-64'
-        }`}
-      >
-        <SideBarTitle isMiniMode={isHide} />
+    <aside
+      ref={wrapperRef}
+      className={` bg-zinc-800 dark:border-r dark:border-r-gray-600 relative max-lg:absolute max-lg:h-full max-lg:z-40 ${
+        isHide ? 'w-16' : 'w-64'
+      }`}
+    >
+      <SideBarTitle isMiniMode={isHide} />
 
-        <ul className='flex flex-col'>
-          {sideBarMenuSectionArr.map((secData, secIdx) => (
-            <React.Fragment key={'sideBarMenuSec' + secIdx}>
-              {secData.title && !isHide && (
-                <li>
-                  <p className='pt-3 pb-3 pl-5 text-sm text-gray-400 border-t border-gray-600 border-solid'>
-                    {secData.title}
-                  </p>
-                </li>
-              )}
-              {secData.data.map((menuData) => (
-                <SideBarMenuBtn
-                  key={menuData.nameArr[0]}
-                  name={menuData.nameArr[0]}
-                  isSelected={menuData.isSelected}
-                  isHide={isHide}
-                  text={menuData.text}
-                  icon={menuData.icon}
-                />
-              ))}
-            </React.Fragment>
-          ))}
-        </ul>
-        <SideBarToggleBtn
-          isHide={isHide}
-          isSmScreen={isSmScreen}
-          setIsHide={setIsHide}
-          setIsShowSideBar={setIsShowSideBar}
-        />
-      </aside>
-    </>
+      <ul className='flex flex-col'>
+        {sideBarMenuSectionArr.map((secData, secIdx) => (
+          <React.Fragment key={'sideBarMenuSec' + secIdx}>
+            {secData.title && !isHide && (
+              <li>
+                <p className='pt-3 pb-3 pl-5 text-sm text-gray-400 border-t border-gray-600 border-solid'>
+                  {secData.title}
+                </p>
+              </li>
+            )}
+            {secData.data.map((menuData) => (
+              <SideBarMenuBtn
+                key={menuData.nameArr[0]}
+                name={menuData.nameArr[0]}
+                isSelected={menuData.isSelected}
+                isHide={isHide}
+                text={menuData.text}
+                icon={menuData.icon}
+              />
+            ))}
+          </React.Fragment>
+        ))}
+      </ul>
+      <SideBarToggleBtn
+        isHide={isHide}
+        isSmScreen={isSmScreen}
+        setIsHide={setIsHide}
+        setIsShowSideBar={setIsShowSideBar}
+      />
+    </aside>
   );
 };
 
