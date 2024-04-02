@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useRef } from 'react';
 
 import { useRouter } from 'next/router';
 import { useMediaQuery } from 'react-responsive';
 
 import SideBarMenuBtn from './SideBarMenuBtn';
 import { SideBarMenuSectionData } from '../../../store/data/SideBarMenus';
-import { produce } from 'immer';
 import SideBarTitle from './SideBarTitle';
 import SideBarToggleBtn from './SideBarToggleBtn';
 import { useClickOutside } from '../../../hooks/useClickOutside';
+import { useSideBarMenu } from '../../../hooks/useSideBarMenu';
 
 interface Props {
   setIsShowSideBar: React.Dispatch<React.SetStateAction<boolean>>;
@@ -19,48 +19,12 @@ const SideBar = ({ setIsShowSideBar, sideBarMenuSectionDataArr }: Props) => {
   const [isHide, setIsHide] = useState<boolean>(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
-  const [sideBarMenuSectionArr, setSideBarMenuSectionArr] = useState(
-    sideBarMenuSectionDataArr
+
+  const { sideBarMenuSectionArr } = useSideBarMenu(
+    sideBarMenuSectionDataArr,
+    router.pathname
   );
 
-  const checkSelectedBtn = useCallback(
-    (pathArr: string[]) => {
-      if (pathArr[2] === 'busking') {
-        setSideBarMenuSectionArr(
-          produce((prevArr) => {
-            const selectedData =
-              prevArr[0].data.find((menuData) => menuData.isSelected) ||
-              prevArr[1].data.find((menuData) => menuData.isSelected);
-            selectedData && (selectedData.isSelected = false);
-            const data = prevArr[1].data.find(
-              (menuData) => menuData.name === 'makebusking'
-            );
-            data && (data.isSelected = true);
-          })
-        );
-      } else {
-        setSideBarMenuSectionArr(
-          produce((prevArr) => {
-            const selectedData =
-              prevArr[0].data.find((menuData) => menuData.isSelected) ||
-              prevArr[1].data.find((menuData) => menuData.isSelected);
-            selectedData && (selectedData.isSelected = false);
-            const data =
-              prevArr[0].data.find(
-                (menuData) => menuData.name === pathArr[2]
-              ) ||
-              prevArr[1].data.find((menuData) => menuData.name === pathArr[2]);
-            data && (data.isSelected = true);
-          })
-        );
-      }
-    },
-    [router]
-  );
-
-  useEffect(() => {
-    checkSelectedBtn(router.pathname.split('/'));
-  }, [router]);
   const isSmScreen = useMediaQuery({
     query: '(max-width:1024px)',
   });
@@ -89,8 +53,8 @@ const SideBar = ({ setIsShowSideBar, sideBarMenuSectionDataArr }: Props) => {
               )}
               {secData.data.map((menuData) => (
                 <SideBarMenuBtn
-                  key={menuData.name}
-                  name={menuData.name}
+                  key={menuData.nameArr[0]}
+                  name={menuData.nameArr[0]}
                   isSelected={menuData.isSelected}
                   isHide={isHide}
                   text={menuData.text}
