@@ -9,6 +9,7 @@ import SongResultRow from '../../components/Table/SongResultRow';
 import SongTable from '../../components/Table/SongTable';
 import TitleBar from '../../components/TitleBar';
 import { useAuthContext } from '../../context/AuthContext';
+import { useMediaQueryContext } from '../../context/MediaQueryContext';
 import { useBusking } from '../../hooks/UseBusking';
 import { usePlaylist } from '../../hooks/UsePlaylist';
 import useSearch from '../../hooks/UseSearch';
@@ -97,6 +98,7 @@ export default function AppPlaylist() {
       }
     }
   };
+  const { isSmScreen } = useMediaQueryContext();
 
   return (
     <>
@@ -115,6 +117,7 @@ export default function AppPlaylist() {
               <SearchBar.MainSec.Button
                 handleClickBtn={handleSearchBtnClick}
                 text='검색'
+                isSmScreen={isSmScreen}
               />
             </SearchBar.MainSec>
             <SearchBar.SubSec>

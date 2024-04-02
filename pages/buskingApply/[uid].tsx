@@ -24,6 +24,7 @@ import { ApplianceData } from '../../store/type/busking';
 import { PlaylistData, PlaylistSongData } from '../../store/type/playlist';
 import { color } from '../../styles/theme';
 import { PlaylistSongDataArrangeOption } from '../../store/data/ArrangeOptions';
+import { useMediaQueryContext } from '../../context/MediaQueryContext';
 //TODO: getIp 기능 오류 자꾸나는거 어떻게좀하기
 const userRepository = new UserRepository();
 const playlistRepository = new PlaylistRepository();
@@ -91,6 +92,8 @@ const App = () => {
       setAppliance([]);
     }
   }, [buskingData]);
+
+  const { isSmScreen } = useMediaQueryContext();
 
   //여기서 userID를 분리할수있을까? 분리해야되나?
   const handleApplySong = (sid: string) => {
@@ -190,6 +193,7 @@ const App = () => {
                     <SearchBar.MainSec.Button
                       handleClickBtn={playlistSearchProps.handleSearchBtnClick}
                       text='검색'
+                      isSmScreen={isSmScreen}
                     />
                   </SearchBar.MainSec>
                   <SearchBar.SubSec>
@@ -318,6 +322,7 @@ const App = () => {
                           playlistSearchProps.handleSearchBtnClick
                         }
                         text='검색'
+                        isSmScreen={isSmScreen}
                       />
                     </SearchBar.MainSec>
                     <SearchBar.SubSec>

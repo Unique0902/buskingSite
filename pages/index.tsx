@@ -7,6 +7,7 @@ import LoginNav from '../components/LoginNav';
 import TutorialBlock from '../components/TutorialBlock';
 import { useAuthContext } from '../context/AuthContext';
 import { borderRadius, fontSize, xyPadding } from '../styles/theme';
+import { useMediaQueryContext } from '../context/MediaQueryContext';
 
 export default function Home() {
   const tutorialRef = useRef<HTMLDivElement>(null);
@@ -14,6 +15,7 @@ export default function Home() {
     tutorialRef.current && tutorialRef.current.scrollIntoView();
   const { login, user } = useAuthContext();
   const router = useRouter();
+  const { isSmScreen } = useMediaQueryContext();
   if (user) {
     router.replace('/app/home');
     return <div>move to app...</div>;
@@ -24,7 +26,7 @@ export default function Home() {
   return (
     <section className='w-screen h-screen text-black bg-black'>
       <section className='p-6 bg-white'>
-        <LoginNav scrollToTutorial={scrollToTutorial} />
+        <LoginNav scrollToTutorial={scrollToTutorial} isSmScreen={isSmScreen} />
         <main className='w-3/5 pt-24 pb-24 m-auto max-lg:w-full'>
           <h1 className='text-6xl font-semibold text-center max-lg:text-4xl'>
             당신만의{' '}

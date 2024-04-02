@@ -1,7 +1,6 @@
 import React, { useState, useRef } from 'react';
 
 import { useRouter } from 'next/router';
-import { useMediaQuery } from 'react-responsive';
 
 import SideBarMenuBtn from './SideBarMenuBtn';
 import { SideBarMenuSectionData } from '../../../store/data/SideBarMenus';
@@ -13,21 +12,21 @@ import { useSideBarMenu } from '../../../hooks/useSideBarMenu';
 interface Props {
   setIsShowSideBar: React.Dispatch<React.SetStateAction<boolean>>;
   sideBarMenuSectionDataArr: SideBarMenuSectionData[];
+  isSmScreen: boolean;
 }
 
-const SideBar = ({ setIsShowSideBar, sideBarMenuSectionDataArr }: Props) => {
+const SideBar = ({
+  setIsShowSideBar,
+  sideBarMenuSectionDataArr,
+  isSmScreen,
+}: Props) => {
   const [isHide, setIsHide] = useState<boolean>(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
-
   const { sideBarMenuSectionArr } = useSideBarMenu(
     sideBarMenuSectionDataArr,
     router.pathname
   );
-
-  const isSmScreen = useMediaQuery({
-    query: '(max-width:1024px)',
-  });
 
   useClickOutside(wrapperRef, () => setIsShowSideBar(false), isSmScreen);
 

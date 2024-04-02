@@ -11,7 +11,6 @@ import {
 } from '../../store/type/searchword';
 import { color, xyPadding } from '../../styles/theme';
 import PrimaryBtn from '../Btn/PrimaryBtn';
-import RenderedWhenFullScreen from '../Responsive/RenderedWhenFullScreen';
 
 interface SearchBarProps {
   children: ReactNode;
@@ -143,19 +142,19 @@ const InputWithButton = ({ handleClickBtn }: InputWithButtonProps) => {
 type ButtonProps = {
   handleClickBtn: () => void;
   text: string;
+  isSmScreen: boolean;
 };
 
-const Button = ({ handleClickBtn, text }: ButtonProps) => {
+const Button = ({ handleClickBtn, text, isSmScreen }: ButtonProps) => {
+  if (isSmScreen) return <></>;
   return (
-    <RenderedWhenFullScreen>
-      <PrimaryBtn
-        handleClick={handleClickBtn}
-        btnPadding={xyPadding.base}
-        isSubmit={true}
-      >
-        {text}
-      </PrimaryBtn>
-    </RenderedWhenFullScreen>
+    <PrimaryBtn
+      handleClick={handleClickBtn}
+      btnPadding={xyPadding.base}
+      isSubmit={true}
+    >
+      {text}
+    </PrimaryBtn>
   );
 };
 SearchBar.MainSec = MainSec;

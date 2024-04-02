@@ -2,29 +2,27 @@ import React, { useEffect, useState } from 'react';
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useMediaQuery } from 'react-responsive';
 
 import PrimaryBtn from './Btn/PrimaryBtn';
 import { borderRadius, fontSize } from '../styles/theme';
 
 type Props = {
   scrollToTutorial: () => void;
+  isSmScreen: boolean;
 };
-export default function LoginNav({ scrollToTutorial }: Props) {
+export default function LoginNav({ scrollToTutorial, isSmScreen }: Props) {
   const handleClickTutorialBtn = () => {
     scrollToTutorial();
   };
   const [isShowSideBar, setIsShowSideBar] = useState<boolean>(false);
-  const isLgMediaQuery = useMediaQuery({
-    query: '(min-width:1024px)',
-  });
+
   useEffect(() => {
-    if (!isLgMediaQuery) {
+    if (isSmScreen) {
       setIsShowSideBar(false);
     } else {
       setIsShowSideBar(true);
     }
-  }, [isLgMediaQuery]);
+  }, [isSmScreen]);
   const [mounted, setMounted] = useState<boolean>(false);
 
   useEffect(() => {
@@ -42,20 +40,6 @@ export default function LoginNav({ scrollToTutorial }: Props) {
         />
         <h1 className='text-3xl font-semibold '>노래책</h1>
       </Link>
-      {/* <ul className='justify-around hidden w-2/5 text-xl font-semibold lg:flex'>
-        <li>
-          <button className='hover:scale-110'>소개</button>
-        </li>
-        <li>
-          <button className='hover:scale-110'>찾기</button>
-        </li>
-        <li>
-          <button className='hover:scale-110'>지원</button>
-        </li>
-        <li>
-          <button className='hover:scale-110'>다운로드</button>
-        </li>
-      </ul> */}
 
       <div className='flex flex-row items-center gap-6 '>
         <PrimaryBtn
@@ -65,23 +49,7 @@ export default function LoginNav({ scrollToTutorial }: Props) {
         >
           튜토리얼
         </PrimaryBtn>
-        {/* <button
-          type='button'
-          aria-label='menu'
-          onClick={() => {
-            setIsShowSideBar(!isShowSideBar);
-          }}
-        >
-          <div className='lg:hidden'>
-            <Icon size={25} color={color.gray_600} icon='Menu' />
-          </div>
-        </button> */}
       </div>
-      {/* {mounted && isShowSideBar && (
-        <RenderedWhenMobile>
-          <HomeSideBar setIsShowSideBar={setIsShowSideBar} />
-        </RenderedWhenMobile>
-      )} */}
     </nav>
   );
 }

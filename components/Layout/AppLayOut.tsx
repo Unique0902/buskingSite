@@ -1,28 +1,26 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 
-import { useMediaQuery } from 'react-responsive';
-
 import ThemeBtn from './Footer/ThemeBtn';
 import AppHeader from './Header/AppHeader';
 import SideBar from './SideBar/SideBar';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import UserDataProtectedRoute from '../ProtectedRoute/UserDataProtectedRoute';
 import { sideBarMenuSectionDataArr } from '../../store/data/SideBarMenus';
+import { useMediaQueryContext } from '../../context/MediaQueryContext';
 type Props = {
   children: ReactNode;
 };
 export default function AppLayOut({ children }: Props) {
   const [isShowSideBar, setIsShowSideBar] = useState<boolean>(true);
-  const isLgMediaQuery = useMediaQuery({
-    query: '(min-width:1024px)',
-  });
+  const { isSmScreen } = useMediaQueryContext();
+
   useEffect(() => {
-    if (!isLgMediaQuery) {
+    if (isSmScreen) {
       setIsShowSideBar(false);
     } else {
       setIsShowSideBar(true);
     }
-  }, [isLgMediaQuery]);
+  }, [isSmScreen]);
 
   return (
     <ProtectedRoute>
@@ -33,6 +31,7 @@ export default function AppLayOut({ children }: Props) {
               <SideBar
                 setIsShowSideBar={setIsShowSideBar}
                 sideBarMenuSectionDataArr={sideBarMenuSectionDataArr}
+                isSmScreen={isSmScreen}
               />
             )}
             <main className='relative px-8 py-6 overflow-y-auto grow max-lg:px-4'>
