@@ -1,4 +1,5 @@
-import React, { ReactNode, useEffect, useRef } from 'react';
+import React, { ReactNode, useRef } from 'react';
+import { useClickOutside } from '../../hooks/useClickOutside';
 
 type Props = {
   children: ReactNode;
@@ -7,20 +8,8 @@ type Props = {
 
 const ModalInner = ({ children, handleClickOther }: Props) => {
   const modalRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        modalRef.current &&
-        !modalRef.current.contains(event.target as Node)
-      ) {
-        handleClickOther();
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [modalRef, handleClickOther]);
+  useClickOutside(modalRef, handleClickOther);
+
   return (
     <section className='fixed top-0 left-0 flex flex-row items-center justify-center w-screen h-screen gap-4'>
       <div

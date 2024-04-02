@@ -4,16 +4,16 @@ import { useRouter } from 'next/router';
 import { useMediaQuery } from 'react-responsive';
 
 import SideBarMenuBtn from './SideBarMenuBtn';
-import Icon from '../../../assets/icon/icon';
 import { SideBarMenuSectionData } from '../../../store/data/SideBarMenus';
 import { produce } from 'immer';
 import SideBarTitle from './SideBarTitle';
 import SideBarToggleBtn from './SideBarToggleBtn';
-import { useClickOutside } from '../../../hooks/UseClickOutside';
-type Props = {
+import { useClickOutside } from '../../../hooks/useClickOutside';
+
+interface Props {
   setIsShowSideBar: React.Dispatch<React.SetStateAction<boolean>>;
   sideBarMenuSectionDataArr: SideBarMenuSectionData[];
-};
+}
 
 const SideBar = ({ setIsShowSideBar, sideBarMenuSectionDataArr }: Props) => {
   const [isHide, setIsHide] = useState<boolean>(false);
@@ -65,7 +65,7 @@ const SideBar = ({ setIsShowSideBar, sideBarMenuSectionDataArr }: Props) => {
     query: '(max-width:1024px)',
   });
 
-  useClickOutside(wrapperRef, isSmScreen, () => setIsShowSideBar(false));
+  useClickOutside(wrapperRef, () => setIsShowSideBar(false), isSmScreen);
 
   return (
     <>

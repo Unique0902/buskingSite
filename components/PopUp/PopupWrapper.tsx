@@ -1,4 +1,5 @@
 import React, { ReactNode, useEffect, useRef } from 'react';
+import { useClickOutside } from '../../hooks/useClickOutside';
 type Props = {
   handleClickOther: () => void;
   isLeft: boolean;
@@ -10,20 +11,7 @@ export default function PopupWrapper({
   children,
 }: Props) {
   const wrapperRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (
-        wrapperRef.current &&
-        !wrapperRef.current.contains(event.target as Node)
-      ) {
-        handleClickOther();
-      }
-    }
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [wrapperRef, handleClickOther]);
+  useClickOutside(wrapperRef, handleClickOther);
   return (
     <div
       ref={wrapperRef}

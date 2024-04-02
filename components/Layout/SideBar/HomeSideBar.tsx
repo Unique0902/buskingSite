@@ -2,26 +2,13 @@ import React, { useEffect, useRef } from 'react';
 
 import HomeSideBarBtn from './HomeSideBarBtn';
 import Icon from '../../../assets/icon/icon';
+import { useClickOutside } from '../../../hooks/useClickOutside';
 type Props = {
   setIsShowSideBar: React.Dispatch<React.SetStateAction<boolean>>;
 };
 const HomeSideBar = ({ setIsShowSideBar }: Props) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        wrapperRef.current &&
-        !wrapperRef.current.contains(event.target as Node)
-      ) {
-        setIsShowSideBar(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [wrapperRef, setIsShowSideBar]);
+  useClickOutside(wrapperRef, () => setIsShowSideBar(false));
 
   return (
     <>

@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 
 export const useClickOutside = (
   insideBlockRef: React.RefObject<HTMLDivElement>,
-  isObserveClick: boolean,
-  onClickOutside: () => void
+  onClickOutside: () => void,
+  isObserveClick: boolean = true
 ) => {
   useEffect(() => {
     if (isObserveClick) {
