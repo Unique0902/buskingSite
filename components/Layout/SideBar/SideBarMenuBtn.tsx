@@ -6,14 +6,14 @@ import { iconName } from '../../../assets/icon/constants';
 import Icon from '../../../assets/icon/icon';
 type Props = {
   name: string;
-  selectedBtn: string;
+  isSelected: boolean;
   isHide: boolean;
   text: string;
   icon: iconName;
 };
-export default function SideBarBtn({
+export default function SideBarMenuBtn({
   name,
-  selectedBtn,
+  isSelected,
   isHide,
   text,
   icon,
@@ -27,13 +27,13 @@ export default function SideBarBtn({
     <Link
       href={`/app/${name}`}
       className={`${isHide ? hideBtnStyle : btnStyle} ${
-        selectedBtn === name ? 'text-blue-400' : 'text-white'
+        isSelected ? 'text-blue-400' : 'text-white'
       } `}
     >
       <div className={`${!isHide && 'mr-4'}`}>
         <Icon
           size={24}
-          color={`${selectedBtn === name ? '#60a5fa' : '#FFFFFF'}`}
+          color={`${isSelected ? '#60a5fa' : '#FFFFFF'}`}
           icon={icon}
         />
       </div>

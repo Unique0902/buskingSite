@@ -3,60 +3,70 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { useMediaQuery } from 'react-responsive';
 
-import SideBarBtn from './SideBarBtn';
+import SideBarMenuBtn from './SideBarMenuBtn';
 import Icon from '../../../assets/icon/icon';
+import { SideBarMenuSectionData } from '../../../store/data/SideBarMenus';
+import { produce } from 'immer';
+import SideBarTitle from './SideBarTitle';
+import SideBarToggleBtn from './SideBarToggleBtn';
+import { useClickOutside } from '../../../hooks/UseClickOutside';
 type Props = {
   setIsShowSideBar: React.Dispatch<React.SetStateAction<boolean>>;
+  sideBarMenuSectionDataArr: SideBarMenuSectionData[];
 };
-type SideBarBtnType =
-  | 'home'
-  | 'add'
-  | 'playlist'
-  | 'inform'
-  | 'makebusking'
-  | 'busking';
-const SideBar = ({ setIsShowSideBar }: Props) => {
+
+const SideBar = ({ setIsShowSideBar, sideBarMenuSectionDataArr }: Props) => {
   const [isHide, setIsHide] = useState<boolean>(false);
-  const [selectedBtn, setSelectedBtn] = useState<SideBarBtnType>('home');
   const wrapperRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const [sideBarMenuSectionArr, setSideBarMenuSectionArr] = useState(
+    sideBarMenuSectionDataArr
+  );
 
-  const checkSelectedBtn = useCallback(() => {
-    const pathArr = router.pathname.split('/');
-    if (pathArr[2] === 'busking') {
-      setSelectedBtn('makebusking');
-    } else {
-      setSelectedBtn(pathArr[2] as SideBarBtnType);
-    }
-  }, [router]);
+  const checkSelectedBtn = useCallback(
+    (pathArr: string[]) => {
+      if (pathArr[2] === 'busking') {
+        setSideBarMenuSectionArr(
+          produce((prevArr) => {
+            const selectedData =
+              prevArr[0].data.find((menuData) => menuData.isSelected) ||
+              prevArr[1].data.find((menuData) => menuData.isSelected);
+            selectedData && (selectedData.isSelected = false);
+            const data = prevArr[1].data.find(
+              (menuData) => menuData.name === 'makebusking'
+            );
+            data && (data.isSelected = true);
+          })
+        );
+      } else {
+        setSideBarMenuSectionArr(
+          produce((prevArr) => {
+            const selectedData =
+              prevArr[0].data.find((menuData) => menuData.isSelected) ||
+              prevArr[1].data.find((menuData) => menuData.isSelected);
+            selectedData && (selectedData.isSelected = false);
+            const data =
+              prevArr[0].data.find(
+                (menuData) => menuData.name === pathArr[2]
+              ) ||
+              prevArr[1].data.find((menuData) => menuData.name === pathArr[2]);
+            data && (data.isSelected = true);
+          })
+        );
+      }
+    },
+    [router]
+  );
 
   useEffect(() => {
-    checkSelectedBtn();
+    checkSelectedBtn(router.pathname.split('/'));
   }, [router]);
-  const isLgMediaQuery = useMediaQuery({
+  const isSmScreen = useMediaQuery({
     query: '(max-width:1024px)',
   });
-  // const handelClick = (name) => {
-  //   if (isLgMediaQuery) {
-  //     setIsShowSideBar(false);
-  //   }
-  // };
-  useEffect(() => {
-    if (isLgMediaQuery) {
-      const handleClickOutside = (event: MouseEvent) => {
-        if (
-          wrapperRef.current &&
-          !wrapperRef.current.contains(event.target as Node)
-        ) {
-          setIsShowSideBar(false);
-        }
-      };
-      document.addEventListener('mousedown', handleClickOutside);
-      return () => {
-        document.removeEventListener('mousedown', handleClickOutside);
-      };
-    }
-  }, [wrapperRef, isLgMediaQuery, setIsShowSideBar]);
+
+  useClickOutside(wrapperRef, isSmScreen, () => setIsShowSideBar(false));
+
   return (
     <>
       <aside
@@ -65,90 +75,37 @@ const SideBar = ({ setIsShowSideBar }: Props) => {
           isHide ? 'w-16' : 'w-64'
         }`}
       >
-        {!isHide && (
-          <div className='flex items-center gap-3 px-5 py-3 text-white border-b border-gray-600 border-solid'>
-            <Icon size={32} color='#60a5fa' icon='Book' />
-            <p className='text-2xl font-semibold '>노래책</p>
-          </div>
-        )}
-        {isHide && (
-          <div className='flex items-center justify-center w-full py-4 text-2xl text-center text-blue-600 border-b border-gray-600 border-solid'>
-            <Icon size={32} color='#60a5fa' icon='Book' />
-          </div>
-        )}
+        <SideBarTitle isMiniMode={isHide} />
 
         <ul className='flex flex-col'>
-          <SideBarBtn
-            name={'home'}
-            selectedBtn={selectedBtn}
-            isHide={isHide}
-            text={'Home'}
-            icon='Home'
-          />
-          {!isHide && (
-            <li>
-              <p className='pt-3 pb-3 pl-5 text-sm text-gray-400 border-t border-gray-600 border-solid'>
-                기능 카테고리
-              </p>
-            </li>
-          )}
-          <SideBarBtn
-            name={'add'}
-            selectedBtn={selectedBtn}
-            isHide={isHide}
-            text={'노래 추가'}
-            icon='Plus'
-          />
-          <SideBarBtn
-            name={'playlist'}
-            selectedBtn={selectedBtn}
-            isHide={isHide}
-            text={'Playlist 관리'}
-            icon='Song'
-          />
-
-          <SideBarBtn
-            name={'inform'}
-            selectedBtn={selectedBtn}
-            isHide={isHide}
-            text={'내 정보'}
-            icon='User'
-          />
-
-          <SideBarBtn
-            name={'makebusking'}
-            selectedBtn={selectedBtn}
-            isHide={isHide}
-            text={'버스킹하기'}
-            icon='Guitar'
-          />
-
-          <li>
-            {isHide ? (
-              <button
-                className='absolute bottom-0 flex justify-center w-full text-white border-t border-gray-600 border-solid hover:opacity-70 py-7'
-                onClick={() => {
-                  setIsHide(false);
-                }}
-              >
-                <Icon size={20} color='white' icon='ArrowRight' />
-              </button>
-            ) : (
-              <button
-                className='absolute bottom-0 flex justify-end w-full pr-5 text-right text-white border-t border-gray-600 border-solid hover:opacity-70 py-7'
-                onClick={() => {
-                  if (isLgMediaQuery) {
-                    setIsShowSideBar(false);
-                  } else {
-                    setIsHide(true);
-                  }
-                }}
-              >
-                <Icon size={20} color='white' icon='ArrowLeft' />
-              </button>
-            )}
-          </li>
+          {sideBarMenuSectionArr.map((secData, secIdx) => (
+            <React.Fragment key={'sideBarMenuSec' + secIdx}>
+              {secData.title && !isHide && (
+                <li>
+                  <p className='pt-3 pb-3 pl-5 text-sm text-gray-400 border-t border-gray-600 border-solid'>
+                    {secData.title}
+                  </p>
+                </li>
+              )}
+              {secData.data.map((menuData) => (
+                <SideBarMenuBtn
+                  key={menuData.name}
+                  name={menuData.name}
+                  isSelected={menuData.isSelected}
+                  isHide={isHide}
+                  text={menuData.text}
+                  icon={menuData.icon}
+                />
+              ))}
+            </React.Fragment>
+          ))}
         </ul>
+        <SideBarToggleBtn
+          isHide={isHide}
+          isSmScreen={isSmScreen}
+          setIsHide={setIsHide}
+          setIsShowSideBar={setIsShowSideBar}
+        />
       </aside>
     </>
   );

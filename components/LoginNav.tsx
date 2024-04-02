@@ -5,10 +5,7 @@ import Link from 'next/link';
 import { useMediaQuery } from 'react-responsive';
 
 import PrimaryBtn from './Btn/PrimaryBtn';
-import HomeSideBar from './Layout/SideBar/HomeSideBar';
-import RenderedWhenMobile from './Responsive/RenderedWhenMobile';
-import Icon from '../assets/icon/icon';
-import { borderRadius, color, fontSize } from '../styles/theme';
+import { borderRadius, fontSize } from '../styles/theme';
 
 type Props = {
   scrollToTutorial: () => void;

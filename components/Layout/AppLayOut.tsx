@@ -7,6 +7,7 @@ import AppHeader from './Header/AppHeader';
 import SideBar from './SideBar/SideBar';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import UserDataProtectedRoute from '../ProtectedRoute/UserDataProtectedRoute';
+import { sideBarMenuSectionDataArr } from '../../store/data/SideBarMenus';
 type Props = {
   children: ReactNode;
 };
@@ -28,7 +29,12 @@ export default function AppLayOut({ children }: Props) {
       <UserDataProtectedRoute>
         {
           <section className='flex h-screen bg-gradient-to-b from-blue-500 to-white dark:from-slate-900 dark:to-slate-700 '>
-            {isShowSideBar && <SideBar setIsShowSideBar={setIsShowSideBar} />}
+            {isShowSideBar && (
+              <SideBar
+                setIsShowSideBar={setIsShowSideBar}
+                sideBarMenuSectionDataArr={sideBarMenuSectionDataArr}
+              />
+            )}
             <main className='relative px-8 py-6 overflow-y-auto grow max-lg:px-4'>
               <AppHeader
                 isShowSideBar={isShowSideBar}
