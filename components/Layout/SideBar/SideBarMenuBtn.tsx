@@ -7,14 +7,14 @@ import Icon from '../../../assets/icon/icon';
 type Props = {
   name: string;
   isSelected: boolean;
-  isHide: boolean;
+  isMiniMode: boolean;
   text: string;
   icon: iconName;
 };
 export default function SideBarMenuBtn({
   name,
   isSelected,
-  isHide,
+  isMiniMode,
   text,
   icon,
 }: Props) {
@@ -26,11 +26,12 @@ export default function SideBarMenuBtn({
   return (
     <Link
       href={`/app/${name}`}
-      className={`${isHide ? hideBtnStyle : btnStyle} ${
+      className={`${isMiniMode ? hideBtnStyle : btnStyle} ${
         isSelected ? 'text-blue-400' : 'text-white'
       } `}
+      data-testid={isSelected ? 'selectedMenu' : ''}
     >
-      <div className={`${!isHide && 'mr-4'}`}>
+      <div className={`${!isMiniMode && 'mr-4'}`}>
         <Icon
           size={24}
           color={`${isSelected ? '#60a5fa' : '#FFFFFF'}`}
@@ -38,7 +39,7 @@ export default function SideBarMenuBtn({
         />
       </div>
 
-      {!isHide && text}
+      {!isMiniMode && text}
     </Link>
   );
 }

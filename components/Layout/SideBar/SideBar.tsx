@@ -1,7 +1,5 @@
 import React, { useState, useRef } from 'react';
 
-import { useRouter } from 'next/router';
-
 import SideBarMenuBtn from './SideBarMenuBtn';
 import { SideBarMenuSectionData } from '../../../store/data/SideBarMenus';
 import SideBarTitle from './SideBarTitle';
@@ -13,19 +11,20 @@ interface Props {
   setIsShowSideBar: React.Dispatch<React.SetStateAction<boolean>>;
   sideBarMenuSectionDataArr: SideBarMenuSectionData[];
   isSmScreen: boolean;
+  routerPathName: string;
 }
 
 const SideBar = ({
   setIsShowSideBar,
   sideBarMenuSectionDataArr,
   isSmScreen,
+  routerPathName,
 }: Props) => {
-  const [isHide, setIsHide] = useState<boolean>(false);
+  const [isMiniMode, setIsMiniMode] = useState<boolean>(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const router = useRouter();
   const { sideBarMenuSectionArr } = useSideBarMenu(
     sideBarMenuSectionDataArr,
-    router.pathname
+    routerPathName
   );
 
   useClickOutside(wrapperRef, () => setIsShowSideBar(false), isSmScreen);
@@ -34,15 +33,15 @@ const SideBar = ({
     <aside
       ref={wrapperRef}
       className={` bg-zinc-800 dark:border-r dark:border-r-gray-600 relative max-lg:absolute max-lg:h-full max-lg:z-40 ${
-        isHide ? 'w-16' : 'w-64'
+        isMiniMode ? 'w-16' : 'w-64'
       }`}
     >
-      <SideBarTitle isMiniMode={isHide} />
+      <SideBarTitle isMiniMode={isMiniMode} />
 
       <ul className='flex flex-col'>
         {sideBarMenuSectionArr.map((secData, secIdx) => (
           <React.Fragment key={'sideBarMenuSec' + secIdx}>
-            {secData.title && !isHide && (
+            {secData.title && !isMiniMode && (
               <li>
                 <p className='pt-3 pb-3 pl-5 text-sm text-gray-400 border-t border-gray-600 border-solid'>
                   {secData.title}
@@ -54,7 +53,7 @@ const SideBar = ({
                 key={menuData.nameArr[0]}
                 name={menuData.nameArr[0]}
                 isSelected={menuData.isSelected}
-                isHide={isHide}
+                isMiniMode={isMiniMode}
                 text={menuData.text}
                 icon={menuData.icon}
               />
@@ -63,9 +62,9 @@ const SideBar = ({
         ))}
       </ul>
       <SideBarToggleBtn
-        isHide={isHide}
+        isMiniMode={isMiniMode}
         isSmScreen={isSmScreen}
-        setIsHide={setIsHide}
+        setIsMiniMode={setIsMiniMode}
         setIsShowSideBar={setIsShowSideBar}
       />
     </aside>

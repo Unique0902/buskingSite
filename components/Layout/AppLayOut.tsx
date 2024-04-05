@@ -7,12 +7,14 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import UserDataProtectedRoute from '../ProtectedRoute/UserDataProtectedRoute';
 import { sideBarMenuSectionDataArr } from '../../store/data/SideBarMenus';
 import { useMediaQueryContext } from '../../context/MediaQueryContext';
+import { useRouter } from 'next/router';
 type Props = {
   children: ReactNode;
 };
 export default function AppLayOut({ children }: Props) {
   const [isShowSideBar, setIsShowSideBar] = useState<boolean>(true);
   const { isSmScreen } = useMediaQueryContext();
+  const router = useRouter();
 
   useEffect(() => {
     if (isSmScreen) {
@@ -32,6 +34,7 @@ export default function AppLayOut({ children }: Props) {
                 setIsShowSideBar={setIsShowSideBar}
                 sideBarMenuSectionDataArr={sideBarMenuSectionDataArr}
                 isSmScreen={isSmScreen}
+                routerPathName={router.pathname}
               />
             )}
             <main className='relative px-8 py-6 overflow-y-auto grow max-lg:px-4'>

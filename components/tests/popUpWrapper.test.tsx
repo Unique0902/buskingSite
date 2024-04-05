@@ -30,7 +30,7 @@ describe('arrangeMenu component test', () => {
     expect(handleClickOther).not.toHaveBeenCalled();
   });
 
-  it('click outer and handleClickOther  execute', async () => {
+  it('click outer and handleClickOther execute', async () => {
     render(
       <>
         <PopupWrapper isLeft handleClickOther={handleClickOther}>
