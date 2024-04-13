@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import ArrangeMenuBtn from '../../components/ArrangeMenu/ArrangeMenuBtn';
 import PrimaryBtn from '../../components/Btn/PrimaryBtn';
 import HoverTextSection from '../../components/Hover/HoverTextSection';
-import LoadingCheckWrapper from '../../components/LoadingCheckWrapper';
+import LoadingCheckWrapper from '../../components/Loading/LoadingCheckWrapper';
 import MainSec from '../../components/MainSec';
 import MusicBar from '../../components/MusicBar/MusicBar';
 import SectionCopyText from '../../components/SectionCopyText';

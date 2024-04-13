@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import ArrangeMenuBtn from '../../components/ArrangeMenu/ArrangeMenuBtn';
-import LoadingCheckWrapper from '../../components/LoadingCheckWrapper';
+import LoadingCheckWrapper from '../../components/Loading/LoadingCheckWrapper';
 import MainSec from '../../components/MainSec';
 import NoPlaylistCheckWrapper from '../../components/NoPlaylistCheckWrapper';
 import SearchBar from '../../components/Search/SearchBar';
