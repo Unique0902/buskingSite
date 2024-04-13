@@ -39,8 +39,8 @@ export default function AppLayOut({ children }: Props) {
             )}
             <main className='relative px-8 py-6 overflow-y-auto grow max-lg:px-4'>
               <AppHeader
-                isShowSideBar={isShowSideBar}
                 setIsShowSideBar={setIsShowSideBar}
+                isSmScreen={isSmScreen}
               />
               {children}
             </main>

@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`popUpMenu component test render correctly 1`] = `
+<button
+  onClick={[Function]}
+>
+  <div>
+    outer btn
+  </div>
+</button>
+`;

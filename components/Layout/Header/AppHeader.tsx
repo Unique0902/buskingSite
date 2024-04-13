@@ -7,11 +7,12 @@ import { useUserData } from '../../../hooks/UseUserData';
 import LoginMenu from '../../LoginMenu/LoginMenu';
 import PlaylistMenu from '../../PlaylistMenu/PlaylistMenu';
 import PopUpMenu from '../../PopUp/PopUpMenu';
+import HeaderMenuBtn from './HeaderMenuBtn';
 type Props = {
-  isShowSideBar: boolean;
   setIsShowSideBar: React.Dispatch<React.SetStateAction<boolean>>;
+  isSmScreen: boolean;
 };
-export default function AppHeader({ isShowSideBar, setIsShowSideBar }: Props) {
+export default function AppHeader({ setIsShowSideBar, isSmScreen }: Props) {
   const { uid } = useAuthContext();
   const {
     userDataQuery: { data: userData },
@@ -35,16 +36,9 @@ export default function AppHeader({ isShowSideBar, setIsShowSideBar }: Props) {
     <>
       <header className='flex justify-between mb-10 '>
         <div className='relative flex items-center'>
-          <button
-            onClick={() => {
-              setIsShowSideBar(!isShowSideBar);
-            }}
-            className='hidden max-lg:flex'
-          >
-            <div className='mr-6'>
-              <Icon size={24} color='white' icon='Menu' />
-            </div>
-          </button>
+          {isSmScreen && (
+            <HeaderMenuBtn onClick={() => setIsShowSideBar((prev) => !prev)} />
+          )}
           <PopUpMenu>
             <PopUpMenu.OuterBtn>
               <div className='flex items-center text-xl text-white hover:scale-110'>
@@ -66,8 +60,8 @@ export default function AppHeader({ isShowSideBar, setIsShowSideBar }: Props) {
         <div className='relative'>
           <PopUpMenu>
             <PopUpMenu.OuterBtn>
-              <div className='text-xl text-white hover:scale-110'>
-                {userData && userData.name}
+              <div className='flex items-center text-xl text-white hover:scale-110'>
+                {userData?.name}
               </div>
             </PopUpMenu.OuterBtn>
             <PopUpMenu.Inner isPopUpInnerLeft={false}>
