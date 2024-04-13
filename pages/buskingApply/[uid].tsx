@@ -8,7 +8,7 @@ import ArrangeMenuBtn from '../../components/ArrangeMenu/ArrangeMenuBtn';
 import HomeBtn from '../../components/Layout/Footer/HomeBtn';
 import ThemeBtn from '../../components/Layout/Footer/ThemeBtn';
 import LoadingCheckWrapper from '../../components/Loading/LoadingCheckWrapper';
-import MainSec from '../../components/MainSec';
+import MainSec from '../../components/Main/MainSec';
 import ModalIconBtn from '../../components/Modal/ModalIconBtn';
 import SearchBar from '../../components/Search/SearchBar';
 import SearchModalContent from '../../components/SearchModal/SearchModalContent';

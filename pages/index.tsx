@@ -3,8 +3,8 @@ import { useRef } from 'react';
 import { useRouter } from 'next/router';
 
 import PrimaryBtn from '../components/Btn/PrimaryBtn';
-import LoginNav from '../components/LoginNav';
-import TutorialBlock from '../components/TutorialBlock';
+import LoginNav from '../components/Home/LoginNav';
+import TutorialBlock from '../components/Home/TutorialBlock';
 import { useAuthContext } from '../context/AuthContext';
 import { borderRadius, fontSize, xyPadding } from '../styles/theme';
 import { useMediaQueryContext } from '../context/MediaQueryContext';

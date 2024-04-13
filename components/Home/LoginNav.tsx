@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import PrimaryBtn from './Btn/PrimaryBtn';
-import { borderRadius, fontSize } from '../styles/theme';
+import PrimaryBtn from '../Btn/PrimaryBtn';
+import { borderRadius, fontSize } from '../../styles/theme';
 
 type Props = {
   scrollToTutorial: () => void;

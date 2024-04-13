@@ -1,9 +1,9 @@
 import React from 'react';
 
-import MainSec from '../../components/MainSec';
+import MainSec from '../../components/Main/MainSec';
 import RowWithTitle from '../../components/Row/RowWithTitle';
 import RowWithTitleAndArrow from '../../components/Row/RowWithTitleAndArrow';
-import TitleBar from '../../components/TitleBar';
+import TitleBar from '../../components/Main/TitleBar';
 import { useAuthContext } from '../../context/AuthContext';
 import { useBusking } from '../../hooks/UseBusking';
 import { usePlaylist } from '../../hooks/UsePlaylist';

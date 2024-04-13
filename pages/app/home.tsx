@@ -1,7 +1,7 @@
 import React from 'react';
 
-import MainSec from '../../components/MainSec';
-import NoPlaylistCheckWrapper from '../../components/NoPlaylistCheckWrapper';
+import MainSec from '../../components/Main/MainSec';
+import NoPlaylistCheckWrapper from '../../components/NoPlaylist/NoPlaylistCheckWrapper';
 import { useAuthContext } from '../../context/AuthContext';
 import { usePlaylist } from '../../hooks/UsePlaylist';
 import { useUserData } from '../../hooks/UseUserData';

@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 
 import Image from 'next/image';
 
-import PrimaryBtn from './Btn/PrimaryBtn';
-import { color } from '../styles/theme';
+import PrimaryBtn from '../Btn/PrimaryBtn';
+import { color } from '../../styles/theme';
 type Props = {
   url: string;
   title: string;

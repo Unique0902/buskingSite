@@ -1,9 +1,9 @@
 import React from 'react';
 
-import PrimaryBtn from './Btn/PrimaryBtn';
-import MainSec from './MainSec';
-import { useAuthContext } from '../context/AuthContext';
-import { usePlaylist } from '../hooks/UsePlaylist';
+import PrimaryBtn from '../Btn/PrimaryBtn';
+import MainSec from '../Main/MainSec';
+import { useAuthContext } from '../../context/AuthContext';
+import { usePlaylist } from '../../hooks/UsePlaylist';
 
 const NoPlaylistSection = () => {
   const { uid } = useAuthContext();

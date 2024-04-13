@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 
 import { useRouter } from 'next/router';
 
-import MainSec from '../../components/MainSec';
-import NoPlaylistCheckWrapper from '../../components/NoPlaylistCheckWrapper';
+import MainSec from '../../components/Main/MainSec';
+import NoPlaylistCheckWrapper from '../../components/NoPlaylist/NoPlaylistCheckWrapper';
 import MainRow from '../../components/Row/RowWithTitle';
-import TitleBar from '../../components/TitleBar';
+import TitleBar from '../../components/Main/TitleBar';
 import { useAuthContext } from '../../context/AuthContext';
 import { useBusking } from '../../hooks/UseBusking';
 import { usePlaylist } from '../../hooks/UsePlaylist';

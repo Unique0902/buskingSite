@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 
 import PrimaryBtn from '../../components/Btn/PrimaryBtn';
-import TitleBar from '../../components/TitleBar';
+import TitleBar from '../../components/Main/TitleBar';
 import { useAuthContext } from '../../context/AuthContext';
 import { useUserData } from '../../hooks/UseUserData';
 import { borderRadius, fontSize, xyPadding } from '../../styles/theme';

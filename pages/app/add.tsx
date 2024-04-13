@@ -2,12 +2,12 @@ import React from 'react';
 
 import HoverIcon from '../../components/Hover/HoverIcon';
 import LoadingCheckWrapper from '../../components/Loading/LoadingCheckWrapper';
-import MainSec from '../../components/MainSec';
-import NoPlaylistCheckWrapper from '../../components/NoPlaylistCheckWrapper';
+import MainSec from '../../components/Main/MainSec';
+import NoPlaylistCheckWrapper from '../../components/NoPlaylist/NoPlaylistCheckWrapper';
 import SearchBar from '../../components/Search/SearchBar';
 import SongResultRow from '../../components/Table/SongResultRow';
 import SongTable from '../../components/Table/SongTable';
-import TitleBar from '../../components/TitleBar';
+import TitleBar from '../../components/Main/TitleBar';
 import { useAuthContext } from '../../context/AuthContext';
 import { useMediaQueryContext } from '../../context/MediaQueryContext';
 import useAddSearch from '../../hooks/UseAddSearch';

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Icon from '../assets/icon/icon';
+import Icon from '../../assets/icon/icon';
 
 type Props = {
   text: string;
