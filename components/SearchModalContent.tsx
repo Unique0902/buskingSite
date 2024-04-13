@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 import { useModalContext } from './Modal/ModalIconBtn';
-import NameResults from './NameResults';
 import SearchBar from './Search/SearchBar';
 import Icon from '../assets/icon/icon';
 import UserDataRepository from '../service/userDataRepository';
@@ -11,6 +10,7 @@ import { nameSearchWordCategories } from '../store/data/CategoryTypes';
 import { NameSearchWord } from '../store/type/searchword';
 import { UserData } from '../store/type/userData';
 import { color } from '../styles/theme';
+import NameResult from './NameResult';
 const userDataRepository = new UserDataRepository();
 const SearchModalContent: React.FC = () => {
   const [searchWord, setSearchWord] = useState<NameSearchWord>({
@@ -76,7 +76,9 @@ const SearchModalContent: React.FC = () => {
           </SearchBar.SubSec>
         </SearchBar>
       </div>
-      <NameResults userDataArr={showedUserDataArr} />
+      {showedUserDataArr.map((value) => (
+        <NameResult key={value.id} userId={value.id} result={value} />
+      ))}
     </>
   );
 };
