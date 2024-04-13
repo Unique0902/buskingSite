@@ -11,7 +11,7 @@ import LoadingCheckWrapper from '../../components/LoadingCheckWrapper';
 import MainSec from '../../components/MainSec';
 import ModalIconBtn from '../../components/Modal/ModalIconBtn';
 import SearchBar from '../../components/Search/SearchBar';
-import SearchModalContent from '../../components/SearchModalContent';
+import SearchModalContent from '../../components/SearchModal/SearchModalContent';
 import SongResultRow from '../../components/Table/SongResultRow';
 import SongTable from '../../components/Table/SongTable';
 import useBuskingData from '../../hooks/UseBuskingData';

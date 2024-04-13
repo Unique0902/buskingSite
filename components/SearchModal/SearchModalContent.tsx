@@ -2,15 +2,15 @@ import React, { useEffect, useState } from 'react';
 
 import { useQuery } from '@tanstack/react-query';
 
-import { useModalContext } from './Modal/ModalIconBtn';
-import SearchBar from './Search/SearchBar';
-import Icon from '../assets/icon/icon';
-import UserDataRepository from '../service/userDataRepository';
-import { nameSearchWordCategories } from '../store/data/CategoryTypes';
-import { NameSearchWord } from '../store/type/searchword';
-import { UserData } from '../store/type/userData';
-import { color } from '../styles/theme';
-import NameResult from './NameResult';
+import { useModalContext } from '../Modal/ModalIconBtn';
+import SearchBar from '../Search/SearchBar';
+import Icon from '../../assets/icon/icon';
+import UserDataRepository from '../../service/userDataRepository';
+import { nameSearchWordCategories } from '../../store/data/CategoryTypes';
+import { NameSearchWord } from '../../store/type/searchword';
+import { UserData } from '../../store/type/userData';
+import { color } from '../../styles/theme';
+import SearchModalNameResult from './SearchModalNameResult';
 const userDataRepository = new UserDataRepository();
 const SearchModalContent: React.FC = () => {
   const [searchWord, setSearchWord] = useState<NameSearchWord>({
@@ -77,7 +77,11 @@ const SearchModalContent: React.FC = () => {
         </SearchBar>
       </div>
       {showedUserDataArr.map((value) => (
-        <NameResult key={value.id} userId={value.id} result={value} />
+        <SearchModalNameResult
+          key={value.id}
+          userId={value.id}
+          result={value}
+        />
       ))}
     </>
   );

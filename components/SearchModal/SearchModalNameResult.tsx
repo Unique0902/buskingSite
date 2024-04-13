@@ -2,16 +2,16 @@ import React from 'react';
 
 import { useRouter } from 'next/router';
 
-import Icon from '../assets/icon/icon';
-import { UserData } from '../store/type/userData';
-import { color } from '../styles/theme';
+import Icon from '../../assets/icon/icon';
+import { UserData } from '../../store/type/userData';
+import { color } from '../../styles/theme';
 
 interface Props {
   userId: string;
   result: UserData;
 }
 
-const NameResult: React.FC<Props> = ({ userId, result }: Props) => {
+const SearchModalNameResult: React.FC<Props> = ({ userId, result }: Props) => {
   const router = useRouter();
 
   return (
@@ -29,4 +29,4 @@ const NameResult: React.FC<Props> = ({ userId, result }: Props) => {
   );
 };
 
-export default NameResult;
+export default SearchModalNameResult;
