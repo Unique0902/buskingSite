@@ -1,4 +1,4 @@
-import { calculateTotalPageNum } from './../calculate';
+import { calculateDataIdxInTable, calculateTotalPageNum } from './../calculate';
 import { describe, expect, it } from '@jest/globals';
 describe('calculateTotalPageNum util function test', () => {
   it('resultTotalNum = 2, resultNumPerPage = 6 normal case', () => {
@@ -35,5 +35,11 @@ describe('calculateTotalPageNum util function test', () => {
     expect(() => calculateTotalPageNum(-3, -3)).toThrow(
       'resultTotalNum must be positive or zero'
     );
+  });
+});
+
+describe('calculateDataIdxInTable function test', () => {
+  it('when idx=0, nowPageNum=2, DataPerPage = 6', () => {
+    expect(calculateDataIdxInTable(0, 2, 6)).toBe(7);
   });
 });

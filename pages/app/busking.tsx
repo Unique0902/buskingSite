@@ -21,7 +21,7 @@ import { ApplianceData, ApplianceObjects } from '../../store/type/busking';
 import { color } from '../../styles/theme';
 import { ApplianceDataArrangeOption } from '../../store/data/ArrangeOptions';
 import ListPage from '../../components/ListPage/ListPage';
-import { calculateTotalPageNum } from '../../utils/calculate';
+import { calculateDataIdxInTable } from '../../utils/calculate';
 //TODO: 본인이 노래 추가하는 기능 넣기 버스킹중일때 인식해서 플레이리스트에서 추가할수있게 버튼만들자!
 export default function AppBusking() {
   const { uid } = useAuthContext();
@@ -40,6 +40,8 @@ export default function AppBusking() {
   const [songArr, setSongArr] = useState<ApplianceData[]>([]);
   const [songArrToView, setSongArrToView] = useState<ApplianceData[]>([]);
   const router = useRouter();
+
+  const SONG_NUM_PER_PAGE = 6;
 
   // 객체의 멤버값이 나올수있는 타입은 기존타입과 undefined임!! null이 아님!! 구분하기
   useEffect(() => {
@@ -78,8 +80,19 @@ export default function AppBusking() {
     removeBuskingSong(sid, uid);
   };
 
-  const { isLoading, viewedDataArr, nowPageNum, handlePlus, handleMinus } =
-    useSearch<ApplianceData>(songArrToView);
+  const [viewedSongArr, setViewedSongArr] = useState<ApplianceData[]>([]);
+  const handleViewedSongArrByPageNum = (pageNum: number) =>
+    setViewedSongArr(
+      [...songArrToView].slice(
+        (pageNum - 1) * SONG_NUM_PER_PAGE,
+        pageNum * SONG_NUM_PER_PAGE
+      )
+    );
+  useEffect(() => {
+    songArrToView.length > SONG_NUM_PER_PAGE
+      ? setViewedSongArr([...songArrToView].slice(0, SONG_NUM_PER_PAGE))
+      : setViewedSongArr([...songArrToView]);
+  }, [songArrToView]);
 
   if (isbuskingDataLoading) {
     return <div>checking buskingData...</div>;
@@ -127,35 +140,43 @@ export default function AppBusking() {
           />
         </div>
 
-        <LoadingCheckWrapper isLoading={isLoading}>
-          <SongTable<ApplianceData>
-            viewdSongArr={viewedDataArr}
-            nowPageNum={nowPageNum}
-            renderSongResult={(index, result) => (
-              <SongResultRow key={result.artist + result.title}>
-                <SongResultRow.Text text={index.toString()} />
-                <SongResultRow.Inform
-                  title={result.title}
-                  artist={result.artist}
-                />
-                <SongResultRow.Text text={result.cnt.toString() + '명'} />
-                <SongResultRow.IconButton
-                  icon='Minus'
-                  size={20}
-                  color={color.white}
-                  onClick={() => handleRemoveRequestSong(result.sid)}
-                />
-              </SongResultRow>
-            )}
-          >
-            <SongTable.PagingBar
-              totalPageNum={calculateTotalPageNum(songArrToView.length, 6)}
-              pageNum={nowPageNum}
-              onPagePlus={handlePlus}
-              onPageMinus={handleMinus}
-            />
-          </SongTable>
-        </LoadingCheckWrapper>
+        <ListPage
+          pageDataInform={{
+            resultNumPerPage: SONG_NUM_PER_PAGE,
+            resultTotalNum: songArrToView.length,
+          }}
+          pageDataArr={viewedSongArr}
+          renderNoData={() => (
+            <ul className='p-1 bg-gray-800 rounded-xl'>
+              <h2 className='my-5 text-2xl font-normal text-center text-white'>
+                노래가 존재하지 않습니다.
+              </h2>
+            </ul>
+          )}
+          renderData={(result, idx, nowPageNum) => (
+            <SongResultRow key={result.artist + result.title}>
+              <SongResultRow.Text
+                text={calculateDataIdxInTable(
+                  idx,
+                  nowPageNum,
+                  SONG_NUM_PER_PAGE
+                ).toString()}
+              />
+              <SongResultRow.Inform
+                title={result.title}
+                artist={result.artist}
+              />
+              <SongResultRow.Text text={result.cnt.toString() + '명'} />
+              <SongResultRow.IconButton
+                icon='Minus'
+                size={20}
+                color={color.white}
+                onClick={() => handleRemoveRequestSong(result.sid)}
+              />
+            </SongResultRow>
+          )}
+          handleChangePage={handleViewedSongArrByPageNum}
+        />
 
         <section className='flex flex-row justify-end pt-4'>
           <PrimaryBtn

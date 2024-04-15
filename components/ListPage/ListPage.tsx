@@ -8,8 +8,9 @@ interface Props<T> {
     resultNumPerPage: number;
   };
   pageDataArr: T[];
-  renderData: (data: T, index: number) => React.JSX.Element;
+  renderData: (data: T, index: number, nowPageNum: number) => React.JSX.Element;
   handleChangePage: (pageNum: number) => void;
+  renderNoData?: () => React.JSX.Element;
 }
 
 const ListPage = <T,>({
@@ -17,6 +18,7 @@ const ListPage = <T,>({
   pageDataArr,
   renderData,
   handleChangePage,
+  renderNoData,
 }: Props<T>) => {
   const [nowPageNum, setNowPageNum] = useState<number>(1);
   const handlePlusPageNum = () => {
@@ -35,16 +37,18 @@ const ListPage = <T,>({
     throw new Error(
       'pageDataArr length must be same or smaller than resultNumPerPage'
     );
+
+  if (pageDataArr.length === 0) return renderNoData ? renderNoData() : <></>;
   return (
-    <>
-      {pageDataArr.map((data, idx) => renderData(data, idx))}
+    <ul className='p-1 bg-gray-800 rounded-xl'>
+      {pageDataArr.map((data, idx) => renderData(data, idx, nowPageNum))}
       <PagingBar
         totalPageNum={calculateTotalPageNum(resultTotalNum, resultNumPerPage)}
         pageNum={nowPageNum}
         onPagePlus={handlePlusPageNum}
         onPageMinus={handleMinusPageNum}
       />
-    </>
+    </ul>
   );
 };
 
