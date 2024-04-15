@@ -65,7 +65,7 @@ const useAddSearchBar = () => {
     null
   );
 
-  const searchBySearchBtn = async () => {
+  const searchBySearchBtn = async (searchWord: SearchWord) => {
     setIsTopTrackTime(false);
     if (searchWord.name) {
       switch (searchWord.category) {
@@ -84,38 +84,26 @@ const useAddSearchBar = () => {
         default:
           throw new Error('not exist song searchWord category!');
       }
-      setSavedSearchWord({ ...searchWord });
     }
   };
 
-  const searchByPageChange = async (pageNum: number) => {
+  const searchByPageChange = (searchWord: SearchWord, pageNum: number) => {
     if (isTopTrackTime) {
       searchTopTrack(pageNum);
       return;
     }
-    if (savedSearchWord) {
-      if (savedSearchWord.category === '제목') {
-        setQueryFunctionObj({
-          func: () => fmService.searchSongByName(savedSearchWord.name, pageNum),
-        });
-        setQueryKey([
-          'searchSongByName',
-          savedSearchWord.name,
-          pageNum.toString(),
-        ]);
-      } else if (savedSearchWord.category === '가수') {
-        setQueryFunctionObj({
-          func: () =>
-            fmService.searchSongByArtist(savedSearchWord.name, pageNum),
-        });
-        setQueryKey([
-          'searchSongByArtist',
-          savedSearchWord.name,
-          pageNum.toString(),
-        ]);
-      } else {
-        throw new Error('not exist song searchWord category!');
-      }
+    if (searchWord.category === '제목') {
+      setQueryFunctionObj({
+        func: () => fmService.searchSongByName(searchWord.name, pageNum),
+      });
+      setQueryKey(['searchSongByName', searchWord.name, pageNum.toString()]);
+    } else if (searchWord.category === '가수') {
+      setQueryFunctionObj({
+        func: () => fmService.searchSongByArtist(searchWord.name, pageNum),
+      });
+      setQueryKey(['searchSongByArtist', searchWord.name, pageNum.toString()]);
+    } else {
+      throw new Error('not exist song searchWord category!');
     }
   };
 

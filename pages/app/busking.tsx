@@ -20,6 +20,7 @@ import { getAppLayOut } from '../../layouts/appLayout';
 import { ApplianceData, ApplianceObjects } from '../../store/type/busking';
 import { color } from '../../styles/theme';
 import { ApplianceDataArrangeOption } from '../../store/data/ArrangeOptions';
+import ListPage from '../../components/ListPage/ListPage';
 //TODO: 본인이 노래 추가하는 기능 넣기 버스킹중일때 인식해서 플레이리스트에서 추가할수있게 버튼만들자!
 export default function AppBusking() {
   const { uid } = useAuthContext();
@@ -76,7 +77,6 @@ export default function AppBusking() {
     removeBuskingSong(sid, uid);
   };
 
-  //이러면 안쓰는 것들이 애매해지네 useAppliance로 따로 만들어야하나 오 객체로 묶으니까 낫네
   const { isLoading, viewedDataArr, nowPageNum, handlePlus, handleMinus } =
     useSearch<ApplianceData>(songArrToView);
 

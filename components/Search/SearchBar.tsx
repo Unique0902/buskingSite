@@ -111,7 +111,7 @@ const Option = ({ value }: { value: string }) => {
 };
 
 type InputWithButtonProps = {
-  handleClickBtn: () => void;
+  handleClickBtn: (searchWord: SearchWord | NameSearchWord) => void;
 };
 
 // input 스타일링은 responsive 일정 브라우저 너비까지는 px로 유지하다가 그 px보다 작은 너비에서 그에 맞게 너비가 브라우
@@ -130,7 +130,7 @@ const InputWithButton = ({ handleClickBtn }: InputWithButtonProps) => {
       />
       <button
         className='absolute right-4 lg:hidden'
-        onClick={handleClickBtn}
+        onClick={() => handleClickBtn(searchWord)}
         type='submit'
       >
         <Icon size={18} color={color.gray_600} icon='Search' />
@@ -140,16 +140,17 @@ const InputWithButton = ({ handleClickBtn }: InputWithButtonProps) => {
 };
 
 type ButtonProps = {
-  handleClickBtn: () => void;
+  handleClickBtn: (searchWord: SearchWord | NameSearchWord) => void;
   text: string;
   isSmScreen: boolean;
 };
 
 const Button = ({ handleClickBtn, text, isSmScreen }: ButtonProps) => {
+  const { searchWord } = useContext(SearchBarContext);
   if (isSmScreen) return <></>;
   return (
     <PrimaryBtn
-      handleClick={handleClickBtn}
+      handleClick={() => handleClickBtn(searchWord)}
       btnPadding={xyPadding.base}
       isSubmit={true}
     >

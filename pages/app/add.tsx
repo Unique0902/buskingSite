@@ -21,7 +21,6 @@ import { color } from '../../styles/theme';
 export default function AppAdd() {
   const { uid } = useAuthContext();
   const { nowPlaylist, addSongToPlaylist } = usePlaylist(uid);
-  //TODO: 커스텀 훅들도 좀 분리좀하자
   const {
     searchResults,
     searchWord,
@@ -41,13 +40,6 @@ export default function AppAdd() {
       <TitleBar text={'노래추가'} />
       <NoPlaylistCheckWrapper isExistWrapper={!!nowPlaylist}>
         <MainSec>
-          {/* compound 디자인패턴 이용한 리팩토링!! 좀더 가독성이 좋아진 기분이랄까 커스텀 변경도 쉬워짐!! */}
-          {/* compound 디자인 관련해서는 고민해봐야될듯 atomic 디자인을 적용해볼까..? 안에 어떻게할지 적어놓음 */}
-          {/* 아토믹 디자인은 디자인 시안이 나와있을때, 스토리북을 함께 사용하면서 하나하나 개발하는게 효율적인듯 */}
-          {/*  아래를 좀더 간단하고 직관적이게 할수있는 방법이 없을까? <<요정도면 충분할듯 */}
-          {/* context로 searchWord랑 setSearchWord를 전달하면 4줄정도는 줄일수있겠네.. 
-          컴포넌트들의 의존성을 줄일방법을 찾고싶네 ㅜ..
-          */}
           <SearchBar searchWord={searchWord} setSearchWord={setSearchWord}>
             <SearchBar.MainSec>
               <SearchBar.MainSec.Select
@@ -62,14 +54,6 @@ export default function AppAdd() {
                 isSmScreen={isSmScreen}
               />
             </SearchBar.MainSec>
-            <SearchBar.SubSec>
-              {!isSmScreen && (
-                <HoverIcon
-                  text='Api 특성상 제목, 가수명을 영어로 입력하시면 더 잘나옵니다.'
-                  icon='Inform'
-                />
-              )}
-            </SearchBar.SubSec>
           </SearchBar>
           <LoadingCheckWrapper isLoading={isLoading}>
             <SongTable<FmEditedTopTrackData | FmTrackData>

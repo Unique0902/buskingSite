@@ -1,9 +1,8 @@
+import { SearchWord } from '../store/type/searchword';
 import useAddPagingBar from './UseAddPagingBar';
 import useAddSearchBar from './UseAddSearchBar';
 
 const useAddSearch = () => {
-  //searchResults까지 그냥 넣어버림 ㅎㅎ
-
   const {
     searchWord,
     setSearchWord,
@@ -15,13 +14,12 @@ const useAddSearch = () => {
   } = useAddSearchBar();
 
   const { nowPageNum, setNowPageNum, handlePlus, handleMinus } =
-    useAddPagingBar(resultNum, searchByPageChange);
+    useAddPagingBar(resultNum, searchByPageChange, searchWord);
 
-  //어차피 여기서 pageNum 초기화함
-  const handleSearchBtnClick = () => {
+  const handleSearchBtnClick = (searchWord: SearchWord) => {
     if (searchWord.category) {
       setNowPageNum(1);
-      searchBySearchBtn();
+      searchBySearchBtn(searchWord);
     }
   };
 
