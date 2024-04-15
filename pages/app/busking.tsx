@@ -22,6 +22,7 @@ import { color } from '../../styles/theme';
 import { ApplianceDataArrangeOption } from '../../store/data/ArrangeOptions';
 import ListPage from '../../components/ListPage/ListPage';
 import { calculateDataIdxInTable } from '../../utils/calculate';
+import NoSongScreen from '../../components/Table/NoSongScreen';
 //TODO: 본인이 노래 추가하는 기능 넣기 버스킹중일때 인식해서 플레이리스트에서 추가할수있게 버튼만들자!
 export default function AppBusking() {
   const { uid } = useAuthContext();
@@ -146,13 +147,7 @@ export default function AppBusking() {
             resultTotalNum: songArrToView.length,
           }}
           pageDataArr={viewedSongArr}
-          renderNoData={() => (
-            <ul className='p-1 bg-gray-800 rounded-xl'>
-              <h2 className='my-5 text-2xl font-normal text-center text-white'>
-                노래가 존재하지 않습니다.
-              </h2>
-            </ul>
-          )}
+          renderNoData={() => <NoSongScreen />}
           renderData={(result, idx, nowPageNum) => (
             <SongResultRow key={result.artist + result.title}>
               <SongResultRow.Text
