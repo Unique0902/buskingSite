@@ -19,31 +19,30 @@ const ListPage = <T,>({
   handleChangePage,
 }: Props<T>) => {
   const [nowPageNum, setNowPageNum] = useState<number>(1);
-  const totalPageNum = calculateTotalPageNum(resultTotalNum, resultNumPerPage);
-  const handlePlusPageNum = (nowPageNum: number, totalPageNum: number) => {
-    if (nowPageNum < totalPageNum) {
-      setNowPageNum((prev) => {
-        handleChangePage(prev + 1);
-        return prev + 1;
-      });
-    }
+  const handlePlusPageNum = () => {
+    setNowPageNum((prev) => {
+      handleChangePage(prev + 1);
+      return prev + 1;
+    });
   };
-  const handleMinusPageNum = (nowPageNum: number) => {
-    if (nowPageNum > 1) {
-      setNowPageNum((prev) => {
-        handleChangePage(prev - 1);
-        return prev - 1;
-      });
-    }
+  const handleMinusPageNum = () => {
+    setNowPageNum((prev) => {
+      handleChangePage(prev - 1);
+      return prev - 1;
+    });
   };
+  if (pageDataArr.length > resultNumPerPage)
+    throw new Error(
+      'pageDataArr length must be same or smaller than resultNumPerPage'
+    );
   return (
     <>
       {pageDataArr.map((data, idx) => renderData(data, idx))}
       <PagingBar
-        totalPageNum={totalPageNum}
+        totalPageNum={calculateTotalPageNum(resultTotalNum, resultNumPerPage)}
         pageNum={nowPageNum}
-        onPagePlus={() => handlePlusPageNum(nowPageNum, totalPageNum)}
-        onPageMinus={() => handleMinusPageNum(nowPageNum)}
+        onPagePlus={handlePlusPageNum}
+        onPageMinus={handleMinusPageNum}
       />
     </>
   );

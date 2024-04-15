@@ -35,7 +35,7 @@ describe('List Page Component Test', () => {
     expect(screen.queryByText('title2')).not.toBeNull();
   });
 
-  it('when change page, excute handleChangePage', () => {
+  it('when click pagingBarBtn, excute handleChangePage', async () => {
     const handleChangePage = jest.fn();
     render(
       <ListPage<TestData>
@@ -43,10 +43,31 @@ describe('List Page Component Test', () => {
         renderData={(data, idx) => (
           <div key={data.title + idx}>{data.title}</div>
         )}
-        pageDataInform={{ resultTotalNum: 2, resultNumPerPage: 6 }}
+        pageDataInform={{ resultTotalNum: 20, resultNumPerPage: 6 }}
         handleChangePage={handleChangePage}
       />
     );
     const [minusBtn, plusBtn] = screen.queryAllByRole('button');
+    await userEvent.click(plusBtn);
+    expect(handleChangePage).toHaveBeenCalledWith(2);
+    await userEvent.click(minusBtn);
+    expect(handleChangePage).toHaveBeenCalledWith(1);
+  });
+
+  it('when pageDataArr length is bigger than resultNumPerPage', async () => {
+    expect(() =>
+      render(
+        <ListPage<TestData>
+          pageDataArr={testPageDataArr}
+          renderData={(data, idx) => (
+            <div key={data.title + idx}>{data.title}</div>
+          )}
+          pageDataInform={{ resultTotalNum: 20, resultNumPerPage: 1 }}
+          handleChangePage={() => {}}
+        />
+      )
+    ).toThrow(
+      'pageDataArr length must be same or smaller than resultNumPerPage'
+    );
   });
 });
