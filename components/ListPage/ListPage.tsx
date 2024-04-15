@@ -19,7 +19,7 @@ Props<T>) => {
   const handleMinusPageNum = () => {};
   return (
     <>
-      {/* {pageDataArr.map((data, idx) => renderData(data, idx))} */}
+      {pageDataArr.map((data, idx) => renderData(data, idx))}
       {/* <PagingBar
         resultNum={resultTotalNum}
         pageNum={nowPageNum}
