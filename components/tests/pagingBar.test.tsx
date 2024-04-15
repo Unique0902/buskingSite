@@ -13,6 +13,7 @@ describe('PagingBar component test', () => {
         onPagePlus={() => {}}
       />
     );
-    expect(screen.queryByText('1 / 2')).not.toBeNull();
+    expect(screen.queryByText('1')).not.toBeNull();
+    expect(screen.queryByText('2')).not.toBeNull();
   });
 });

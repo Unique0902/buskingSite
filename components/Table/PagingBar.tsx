@@ -20,9 +20,12 @@ export default function PagingBar({
       <button className={btnStyle} onClick={onPageMinus}>
         <Icon size={18} color='white' icon='ArrowLeft' />
       </button>
-      <p className='ml-2 text-xl font-normal text-white'>
-        {pageNum} / {totalPageNum}
-      </p>
+      <div className='flex flex-row items-center gap-2 text-xl font-normal text-white'>
+        <p>{pageNum}</p>
+        <p>/</p>
+        <p>{totalPageNum}</p>
+      </div>
+
       <button className={btnStyle} onClick={onPagePlus}>
         <Icon size={18} color='white' icon={'ArrowRight'} />
       </button>
