@@ -2,13 +2,13 @@ import React from 'react';
 
 import Icon from '../../assets/icon/icon';
 type Props = {
-  resultNum: number;
+  totalPageNum: number;
   pageNum: number;
   onPagePlus: () => void;
   onPageMinus: () => void;
 };
 export default function PagingBar({
-  resultNum,
+  totalPageNum,
   pageNum,
   onPagePlus,
   onPageMinus,
@@ -21,7 +21,7 @@ export default function PagingBar({
         <Icon size={18} color='white' icon='ArrowLeft' />
       </button>
       <p className='ml-2 text-xl font-normal text-white'>
-        {pageNum} / {Math.floor((resultNum - 1) / 6) + 1}
+        {pageNum} / {totalPageNum}
       </p>
       <button className={btnStyle} onClick={onPagePlus}>
         <Icon size={18} color='white' icon={'ArrowRight'} />

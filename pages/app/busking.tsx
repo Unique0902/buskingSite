@@ -21,6 +21,7 @@ import { ApplianceData, ApplianceObjects } from '../../store/type/busking';
 import { color } from '../../styles/theme';
 import { ApplianceDataArrangeOption } from '../../store/data/ArrangeOptions';
 import ListPage from '../../components/ListPage/ListPage';
+import { calculateTotalPageNum } from '../../utils/calculate';
 //TODO: 본인이 노래 추가하는 기능 넣기 버스킹중일때 인식해서 플레이리스트에서 추가할수있게 버튼만들자!
 export default function AppBusking() {
   const { uid } = useAuthContext();
@@ -148,7 +149,7 @@ export default function AppBusking() {
             )}
           >
             <SongTable.PagingBar
-              resultNum={songArrToView.length}
+              totalPageNum={calculateTotalPageNum(songArrToView.length, 6)}
               pageNum={nowPageNum}
               onPagePlus={handlePlus}
               onPageMinus={handleMinus}

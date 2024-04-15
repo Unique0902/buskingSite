@@ -24,7 +24,11 @@ describe('List Page Component Test', () => {
     render(
       <ListPage<TestData>
         pageDataArr={testPageDataArr}
-        renderData={(data, idx) => <div>{data.title}</div>}
+        renderData={(data, idx) => (
+          <div key={data.title + idx}>{data.title}</div>
+        )}
+        resultTotalNum={2}
+        resultNumPerPage={6}
       />
     );
     expect(screen.queryByText('title1')).not.toBeNull();

@@ -25,6 +25,7 @@ import { PlaylistData, PlaylistSongData } from '../../store/type/playlist';
 import { color } from '../../styles/theme';
 import { PlaylistSongDataArrangeOption } from '../../store/data/ArrangeOptions';
 import { useMediaQueryContext } from '../../context/MediaQueryContext';
+import { calculateTotalPageNum } from '../../utils/calculate';
 //TODO: getIp 기능 오류 자꾸나는거 어떻게좀하기
 const userRepository = new UserRepository();
 const playlistRepository = new PlaylistRepository();
@@ -225,7 +226,10 @@ const App = () => {
                     )}
                   >
                     <SongTable.PagingBar
-                      resultNum={nowPlaylistSongArr.length}
+                      totalPageNum={calculateTotalPageNum(
+                        nowPlaylistSongArr.length,
+                        6
+                      )}
                       pageNum={playlistSearchProps.nowPageNum}
                       onPagePlus={playlistSearchProps.handlePlus}
                       onPageMinus={playlistSearchProps.handleMinus}
@@ -268,7 +272,7 @@ const App = () => {
                     )}
                   >
                     <SongTable.PagingBar
-                      resultNum={appliance.length}
+                      totalPageNum={calculateTotalPageNum(appliance.length, 6)}
                       pageNum={applianceSearchProps.nowPageNum}
                       onPagePlus={applianceSearchProps.handlePlus}
                       onPageMinus={applianceSearchProps.handleMinus}
@@ -356,7 +360,10 @@ const App = () => {
                       )}
                     >
                       <SongTable.PagingBar
-                        resultNum={nowPlaylistSongArr.length}
+                        totalPageNum={calculateTotalPageNum(
+                          nowPlaylistSongArr.length,
+                          6
+                        )}
                         pageNum={playlistSearchProps.nowPageNum}
                         onPagePlus={playlistSearchProps.handlePlus}
                         onPageMinus={playlistSearchProps.handleMinus}

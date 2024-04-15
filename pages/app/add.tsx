@@ -16,6 +16,7 @@ import { getAppLayOut } from '../../layouts/appLayout';
 import { songSearchWordCategories } from '../../store/data/CategoryTypes';
 import { FmEditedTopTrackData, FmTrackData } from '../../store/type/fm';
 import { color } from '../../styles/theme';
+import { calculateTotalPageNum } from '../../utils/calculate';
 // TODO: searchBar, songTable 기능 테스트 적은후 하기
 // 자꾸 구조 바꿀때마다 오류나는게 걱정나니
 export default function AppAdd() {
@@ -78,7 +79,7 @@ export default function AppAdd() {
               )}
             >
               <SongTable.PagingBar
-                resultNum={resultNum}
+                totalPageNum={calculateTotalPageNum(resultNum, 6)}
                 pageNum={nowPageNum}
                 onPagePlus={handlePlus}
                 onPageMinus={handleMinus}

@@ -18,6 +18,7 @@ import { PlaylistSongDataArrangeOption } from '../../store/data/ArrangeOptions';
 import { songSearchWordCategories } from '../../store/data/CategoryTypes';
 import { PlaylistSongData } from '../../store/type/playlist';
 import { color } from '../../styles/theme';
+import { calculateTotalPageNum } from '../../utils/calculate';
 //TODO: 플레이리스트 노래 제목이나 가수 수정기능 추가 이것도 송 아이템에 부가 버튼 만들어서 추가하자
 // 자리 부족한 반응형 화면에서는 ... 이모티콘 넣어서 눌렀을때 버튼 리스트 나오게
 export default function AppPlaylist() {
@@ -176,7 +177,7 @@ export default function AppPlaylist() {
               )}
             >
               <SongTable.PagingBar
-                resultNum={songArr.length}
+                totalPageNum={calculateTotalPageNum(songArr.length, 6)}
                 pageNum={nowPageNum}
                 onPagePlus={handlePlus}
                 onPageMinus={handleMinus}
