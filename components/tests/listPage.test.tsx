@@ -1,4 +1,4 @@
-import { describe, expect, it } from '@jest/globals';
+import { describe, expect, it, jest } from '@jest/globals';
 import renderer from 'react-test-renderer';
 import userEvent from '@testing-library/user-event';
 import ListPage from '../ListPage/ListPage';
@@ -27,11 +27,26 @@ describe('List Page Component Test', () => {
         renderData={(data, idx) => (
           <div key={data.title + idx}>{data.title}</div>
         )}
-        resultTotalNum={2}
-        resultNumPerPage={6}
+        pageDataInform={{ resultTotalNum: 2, resultNumPerPage: 6 }}
+        handleChangePage={() => {}}
       />
     );
     expect(screen.queryByText('title1')).not.toBeNull();
     expect(screen.queryByText('title2')).not.toBeNull();
+  });
+
+  it('when change page, excute handleChangePage', () => {
+    const handleChangePage = jest.fn();
+    render(
+      <ListPage<TestData>
+        pageDataArr={testPageDataArr}
+        renderData={(data, idx) => (
+          <div key={data.title + idx}>{data.title}</div>
+        )}
+        pageDataInform={{ resultTotalNum: 2, resultNumPerPage: 6 }}
+        handleChangePage={handleChangePage}
+      />
+    );
+    const [minusBtn, plusBtn] = screen.queryAllByRole('button');
   });
 });

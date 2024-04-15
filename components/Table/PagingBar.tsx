@@ -14,10 +14,20 @@ export default function PagingBar({
   onPageMinus,
 }: Props) {
   const btnStyle = ' rounded-full hover:scale-110 px-4 py-2';
+  const handlePagePlus = () => {
+    if (pageNum < totalPageNum) {
+      onPagePlus();
+    }
+  };
+  const handlePageMinus = () => {
+    if (pageNum > 1) {
+      onPageMinus();
+    }
+  };
 
   return (
     <div className='flex flex-row items-center justify-center mt-3'>
-      <button className={btnStyle} onClick={onPageMinus}>
+      <button className={btnStyle} onClick={handlePageMinus}>
         <Icon size={18} color='white' icon='ArrowLeft' />
       </button>
       <div className='flex flex-row items-center gap-2 text-xl font-normal text-white'>
@@ -26,7 +36,7 @@ export default function PagingBar({
         <p>{totalPageNum}</p>
       </div>
 
-      <button className={btnStyle} onClick={onPagePlus}>
+      <button className={btnStyle} onClick={handlePagePlus}>
         <Icon size={18} color='white' icon={'ArrowRight'} />
       </button>
     </div>
