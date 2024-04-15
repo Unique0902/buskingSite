@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PagingBar component test rendering correctly test 1`] = `
+<div
+  className="flex flex-row items-center justify-center mt-3"
+>
+  <button
+    className=" rounded-full hover:scale-110 px-4 py-2"
+    onClick={[Function]}
+  >
+    <svg
+      fill="white"
+      height={18}
+      viewBox="0 0 306 306"
+      width={18}
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M247.35 35.7 211.65 0l-153 153 153 153 35.7-35.7L130.05 153z"
+        fillRule="nonzero"
+      />
+    </svg>
+  </button>
+  <div
+    className="flex flex-row items-center gap-2 text-xl font-normal text-white"
+  >
+    <p>
+      1
+    </p>
+    <p>
+      /
+    </p>
+    <p>
+      2
+    </p>
+  </div>
+  <button
+    className=" rounded-full hover:scale-110 px-4 py-2"
+    onClick={[Function]}
+  >
+    <svg
+      fill="white"
+      height={18}
+      viewBox="0 0 306 306"
+      width={18}
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M58.65 267.75 175.95 153 58.65 35.7 94.35 0l153 153-153 153z"
+        fillRule="nonzero"
+      />
+    </svg>
+  </button>
+</div>
+`;
