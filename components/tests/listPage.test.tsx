@@ -79,4 +79,19 @@ describe('List Page Component Test', () => {
       'pageDataArr length must be same or smaller than resultNumPerPage'
     );
   });
+
+  it('when no data', () => {
+    render(
+      <ListPage<TestData>
+        pageDataArr={[]}
+        renderData={(data, idx) => (
+          <div key={data.title + idx}>{data.title}</div>
+        )}
+        pageDataInform={{ resultTotalNum: 0, resultNumPerPage: 6 }}
+        handleChangePage={() => {}}
+        renderNoData={() => <div>no data</div>}
+      />
+    );
+    expect(screen.queryByText('no data')).not.toBeNull();
+  });
 });
