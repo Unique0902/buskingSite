@@ -132,6 +132,7 @@ export default function AppBusking() {
           pageDataInform={{
             resultNumPerPage: SONG_NUM_PER_PAGE,
             resultTotalNum: songArrToView.length,
+            totalDataArr: songArrToView,
           }}
           pageDataArr={viewedSongArr}
           renderNoData={() => <NoSongScreen />}

@@ -33,7 +33,9 @@ describe('arrangeMenu component test', () => {
 
     const outerBox = screen.getByText('outer');
     await userEvent.hover(outerBox);
-    expect(screen.getByText('inner')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText('inner')).toBeInTheDocument();
+    });
   });
 
   it('hover outer box and show inner box correctly with time after 0.5sec', async () => {

@@ -15,6 +15,37 @@ describe('List Page Component Test', () => {
     { title: 'title2', description: 'description2' },
   ];
 
+  const testPageDataArr2: TestData[] = [
+    { title: 'title1', description: 'description1' },
+    { title: 'title2', description: 'description2' },
+  ];
+
+  const bigTestPageDataArr: TestData[] = [
+    { title: 'title1', description: 'description1' },
+    { title: 'title2', description: 'description2' },
+    { title: 'title2', description: 'description2' },
+    { title: 'title2', description: 'description2' },
+    { title: 'title2', description: 'description2' },
+    { title: 'title2', description: 'description2' },
+    { title: 'title2', description: 'description2' },
+    { title: 'title2', description: 'description2' },
+    { title: 'title2', description: 'description2' },
+    { title: 'title2', description: 'description2' },
+  ];
+
+  const bigTestPageDataArr2: TestData[] = [
+    { title: 'title1', description: 'description1' },
+    { title: 'title2', description: 'description2' },
+    { title: 'title2', description: 'description2' },
+    { title: 'title2', description: 'description2' },
+    { title: 'title2', description: 'description2' },
+    { title: 'title2', description: 'description2' },
+    { title: 'title2', description: 'description2' },
+    { title: 'title2', description: 'description2' },
+    { title: 'title2', description: 'description2' },
+    { title: 'title2', description: 'description2' },
+  ];
+
   it('test rendering correctly', () => {
     const component = renderer.create(
       <ListPage<TestData>
@@ -22,7 +53,11 @@ describe('List Page Component Test', () => {
         renderData={(data, idx) => (
           <div key={data.title + idx}>{data.title}</div>
         )}
-        pageDataInform={{ resultTotalNum: 2, resultNumPerPage: 6 }}
+        pageDataInform={{
+          resultTotalNum: testPageDataArr.length,
+          resultNumPerPage: 6,
+          totalDataArr: testPageDataArr,
+        }}
         handleChangePage={() => {}}
       />
     );
@@ -36,7 +71,11 @@ describe('List Page Component Test', () => {
         renderData={(data, idx) => (
           <div key={data.title + idx}>{data.title}</div>
         )}
-        pageDataInform={{ resultTotalNum: 2, resultNumPerPage: 6 }}
+        pageDataInform={{
+          resultTotalNum: testPageDataArr.length,
+          resultNumPerPage: 6,
+          totalDataArr: testPageDataArr,
+        }}
         handleChangePage={() => {}}
       />
     );
@@ -52,7 +91,11 @@ describe('List Page Component Test', () => {
         renderData={(data, idx) => (
           <div key={data.title + idx}>{data.title}</div>
         )}
-        pageDataInform={{ resultTotalNum: 20, resultNumPerPage: 6 }}
+        pageDataInform={{
+          resultTotalNum: bigTestPageDataArr.length,
+          resultNumPerPage: 2,
+          totalDataArr: bigTestPageDataArr,
+        }}
         handleChangePage={handleChangePage}
       />
     );
@@ -71,7 +114,11 @@ describe('List Page Component Test', () => {
           renderData={(data, idx) => (
             <div key={data.title + idx}>{data.title}</div>
           )}
-          pageDataInform={{ resultTotalNum: 20, resultNumPerPage: 1 }}
+          pageDataInform={{
+            resultTotalNum: bigTestPageDataArr.length,
+            resultNumPerPage: 1,
+            totalDataArr: bigTestPageDataArr,
+          }}
           handleChangePage={() => {}}
         />
       )
@@ -87,11 +134,52 @@ describe('List Page Component Test', () => {
         renderData={(data, idx) => (
           <div key={data.title + idx}>{data.title}</div>
         )}
-        pageDataInform={{ resultTotalNum: 0, resultNumPerPage: 6 }}
+        pageDataInform={{
+          resultTotalNum: 0,
+          resultNumPerPage: 6,
+          totalDataArr: [],
+        }}
         handleChangePage={() => {}}
         renderNoData={() => <div>no data</div>}
       />
     );
     expect(screen.queryByText('no data')).not.toBeNull();
+  });
+  // TODO: totalDataArr 변화했을때 pageNum 0 된거 테스트하기
+
+  it('when totalDataArr change, pageNum clear', async () => {
+    const { rerender } = render(
+      <ListPage<TestData>
+        pageDataArr={testPageDataArr}
+        renderData={(data, idx) => (
+          <div key={data.title + idx}>{data.title}</div>
+        )}
+        pageDataInform={{
+          resultTotalNum: bigTestPageDataArr.length,
+          resultNumPerPage: 2,
+          totalDataArr: bigTestPageDataArr,
+        }}
+        handleChangePage={() => {}}
+      />
+    );
+    const [minusBtn, plusBtn] = screen.queryAllByRole('button');
+    await userEvent.click(plusBtn);
+    expect(screen.queryByText('2')).not.toBeNull();
+    rerender(
+      <ListPage<TestData>
+        pageDataArr={testPageDataArr2}
+        renderData={(data, idx) => (
+          <div key={data.title + idx}>{data.title}</div>
+        )}
+        pageDataInform={{
+          resultTotalNum: bigTestPageDataArr2.length,
+          resultNumPerPage: 2,
+          totalDataArr: bigTestPageDataArr2,
+        }}
+        handleChangePage={() => {}}
+      />
+    );
+
+    expect(screen.queryByText('1')).not.toBeNull();
   });
 });

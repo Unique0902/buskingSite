@@ -225,6 +225,7 @@ const App = () => {
                   pageDataInform={{
                     resultNumPerPage: SONG_NUM_PER_PAGE,
                     resultTotalNum: nowPlaylistSongArr.length,
+                    totalDataArr: nowPlaylistSongArr,
                   }}
                   pageDataArr={playlistViewedSongArr}
                   renderNoData={() => <NoSongScreen />}
@@ -267,6 +268,7 @@ const App = () => {
                   pageDataInform={{
                     resultNumPerPage: SONG_NUM_PER_PAGE,
                     resultTotalNum: appliance.length,
+                    totalDataArr: appliance,
                   }}
                   pageDataArr={applianceViewedSongArr}
                   renderNoData={() => <NoSongScreen />}

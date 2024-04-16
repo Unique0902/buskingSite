@@ -1,30 +1,23 @@
 import React, { useState, useEffect } from 'react';
 
 import ArrangeMenuBtn from '../../components/ArrangeMenu/ArrangeMenuBtn';
-import LoadingCheckWrapper from '../../components/Loading/LoadingCheckWrapper';
 import MainSec from '../../components/Main/MainSec';
 import NoPlaylistCheckWrapper from '../../components/NoPlaylist/NoPlaylistCheckWrapper';
-import SearchBar from '../../components/Search/SearchBar';
 import SongResultRow from '../../components/Table/SongResultRow';
-import SongTable from '../../components/Table/SongTable';
 import TitleBar from '../../components/Main/TitleBar';
 import { useAuthContext } from '../../context/AuthContext';
-import { useMediaQueryContext } from '../../context/MediaQueryContext';
 import { useBusking } from '../../hooks/UseBusking';
 import { usePlaylist } from '../../hooks/UsePlaylist';
-import useSearch from '../../hooks/UseSearch';
 import { getAppLayOut } from '../../layouts/appLayout';
 import { PlaylistSongDataArrangeOption } from '../../store/data/ArrangeOptions';
-import { songSearchWordCategories } from '../../store/data/CategoryTypes';
 import { PlaylistSongData } from '../../store/type/playlist';
 import { color } from '../../styles/theme';
-import {
-  calculateDataIdxInTable,
-  calculateTotalPageNum,
-} from '../../utils/calculate';
+import { calculateDataIdxInTable } from '../../utils/calculate';
 import ListPage from '../../components/ListPage/ListPage';
 import NoSongScreen from '../../components/Table/NoSongScreen';
 import { UseListPageDataWithAllData } from '../../hooks/UseListPageDataWithAllData';
+import NewSearchBar from '../../components/Search/NewSearchBar';
+import { NewSearchWord } from '../../store/type/searchword';
 //TODO: 플레이리스트 노래 제목이나 가수 수정기능 추가 이것도 송 아이템에 부가 버튼 만들어서 추가하자
 // 자리 부족한 반응형 화면에서는 ... 이모티콘 넣어서 눌렀을때 버튼 리스트 나오게
 export default function AppPlaylist() {
@@ -47,11 +40,42 @@ export default function AppPlaylist() {
     }
   }, [nowPlaylist]);
 
-  //searchword가 searchBar의 여러 컴포넌트에 전해지는게 맘에 안듬, searchWord state도 searchBar에서 관리하게하고싶음 <<이건 불가능
-  //그래도 전자는 해결
-  //바깥 컴포넌트에서 말고 useAddSearch의 로직이 워낙 복잡하다 보니.. 쉽지않네
-  const { searchWord, setSearchWord, handleSearchBtnClick } =
-    useSearch<PlaylistSongData>(songArr);
+  // const { searchWord, setSearchWord, handleSearchBtnClick } =
+  //   useSearch<PlaylistSongData>(songArr);
+
+  // -------------
+
+  const [songArrToView, setSongArrToView] = useState<PlaylistSongData[]>([]);
+  useEffect(() => {
+    setSongArrToView([...songArr]);
+  }, [songArr]);
+  const searchBySearchWord = (searchWord: NewSearchWord) => {
+    if (searchWord.name) {
+      if (searchWord.category === '제목') {
+        const filterdDataArr = songArr.filter((song) =>
+          song.title.toLowerCase().includes(searchWord.name)
+        );
+        setSongArrToView([...filterdDataArr]);
+      } else if (searchWord.category === '가수') {
+        const filterdDataArr = songArr.filter((song) =>
+          song.artist.toLowerCase().includes(searchWord.name)
+        );
+        setSongArrToView([...filterdDataArr]);
+      } else {
+        throw new Error('not exist song searchWord category!');
+      }
+    } else {
+      setSongArrToView([...songArr]);
+    }
+  };
+  //TODO: 테스트 만들기 (TDD 안하니까 불안하더라)
+  const handleSearchBtnClick = (searchWord: NewSearchWord) => {
+    if (searchWord.category) {
+      // setNowPageNum(1);
+      searchBySearchWord(searchWord);
+    }
+  };
+  // -------------
 
   const handleClickResult = (sid: string) => {
     removeSongInPlaylist(sid);
@@ -79,7 +103,7 @@ export default function AppPlaylist() {
           alert('신청 최대수에 도달했습니다!');
           return;
         }
-        const songToApply = songArr.find((s) => s.id === sid);
+        const songToApply = songArrToView.find((s) => s.id === sid);
         if (songToApply) {
           applyNewBuskingSong(
             uid,
@@ -91,25 +115,40 @@ export default function AppPlaylist() {
           alert(songToApply.title + ' 이 신청되었습니다!');
         } else {
           throw new Error(
-            'there is no song that you apply in playlist SongArr!!'
+            'there is no song that you apply in playlist songArrToView!!'
           );
         }
       }
     }
   };
-  const { isSmScreen } = useMediaQueryContext();
   const SONG_NUM_PER_PAGE = 6;
 
   const { viewedSongArr, handleViewedSongArrByPageNum } =
-    UseListPageDataWithAllData(songArr, SONG_NUM_PER_PAGE);
+    UseListPageDataWithAllData(songArrToView, SONG_NUM_PER_PAGE);
 
   return (
     <>
       <TitleBar text={'플레이리스트 관리'} />
       <NoPlaylistCheckWrapper isExistWrapper={!!nowPlaylist}>
         <MainSec>
-          {/* TODO: SearchBar속에 searchWord 들어가서 콜백함수로 실행되게 리팩토링하기 4/16 */}
-          <SearchBar searchWord={searchWord} setSearchWord={setSearchWord}>
+          <NewSearchBar categories={['제목', '가수']}>
+            <NewSearchBar.MainSec>
+              <NewSearchBar.MainSec.Select />
+              <NewSearchBar.MainSec.Input />
+              <NewSearchBar.MainSec.Button
+                handleClickBtn={handleSearchBtnClick}
+                text='검색'
+              />
+            </NewSearchBar.MainSec>
+            <NewSearchBar.SubSec>
+              <ArrangeMenuBtn<PlaylistSongData>
+                setResults={setSongArrToView}
+                arrangeOptionArr={PlaylistSongDataArrangeOption}
+              />
+            </NewSearchBar.SubSec>
+          </NewSearchBar>
+
+          {/* <SearchBar searchWord={searchWord} setSearchWord={setSearchWord}>
             <SearchBar.MainSec>
               <SearchBar.MainSec.Select
                 optionValueArr={songSearchWordCategories}
@@ -130,16 +169,17 @@ export default function AppPlaylist() {
                 arrangeOptionArr={PlaylistSongDataArrangeOption}
               />
             </SearchBar.SubSec>
-          </SearchBar>
+          </SearchBar> */}
 
           <h2 className='mb-2 text-xl font-semibold '>
-            총 노래 수 {songArr && songArr.length}
+            총 노래 수 {songArrToView && songArrToView.length}
           </h2>
 
           <ListPage
             pageDataInform={{
               resultNumPerPage: SONG_NUM_PER_PAGE,
-              resultTotalNum: songArr.length,
+              resultTotalNum: songArrToView.length,
+              totalDataArr: songArrToView,
             }}
             pageDataArr={viewedSongArr}
             renderNoData={() => <NoSongScreen />}
