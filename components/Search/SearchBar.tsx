@@ -1,7 +1,5 @@
 import React, { createContext, ReactNode, useContext } from 'react';
 
-import { v4 as uuidv4 } from 'uuid';
-
 import Icon from '../../assets/icon/icon';
 import {
   NameSearchWord,
@@ -97,8 +95,7 @@ const Select = ({ optionValueArr }: SelectProps) => {
       onChange={handleSelectChange}
     >
       {optionValueArr.map((val) => (
-        // TODO:키 줄만한 다른거 찾아보기
-        <option key={uuidv4()} value={val}>
+        <option key={'selectOption' + val} value={val}>
           {val}
         </option>
       ))}

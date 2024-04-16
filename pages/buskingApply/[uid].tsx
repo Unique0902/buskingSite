@@ -25,7 +25,13 @@ import { PlaylistData, PlaylistSongData } from '../../store/type/playlist';
 import { color } from '../../styles/theme';
 import { PlaylistSongDataArrangeOption } from '../../store/data/ArrangeOptions';
 import { useMediaQueryContext } from '../../context/MediaQueryContext';
-import { calculateTotalPageNum } from '../../utils/calculate';
+import {
+  calculateDataIdxInTable,
+  calculateTotalPageNum,
+} from '../../utils/calculate';
+import ListPage from '../../components/ListPage/ListPage';
+import { UseListPageDataWithAllData } from '../../hooks/UseListPageDataWithAllData';
+import NoSongScreen from '../../components/Table/NoSongScreen';
 //TODO: getIp 기능 오류 자꾸나는거 어떻게좀하기
 const userRepository = new UserRepository();
 const playlistRepository = new PlaylistRepository();
@@ -46,9 +52,7 @@ const App = () => {
   } = useIpData(userId);
 
   const playlistSearchProps = useSearch<PlaylistSongData>(nowPlaylistSongArr);
-  const applianceSearchProps = useSearch<ApplianceData>(appliance);
 
-  //얘도 mutation해야할거 있으면 나중에 custom hook으로 리팩토링하기
   const { data: buskerData } = useQuery({
     queryKey: [userId, 'buskerData'],
     queryFn: () => userRepository.getUserData(userId as string),
@@ -134,6 +138,18 @@ const App = () => {
     }
   };
 
+  const SONG_NUM_PER_PAGE = 6;
+
+  const {
+    viewedSongArr: playlistViewedSongArr,
+    handleViewedSongArrByPageNum: handlePlaylistViewedSongArrByPageNum,
+  } = UseListPageDataWithAllData(nowPlaylistSongArr, SONG_NUM_PER_PAGE);
+
+  const {
+    viewedSongArr: applianceViewedSongArr,
+    handleViewedSongArrByPageNum: handleApplianceViewedSongArrByPageNum,
+  } = UseListPageDataWithAllData(appliance, SONG_NUM_PER_PAGE);
+
   if (isIpdataError) {
     console.error(ipDataError);
     return <div>ip를 불러올수 없습니다. 새로고침해주세요.</div>;
@@ -205,37 +221,36 @@ const App = () => {
                   </SearchBar.SubSec>
                 </SearchBar>
 
-                <LoadingCheckWrapper isLoading={playlistSearchProps.isLoading}>
-                  <SongTable<PlaylistSongData>
-                    viewdSongArr={playlistSearchProps.viewedDataArr}
-                    nowPageNum={playlistSearchProps.nowPageNum}
-                    renderSongResult={(index, result) => (
-                      <SongResultRow key={result.artist + result.title}>
-                        <SongResultRow.Text text={index.toString()} />
-                        <SongResultRow.Inform
-                          title={result.title}
-                          artist={result.artist}
-                        />
-                        <SongResultRow.IconButton
-                          icon='Send'
-                          size={20}
-                          color={color.white}
-                          onClick={() => handleApplySong(result.id)}
-                        />
-                      </SongResultRow>
-                    )}
-                  >
-                    <SongTable.PagingBar
-                      totalPageNum={calculateTotalPageNum(
-                        nowPlaylistSongArr.length,
-                        6
-                      )}
-                      pageNum={playlistSearchProps.nowPageNum}
-                      onPagePlus={playlistSearchProps.handlePlus}
-                      onPageMinus={playlistSearchProps.handleMinus}
-                    />
-                  </SongTable>
-                </LoadingCheckWrapper>
+                <ListPage
+                  pageDataInform={{
+                    resultNumPerPage: SONG_NUM_PER_PAGE,
+                    resultTotalNum: nowPlaylistSongArr.length,
+                  }}
+                  pageDataArr={playlistViewedSongArr}
+                  renderNoData={() => <NoSongScreen />}
+                  renderData={(result, idx, nowPageNum) => (
+                    <SongResultRow key={result.artist + result.title}>
+                      <SongResultRow.Text
+                        text={calculateDataIdxInTable(
+                          idx,
+                          nowPageNum,
+                          SONG_NUM_PER_PAGE
+                        ).toString()}
+                      />
+                      <SongResultRow.Inform
+                        title={result.title}
+                        artist={result.artist}
+                      />
+                      <SongResultRow.IconButton
+                        icon='Send'
+                        size={20}
+                        color={color.white}
+                        onClick={() => handleApplySong(result.id)}
+                      />
+                    </SongResultRow>
+                  )}
+                  handleChangePage={handlePlaylistViewedSongArrByPageNum}
+                />
               </MainSec>
 
               <MainSec>
@@ -248,37 +263,37 @@ const App = () => {
                   </h3>
                 </section>
 
-                <LoadingCheckWrapper isLoading={applianceSearchProps.isLoading}>
-                  <SongTable<ApplianceData>
-                    viewdSongArr={applianceSearchProps.viewedDataArr}
-                    nowPageNum={applianceSearchProps.nowPageNum}
-                    renderSongResult={(index, result) => (
-                      <SongResultRow key={result.artist + result.title}>
-                        <SongResultRow.Text text={index.toString()} />
-                        <SongResultRow.Inform
-                          title={result.title}
-                          artist={result.artist}
-                        />
-                        <SongResultRow.Text
-                          text={result.cnt.toString() + '명'}
-                        />
-                        <SongResultRow.IconButton
-                          icon='Send'
-                          size={20}
-                          color={color.white}
-                          onClick={() => handleApplySong(result.sid)}
-                        />
-                      </SongResultRow>
-                    )}
-                  >
-                    <SongTable.PagingBar
-                      totalPageNum={calculateTotalPageNum(appliance.length, 6)}
-                      pageNum={applianceSearchProps.nowPageNum}
-                      onPagePlus={applianceSearchProps.handlePlus}
-                      onPageMinus={applianceSearchProps.handleMinus}
-                    />
-                  </SongTable>
-                </LoadingCheckWrapper>
+                <ListPage
+                  pageDataInform={{
+                    resultNumPerPage: SONG_NUM_PER_PAGE,
+                    resultTotalNum: appliance.length,
+                  }}
+                  pageDataArr={applianceViewedSongArr}
+                  renderNoData={() => <NoSongScreen />}
+                  renderData={(result, idx, nowPageNum) => (
+                    <SongResultRow key={result.artist + result.title}>
+                      <SongResultRow.Text
+                        text={calculateDataIdxInTable(
+                          idx,
+                          nowPageNum,
+                          SONG_NUM_PER_PAGE
+                        ).toString()}
+                      />
+                      <SongResultRow.Inform
+                        title={result.title}
+                        artist={result.artist}
+                      />
+                      <SongResultRow.Text text={result.cnt.toString() + '명'} />
+                      <SongResultRow.IconButton
+                        icon='Send'
+                        size={20}
+                        color={color.white}
+                        onClick={() => handleApplySong(result.sid)}
+                      />
+                    </SongResultRow>
+                  )}
+                  handleChangePage={handleApplianceViewedSongArrByPageNum}
+                />
               </MainSec>
             </section>
           ) : (

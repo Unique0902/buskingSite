@@ -5,16 +5,13 @@ import { useRouter } from 'next/router';
 import ArrangeMenuBtn from '../../components/ArrangeMenu/ArrangeMenuBtn';
 import PrimaryBtn from '../../components/Btn/PrimaryBtn';
 import HoverTextSection from '../../components/Hover/HoverTextSection';
-import LoadingCheckWrapper from '../../components/Loading/LoadingCheckWrapper';
 import MainSec from '../../components/Main/MainSec';
 import MusicBar from '../../components/MusicBar/MusicBar';
 import SectionCopyText from '../../components/BuskingPage/SectionCopyText';
 import SongResultRow from '../../components/Table/SongResultRow';
-import SongTable from '../../components/Table/SongTable';
 import { useAuthContext } from '../../context/AuthContext';
 import { useBusking } from '../../hooks/UseBusking';
 import { usePlaylist } from '../../hooks/UsePlaylist';
-import useSearch from '../../hooks/UseSearch';
 import { useUserData } from '../../hooks/UseUserData';
 import { getAppLayOut } from '../../layouts/appLayout';
 import { ApplianceData, ApplianceObjects } from '../../store/type/busking';
@@ -23,6 +20,7 @@ import { ApplianceDataArrangeOption } from '../../store/data/ArrangeOptions';
 import ListPage from '../../components/ListPage/ListPage';
 import { calculateDataIdxInTable } from '../../utils/calculate';
 import NoSongScreen from '../../components/Table/NoSongScreen';
+import { UseListPageDataWithAllData } from '../../hooks/UseListPageDataWithAllData';
 //TODO: 본인이 노래 추가하는 기능 넣기 버스킹중일때 인식해서 플레이리스트에서 추가할수있게 버튼만들자!
 export default function AppBusking() {
   const { uid } = useAuthContext();
@@ -81,19 +79,8 @@ export default function AppBusking() {
     removeBuskingSong(sid, uid);
   };
 
-  const [viewedSongArr, setViewedSongArr] = useState<ApplianceData[]>([]);
-  const handleViewedSongArrByPageNum = (pageNum: number) =>
-    setViewedSongArr(
-      [...songArrToView].slice(
-        (pageNum - 1) * SONG_NUM_PER_PAGE,
-        pageNum * SONG_NUM_PER_PAGE
-      )
-    );
-  useEffect(() => {
-    songArrToView.length > SONG_NUM_PER_PAGE
-      ? setViewedSongArr([...songArrToView].slice(0, SONG_NUM_PER_PAGE))
-      : setViewedSongArr([...songArrToView]);
-  }, [songArrToView]);
+  const { viewedSongArr, handleViewedSongArrByPageNum } =
+    UseListPageDataWithAllData(songArrToView, SONG_NUM_PER_PAGE);
 
   if (isbuskingDataLoading) {
     return <div>checking buskingData...</div>;
