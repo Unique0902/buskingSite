@@ -9,6 +9,11 @@ export type SearchWord = {
   category: SearchWordCategoryType;
 };
 
+export type NewSearchWord = {
+  name: string;
+  category: string;
+};
+
 export type SearchWordCategoryType = (typeof songSearchWordCategories)[number];
 
 export type NameSearchWord = {
