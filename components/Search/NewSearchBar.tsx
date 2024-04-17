@@ -86,10 +86,6 @@ const Select = () => {
   );
 };
 
-const Option = ({ value }: { value: string }) => {
-  return <option value={value}>{value}</option>;
-};
-
 type InputProps = {
   placeholder?: string;
 };
@@ -131,7 +127,6 @@ NewSearchBar.MainSec = MainSec;
 NewSearchBar.SubSec = SubSec;
 
 MainSec.Select = Select;
-MainSec.Option = Option;
 MainSec.Input = Input;
 MainSec.Button = Button;
 

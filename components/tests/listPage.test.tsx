@@ -145,7 +145,6 @@ describe('List Page Component Test', () => {
     );
     expect(screen.queryByText('no data')).not.toBeNull();
   });
-  // TODO: totalDataArr 변화했을때 pageNum 0 된거 테스트하기
 
   it('when totalDataArr change, pageNum clear', async () => {
     const { rerender } = render(

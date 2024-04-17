@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`newSearchBar component tests render test 1`] = `
+<form
+  className="relative flex flex-row items-center justify-center flex-1 gap-2 mb-6 max-lg:w-full"
+  onSubmit={[Function]}
+>
+  <div
+    className="relative flex flex-row items-center justify-center flex-1 gap-2 max-lg:w-full max-lg:mx-2"
+  >
+    <select
+      className="p-2 text-lg border-2 border-black rounded-xl max-lg:mr-0 max-lg:text-base dark:bg-slate-500 "
+      onChange={[Function]}
+      value="category1"
+    >
+      <option
+        value="category1"
+      >
+        category1
+      </option>
+      <option
+        value="category2"
+      >
+        category2
+      </option>
+    </select>
+    <div
+      className="relative flex flex-row items-center flex-1"
+    >
+      <input
+        className="w-full p-2 text-lg border-2 border-black rounded-xl max-lg:text-base dark:bg-slate-500"
+        onChange={[Function]}
+        placeholder="검색어를 입력하세요.."
+        type="search"
+        value=""
+      />
+    </div>
+    <button
+      className="hover:opacity-70 cursor-pointer rounded-lg"
+      onClick={[Function]}
+      style={
+        {
+          "backgroundColor": "#0055ff",
+          "color": "#FFFFFF",
+          "fontSize": "12px",
+          "padding": "12px 24px",
+        }
+      }
+      type="submit"
+    >
+      btn
+    </button>
+  </div>
+  <div>
+    subsec
+  </div>
+</form>
+`;

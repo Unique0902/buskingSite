@@ -68,10 +68,10 @@ export default function AppPlaylist() {
       setSongArrToView([...songArr]);
     }
   };
-  //TODO: 테스트 만들기 (TDD 안하니까 불안하더라)
+  //TODO: SearchBar 테스트 만들기 (TDD 안하니까 불안하더라)
+  // 페이지 변경때 pageNum과 함께 검색하는 방법찾기
   const handleSearchBtnClick = (searchWord: NewSearchWord) => {
     if (searchWord.category) {
-      // setNowPageNum(1);
       searchBySearchWord(searchWord);
     }
   };
