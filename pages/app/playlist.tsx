@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 
 import ArrangeMenuBtn from '../../components/ArrangeMenu/ArrangeMenuBtn';
 import MainSec from '../../components/Main/MainSec';
@@ -22,7 +22,6 @@ import { NewSearchWord } from '../../store/type/searchword';
 // 자리 부족한 반응형 화면에서는 ... 이모티콘 넣어서 눌렀을때 버튼 리스트 나오게
 export default function AppPlaylist() {
   const { uid } = useAuthContext();
-  const [songArr, setSongArr] = useState<PlaylistSongData[]>([]);
   const { nowPlaylist, removeSongInPlaylist, editSongInPlaylist } =
     usePlaylist(uid);
   const {
@@ -30,52 +29,22 @@ export default function AppPlaylist() {
     applyOldBuskingSong,
     applyNewBuskingSong,
   } = useBusking(uid);
-  useEffect(() => {
-    if (nowPlaylist) {
-      nowPlaylist.songs
-        ? setSongArr(Object.values(nowPlaylist.songs))
-        : setSongArr([]);
-    } else {
-      setSongArr([]);
-    }
-  }, [nowPlaylist]);
 
-  // const { searchWord, setSearchWord, handleSearchBtnClick } =
-  //   useSearch<PlaylistSongData>(songArr);
+  const songTotalArr = useMemo(
+    () =>
+      nowPlaylist && nowPlaylist.songs ? Object.values(nowPlaylist.songs) : [],
+    [nowPlaylist]
+  );
 
-  // -------------
+  const SONG_NUM_PER_PAGE = 6;
 
-  const [songArrToView, setSongArrToView] = useState<PlaylistSongData[]>([]);
-  useEffect(() => {
-    setSongArrToView([...songArr]);
-  }, [songArr]);
-  const searchBySearchWord = (searchWord: NewSearchWord) => {
-    if (searchWord.name) {
-      if (searchWord.category === '제목') {
-        const filterdDataArr = songArr.filter((song) =>
-          song.title.toLowerCase().includes(searchWord.name)
-        );
-        setSongArrToView([...filterdDataArr]);
-      } else if (searchWord.category === '가수') {
-        const filterdDataArr = songArr.filter((song) =>
-          song.artist.toLowerCase().includes(searchWord.name)
-        );
-        setSongArrToView([...filterdDataArr]);
-      } else {
-        throw new Error('not exist song searchWord category!');
-      }
-    } else {
-      setSongArrToView([...songArr]);
-    }
-  };
-  //TODO: SearchBar 테스트 만들기 (TDD 안하니까 불안하더라)
-  // 페이지 변경때 pageNum과 함께 검색하는 방법찾기
-  const handleSearchBtnClick = (searchWord: NewSearchWord) => {
-    if (searchWord.category) {
-      searchBySearchWord(searchWord);
-    }
-  };
-  // -------------
+  const {
+    viewedSongArr,
+    handleViewedSongArrByPageNum,
+    handleSearch,
+    searchedSongArr,
+    setSearchedSongArr,
+  } = UseListPageDataWithAllData(songTotalArr, SONG_NUM_PER_PAGE);
 
   const handleClickResult = (sid: string) => {
     removeSongInPlaylist(sid);
@@ -103,7 +72,7 @@ export default function AppPlaylist() {
           alert('신청 최대수에 도달했습니다!');
           return;
         }
-        const songToApply = songArrToView.find((s) => s.id === sid);
+        const songToApply = searchedSongArr.find((s) => s.id === sid);
         if (songToApply) {
           applyNewBuskingSong(
             uid,
@@ -121,10 +90,6 @@ export default function AppPlaylist() {
       }
     }
   };
-  const SONG_NUM_PER_PAGE = 6;
-
-  const { viewedSongArr, handleViewedSongArrByPageNum } =
-    UseListPageDataWithAllData(songArrToView, SONG_NUM_PER_PAGE);
 
   return (
     <>
@@ -136,13 +101,13 @@ export default function AppPlaylist() {
               <NewSearchBar.MainSec.Select />
               <NewSearchBar.MainSec.Input />
               <NewSearchBar.MainSec.Button
-                handleClickBtn={handleSearchBtnClick}
+                handleClickBtn={handleSearch}
                 text='검색'
               />
             </NewSearchBar.MainSec>
             <NewSearchBar.SubSec>
               <ArrangeMenuBtn<PlaylistSongData>
-                setResults={setSongArrToView}
+                setResults={setSearchedSongArr}
                 arrangeOptionArr={PlaylistSongDataArrangeOption}
               />
             </NewSearchBar.SubSec>
@@ -172,17 +137,18 @@ export default function AppPlaylist() {
           </SearchBar> */}
 
           <h2 className='mb-2 text-xl font-semibold '>
-            총 노래 수 {songArrToView && songArrToView.length}
+            총 노래 수 {searchedSongArr && searchedSongArr.length}
           </h2>
 
           <ListPage
             pageDataInform={{
               resultNumPerPage: SONG_NUM_PER_PAGE,
-              resultTotalNum: songArrToView.length,
-              totalDataArr: songArrToView,
+              resultTotalNum: searchedSongArr.length,
+              totalDataArr: searchedSongArr,
             }}
             pageDataArr={viewedSongArr}
             renderNoData={() => <NoSongScreen />}
+            handleChangePage={handleViewedSongArrByPageNum}
             renderData={(result, idx, nowPageNum) => (
               <SongResultRow key={result.artist + result.title}>
                 <SongResultRow.Text
@@ -227,7 +193,6 @@ export default function AppPlaylist() {
                 </SongResultRow.HiddenSection>
               </SongResultRow>
             )}
-            handleChangePage={handleViewedSongArrByPageNum}
           />
         </MainSec>
       </NoPlaylistCheckWrapper>
