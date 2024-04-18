@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 
 import { useRouter } from 'next/router';
 
@@ -36,26 +36,22 @@ export default function AppBusking() {
     removeBusking,
   } = useBusking(uid);
 
-  const [songArr, setSongArr] = useState<ApplianceData[]>([]);
-  const [songArrToView, setSongArrToView] = useState<ApplianceData[]>([]);
+  const [songArrWithMusicBar, setSongArrWithMusicBar] = useState<
+    ApplianceData[]
+  >([]);
   const router = useRouter();
 
   const SONG_NUM_PER_PAGE = 6;
 
-  // 객체의 멤버값이 나올수있는 타입은 기존타입과 undefined임!! null이 아님!! 구분하기
-  useEffect(() => {
-    if (buskingData) {
-      const appliance: ApplianceObjects | undefined = buskingData.appliance;
-      if (appliance) {
-        const applianceArr = Object.values(appliance);
-        setSongArr(
-          applianceArr.sort((a, b) => parseInt(a.id) - parseInt(b.id))
-        );
-      } else {
-        setSongArr([]);
-      }
-    }
-  }, [buskingData]);
+  const songTotalArr = useMemo(
+    () =>
+      buskingData && buskingData.appliance
+        ? Object.values(buskingData.appliance).sort(
+            (a, b) => parseInt(a.id) - parseInt(b.id)
+          )
+        : [],
+    [buskingData]
+  );
 
   useEffect(() => {
     if (!buskingData) router.push('/app/makebusking');
@@ -80,7 +76,7 @@ export default function AppBusking() {
   };
 
   const { viewedSongArr, handleViewedSongArrByPageNum } =
-    UseListPageDataWithAllData(songArrToView, SONG_NUM_PER_PAGE);
+    UseListPageDataWithAllData(songArrWithMusicBar, SONG_NUM_PER_PAGE);
 
   if (isbuskingDataLoading) {
     return <div>checking buskingData...</div>;
@@ -108,7 +104,10 @@ export default function AppBusking() {
         </div>
       </section>
 
-      <MusicBar songArr={songArr} setSongArrToView={setSongArrToView} />
+      <MusicBar
+        songArr={songTotalArr}
+        setSongArrToView={setSongArrWithMusicBar}
+      />
 
       <MainSec>
         <section className='relative flex flex-row items-center justify-between max-lg:flex-col max-lg:items-start max-lg:px-4'>
@@ -118,12 +117,12 @@ export default function AppBusking() {
               `현재 플레이리스트: ${playlists[buskingData.playlistId].name}`}
           </h1>
           <h2 className='text-xl font-semibold '>
-            총 노래 수 {songArrToView ? songArrToView.length : 0}
+            총 노래 수 {songArrWithMusicBar ? songArrWithMusicBar.length : 0}
           </h2>
         </section>
         <div className='flex flex-row justify-end'>
           <ArrangeMenuBtn<ApplianceData>
-            setResults={setSongArrToView}
+            setResults={setSongArrWithMusicBar}
             arrangeOptionArr={ApplianceDataArrangeOption}
           />
         </div>
@@ -131,8 +130,8 @@ export default function AppBusking() {
         <ListPage
           pageDataInform={{
             resultNumPerPage: SONG_NUM_PER_PAGE,
-            resultTotalNum: songArrToView.length,
-            totalDataArr: songArrToView,
+            resultTotalNum: songArrWithMusicBar.length,
+            totalDataArr: songArrWithMusicBar,
           }}
           pageDataArr={viewedSongArr}
           renderNoData={() => <NoSongScreen />}

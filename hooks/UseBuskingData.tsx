@@ -7,7 +7,7 @@ import { UserData } from '../store/type/userData';
 const buskingRepository = new BuskingRepository();
 
 const useBuskingData = (
-  userId: string | null,
+  userId: string | null | undefined,
   buskerData: UserData | null | undefined
 ) => {
   const buskingQueryResult = useQuery({

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useMemo } from 'react';
 
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
@@ -16,12 +16,10 @@ import SongResultRow from '../../components/Table/SongResultRow';
 import SongTable from '../../components/Table/SongTable';
 import useBuskingData from '../../hooks/UseBuskingData';
 import useIpData from '../../hooks/UseIpData';
-import useSearch from '../../hooks/UseSearch';
 import PlaylistRepository from '../../service/playlist_repository';
 import UserRepository from '../../service/userRepository';
 import { songSearchWordCategories } from '../../store/data/CategoryTypes';
-import { ApplianceData } from '../../store/type/busking';
-import { PlaylistData, PlaylistSongData } from '../../store/type/playlist';
+import { PlaylistSongData } from '../../store/type/playlist';
 import { color } from '../../styles/theme';
 import { PlaylistSongDataArrangeOption } from '../../store/data/ArrangeOptions';
 import { useMediaQueryContext } from '../../context/MediaQueryContext';
@@ -32,77 +30,65 @@ import {
 import ListPage from '../../components/ListPage/ListPage';
 import { UseListPageDataWithAllData } from '../../hooks/UseListPageDataWithAllData';
 import NoSongScreen from '../../components/Table/NoSongScreen';
+import NewSearchBar from '../../components/Search/NewSearchBar';
 //TODO: getIp 기능 오류 자꾸나는거 어떻게좀하기
 const userRepository = new UserRepository();
 const playlistRepository = new PlaylistRepository();
 
 const App = () => {
-  const [nowPlaylistSongArr, setNowPlaylistSongArr] = useState<
-    PlaylistSongData[]
-  >([]);
-  const [appliance, setAppliance] = useState<ApplianceData[]>([]);
-  const [nowPlaylist, setNowPlaylist] = useState<PlaylistData | null>(null);
   const router = useRouter();
-  const userId = router.query.uid ? router.query.uid.toString() : null;
+  const buskerUserId = router.query.uid?.toString();
   const {
     data: ipData,
     isError: isIpdataError,
     error: ipDataError,
     isLoading: isIpDataLoading,
-  } = useIpData(userId);
-
-  const playlistSearchProps = useSearch<PlaylistSongData>(nowPlaylistSongArr);
+  } = useIpData(buskerUserId);
 
   const { data: buskerData } = useQuery({
-    queryKey: [userId, 'buskerData'],
-    queryFn: () => userRepository.getUserData(userId as string),
-    enabled: !!userId,
+    queryKey: [buskerUserId, 'buskerData'],
+    queryFn: () => userRepository.getUserData(buskerUserId as string),
+    enabled: !!buskerUserId,
   });
 
   const { data: playlistData } = useQuery({
-    queryKey: [userId, 'playlistData'],
-    queryFn: () => playlistRepository.getPlaylists(userId as string),
-    enabled: !!userId && !!buskerData,
+    queryKey: [buskerUserId, 'playlistData'],
+    queryFn: () => playlistRepository.getPlaylists(buskerUserId as string),
+    enabled: !!buskerUserId && !!buskerData,
   });
 
   const {
     buskingQueryResult: { data: buskingData },
     applyOldBuskingSong,
     applyNewBuskingSong,
-  } = useBuskingData(userId, buskerData);
+  } = useBuskingData(buskerUserId, buskerData);
 
-  useEffect(() => {
-    if (buskerData && playlistData) {
-      if (!playlistData) return;
-      const listArr = Object.values(playlistData);
-      if (listArr.length > 0) {
-        setNowPlaylist(listArr[0]);
-        // nowPlaylist.songs && setNowPlaylistSongArr(Object.values(nowPlaylist.songs));
-        // setState함수는 비동기적으로 동작하므로 위 코드에 nowPlaylist가 잘들어갔는지 보장할 수 없다!
-        //따라서 아래처럼 코드를 바꾸었다.
-        listArr[0].songs &&
-          setNowPlaylistSongArr(Object.values(listArr[0].songs));
-      }
-    }
-  }, [buskerData, playlistData]);
-
-  useEffect(() => {
-    if (buskingData && buskingData.appliance) {
-      setAppliance(
-        Object.values(buskingData.appliance).sort(
-          (a, b) => parseInt(a.id) - parseInt(b.id)
-        )
-      );
-    } else {
-      setAppliance([]);
-    }
-  }, [buskingData]);
+  const nowPlaylist = useMemo(
+    () =>
+      playlistData && Object.values(playlistData).length > 0
+        ? Object.values(playlistData)[0]
+        : undefined,
+    [playlistData]
+  );
+  const nowPlaylistSongArr: PlaylistSongData[] = useMemo(
+    () => (nowPlaylist?.songs ? Object.values(nowPlaylist.songs) : []),
+    [nowPlaylist]
+  );
+  const appliance = useMemo(
+    () =>
+      buskingData?.appliance
+        ? Object.values(buskingData.appliance).sort(
+            (a, b) => parseInt(a.id) - parseInt(b.id)
+          )
+        : [],
+    [buskingData]
+  );
 
   const { isSmScreen } = useMediaQueryContext();
 
   //여기서 userID를 분리할수있을까? 분리해야되나?
   const handleApplySong = (sid: string) => {
-    if (buskingData && userId && ipData) {
+    if (buskingData && buskerUserId && ipData) {
       const appliedSongData = appliance.find((song) => song.sid === sid);
       if (appliedSongData) {
         const isUserApplied = !!appliedSongData.applicants.find(
@@ -112,7 +98,7 @@ const App = () => {
           window.alert('이미 투표하셨습니다!');
           return;
         }
-        applyOldBuskingSong(userId, sid, ipData, appliedSongData);
+        applyOldBuskingSong(buskerUserId, sid, ipData, appliedSongData);
         alert(appliedSongData.title + ' 이 신청되었습니다!');
       } else {
         if (appliance.length === buskingData.maxNum) {
@@ -122,7 +108,7 @@ const App = () => {
         const songToApply = nowPlaylistSongArr.find((s) => s.id === sid);
         if (songToApply) {
           applyNewBuskingSong(
-            userId,
+            buskerUserId,
             songToApply.title,
             songToApply.artist,
             sid,
@@ -143,6 +129,9 @@ const App = () => {
   const {
     viewedSongArr: playlistViewedSongArr,
     handleViewedSongArrByPageNum: handlePlaylistViewedSongArrByPageNum,
+    searchedSongArr: playlistSearchedSongArr,
+    setSearchedSongArr: setPlaylistSearchedSongArr,
+    handleSearch: handlePlaylistSearch,
   } = UseListPageDataWithAllData(nowPlaylistSongArr, SONG_NUM_PER_PAGE);
 
   const {
@@ -196,39 +185,33 @@ const App = () => {
                     신청가능 곡 수 {nowPlaylistSongArr.length}
                   </h3>
                 </div>
-                <SearchBar
-                  searchWord={playlistSearchProps.searchWord}
-                  setSearchWord={playlistSearchProps.setSearchWord}
-                >
-                  <SearchBar.MainSec>
-                    <SearchBar.MainSec.Select
-                      optionValueArr={songSearchWordCategories}
-                    />
-                    <SearchBar.MainSec.InputWithButton
-                      handleClickBtn={playlistSearchProps.handleSearchBtnClick}
-                    />
-                    <SearchBar.MainSec.Button
-                      handleClickBtn={playlistSearchProps.handleSearchBtnClick}
+
+                <NewSearchBar categories={['제목', '가수']}>
+                  <NewSearchBar.MainSec>
+                    <NewSearchBar.MainSec.Select />
+                    <NewSearchBar.MainSec.Input />
+                    <NewSearchBar.MainSec.Button
+                      handleClickBtn={handlePlaylistSearch}
                       text='검색'
-                      isSmScreen={isSmScreen}
                     />
-                  </SearchBar.MainSec>
-                  <SearchBar.SubSec>
+                  </NewSearchBar.MainSec>
+                  <NewSearchBar.SubSec>
                     <ArrangeMenuBtn<PlaylistSongData>
-                      setResults={setNowPlaylistSongArr}
+                      setResults={setPlaylistSearchedSongArr}
                       arrangeOptionArr={PlaylistSongDataArrangeOption}
                     />
-                  </SearchBar.SubSec>
-                </SearchBar>
+                  </NewSearchBar.SubSec>
+                </NewSearchBar>
 
                 <ListPage
                   pageDataInform={{
                     resultNumPerPage: SONG_NUM_PER_PAGE,
-                    resultTotalNum: nowPlaylistSongArr.length,
-                    totalDataArr: nowPlaylistSongArr,
+                    resultTotalNum: playlistSearchedSongArr.length,
+                    totalDataArr: playlistSearchedSongArr,
                   }}
                   pageDataArr={playlistViewedSongArr}
                   renderNoData={() => <NoSongScreen />}
+                  handleChangePage={handlePlaylistViewedSongArrByPageNum}
                   renderData={(result, idx, nowPageNum) => (
                     <SongResultRow key={result.artist + result.title}>
                       <SongResultRow.Text
@@ -250,7 +233,6 @@ const App = () => {
                       />
                     </SongResultRow>
                   )}
-                  handleChangePage={handlePlaylistViewedSongArrByPageNum}
                 />
               </MainSec>
 
@@ -272,6 +254,7 @@ const App = () => {
                   }}
                   pageDataArr={applianceViewedSongArr}
                   renderNoData={() => <NoSongScreen />}
+                  handleChangePage={handleApplianceViewedSongArrByPageNum}
                   renderData={(result, idx, nowPageNum) => (
                     <SongResultRow key={result.artist + result.title}>
                       <SongResultRow.Text
@@ -294,7 +277,6 @@ const App = () => {
                       />
                     </SongResultRow>
                   )}
-                  handleChangePage={handleApplianceViewedSongArrByPageNum}
                 />
               </MainSec>
             </section>
@@ -317,7 +299,7 @@ const App = () => {
               {nowPlaylist && (
                 <MainSec>
                   <h2 className='text-3xl font-semibold max-lg:text-center'>
-                    {nowPlaylist && nowPlaylist.name}
+                    {nowPlaylist.name}
                   </h2>
                   <div className='flex flex-row justify-end mb-3'>
                     <h3 className='text-xl font-normal '>
@@ -325,68 +307,54 @@ const App = () => {
                     </h3>
                   </div>
 
-                  <SearchBar
-                    searchWord={playlistSearchProps.searchWord}
-                    setSearchWord={playlistSearchProps.setSearchWord}
-                  >
-                    <SearchBar.MainSec>
-                      <SearchBar.MainSec.Select
-                        optionValueArr={songSearchWordCategories}
-                      />
-                      <SearchBar.MainSec.InputWithButton
-                        handleClickBtn={
-                          playlistSearchProps.handleSearchBtnClick
-                        }
-                      />
-                      <SearchBar.MainSec.Button
-                        handleClickBtn={
-                          playlistSearchProps.handleSearchBtnClick
-                        }
+                  <NewSearchBar categories={['제목', '가수']}>
+                    <NewSearchBar.MainSec>
+                      <NewSearchBar.MainSec.Select />
+                      <NewSearchBar.MainSec.Input />
+                      <NewSearchBar.MainSec.Button
+                        handleClickBtn={handlePlaylistSearch}
                         text='검색'
-                        isSmScreen={isSmScreen}
                       />
-                    </SearchBar.MainSec>
-                    <SearchBar.SubSec>
+                    </NewSearchBar.MainSec>
+                    <NewSearchBar.SubSec>
                       <ArrangeMenuBtn<PlaylistSongData>
-                        setResults={setNowPlaylistSongArr}
+                        setResults={setPlaylistSearchedSongArr}
                         arrangeOptionArr={PlaylistSongDataArrangeOption}
                       />
-                    </SearchBar.SubSec>
-                  </SearchBar>
+                    </NewSearchBar.SubSec>
+                  </NewSearchBar>
 
-                  <LoadingCheckWrapper
-                    isLoading={playlistSearchProps.isLoading}
-                  >
-                    <SongTable<PlaylistSongData>
-                      viewdSongArr={playlistSearchProps.viewedDataArr}
-                      nowPageNum={playlistSearchProps.nowPageNum}
-                      renderSongResult={(index, result) => (
-                        <SongResultRow key={result.artist + result.title}>
-                          <SongResultRow.Text text={index.toString()} />
-                          <SongResultRow.Inform
-                            title={result.title}
-                            artist={result.artist}
-                          />
-                          <SongResultRow.IconButton
-                            icon='Smile'
-                            size={20}
-                            color={color.white}
-                            onClick={() => {}}
-                          />
-                        </SongResultRow>
-                      )}
-                    >
-                      <SongTable.PagingBar
-                        totalPageNum={calculateTotalPageNum(
-                          nowPlaylistSongArr.length,
-                          6
-                        )}
-                        pageNum={playlistSearchProps.nowPageNum}
-                        onPagePlus={playlistSearchProps.handlePlus}
-                        onPageMinus={playlistSearchProps.handleMinus}
-                      />
-                    </SongTable>
-                  </LoadingCheckWrapper>
+                  <ListPage
+                    pageDataInform={{
+                      resultNumPerPage: SONG_NUM_PER_PAGE,
+                      resultTotalNum: playlistSearchedSongArr.length,
+                      totalDataArr: playlistSearchedSongArr,
+                    }}
+                    pageDataArr={playlistViewedSongArr}
+                    renderNoData={() => <NoSongScreen />}
+                    handleChangePage={handlePlaylistViewedSongArrByPageNum}
+                    renderData={(result, idx, nowPageNum) => (
+                      <SongResultRow key={result.artist + result.title}>
+                        <SongResultRow.Text
+                          text={calculateDataIdxInTable(
+                            idx,
+                            nowPageNum,
+                            SONG_NUM_PER_PAGE
+                          ).toString()}
+                        />
+                        <SongResultRow.Inform
+                          title={result.title}
+                          artist={result.artist}
+                        />
+                        <SongResultRow.IconButton
+                          icon='Smile'
+                          size={20}
+                          color={color.white}
+                          onClick={() => {}}
+                        />
+                      </SongResultRow>
+                    )}
+                  />
                 </MainSec>
               )}
             </section>

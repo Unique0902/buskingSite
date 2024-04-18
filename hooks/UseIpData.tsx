@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { IpServiceObj } from '../service/ipService';
 
-const useIpData = (userId: string | null) => {
+const useIpData = (userId: string | undefined) => {
   const ipService = IpServiceObj;
   return useQuery({
     queryKey: ['ipService'],
