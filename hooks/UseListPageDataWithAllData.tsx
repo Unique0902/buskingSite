@@ -15,8 +15,8 @@ export const UseListPageDataWithAllData = <
   // TODO: 자꾸 페이지넘바꿀때 생기는 오류 log 해결하기
   // TODO: SONG_NUM_PER_PAGE 로직
   // TODO: queryKey 관련해서 공부하고 굳이 searchWord, pageNum을 state로 사용해야하는지 생각해보기
-
-  // Clear: ListPage의 totalDataArr prop 말고 pageNum 초기화방법있는지 생각해보기 => react key를 이용한 해결방법 (이후 관련 블로그글 작성해보기)
+  // TODO: buskingApply에서 사용하는 SearchBar 대안 찾기
+  //  TODO: 이전에 존재했던 반응형 기능 다시 넣어보기
 
   //searchSongArr를 사용안하는 ListPage는 그냥 기존 searchedArr 사용하던 부분을 allDataArr로 사용하면될듯
   const [searchedSongArr, setSearchedSongArr] = useState<T[]>([]);

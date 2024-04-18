@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import MainSec from '../../components/Main/MainSec';
 import NoPlaylistCheckWrapper from '../../components/NoPlaylist/NoPlaylistCheckWrapper';
 import SongResultRow from '../../components/Table/SongResultRow';

@@ -1,36 +1,28 @@
 import React, { useMemo } from 'react';
-
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { createPortal } from 'react-dom';
-
 import ArrangeMenuBtn from '../../components/ArrangeMenu/ArrangeMenuBtn';
 import HomeBtn from '../../components/Layout/Footer/HomeBtn';
 import ThemeBtn from '../../components/Layout/Footer/ThemeBtn';
-import LoadingCheckWrapper from '../../components/Loading/LoadingCheckWrapper';
 import MainSec from '../../components/Main/MainSec';
 import ModalIconBtn from '../../components/Modal/ModalIconBtn';
-import SearchBar from '../../components/Search/SearchBar';
 import SearchModalContent from '../../components/SearchModal/SearchModalContent';
 import SongResultRow from '../../components/Table/SongResultRow';
-import SongTable from '../../components/Table/SongTable';
 import useBuskingData from '../../hooks/UseBuskingData';
 import useIpData from '../../hooks/UseIpData';
 import PlaylistRepository from '../../service/playlist_repository';
 import UserRepository from '../../service/userRepository';
-import { songSearchWordCategories } from '../../store/data/CategoryTypes';
 import { PlaylistSongData } from '../../store/type/playlist';
 import { color } from '../../styles/theme';
 import { PlaylistSongDataArrangeOption } from '../../store/data/ArrangeOptions';
 import { useMediaQueryContext } from '../../context/MediaQueryContext';
-import {
-  calculateDataIdxInTable,
-  calculateTotalPageNum,
-} from '../../utils/calculate';
+import { calculateDataIdxInTable } from '../../utils/calculate';
 import ListPage from '../../components/ListPage/ListPage';
 import { UseListPageDataWithAllData } from '../../hooks/UseListPageDataWithAllData';
 import NoSongScreen from '../../components/Table/NoSongScreen';
 import NewSearchBar from '../../components/Search/NewSearchBar';
+
 //TODO: getIp 기능 오류 자꾸나는거 어떻게좀하기
 const userRepository = new UserRepository();
 const playlistRepository = new PlaylistRepository();
