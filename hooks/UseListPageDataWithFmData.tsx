@@ -63,7 +63,9 @@ export const UseListPageDataWithFmData = (songNumPerPage: number) => {
     staleTime: 1000 * 60 * 2,
   });
 
-  const fmSongArr = fmSearchData?.data || [];
+  const fmSongArr = fmSearchData
+    ? fmSearchData.data.slice(0, songNumPerPage)
+    : [];
   const totalResultNum = parseInt(fmSearchData?.totalResultNum || '0');
 
   const handleSearch = (searchWord: NewSearchWord) => {

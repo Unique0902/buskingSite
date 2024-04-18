@@ -18,9 +18,7 @@ export const UseListPageDataWithAllData = <
   // TODO: buskingApply에서 사용하는 SearchBar 대안 찾기
   //  TODO: 이전에 존재했던 반응형 기능 다시 넣어보기
 
-  //searchSongArr를 사용안하는 ListPage는 그냥 기존 searchedArr 사용하던 부분을 allDataArr로 사용하면될듯
   const [searchedSongArr, setSearchedSongArr] = useState<T[]>([]);
-  // 요건 add 관련 data처리에서 힘쓸거임
   const [savedSearchWord, setSavedSearchWord] = useState<NewSearchWord>({
     name: '',
     category: '',
