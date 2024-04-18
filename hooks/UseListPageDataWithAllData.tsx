@@ -9,9 +9,15 @@ export const UseListPageDataWithAllData = <
   allDataArr: T[],
   songNumPerPage: number
 ) => {
-  //TODO: 요거 다른페이지에도 적용하기
-  //TODO: add 페이지에서 사용할수있는 이거랑 비슷한 별도의 custom hook 만들기
-  //TODO: 오류를 장담할수없으니, 이 로직과 관련해서 테스트코드 작성할수없는지 생각해보기
+  // TODO: add 페이지에서 사용할수있는 이거랑 비슷한 별도의 custom hook 만들기
+  // TODO: 오류를 장담할수없으니, 이 로직과 관련해서 테스트코드 작성할수없는지 생각해보기
+  // TODO: MusicBar 관련 처리
+  // TODO: 자꾸 페이지넘바꿀때 생기는 오류 log 해결하기
+  // TODO: SONG_NUM_PER_PAGE 로직
+  // TODO: queryKey 관련해서 공부하고 굳이 searchWord, pageNum을 state로 사용해야하는지 생각해보기
+
+  // Clear: ListPage의 totalDataArr prop 말고 pageNum 초기화방법있는지 생각해보기 => react key를 이용한 해결방법 (이후 관련 블로그글 작성해보기)
+
   //searchSongArr를 사용안하는 ListPage는 그냥 기존 searchedArr 사용하던 부분을 allDataArr로 사용하면될듯
   const [searchedSongArr, setSearchedSongArr] = useState<T[]>([]);
   // 요건 add 관련 data처리에서 힘쓸거임
@@ -66,5 +72,6 @@ export const UseListPageDataWithAllData = <
     handleSearch,
     searchedSongArr,
     setSearchedSongArr,
+    savedSearchWord,
   };
 };

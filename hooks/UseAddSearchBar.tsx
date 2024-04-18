@@ -23,12 +23,12 @@ const useAddSearchBar = () => {
     func: () => fmService.getTopTracks(1),
   });
   //사실 콜백한번더 감싸줘서 state에 함수 저장해도 되지만 그냥 객체에다 저장하면 좀더 가독성이 좋긴한듯
-  // 콜백으로 하려면 setState할때마다 ()=>()=>callback() 이거 해주는데 ^^ 화살쏘는 큐피트도 아니고 이건좀 아닌듯 ^^
+  // 콜백으로 하려면 setState할때마다 ()=>()=>callback() 이거 해주는데  이건좀 아닌듯
   //이런식으로 작성한 이유는 블로그에도 쓸건데 setState를 저장할때 callback으로 진행할수있다는 사실때문에
   //state로 콜백함수를 저장할때 코드의 가독성이 떨어져서 그냥 따로 새로운 객체만들어서 전달하는게 더 나을것같다고 생각함!
   //그래서 이런식으로 코드 작성한것
 
-  // react query 사용하면서 얻은것중 하나는 캐싱기능(strict mode에서도 fetch 한번만됨 개꿀 ^^) + 페이지 focus시 리패치
+  // react query 사용하면서 얻은것중 하나는 캐싱기능(strict mode에서도 fetch 한번만됨) + 페이지 focus시 리패치
   // 부가기능중에 추가할것들은 추가할예정
 
   const [queryKey, setQueryKey] = useState<string[]>(['getTopTracks', '1']);

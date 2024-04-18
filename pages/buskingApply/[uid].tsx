@@ -132,6 +132,7 @@ const App = () => {
     searchedSongArr: playlistSearchedSongArr,
     setSearchedSongArr: setPlaylistSearchedSongArr,
     handleSearch: handlePlaylistSearch,
+    savedSearchWord: playlistSavedSearchWord,
   } = UseListPageDataWithAllData(nowPlaylistSongArr, SONG_NUM_PER_PAGE);
 
   const {
@@ -204,10 +205,16 @@ const App = () => {
                 </NewSearchBar>
 
                 <ListPage
+                  key={
+                    playlistSavedSearchWord.name
+                      ? playlistSavedSearchWord.name +
+                        '+' +
+                        playlistSavedSearchWord.category
+                      : 'totalPlaylistData'
+                  }
                   pageDataInform={{
                     resultNumPerPage: SONG_NUM_PER_PAGE,
                     resultTotalNum: playlistSearchedSongArr.length,
-                    totalDataArr: playlistSearchedSongArr,
                   }}
                   pageDataArr={playlistViewedSongArr}
                   renderNoData={() => <NoSongScreen />}
@@ -250,7 +257,6 @@ const App = () => {
                   pageDataInform={{
                     resultNumPerPage: SONG_NUM_PER_PAGE,
                     resultTotalNum: appliance.length,
-                    totalDataArr: appliance,
                   }}
                   pageDataArr={applianceViewedSongArr}
                   renderNoData={() => <NoSongScreen />}
@@ -325,10 +331,16 @@ const App = () => {
                   </NewSearchBar>
 
                   <ListPage
+                    key={
+                      playlistSavedSearchWord.name
+                        ? playlistSavedSearchWord.name +
+                          '+' +
+                          playlistSavedSearchWord.category
+                        : 'totalPlaylistData'
+                    }
                     pageDataInform={{
                       resultNumPerPage: SONG_NUM_PER_PAGE,
                       resultTotalNum: playlistSearchedSongArr.length,
-                      totalDataArr: playlistSearchedSongArr,
                     }}
                     pageDataArr={playlistViewedSongArr}
                     renderNoData={() => <NoSongScreen />}

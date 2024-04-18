@@ -42,3 +42,11 @@ export type FmEditedTopTrackData = {
   url: string;
   playcount: string;
 };
+export type SimpleTrackData = {
+  title: string;
+  artist: string;
+};
+export type SimpleSearchFmData = {
+  totalResultNum: string;
+  data: SimpleTrackData[];
+};

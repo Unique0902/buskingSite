@@ -56,7 +56,6 @@ describe('List Page Component Test', () => {
         pageDataInform={{
           resultTotalNum: testPageDataArr.length,
           resultNumPerPage: 6,
-          totalDataArr: testPageDataArr,
         }}
         handleChangePage={() => {}}
       />
@@ -74,7 +73,6 @@ describe('List Page Component Test', () => {
         pageDataInform={{
           resultTotalNum: testPageDataArr.length,
           resultNumPerPage: 6,
-          totalDataArr: testPageDataArr,
         }}
         handleChangePage={() => {}}
       />
@@ -94,7 +92,6 @@ describe('List Page Component Test', () => {
         pageDataInform={{
           resultTotalNum: bigTestPageDataArr.length,
           resultNumPerPage: 2,
-          totalDataArr: bigTestPageDataArr,
         }}
         handleChangePage={handleChangePage}
       />
@@ -117,7 +114,6 @@ describe('List Page Component Test', () => {
           pageDataInform={{
             resultTotalNum: bigTestPageDataArr.length,
             resultNumPerPage: 1,
-            totalDataArr: bigTestPageDataArr,
           }}
           handleChangePage={() => {}}
         />
@@ -137,7 +133,6 @@ describe('List Page Component Test', () => {
         pageDataInform={{
           resultTotalNum: 0,
           resultNumPerPage: 6,
-          totalDataArr: [],
         }}
         handleChangePage={() => {}}
         renderNoData={() => <div>no data</div>}
@@ -146,39 +141,38 @@ describe('List Page Component Test', () => {
     expect(screen.queryByText('no data')).not.toBeNull();
   });
 
-  it('when totalDataArr change, pageNum clear', async () => {
-    const { rerender } = render(
-      <ListPage<TestData>
-        pageDataArr={testPageDataArr}
-        renderData={(data, idx) => (
-          <div key={data.title + idx}>{data.title}</div>
-        )}
-        pageDataInform={{
-          resultTotalNum: bigTestPageDataArr.length,
-          resultNumPerPage: 2,
-          totalDataArr: bigTestPageDataArr,
-        }}
-        handleChangePage={() => {}}
-      />
-    );
-    const [minusBtn, plusBtn] = screen.queryAllByRole('button');
-    await userEvent.click(plusBtn);
-    expect(screen.queryByText('2')).not.toBeNull();
-    rerender(
-      <ListPage<TestData>
-        pageDataArr={testPageDataArr2}
-        renderData={(data, idx) => (
-          <div key={data.title + idx}>{data.title}</div>
-        )}
-        pageDataInform={{
-          resultTotalNum: bigTestPageDataArr2.length,
-          resultNumPerPage: 2,
-          totalDataArr: bigTestPageDataArr2,
-        }}
-        handleChangePage={() => {}}
-      />
-    );
+  // 이 기능은 제거됨
+  // it('when totalDataArr change, pageNum clear', async () => {
+  //   const { rerender } = render(
+  //     <ListPage<TestData>
+  //       pageDataArr={testPageDataArr}
+  //       renderData={(data, idx) => (
+  //         <div key={data.title + idx}>{data.title}</div>
+  //       )}
+  //       pageDataInform={{
+  //         resultTotalNum: bigTestPageDataArr.length,
+  //         resultNumPerPage: 2,
+  //       }}
+  //       handleChangePage={() => {}}
+  //     />
+  //   );
+  //   const [minusBtn, plusBtn] = screen.queryAllByRole('button');
+  //   await userEvent.click(plusBtn);
+  //   expect(screen.queryByText('2')).not.toBeNull();
+  //   rerender(
+  //     <ListPage<TestData>
+  //       pageDataArr={testPageDataArr2}
+  //       renderData={(data, idx) => (
+  //         <div key={data.title + idx}>{data.title}</div>
+  //       )}
+  //       pageDataInform={{
+  //         resultTotalNum: bigTestPageDataArr2.length,
+  //         resultNumPerPage: 2,
+  //       }}
+  //       handleChangePage={() => {}}
+  //     />
+  //   );
 
-    expect(screen.queryByText('1')).not.toBeNull();
-  });
+  //   expect(screen.queryByText('1')).not.toBeNull();
+  // });
 });

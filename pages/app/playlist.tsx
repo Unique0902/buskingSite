@@ -44,6 +44,7 @@ export default function AppPlaylist() {
     handleSearch,
     searchedSongArr,
     setSearchedSongArr,
+    savedSearchWord,
   } = UseListPageDataWithAllData(songTotalArr, SONG_NUM_PER_PAGE);
 
   const handleClickResult = (sid: string) => {
@@ -113,38 +114,19 @@ export default function AppPlaylist() {
             </NewSearchBar.SubSec>
           </NewSearchBar>
 
-          {/* <SearchBar searchWord={searchWord} setSearchWord={setSearchWord}>
-            <SearchBar.MainSec>
-              <SearchBar.MainSec.Select
-                optionValueArr={songSearchWordCategories}
-              />
-
-              <SearchBar.MainSec.InputWithButton
-                handleClickBtn={handleSearchBtnClick}
-              />
-              <SearchBar.MainSec.Button
-                handleClickBtn={handleSearchBtnClick}
-                text='검색'
-                isSmScreen={isSmScreen}
-              />
-            </SearchBar.MainSec>
-            <SearchBar.SubSec>
-              <ArrangeMenuBtn<PlaylistSongData>
-                setResults={setSongArr}
-                arrangeOptionArr={PlaylistSongDataArrangeOption}
-              />
-            </SearchBar.SubSec>
-          </SearchBar> */}
-
           <h2 className='mb-2 text-xl font-semibold '>
             총 노래 수 {searchedSongArr && searchedSongArr.length}
           </h2>
 
           <ListPage
+            key={
+              savedSearchWord.name
+                ? savedSearchWord.name + '+' + savedSearchWord.category
+                : 'totalData'
+            }
             pageDataInform={{
               resultNumPerPage: SONG_NUM_PER_PAGE,
               resultTotalNum: searchedSongArr.length,
-              totalDataArr: searchedSongArr,
             }}
             pageDataArr={viewedSongArr}
             renderNoData={() => <NoSongScreen />}
