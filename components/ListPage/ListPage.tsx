@@ -21,15 +21,15 @@ const ListPage = <T,>({
   renderNoData,
 }: Props<T>) => {
   const [nowPageNum, setNowPageNum] = useState<number>(1);
-  const handlePlusPageNum = () => {
+  const handlePlusPageNum = (pageNum: number) => {
+    handleChangePage(pageNum + 1);
     setNowPageNum((prev) => {
-      handleChangePage(prev + 1);
       return prev + 1;
     });
   };
-  const handleMinusPageNum = () => {
+  const handleMinusPageNum = (pageNum: number) => {
+    handleChangePage(pageNum - 1);
     setNowPageNum((prev) => {
-      handleChangePage(prev - 1);
       return prev - 1;
     });
   };
@@ -46,8 +46,8 @@ const ListPage = <T,>({
       <PagingBar
         totalPageNum={calculateTotalPageNum(resultTotalNum, resultNumPerPage)}
         pageNum={nowPageNum}
-        onPagePlus={handlePlusPageNum}
-        onPageMinus={handleMinusPageNum}
+        onPagePlus={() => handlePlusPageNum(nowPageNum)}
+        onPageMinus={() => handleMinusPageNum(nowPageNum)}
       />
     </ul>
   );
