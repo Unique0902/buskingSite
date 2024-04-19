@@ -1,6 +1,6 @@
 import { describe, expect, it, jest } from '@jest/globals';
 import { render, screen } from '@testing-library/react';
-import NewSearchBar from '../Search/NewSearchBar';
+import SearchBar from '../Search/SearchBar';
 import renderer from 'react-test-renderer';
 import userEvent from '@testing-library/user-event';
 
@@ -9,27 +9,27 @@ describe('newSearchBar component tests', () => {
 
   it('render test', () => {
     const component = renderer.create(
-      <NewSearchBar categories={testCategories}>
-        <NewSearchBar.MainSec>
-          <NewSearchBar.MainSec.Select />
-          <NewSearchBar.MainSec.Input />
-          <NewSearchBar.MainSec.Button handleClickBtn={() => {}} text='btn' />
-        </NewSearchBar.MainSec>
-        <NewSearchBar.SubSec>
+      <SearchBar categories={testCategories}>
+        <SearchBar.MainSec>
+          <SearchBar.MainSec.Select />
+          <SearchBar.MainSec.Input />
+          <SearchBar.MainSec.Button handleClickBtn={() => {}} text='btn' />
+        </SearchBar.MainSec>
+        <SearchBar.SubSec>
           <div>subsec</div>
-        </NewSearchBar.SubSec>
-      </NewSearchBar>
+        </SearchBar.SubSec>
+      </SearchBar>
     );
     expect(component.toJSON()).toMatchSnapshot();
   });
 
   it('categoriesArr change to each option', () => {
     render(
-      <NewSearchBar categories={testCategories}>
-        <NewSearchBar.MainSec>
-          <NewSearchBar.MainSec.Select />
-        </NewSearchBar.MainSec>
-      </NewSearchBar>
+      <SearchBar categories={testCategories}>
+        <SearchBar.MainSec>
+          <SearchBar.MainSec.Select />
+        </SearchBar.MainSec>
+      </SearchBar>
     );
     const [category1, category2] = screen.getAllByRole('option');
 
@@ -40,16 +40,16 @@ describe('newSearchBar component tests', () => {
   it('when btn click, handleClickBtn execute with searchWord', async () => {
     const handleClickBtn = jest.fn();
     render(
-      <NewSearchBar categories={testCategories}>
-        <NewSearchBar.MainSec>
-          <NewSearchBar.MainSec.Select />
-          <NewSearchBar.MainSec.Input />
-          <NewSearchBar.MainSec.Button
+      <SearchBar categories={testCategories}>
+        <SearchBar.MainSec>
+          <SearchBar.MainSec.Select />
+          <SearchBar.MainSec.Input />
+          <SearchBar.MainSec.Button
             handleClickBtn={handleClickBtn}
             text='btn'
           />
-        </NewSearchBar.MainSec>
-      </NewSearchBar>
+        </SearchBar.MainSec>
+      </SearchBar>
     );
     const input = screen.getByRole('searchbox');
     await userEvent.type(input, 'text');

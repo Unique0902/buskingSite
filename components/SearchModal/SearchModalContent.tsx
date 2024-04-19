@@ -7,7 +7,7 @@ import { NewSearchWord } from '../../store/type/searchword';
 import { UserData } from '../../store/type/userData';
 import { color } from '../../styles/theme';
 import SearchModalNameResult from './SearchModalNameResult';
-import NewSearchBar from '../Search/NewSearchBar';
+import SearchBar from '../Search/SearchBar';
 const userDataRepository = new UserDataRepository();
 const SearchModalContent: React.FC = () => {
   const { data } = useQuery({
@@ -43,16 +43,16 @@ const SearchModalContent: React.FC = () => {
   return (
     <>
       <div className='px-4 pt-4'>
-        <NewSearchBar categories={['이름']}>
-          <NewSearchBar.MainSec>
-            <NewSearchBar.MainSec.Select />
-            <NewSearchBar.MainSec.Input />
-            <NewSearchBar.MainSec.Button
+        <SearchBar categories={['이름']}>
+          <SearchBar.MainSec>
+            <SearchBar.MainSec.Select />
+            <SearchBar.MainSec.Input />
+            <SearchBar.MainSec.Button
               handleClickBtn={handleSearchName}
               text='검색'
             />
-          </NewSearchBar.MainSec>
-          <NewSearchBar.SubSec>
+          </SearchBar.MainSec>
+          <SearchBar.SubSec>
             <button
               onClick={() => {
                 setIsOpenModal(false);
@@ -62,8 +62,8 @@ const SearchModalContent: React.FC = () => {
             >
               <Icon size={24} color={color.warning} icon='Cancel' />
             </button>
-          </NewSearchBar.SubSec>
-        </NewSearchBar>
+          </SearchBar.SubSec>
+        </SearchBar>
       </div>
       {showedUserDataArr.map((value) => (
         <SearchModalNameResult

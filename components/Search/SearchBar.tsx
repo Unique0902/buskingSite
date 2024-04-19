@@ -18,7 +18,7 @@ const SearchBarContext = createContext<SearchBarContextProps>(
   {} as SearchBarContextProps
 );
 
-const NewSearchBar = ({ children, categories }: SearchBarProps) => {
+const SearchBar = ({ children, categories }: SearchBarProps) => {
   const [searchWord, setSearchWord] = useState<NewSearchWord>({
     name: '',
     category: categories[0],
@@ -123,11 +123,11 @@ const Button = ({ handleClickBtn, text }: ButtonProps) => {
   );
 };
 
-NewSearchBar.MainSec = MainSec;
-NewSearchBar.SubSec = SubSec;
+SearchBar.MainSec = MainSec;
+SearchBar.SubSec = SubSec;
 
 MainSec.Select = Select;
 MainSec.Input = Input;
 MainSec.Button = Button;
 
-export default NewSearchBar;
+export default SearchBar;

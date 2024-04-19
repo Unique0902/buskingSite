@@ -21,7 +21,7 @@ import { calculateDataIdxInTable } from '../../utils/calculate';
 import ListPage from '../../components/ListPage/ListPage';
 import { UseListPageDataWithAllData } from '../../hooks/UseListPageDataWithAllData';
 import NoSongScreen from '../../components/Table/NoSongScreen';
-import NewSearchBar from '../../components/Search/NewSearchBar';
+import SearchBar from '../../components/Search/SearchBar';
 
 //TODO: getIp 기능 오류 자꾸나는거 어떻게좀하기
 const userRepository = new UserRepository();
@@ -179,22 +179,22 @@ const App = () => {
                   </h3>
                 </div>
 
-                <NewSearchBar categories={['제목', '가수']}>
-                  <NewSearchBar.MainSec>
-                    <NewSearchBar.MainSec.Select />
-                    <NewSearchBar.MainSec.Input />
-                    <NewSearchBar.MainSec.Button
+                <SearchBar categories={['제목', '가수']}>
+                  <SearchBar.MainSec>
+                    <SearchBar.MainSec.Select />
+                    <SearchBar.MainSec.Input />
+                    <SearchBar.MainSec.Button
                       handleClickBtn={handlePlaylistSearch}
                       text='검색'
                     />
-                  </NewSearchBar.MainSec>
-                  <NewSearchBar.SubSec>
+                  </SearchBar.MainSec>
+                  <SearchBar.SubSec>
                     <ArrangeMenuBtn<PlaylistSongData>
                       setResults={setPlaylistSearchedSongArr}
                       arrangeOptionArr={PlaylistSongDataArrangeOption}
                     />
-                  </NewSearchBar.SubSec>
-                </NewSearchBar>
+                  </SearchBar.SubSec>
+                </SearchBar>
 
                 <ListPage
                   key={
@@ -305,22 +305,22 @@ const App = () => {
                     </h3>
                   </div>
 
-                  <NewSearchBar categories={['제목', '가수']}>
-                    <NewSearchBar.MainSec>
-                      <NewSearchBar.MainSec.Select />
-                      <NewSearchBar.MainSec.Input />
-                      <NewSearchBar.MainSec.Button
+                  <SearchBar categories={['제목', '가수']}>
+                    <SearchBar.MainSec>
+                      <SearchBar.MainSec.Select />
+                      <SearchBar.MainSec.Input />
+                      <SearchBar.MainSec.Button
                         handleClickBtn={handlePlaylistSearch}
                         text='검색'
                       />
-                    </NewSearchBar.MainSec>
-                    <NewSearchBar.SubSec>
+                    </SearchBar.MainSec>
+                    <SearchBar.SubSec>
                       <ArrangeMenuBtn<PlaylistSongData>
                         setResults={setPlaylistSearchedSongArr}
                         arrangeOptionArr={PlaylistSongDataArrangeOption}
                       />
-                    </NewSearchBar.SubSec>
-                  </NewSearchBar>
+                    </SearchBar.SubSec>
+                  </SearchBar>
 
                   <ListPage
                     key={

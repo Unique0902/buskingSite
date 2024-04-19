@@ -9,7 +9,7 @@ import { getAppLayOut } from '../../layouts/appLayout';
 import { color } from '../../styles/theme';
 import { calculateDataIdxInTable } from '../../utils/calculate';
 import ListPage from '../../components/ListPage/ListPage';
-import NewSearchBar from '../../components/Search/NewSearchBar';
+import SearchBar from '../../components/Search/SearchBar';
 import NoSongScreen from '../../components/Table/NoSongScreen';
 import { UseListPageDataWithFmData } from '../../hooks/UseListPageDataWithFmData';
 export default function AppAdd() {
@@ -31,16 +31,16 @@ export default function AppAdd() {
       <TitleBar text={'노래추가'} />
       <NoPlaylistCheckWrapper isExistWrapper={!!nowPlaylist}>
         <MainSec>
-          <NewSearchBar categories={['제목', '가수']}>
-            <NewSearchBar.MainSec>
-              <NewSearchBar.MainSec.Select />
-              <NewSearchBar.MainSec.Input />
-              <NewSearchBar.MainSec.Button
+          <SearchBar categories={['제목', '가수']}>
+            <SearchBar.MainSec>
+              <SearchBar.MainSec.Select />
+              <SearchBar.MainSec.Input />
+              <SearchBar.MainSec.Button
                 handleClickBtn={handleSearch}
                 text='검색'
               />
-            </NewSearchBar.MainSec>
-          </NewSearchBar>
+            </SearchBar.MainSec>
+          </SearchBar>
 
           <ListPage
             key={

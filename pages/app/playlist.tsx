@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 
 import ArrangeMenuBtn from '../../components/ArrangeMenu/ArrangeMenuBtn';
 import MainSec from '../../components/Main/MainSec';
@@ -16,8 +16,7 @@ import { calculateDataIdxInTable } from '../../utils/calculate';
 import ListPage from '../../components/ListPage/ListPage';
 import NoSongScreen from '../../components/Table/NoSongScreen';
 import { UseListPageDataWithAllData } from '../../hooks/UseListPageDataWithAllData';
-import NewSearchBar from '../../components/Search/NewSearchBar';
-import { NewSearchWord } from '../../store/type/searchword';
+import SearchBar from '../../components/Search/SearchBar';
 //TODO: 플레이리스트 노래 제목이나 가수 수정기능 추가 이것도 송 아이템에 부가 버튼 만들어서 추가하자
 // 자리 부족한 반응형 화면에서는 ... 이모티콘 넣어서 눌렀을때 버튼 리스트 나오게
 export default function AppPlaylist() {
@@ -97,22 +96,22 @@ export default function AppPlaylist() {
       <TitleBar text={'플레이리스트 관리'} />
       <NoPlaylistCheckWrapper isExistWrapper={!!nowPlaylist}>
         <MainSec>
-          <NewSearchBar categories={['제목', '가수']}>
-            <NewSearchBar.MainSec>
-              <NewSearchBar.MainSec.Select />
-              <NewSearchBar.MainSec.Input />
-              <NewSearchBar.MainSec.Button
+          <SearchBar categories={['제목', '가수']}>
+            <SearchBar.MainSec>
+              <SearchBar.MainSec.Select />
+              <SearchBar.MainSec.Input />
+              <SearchBar.MainSec.Button
                 handleClickBtn={handleSearch}
                 text='검색'
               />
-            </NewSearchBar.MainSec>
-            <NewSearchBar.SubSec>
+            </SearchBar.MainSec>
+            <SearchBar.SubSec>
               <ArrangeMenuBtn<PlaylistSongData>
                 setResults={setSearchedSongArr}
                 arrangeOptionArr={PlaylistSongDataArrangeOption}
               />
-            </NewSearchBar.SubSec>
-          </NewSearchBar>
+            </SearchBar.SubSec>
+          </SearchBar>
 
           <h2 className='mb-2 text-xl font-semibold '>
             총 노래 수 {searchedSongArr && searchedSongArr.length}
