@@ -1,22 +1,15 @@
 import React, { useEffect, useState } from 'react';
-
 import { useQuery } from '@tanstack/react-query';
-
 import { useModalContext } from '../Modal/ModalIconBtn';
-import SearchBar from '../Search/SearchBar';
 import Icon from '../../assets/icon/icon';
 import UserDataRepository from '../../service/userDataRepository';
-import { nameSearchWordCategories } from '../../store/data/CategoryTypes';
-import { NameSearchWord } from '../../store/type/searchword';
+import { NewSearchWord } from '../../store/type/searchword';
 import { UserData } from '../../store/type/userData';
 import { color } from '../../styles/theme';
 import SearchModalNameResult from './SearchModalNameResult';
+import NewSearchBar from '../Search/NewSearchBar';
 const userDataRepository = new UserDataRepository();
 const SearchModalContent: React.FC = () => {
-  const [searchWord, setSearchWord] = useState<NameSearchWord>({
-    name: '',
-    category: '이름',
-  });
   const { data } = useQuery({
     queryKey: ['userDatas'],
     queryFn: () => userDataRepository.getAllUserDatas(),
@@ -38,7 +31,7 @@ const SearchModalContent: React.FC = () => {
 
   const showedUserDataArr = searchedDataArr.slice(0, 5);
 
-  const handleSearchName = () => {
+  const handleSearchName = (searchWord: NewSearchWord) => {
     setSearchedDataArr(
       userDataArr.filter((val) =>
         val.name.toLowerCase().includes(searchWord.name)
@@ -50,20 +43,16 @@ const SearchModalContent: React.FC = () => {
   return (
     <>
       <div className='px-4 pt-4'>
-        <SearchBar
-          searchWord={searchWord}
-          setSearchWord={setSearchWord}
-          isLgRow={true}
-        >
-          <SearchBar.MainSec>
-            <SearchBar.MainSec.Select
-              optionValueArr={nameSearchWordCategories}
+        <NewSearchBar categories={['이름']}>
+          <NewSearchBar.MainSec>
+            <NewSearchBar.MainSec.Select />
+            <NewSearchBar.MainSec.Input />
+            <NewSearchBar.MainSec.Button
+              handleClickBtn={handleSearchName}
+              text='검색'
             />
-            <SearchBar.MainSec.InputWithButton
-              handleClickBtn={() => handleSearchName()}
-            />
-          </SearchBar.MainSec>
-          <SearchBar.SubSec>
+          </NewSearchBar.MainSec>
+          <NewSearchBar.SubSec>
             <button
               onClick={() => {
                 setIsOpenModal(false);
@@ -73,8 +62,8 @@ const SearchModalContent: React.FC = () => {
             >
               <Icon size={24} color={color.warning} icon='Cancel' />
             </button>
-          </SearchBar.SubSec>
-        </SearchBar>
+          </NewSearchBar.SubSec>
+        </NewSearchBar>
       </div>
       {showedUserDataArr.map((value) => (
         <SearchModalNameResult
