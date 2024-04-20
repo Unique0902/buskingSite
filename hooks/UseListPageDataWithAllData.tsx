@@ -2,6 +2,10 @@ import { useEffect, useState } from 'react';
 import { ApplianceData } from '../store/type/busking';
 import { PlaylistSongData } from '../store/type/playlist';
 import { NewSearchWord } from '../store/type/searchword';
+import {
+  searchSong,
+  sliceSongArrByNumPerPage,
+} from '../utils/listPageDataWithAllData';
 
 export const UseListPageDataWithAllData = <
   T extends PlaylistSongData | ApplianceData
@@ -31,28 +35,10 @@ export const UseListPageDataWithAllData = <
     setSearchedSongArr([...allDataArr]);
   }, [allDataArr]);
 
-  const searchSong = (allDataArr: T[], { name, category }: NewSearchWord) => {
-    if (category === '제목')
-      return allDataArr.filter((song) =>
-        song.title.toLowerCase().includes(name)
-      );
-    else if (category === '가수')
-      return allDataArr.filter((song) =>
-        song.artist.toLowerCase().includes(name)
-      );
-    else throw new Error('not exist song searchWord category!');
-  };
-
   const handleSearch = (searchWord: NewSearchWord) => {
     searchSong(allDataArr, searchWord);
     setSavedSearchWord({ ...searchWord });
   };
-
-  const sliceSongArrByNumPerPage = (
-    songArr: T[],
-    numPerPage: number,
-    pageNum: number
-  ) => songArr.slice((pageNum - 1) * numPerPage, pageNum * numPerPage);
 
   const handleChangePage = (pageNum: number) =>
     setViewedSongArr(

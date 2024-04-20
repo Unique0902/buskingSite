@@ -1,6 +1,5 @@
 import { describe, expect, it } from '@jest/globals';
 import { renderHook } from '@testing-library/react';
-import { useEffect } from 'react';
 import { PlaylistSongData } from '../../store/type/playlist';
 import { UseListPageDataWithAllData } from '../UseListPageDataWithAllData';
 
@@ -21,14 +20,7 @@ describe('UseListPageDataWithAllData custom hook test', () => {
         },
       }
     );
-    const {
-      viewedSongArr,
-      handleChangePage,
-      handleSearch,
-      searchedSongArr,
-      setSearchedSongArr,
-      savedSearchWord,
-    } = result.current;
+    const { searchedSongArr } = result.current;
     expect(searchedSongArr).toEqual(dataArr);
   });
 
@@ -48,20 +40,4 @@ describe('UseListPageDataWithAllData custom hook test', () => {
     expect(viewedSongArr.length).toBe(songNumPerPage);
     expect(viewedSongArr).toEqual(dataArr.slice(0, songNumPerPage));
   });
-
-  //TODO: handle함수 테스트할수없는지? 함수의 설계 문제인지?
-  // it('change pageNum and viewedArr change', () => {
-  //   const { result } = renderHook(
-  //     ({ allDataArr, songNumPerPage }) =>
-  //       UseListPageDataWithAllData(allDataArr, songNumPerPage),
-  //     {
-  //       initialProps: {
-  //         allDataArr: dataArr,
-  //         songNumPerPage: 2,
-  //       },
-  //     }
-  //   );
-  //   const { viewedSongArr } = result.current;
-  //   expect(viewedSongArr).toEqual(dataArr.slice(1, 2));
-  // });
 });
