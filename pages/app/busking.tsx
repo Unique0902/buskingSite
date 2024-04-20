@@ -75,8 +75,10 @@ export default function AppBusking() {
     removeBuskingSong(sid, uid);
   };
 
-  const { viewedSongArr, handleViewedSongArrByPageNum } =
-    UseListPageDataWithAllData(songArrWithMusicBar, SONG_NUM_PER_PAGE);
+  const { viewedSongArr, handleChangePage } = UseListPageDataWithAllData(
+    songArrWithMusicBar,
+    SONG_NUM_PER_PAGE
+  );
 
   if (isbuskingDataLoading) {
     return <div>checking buskingData...</div>;
@@ -131,7 +133,6 @@ export default function AppBusking() {
           pageDataInform={{
             resultNumPerPage: SONG_NUM_PER_PAGE,
             resultTotalNum: songArrWithMusicBar.length,
-            totalDataArr: songArrWithMusicBar,
           }}
           pageDataArr={viewedSongArr}
           renderNoData={() => <NoSongScreen />}
@@ -157,7 +158,7 @@ export default function AppBusking() {
               />
             </SongResultRow>
           )}
-          handleChangePage={handleViewedSongArrByPageNum}
+          handleChangePage={handleChangePage}
         />
 
         <section className='flex flex-row justify-end pt-4'>

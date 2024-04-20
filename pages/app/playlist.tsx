@@ -39,7 +39,7 @@ export default function AppPlaylist() {
 
   const {
     viewedSongArr,
-    handleViewedSongArrByPageNum,
+    handleChangePage,
     handleSearch,
     searchedSongArr,
     setSearchedSongArr,
@@ -129,7 +129,7 @@ export default function AppPlaylist() {
             }}
             pageDataArr={viewedSongArr}
             renderNoData={() => <NoSongScreen />}
-            handleChangePage={handleViewedSongArrByPageNum}
+            handleChangePage={handleChangePage}
             renderData={(result, idx, nowPageNum) => (
               <SongResultRow key={result.artist + result.title}>
                 <SongResultRow.Text

@@ -120,7 +120,7 @@ const App = () => {
 
   const {
     viewedSongArr: playlistViewedSongArr,
-    handleViewedSongArrByPageNum: handlePlaylistViewedSongArrByPageNum,
+    handleChangePage: handlePlaylistChangePage,
     searchedSongArr: playlistSearchedSongArr,
     setSearchedSongArr: setPlaylistSearchedSongArr,
     handleSearch: handlePlaylistSearch,
@@ -129,7 +129,7 @@ const App = () => {
 
   const {
     viewedSongArr: applianceViewedSongArr,
-    handleViewedSongArrByPageNum: handleApplianceViewedSongArrByPageNum,
+    handleChangePage: handleApplianceChangePage,
   } = UseListPageDataWithAllData(appliance, SONG_NUM_PER_PAGE);
 
   if (isIpdataError) {
@@ -210,7 +210,7 @@ const App = () => {
                   }}
                   pageDataArr={playlistViewedSongArr}
                   renderNoData={() => <NoSongScreen />}
-                  handleChangePage={handlePlaylistViewedSongArrByPageNum}
+                  handleChangePage={handlePlaylistChangePage}
                   renderData={(result, idx, nowPageNum) => (
                     <SongResultRow key={result.artist + result.title}>
                       <SongResultRow.Text
@@ -252,7 +252,7 @@ const App = () => {
                   }}
                   pageDataArr={applianceViewedSongArr}
                   renderNoData={() => <NoSongScreen />}
-                  handleChangePage={handleApplianceViewedSongArrByPageNum}
+                  handleChangePage={handleApplianceChangePage}
                   renderData={(result, idx, nowPageNum) => (
                     <SongResultRow key={result.artist + result.title}>
                       <SongResultRow.Text
@@ -336,7 +336,7 @@ const App = () => {
                     }}
                     pageDataArr={playlistViewedSongArr}
                     renderNoData={() => <NoSongScreen />}
-                    handleChangePage={handlePlaylistViewedSongArrByPageNum}
+                    handleChangePage={handlePlaylistChangePage}
                     renderData={(result, idx, nowPageNum) => (
                       <SongResultRow key={result.artist + result.title}>
                         <SongResultRow.Text

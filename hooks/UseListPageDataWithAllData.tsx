@@ -31,38 +31,37 @@ export const UseListPageDataWithAllData = <
     setSearchedSongArr([...allDataArr]);
   }, [allDataArr]);
 
+  const searchSong = (allDataArr: T[], { name, category }: NewSearchWord) => {
+    if (category === '제목')
+      return allDataArr.filter((song) =>
+        song.title.toLowerCase().includes(name)
+      );
+    else if (category === '가수')
+      return allDataArr.filter((song) =>
+        song.artist.toLowerCase().includes(name)
+      );
+    else throw new Error('not exist song searchWord category!');
+  };
+
   const handleSearch = (searchWord: NewSearchWord) => {
-    if (searchWord.name) {
-      if (searchWord.category === '제목') {
-        const filterdDataArr = allDataArr.filter((song) =>
-          song.title.toLowerCase().includes(searchWord.name)
-        );
-        setSearchedSongArr([...filterdDataArr]);
-      } else if (searchWord.category === '가수') {
-        const filterdDataArr = allDataArr.filter((song) =>
-          song.artist.toLowerCase().includes(searchWord.name)
-        );
-        setSearchedSongArr([...filterdDataArr]);
-      } else {
-        throw new Error('not exist song searchWord category!');
-      }
-    } else {
-      setSearchedSongArr([...allDataArr]);
-    }
+    searchSong(allDataArr, searchWord);
     setSavedSearchWord({ ...searchWord });
   };
 
-  const handleViewedSongArrByPageNum = (pageNum: number) =>
+  const sliceSongArrByNumPerPage = (
+    songArr: T[],
+    numPerPage: number,
+    pageNum: number
+  ) => songArr.slice((pageNum - 1) * numPerPage, pageNum * numPerPage);
+
+  const handleChangePage = (pageNum: number) =>
     setViewedSongArr(
-      [...searchedSongArr].slice(
-        (pageNum - 1) * songNumPerPage,
-        pageNum * songNumPerPage
-      )
+      sliceSongArrByNumPerPage([...searchedSongArr], songNumPerPage, pageNum)
     );
 
   return {
     viewedSongArr,
-    handleViewedSongArrByPageNum,
+    handleChangePage,
     handleSearch,
     searchedSongArr,
     setSearchedSongArr,
